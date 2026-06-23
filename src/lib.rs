@@ -472,6 +472,7 @@ mod tests {
 
     #[test]
     fn pow2_constructible_from_align_of() {
+        assert_eq!(Pow2::align_of::<()>(), Pow2::from_exponent(0));
         assert_eq!(Pow2::align_of::<u8>(), Pow2::from_exponent(0));
         assert_eq!(Pow2::align_of::<u32>(), Pow2::from_exponent(2));
         assert_eq!(Pow2::align_of::<u128>(), Pow2::from_exponent(4));
@@ -479,6 +480,7 @@ mod tests {
 
     #[test]
     fn pow2_constructible_from_align_of_val() {
+        assert_eq!(Pow2::align_of_val(&()), Pow2::from_exponent(0));
         assert_eq!(Pow2::align_of_val(&0_u8), Pow2::from_exponent(0));
         assert_eq!(Pow2::align_of_val(&0_u32), Pow2::from_exponent(2));
         assert_eq!(Pow2::align_of_val(&0_u128), Pow2::from_exponent(4));
@@ -639,6 +641,22 @@ mod tests {
     }
 
     #[test]
+    fn pow2_checked_mul() {
+        assert_eq!(
+            Pow2::from_exponent(12).checked_mul(Pow2::from_exponent(13)),
+            Some(Pow2::from_exponent(25))
+        );
+        assert_eq!(
+            Pow2::from_exponent(12).checked_mul(Pow2::from_exponent(0)),
+            Some(Pow2::from_exponent(12))
+        );
+        assert_eq!(
+            Pow2::from_exponent(0).checked_mul(Pow2::from_exponent(13)),
+            Some(Pow2::from_exponent(13))
+        );
+    }
+
+    #[test]
     fn pow2_checked_mul_boundary() {
         assert_eq!(
             Pow2::from_exponent(254).checked_mul(Pow2::from_exponent(1)),
@@ -647,6 +665,22 @@ mod tests {
         assert_eq!(
             Pow2::from_exponent(254).checked_mul(Pow2::from_exponent(2)),
             None
+        );
+    }
+
+    #[test]
+    fn pow2_saturating_mul() {
+        assert_eq!(
+            Pow2::from_exponent(13).saturating_mul(Pow2::from_exponent(14)),
+            Pow2::from_exponent(27)
+        );
+        assert_eq!(
+            Pow2::from_exponent(13).saturating_mul(Pow2::from_exponent(0)),
+            Pow2::from_exponent(13)
+        );
+        assert_eq!(
+            Pow2::from_exponent(0).saturating_mul(Pow2::from_exponent(14)),
+            Pow2::from_exponent(14)
         );
     }
 
@@ -1037,6 +1071,7 @@ mod tests {
         assert_eq!(unbounded_div_ceil(0_i32, Pow2::from_exponent(30)), 0);
         assert_eq!(unbounded_div_ceil(i32::MAX, Pow2::from_exponent(30)), 2);
         assert_eq!(unbounded_div_ceil(0_i32, Pow2::from_exponent(31)), 0);
+        assert_eq!(unbounded_div_ceil(i32::MIN, Pow2::from_exponent(31)), -1);
         assert_eq!(unbounded_div_ceil(-1_i32, Pow2::from_exponent(32)), 0);
         assert_eq!(unbounded_div_ceil(0_i32, Pow2::from_exponent(32)), 0);
         assert_eq!(unbounded_div_ceil(1_i32, Pow2::from_exponent(32)), 1);
@@ -1156,6 +1191,10 @@ mod tests {
             None
         );
         assert_eq!(
+            unbounded_floor_to_multiple(1_i32, Pow2::from_exponent(32)),
+            Some(0)
+        );
+        assert_eq!(
             unbounded_floor_to_multiple(0_i32, Pow2::from_exponent(255)),
             Some(0)
         );
@@ -1194,6 +1233,13 @@ mod tests {
     fn ceil_to_multiple_i64_positive() {
         assert_eq!(ceil_to_multiple(33i64, Pow2::from_exponent(5)), 64);
         assert_eq!(ceil_to_multiple(32i64, Pow2::from_exponent(5)), 32);
+    }
+
+    #[test]
+    fn ceil_to_multiple_i64_negative() {
+        assert_eq!(ceil_to_multiple(-33i64, Pow2::from_exponent(5)), -32);
+        assert_eq!(ceil_to_multiple(-32i64, Pow2::from_exponent(5)), -32);
+        assert_eq!(ceil_to_multiple(-16i64, Pow2::from_exponent(5)), 0);
     }
 
     #[test]
@@ -1323,6 +1369,11 @@ mod tests {
     }
 
     #[test]
+    fn mod_floor_i64_negative() {
+        assert_eq!(mod_floor(-1i64, Pow2::from_exponent(5)), 31);
+    }
+
+    #[test]
     fn mod_floor_min() {
         assert_eq!(mod_floor(i32::MIN, Pow2::from_exponent(2)), 0);
         assert_eq!(mod_floor(i32::MIN, Pow2::from_exponent(31)), 0);
@@ -1375,6 +1426,7 @@ mod tests {
     #[test]
     fn is_multiple_of_i64_negative() {
         assert!(is_multiple_of(-32i64, Pow2::from_exponent(5)));
+        assert!(is_multiple_of(i32::MIN, Pow2::from_exponent(31)));
         assert!(!is_multiple_of(-31i64, Pow2::from_exponent(5)));
     }
 
