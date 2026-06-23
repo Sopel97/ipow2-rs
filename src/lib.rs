@@ -436,6 +436,8 @@ pub fn unbounded_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fmt::Write;
+    use std::hash::{DefaultHasher, Hash, Hasher};
 
     #[test]
     fn pow2_constructible_from_any_u8_exponent() {
@@ -1396,5 +1398,38 @@ mod tests {
         assert_eq!(Pow2::YOBI, Pow2::from_exponent(80));
         assert_eq!(Pow2::ROBI, Pow2::from_exponent(90));
         assert_eq!(Pow2::QUEBI, Pow2::from_exponent(100));
+    }
+
+    #[test]
+    fn pow2_has_debug() {
+        let v = Pow2::from_exponent(0);
+        let mut s = String::new();
+        write!(&mut s, "{:?}", v).unwrap();
+        assert_eq!(s, "Pow2 { exponent: 0 }");
+    }
+
+    #[test]
+    fn pow2_has_hash() {
+        let v = Pow2::from_exponent(123);
+        let mut s0 = DefaultHasher::new();
+        v.hash(&mut s0);
+        let mut s1 = DefaultHasher::new();
+        123u8.hash(&mut s1);
+        assert_eq!(s0.finish(), s1.finish());
+    }
+
+    #[test]
+    fn pow2_has_eq() {
+        assert_eq!(Pow2::VAL_1, Pow2::VAL_1);
+        assert_eq!(Pow2::KIBI, Pow2::KIBI);
+        assert_ne!(Pow2::VAL_1, Pow2::VAL_2);
+    }
+
+    #[test]
+    fn pow2_has_ord() {
+        assert!(Pow2::VAL_1 < Pow2::VAL_2);
+        assert!(Pow2::VAL_2 <= Pow2::VAL_2);
+        assert!(Pow2::VAL_2 >= Pow2::VAL_2);
+        assert!(Pow2::VAL_4 > Pow2::VAL_2);
     }
 }
