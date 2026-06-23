@@ -1,6 +1,7 @@
 use crate::private::Int;
 use std::ops::{Div, DivAssign, Mul, MulAssign};
 
+#[macro_use]
 mod private;
 
 #[repr(transparent)]

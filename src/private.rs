@@ -187,7 +187,6 @@ impl_int!(u64, i64);
 impl_int!(u128, i128);
 impl_int!(usize, isize);
 
-#[macro_export]
 macro_rules! impl_signed_unsigned_trait {
     ($trait:ident, trait_body $base_body:tt, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
         trait $trait: Int $base_body
