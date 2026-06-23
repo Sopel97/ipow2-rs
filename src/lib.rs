@@ -460,7 +460,10 @@ pub fn checked_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
 pub fn unbounded_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
     if rhs.is_safe::<T>() {
         Some(ceil_to_multiple(lhs, rhs))
-    } else if T::is_signed() && rhs.is_safe::<T::Unsigned>() && lhs == T::min_value() {
+    } else if T::is_signed()
+        && rhs.exponent as u32 == T::Unsigned::safe_shift_bits()
+        && lhs == T::min_value()
+    {
         Some(T::min_value())
     } else if lhs <= T::zero() {
         Some(T::zero())
