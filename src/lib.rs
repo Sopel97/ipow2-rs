@@ -5,7 +5,7 @@ use std::ops::{Div, DivAssign, Mul, MulAssign};
 mod private;
 
 #[repr(transparent)]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
+#[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
 pub struct Pow2 {
     exponent: u8,
 }
