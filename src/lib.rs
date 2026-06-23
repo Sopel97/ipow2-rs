@@ -48,6 +48,20 @@ impl Pow2 {
     }
 
     #[inline(always)]
+    pub fn align_of<T>() -> Pow2 {
+        Pow2 {
+            exponent: align_of::<T>().ilog2() as u8,
+        }
+    }
+
+    #[inline(always)]
+    pub fn align_of_val<T: ?Sized>(val: &T) -> Pow2 {
+        Pow2 {
+            exponent: align_of_val(val).ilog2() as u8,
+        }
+    }
+
+    #[inline(always)]
     pub fn exponent(self) -> u8 {
         self.exponent
     }
@@ -428,6 +442,20 @@ mod tests {
         for e in 0_u8..=u8::MAX {
             assert_eq!(Pow2::from_exponent(e).exponent(), e);
         }
+    }
+
+    #[test]
+    fn pow2_constructible_from_align_of() {
+        assert_eq!(Pow2::align_of::<u8>(), Pow2::from_exponent(0));
+        assert_eq!(Pow2::align_of::<u32>(), Pow2::from_exponent(2));
+        assert_eq!(Pow2::align_of::<u128>(), Pow2::from_exponent(4));
+    }
+
+    #[test]
+    fn pow2_constructible_from_align_of_val() {
+        assert_eq!(Pow2::align_of_val(&0_u8), Pow2::from_exponent(0));
+        assert_eq!(Pow2::align_of_val(&0_u32), Pow2::from_exponent(2));
+        assert_eq!(Pow2::align_of_val(&0_u128), Pow2::from_exponent(4));
     }
 
     #[test]
