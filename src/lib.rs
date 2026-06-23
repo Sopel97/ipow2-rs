@@ -352,7 +352,7 @@ pub fn is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
 
 #[inline(always)]
 pub fn unbounded_is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
-    if !rhs.is_safe::<T>() {
+    if !rhs.is_safe::<T::Unsigned>() {
         lhs.is_zero()
     } else {
         // This actually works for signed integers being shifted by `BITS-1` too.
@@ -1368,6 +1368,7 @@ mod tests {
     #[test]
     fn unbounded_is_multiple_of_boundary() {
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(30)));
+        assert!(unbounded_is_multiple_of(i32::MIN, Pow2::from_exponent(31)));
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(31)));
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(32)));
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(33)));
