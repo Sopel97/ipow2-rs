@@ -28,8 +28,12 @@ where
     fn is_not_zero(self) -> bool;
     fn zero() -> Self;
     fn one() -> Self;
+    fn minus_one() -> Self;
+    fn min_value() -> Self;
     fn safe_shift_bits() -> u32;
     fn trailing_zeros(self) -> u32;
+    fn is_signed() -> bool;
+    fn is_unsigned() -> bool;
 }
 
 macro_rules! impl_common_int {
@@ -68,6 +72,11 @@ macro_rules! impl_common_int {
         fn trailing_zeros(self) -> u32 {
             self.trailing_zeros()
         }
+
+        #[inline(always)]
+        fn min_value() -> Self {
+            <$t>::MIN
+        }
     };
 }
 
@@ -94,6 +103,21 @@ macro_rules! impl_uint {
         fn safe_shift_bits() -> u32 {
             <$t>::BITS - 1
         }
+
+        #[inline(always)]
+        fn minus_one() -> Self {
+            <$t>::MAX
+        }
+
+        #[inline(always)]
+        fn is_signed() -> bool {
+            false
+        }
+
+        #[inline(always)]
+        fn is_unsigned() -> bool {
+            true
+        }
     };
 }
 
@@ -115,10 +139,25 @@ macro_rules! impl_sint {
         fn cast_unsigned(self) -> $t_uint {
             self.cast_unsigned()
         }
-        
+
         #[inline(always)]
         fn safe_shift_bits() -> u32 {
             <$t>::BITS - 2
+        }
+
+        #[inline(always)]
+        fn minus_one() -> Self {
+            -1
+        }
+
+        #[inline(always)]
+        fn is_signed() -> bool {
+            true
+        }
+
+        #[inline(always)]
+        fn is_unsigned() -> bool {
+            false
         }
     };
 }
@@ -147,3 +186,23 @@ impl_int!(u32, i32);
 impl_int!(u64, i64);
 impl_int!(u128, i128);
 impl_int!(usize, isize);
+
+#[macro_export] macro_rules! impl_signed_unsigned_trait {
+    ($trait:ident, trait_body $base_body:tt, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
+        trait $trait: Int $base_body
+
+        impl $trait for u8  $unsigned_body
+        impl $trait for u16 $unsigned_body
+        impl $trait for u32 $unsigned_body
+        impl $trait for u64 $unsigned_body
+        impl $trait for u128 $unsigned_body
+        impl $trait for usize $unsigned_body
+
+        impl $trait for i8  $signed_body
+        impl $trait for i16 $signed_body
+        impl $trait for i32 $signed_body
+        impl $trait for i64 $signed_body
+        impl $trait for i128 $signed_body
+        impl $trait for isize $signed_body
+    };
+}
