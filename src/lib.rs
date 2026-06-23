@@ -1336,6 +1336,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn ceil_to_multiple_overflow() {
+        let _ = ceil_to_multiple(i32::MAX, Pow2::from_exponent(1));
+    }
+
+    #[test]
     fn ceil_to_multiple_u64_unaligned() {
         assert_eq!(ceil_to_multiple(65u64, Pow2::from_exponent(6)), 128);
         assert_eq!(ceil_to_multiple(1u64, Pow2::from_exponent(6)), 64);
