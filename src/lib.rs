@@ -607,6 +607,15 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn pow2_mul_overflow() {
+        let lhs = Pow2::from_exponent(128);
+        let rhs = Pow2::from_exponent(128);
+        let _ = lhs * rhs;
+    }
+
+    #[test]
     fn pow2_mul_assign() {
         let lhs = Pow2::from_exponent(6);
         let rhs = Pow2::from_exponent(7);
@@ -617,6 +626,15 @@ mod tests {
         let mut new_rhs = rhs;
         new_rhs *= lhs;
         assert_eq!(new_rhs, Pow2::from_exponent(13));
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn pow2_mul_assign_overflow() {
+        let mut lhs = Pow2::from_exponent(128);
+        let rhs = Pow2::from_exponent(128);
+        lhs *= rhs;
     }
 
     #[test]
@@ -704,11 +722,29 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn pow2_div_overflow() {
+        let lhs = Pow2::from_exponent(127);
+        let rhs = Pow2::from_exponent(128);
+        let _ = lhs / rhs;
+    }
+
+    #[test]
     fn pow2_div_assign_positive() {
         let mut lhs = Pow2::from_exponent(6);
         let rhs = Pow2::from_exponent(3);
         lhs /= rhs;
         assert_eq!(lhs, Pow2::from_exponent(3));
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn pow2_div_assign_overflow() {
+        let mut lhs = Pow2::from_exponent(127);
+        let rhs = Pow2::from_exponent(128);
+        lhs /= rhs;
     }
 
     #[test]
@@ -813,6 +849,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn div_divisor_out_of_range() {
+        let _ = 123_i32 / Pow2::from_exponent(32);
+    }
+
+    #[test]
     fn div_assign_exact() {
         let mut v = 32u64;
         v /= Pow2::from_exponent(5);
@@ -825,6 +868,13 @@ mod tests {
         let mut v = -64i64;
         v /= Pow2::from_exponent(3);
         assert_eq!(v, -8);
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn div_assign_divisor_out_of_range() {
+        let _ = 123_i32 / Pow2::from_exponent(32);
     }
 
     #[test]
@@ -937,6 +987,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn div_floor_divisor_out_of_range() {
+        let _ = div_floor(32u64, Pow2::from_exponent(64));
+    }
+
+    #[test]
     fn div_floor_u64_rounds_down() {
         assert_eq!(div_floor(37u64, Pow2::from_exponent(5)), 1);
         assert_eq!(div_floor(63u64, Pow2::from_exponent(5)), 1);
@@ -1019,6 +1076,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn div_ceil_divisor_out_of_range() {
+        let _ = div_ceil(32u64, Pow2::from_exponent(64));
+    }
+
+    #[test]
     fn div_ceil_u64_rounds_up() {
         assert_eq!(div_ceil(33u64, Pow2::from_exponent(5)), 2);
         assert_eq!(div_ceil(63u64, Pow2::from_exponent(5)), 2);
@@ -1089,6 +1153,13 @@ mod tests {
     #[test]
     fn floor_to_multiple_u64_already_aligned() {
         assert_eq!(floor_to_multiple(64u64, Pow2::from_exponent(6)), 64);
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn floor_to_multiple_align_out_of_range() {
+        let _ = floor_to_multiple(64u64, Pow2::from_exponent(64));
     }
 
     #[test]
@@ -1216,6 +1287,13 @@ mod tests {
     #[test]
     fn ceil_to_multiple_u64_already_aligned() {
         assert_eq!(ceil_to_multiple(64u64, Pow2::from_exponent(6)), 64);
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn ceil_to_multiple_align_out_of_range() {
+        let _ = ceil_to_multiple(64u64, Pow2::from_exponent(64));
     }
 
     #[test]
@@ -1358,6 +1436,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn mod_floor_divisor_out_of_range() {
+        let _ = mod_floor(32u64, Pow2::from_exponent(64));
+    }
+
+    #[test]
     fn mod_floor_u64_remainder() {
         assert_eq!(mod_floor(37u64, Pow2::from_exponent(5)), 5);
         assert_eq!(mod_floor(63u64, Pow2::from_exponent(5)), 31);
@@ -1438,6 +1523,10 @@ mod tests {
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(32)));
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(33)));
         assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(255)));
+        assert!(!unbounded_is_multiple_of(
+            i32::MIN,
+            Pow2::from_exponent(255)
+        ));
     }
 
     #[test]
