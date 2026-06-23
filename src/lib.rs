@@ -1,4 +1,5 @@
 use crate::private::Int;
+use std::ops::{Div, DivAssign, Mul, MulAssign};
 
 mod private;
 
@@ -73,6 +74,36 @@ impl_try_from!(i32);
 impl_try_from!(i64);
 impl_try_from!(i128);
 impl_try_from!(isize);
+
+impl Mul for Pow2 {
+    type Output = Pow2;
+
+    #[allow(clippy::suspicious_arithmetic_impl)]
+    fn mul(self, other: Pow2) -> Pow2 {
+        Pow2::from_exponent(self.exponent + other.exponent)
+    }
+}
+
+impl MulAssign for Pow2 {
+    #[allow(clippy::suspicious_arithmetic_impl)]
+    fn mul_assign(&mut self, other: Pow2) {
+        self.exponent += other.exponent;
+    }
+}
+
+impl Div for Pow2 {
+    type Output = Pow2;
+    fn div(self, other: Pow2) -> Pow2 {
+        Pow2::from_exponent(self.exponent.saturating_sub(other.exponent))
+    }
+}
+
+impl DivAssign for Pow2 {
+    #[allow(clippy::suspicious_arithmetic_impl)]
+    fn div_assign(&mut self, other: Pow2) {
+        self.exponent = self.exponent.saturating_sub(other.exponent);
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -156,5 +187,48 @@ mod tests {
         assert_eq!(Pow2::from_exponent(63).as_u64(), 1 << 63);
         assert_eq!(Pow2::from_exponent(126).as_i128(), 1 << 126);
         assert_eq!(Pow2::from_exponent(127).as_u128(), 1 << 127);
+    }
+
+    #[test]
+    fn pow2_mul() {
+        let lhs = Pow2::from_exponent(6);
+        let rhs = Pow2::from_exponent(7);
+        assert_eq!(lhs * rhs, Pow2::from_exponent(13));
+        assert_eq!(rhs * lhs, Pow2::from_exponent(13));
+    }
+
+    #[test]
+    fn pow2_mul_zero() {
+        let lhs = Pow2::from_exponent(65);
+        let rhs = Pow2::from_exponent(0);
+        assert_eq!(lhs * rhs, lhs);
+        assert_eq!(rhs * lhs, lhs);
+    }
+
+    #[test]
+    fn pow2_div_positive() {
+        let lhs = Pow2::from_exponent(6);
+        let rhs = Pow2::from_exponent(3);
+        assert_eq!(lhs / rhs, Pow2::from_exponent(3));
+    }
+
+    #[test]
+    fn pow2_div_zero() {
+        let lhs = Pow2::from_exponent(3);
+        let rhs = Pow2::from_exponent(6);
+        assert_eq!(lhs / rhs, Pow2::from_exponent(0));
+    }
+
+    #[test]
+    fn pow2_div_one() {
+        let lhs = Pow2::from_exponent(3);
+        let rhs = Pow2::from_exponent(0);
+        assert_eq!(lhs / rhs, lhs);
+    }
+
+    #[test]
+    fn pow2_div_self() {
+        let v = Pow2::from_exponent(123);
+        assert_eq!(v / v, Pow2::from_exponent(0));
     }
 }
