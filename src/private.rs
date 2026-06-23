@@ -1,6 +1,20 @@
+use std::ops::{Add, BitAnd, Not, Shl, Shr, Sub};
+
 pub trait Int
 where
-    Self: Sized + Copy + Clone,
+    Self: Sized
+        + Copy
+        + Clone
+        + Eq
+        + PartialEq
+        + Ord
+        + PartialOrd
+        + Shr<u8, Output = Self>
+        + Shl<u8, Output = Self>
+        + Sub<Output = Self>
+        + Add<Output = Self>
+        + Not<Output = Self>
+        + BitAnd<Output = Self>,
 {
     type Signed;
     type Unsigned;
@@ -9,6 +23,11 @@ where
     fn ilog2(self) -> u32;
     fn cast_signed(self) -> Self::Signed;
     fn cast_unsigned(self) -> Self::Unsigned;
+    fn from_bool(b: bool) -> Self;
+    fn is_not_zero(self) -> bool;
+    fn zero() -> Self;
+    fn one() -> Self;
+    fn safe_shift_bits() -> u32;
 }
 
 macro_rules! impl_common_int {
@@ -16,6 +35,26 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn ilog2(self) -> u32 {
             self.ilog2()
+        }
+
+        #[inline(always)]
+        fn from_bool(b: bool) -> Self {
+            b as Self
+        }
+
+        #[inline(always)]
+        fn is_not_zero(self) -> bool {
+            self != 0
+        }
+
+        #[inline(always)]
+        fn zero() -> Self {
+            0
+        }
+
+        #[inline(always)]
+        fn one() -> Self {
+            1
         }
     };
 }
@@ -38,6 +77,11 @@ macro_rules! impl_uint {
         fn cast_unsigned(self) -> $t {
             self
         }
+
+        #[inline(always)]
+        fn safe_shift_bits() -> u32 {
+            <$t>::BITS - 1
+        }
     };
 }
 
@@ -58,6 +102,11 @@ macro_rules! impl_sint {
         #[inline(always)]
         fn cast_unsigned(self) -> $t_uint {
             self.cast_unsigned()
+        }
+        
+        #[inline(always)]
+        fn safe_shift_bits() -> u32 {
+            <$t>::BITS - 2
         }
     };
 }
