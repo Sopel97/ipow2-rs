@@ -210,10 +210,7 @@ macro_rules! impl_div_signed {
                 if self >= 0 {
                     self >> other.exponent
                 } else {
-                    // The mask computation needs to be done as unsigned, because it can overflow
-                    // to the sign bit before we subtract one.
-                    let mask = (((1 as <$t as Int>::Unsigned) << other.exponent) - 1)
-                        as <$t as Int>::Signed;
+                    let mask = <$t as Int>::mask(other.exponent as u32);
                     (self + mask) >> other.exponent
                 }
             }
@@ -444,27 +441,27 @@ pub fn unbounded_floor_to_multiple<T: IntForUnboundedFloorToMultiple>(
 
 #[inline(always)]
 pub fn ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T>());
+    debug_assert!(rhs.is_safe::<T::Unsigned>());
     // We can actually use the mask method here because if the intermediate `a + mask` overflows
     // then the actual result would overflow too.
-    let mask = (T::one() << rhs.exponent) - T::one();
+    let mask = T::mask(rhs.exponent as u32);
     (lhs + mask) & !mask
 }
 
 #[inline(always)]
 pub fn checked_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    rhs.is_safe::<T>().then(|| ceil_to_multiple(lhs, rhs))
+    if rhs.is_safe::<T::Unsigned>() {
+        let mask = T::mask(rhs.exponent as u32);
+        Some(lhs.checked_add(mask)? & !mask)
+    } else {
+        None
+    }
 }
 
 #[inline(always)]
 pub fn unbounded_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    if rhs.is_safe::<T>() {
-        Some(ceil_to_multiple(lhs, rhs))
-    } else if T::is_signed()
-        && rhs.exponent as u32 == T::Unsigned::safe_shift_bits()
-        && lhs == T::min_value()
-    {
-        Some(T::min_value())
+    if rhs.is_safe::<T::Unsigned>() {
+        checked_ceil_to_multiple(lhs, rhs)
     } else if lhs <= T::zero() {
         Some(T::zero())
     } else {
@@ -1394,12 +1391,24 @@ mod tests {
         );
         assert_eq!(
             checked_ceil_to_multiple(0_i32, Pow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_ceil_to_multiple(i32::MAX, Pow2::from_exponent(0)),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            checked_ceil_to_multiple(i32::MAX, Pow2::from_exponent(1)),
             None
         );
 
         assert_eq!(
             checked_ceil_to_multiple(0_u32, Pow2::from_exponent(31)),
             Some(0)
+        );
+        assert_eq!(
+            checked_ceil_to_multiple(i32::MAX as u32 + 2, Pow2::from_exponent(31)),
+            None
         );
         assert_eq!(
             checked_ceil_to_multiple(0_u32, Pow2::from_exponent(32)),
@@ -1445,6 +1454,14 @@ mod tests {
             unbounded_ceil_to_multiple(i32::MIN, Pow2::from_exponent(255)),
             Some(0)
         );
+        assert_eq!(
+            unbounded_ceil_to_multiple(i32::MAX, Pow2::from_exponent(0)),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            unbounded_ceil_to_multiple(i32::MAX, Pow2::from_exponent(1)),
+            None
+        );
 
         assert_eq!(
             unbounded_ceil_to_multiple(0_u32, Pow2::from_exponent(31)),
@@ -1468,6 +1485,10 @@ mod tests {
         );
         assert_eq!(
             unbounded_ceil_to_multiple(1_u32, Pow2::from_exponent(255)),
+            None
+        );
+        assert_eq!(
+            unbounded_ceil_to_multiple(i32::MAX as u32 + 2, Pow2::from_exponent(31)),
             None
         );
     }

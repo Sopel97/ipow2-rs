@@ -31,11 +31,11 @@ where
     fn minus_one() -> Self;
     fn min_value() -> Self;
     fn safe_shift_bits() -> u32;
-    fn trailing_zeros(self) -> u32;
-    fn leading_zeros(self) -> u32;
     fn is_signed() -> bool;
     fn is_unsigned() -> bool;
     fn checked_shl(self, rhs: u32) -> Option<Self>;
+    fn checked_add(self, rhs: Self) -> Option<Self>;
+    fn mask(bits: u32) -> Self;
 }
 
 macro_rules! impl_common_int {
@@ -71,16 +71,6 @@ macro_rules! impl_common_int {
         }
 
         #[inline(always)]
-        fn trailing_zeros(self) -> u32 {
-            self.trailing_zeros()
-        }
-
-        #[inline(always)]
-        fn leading_zeros(self) -> u32 {
-            self.leading_zeros()
-        }
-
-        #[inline(always)]
         fn min_value() -> Self {
             <$t>::MIN
         }
@@ -88,6 +78,11 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn checked_shl(self, rhs: u32) -> Option<Self> {
             <$t>::checked_shl(self, rhs)
+        }
+
+        #[inline(always)]
+        fn checked_add(self, rhs: Self) -> Option<Self> {
+            <$t>::checked_add(self, rhs)
         }
     };
 }
@@ -130,6 +125,12 @@ macro_rules! impl_uint {
         fn is_unsigned() -> bool {
             true
         }
+
+        #[inline(always)]
+        fn mask(bits: u32) -> Self {
+            debug_assert!(bits <= Self::safe_shift_bits());
+            (1 << bits) - 1
+        }
     };
 }
 
@@ -170,6 +171,14 @@ macro_rules! impl_sint {
         #[inline(always)]
         fn is_unsigned() -> bool {
             false
+        }
+
+        #[inline(always)]
+        fn mask(bits: u32) -> Self {
+            debug_assert!(bits <= Self::Unsigned::safe_shift_bits());
+            // The mask computation needs to be done as unsigned, because it can overflow
+            // to the sign bit before we subtract one.
+            (((1 as $t_uint) << bits) - 1) as $t
         }
     };
 }
