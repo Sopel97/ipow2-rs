@@ -11,6 +11,9 @@ pub struct Pow2 {
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct NotPow2;
 
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
+pub struct Pow2OutOfRange;
+
 impl Pow2 {
     pub const VAL_1: Pow2 = Pow2::from_exponent(0);
     pub const VAL_2: Pow2 = Pow2::from_exponent(1);
@@ -81,6 +84,19 @@ macro_rules! impl_try_from {
                     Err(NotPow2)
                 } else {
                     Ok(Pow2::from_exponent(value.ilog2() as u8))
+                }
+            }
+        }
+
+        impl TryFrom<Pow2> for $t {
+            type Error = Pow2OutOfRange;
+
+            #[inline(always)]
+            fn try_from(value: Pow2) -> Result<Self, Self::Error> {
+                if value.exponent as u32 <= <$t>::safe_shift_bits() {
+                    Ok(1 << value.exponent)
+                } else {
+                    Err(Pow2OutOfRange)
                 }
             }
         }
@@ -258,6 +274,45 @@ mod tests {
         assert_eq!(Pow2::from_exponent(63).as_u64(), 1 << 63);
         assert_eq!(Pow2::from_exponent(126).as_i128(), 1 << 126);
         assert_eq!(Pow2::from_exponent(127).as_u128(), 1 << 127);
+    }
+
+    #[test]
+    fn pow2_to_int() {
+        assert_eq!(i8::try_from(Pow2::from_exponent(6)), Ok(1 << 6));
+        assert_eq!(i8::try_from(Pow2::from_exponent(7)), Err(Pow2OutOfRange));
+
+        assert_eq!(u8::try_from(Pow2::from_exponent(7)), Ok(1 << 7));
+        assert_eq!(u8::try_from(Pow2::from_exponent(8)), Err(Pow2OutOfRange));
+
+        assert_eq!(i16::try_from(Pow2::from_exponent(14)), Ok(1 << 14));
+        assert_eq!(i16::try_from(Pow2::from_exponent(15)), Err(Pow2OutOfRange));
+
+        assert_eq!(u16::try_from(Pow2::from_exponent(15)), Ok(1 << 15));
+        assert_eq!(u16::try_from(Pow2::from_exponent(16)), Err(Pow2OutOfRange));
+
+        assert_eq!(i32::try_from(Pow2::from_exponent(30)), Ok(1 << 30));
+        assert_eq!(i32::try_from(Pow2::from_exponent(31)), Err(Pow2OutOfRange));
+
+        assert_eq!(u32::try_from(Pow2::from_exponent(31)), Ok(1 << 31));
+        assert_eq!(u32::try_from(Pow2::from_exponent(32)), Err(Pow2OutOfRange));
+
+        assert_eq!(i64::try_from(Pow2::from_exponent(62)), Ok(1 << 62));
+        assert_eq!(i64::try_from(Pow2::from_exponent(63)), Err(Pow2OutOfRange));
+
+        assert_eq!(u64::try_from(Pow2::from_exponent(63)), Ok(1 << 63));
+        assert_eq!(u64::try_from(Pow2::from_exponent(64)), Err(Pow2OutOfRange));
+
+        assert_eq!(i128::try_from(Pow2::from_exponent(126)), Ok(1 << 126));
+        assert_eq!(
+            i128::try_from(Pow2::from_exponent(127)),
+            Err(Pow2OutOfRange)
+        );
+
+        assert_eq!(u128::try_from(Pow2::from_exponent(127)), Ok(1 << 127));
+        assert_eq!(
+            u128::try_from(Pow2::from_exponent(128)),
+            Err(Pow2OutOfRange)
+        );
     }
 
     #[test]
