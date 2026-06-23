@@ -12,8 +12,30 @@ pub struct Pow2 {
 pub struct NotPow2;
 
 impl Pow2 {
+    pub const VAL_1: Pow2 = Pow2::from_exponent(0);
+    pub const VAL_2: Pow2 = Pow2::from_exponent(1);
+    pub const VAL_4: Pow2 = Pow2::from_exponent(2);
+    pub const VAL_8: Pow2 = Pow2::from_exponent(3);
+    pub const VAL_16: Pow2 = Pow2::from_exponent(4);
+    pub const VAL_32: Pow2 = Pow2::from_exponent(5);
+    pub const VAL_64: Pow2 = Pow2::from_exponent(6);
+    pub const VAL_128: Pow2 = Pow2::from_exponent(7);
+    pub const VAL_256: Pow2 = Pow2::from_exponent(8);
+    pub const VAL_512: Pow2 = Pow2::from_exponent(9);
+    
+    pub const KIBI: Pow2 = Pow2::from_exponent(10);
+    pub const MEBI: Pow2 = Pow2::from_exponent(20);
+    pub const GIBI: Pow2 = Pow2::from_exponent(30);
+    pub const TEBI: Pow2 = Pow2::from_exponent(40);
+    pub const PEBI: Pow2 = Pow2::from_exponent(50);
+    pub const EXBI: Pow2 = Pow2::from_exponent(60);
+    pub const ZEBI: Pow2 = Pow2::from_exponent(70);
+    pub const YOBI: Pow2 = Pow2::from_exponent(80);
+    pub const ROBI: Pow2 = Pow2::from_exponent(90);
+    pub const QUEBI: Pow2 = Pow2::from_exponent(100);
+
     #[inline(always)]
-    pub fn from_exponent(exponent: u8) -> Pow2 {
+    pub const fn from_exponent(exponent: u8) -> Pow2 {
         Pow2 { exponent }
     }
 
@@ -414,7 +436,10 @@ mod tests {
 
     #[test]
     fn floor_to_multiple_max() {
-        assert_eq!(floor_to_multiple(i32::MAX, Pow2::from_exponent(30)), 1 << 30);
+        assert_eq!(
+            floor_to_multiple(i32::MAX, Pow2::from_exponent(30)),
+            1 << 30
+        );
         assert_eq!(
             floor_to_multiple(u32::MAX, Pow2::from_exponent(31)),
             1 << 31
@@ -455,10 +480,16 @@ mod tests {
     #[test]
     fn ceil_to_multiple_max() {
         assert_eq!(ceil_to_multiple(i32::MAX, Pow2::from_exponent(0)), i32::MAX);
-        assert_eq!(ceil_to_multiple(i32::MAX - 1, Pow2::from_exponent(1)), i32::MAX - 1);
+        assert_eq!(
+            ceil_to_multiple(i32::MAX - 1, Pow2::from_exponent(1)),
+            i32::MAX - 1
+        );
 
         assert_eq!(ceil_to_multiple(u32::MAX, Pow2::from_exponent(0)), u32::MAX);
-        assert_eq!(ceil_to_multiple(u32::MAX - 1, Pow2::from_exponent(1)), u32::MAX - 1);
+        assert_eq!(
+            ceil_to_multiple(u32::MAX - 1, Pow2::from_exponent(1)),
+            u32::MAX - 1
+        );
     }
 
     #[test]
@@ -541,5 +572,30 @@ mod tests {
             let reconstructed = floor_to_multiple(a, b) + mod_floor(a, b);
             assert_eq!(reconstructed, a, "reconstruction failed at a={a}");
         }
+    }
+
+    #[test]
+    fn constants() {
+        assert_eq!(Pow2::VAL_1, Pow2::from_exponent(0));
+        assert_eq!(Pow2::VAL_2, Pow2::from_exponent(1));
+        assert_eq!(Pow2::VAL_4, Pow2::from_exponent(2));
+        assert_eq!(Pow2::VAL_8, Pow2::from_exponent(3));
+        assert_eq!(Pow2::VAL_16, Pow2::from_exponent(4));
+        assert_eq!(Pow2::VAL_32, Pow2::from_exponent(5));
+        assert_eq!(Pow2::VAL_64, Pow2::from_exponent(6));
+        assert_eq!(Pow2::VAL_128, Pow2::from_exponent(7));
+        assert_eq!(Pow2::VAL_256, Pow2::from_exponent(8));
+        assert_eq!(Pow2::VAL_512, Pow2::from_exponent(9));
+
+        assert_eq!(Pow2::KIBI, Pow2::from_exponent(10));
+        assert_eq!(Pow2::MEBI, Pow2::from_exponent(20));
+        assert_eq!(Pow2::GIBI, Pow2::from_exponent(30));
+        assert_eq!(Pow2::TEBI, Pow2::from_exponent(40));
+        assert_eq!(Pow2::PEBI, Pow2::from_exponent(50));
+        assert_eq!(Pow2::EXBI, Pow2::from_exponent(60));
+        assert_eq!(Pow2::ZEBI, Pow2::from_exponent(70));
+        assert_eq!(Pow2::YOBI, Pow2::from_exponent(80));
+        assert_eq!(Pow2::ROBI, Pow2::from_exponent(90));
+        assert_eq!(Pow2::QUEBI, Pow2::from_exponent(100));
     }
 }
