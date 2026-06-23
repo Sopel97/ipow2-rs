@@ -161,6 +161,44 @@ impl DivAssign for Pow2 {
     }
 }
 
+macro_rules! impl_div_signed {
+    ($t:ty) => {
+        impl Div<Pow2> for $t {
+            type Output = $t;
+
+            #[inline(always)]
+            fn div(self, other: Pow2) -> $t {
+                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+                if self >= 0 {
+                    self >> other.exponent
+                } else {
+                    // The mask computation needs to be done as unsigned, because it can overflow
+                    // to the sign bit before we subtract one.
+                    let mask = (((1 as <$t as Int>::Unsigned) << other.exponent) - 1) as <$t as Int>::Signed;
+                    (self + mask) >> other.exponent
+                }
+            }
+        }
+    };
+}
+
+macro_rules! impl_div_unsigned {
+    ($t:ty) => {
+        impl Div<Pow2> for $t {
+            type Output = $t;
+
+            #[inline(always)]
+            fn div(self, other: Pow2) -> $t {
+                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+                self >> other.exponent
+            }
+        }
+    };
+}
+
+impl_for_signed!(impl_div_signed);
+impl_for_unsigned!(impl_div_unsigned);
+
 #[inline(always)]
 pub fn div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
     debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -485,6 +523,40 @@ mod tests {
     fn pow2_div_self() {
         let v = Pow2::from_exponent(123);
         assert_eq!(v / v, Pow2::from_exponent(0));
+    }
+
+    #[test]
+    fn div_exact() {
+        assert_eq!(32u64 / Pow2::from_exponent(5), 1);
+        assert_eq!(64u64 / Pow2::from_exponent(3), 8);
+        assert_eq!(-64i64 / Pow2::from_exponent(3), -8);
+    }
+
+    #[test]
+    fn div_rounds_towards_zero() {
+        assert_eq!(37u64 / Pow2::from_exponent(5), 1);
+        assert_eq!(63u64 / Pow2::from_exponent(5), 1);
+        assert_eq!(-37i64 / Pow2::from_exponent(5), -1);
+        assert_eq!(-1i64 / Pow2::from_exponent(5), 0);
+    }
+
+    #[test]
+    fn div_by_one_is_identity() {
+        assert_eq!(42i64 / Pow2::from_exponent(0), 42);
+        assert_eq!(-42i64 / Pow2::from_exponent(0), -42);
+    }
+
+    #[test]
+    fn div_min() {
+        assert_eq!(i32::MIN / Pow2::from_exponent(30), -2);
+        assert_eq!(i32::MIN / Pow2::from_exponent(31), -1);
+    }
+
+    #[test]
+    fn div_max() {
+        assert_eq!(i32::MAX / Pow2::from_exponent(30), 1);
+        assert_eq!(i32::MAX / Pow2::from_exponent(31), 0);
+        assert_eq!(u32::MAX / Pow2::from_exponent(31), 1);
     }
 
     #[test]

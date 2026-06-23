@@ -206,3 +206,25 @@ macro_rules! impl_signed_unsigned_trait {
         impl $trait for isize $signed_body
     };
 }
+
+macro_rules! impl_for_signed {
+    ($m:ident) => {
+        $m!(i8);
+        $m!(i16);
+        $m!(i32);
+        $m!(i64);
+        $m!(i128);
+        $m!(isize);
+    }
+}
+
+macro_rules! impl_for_unsigned {
+    ($m:ident) => {
+        $m!(u8);
+        $m!(u16);
+        $m!(u32);
+        $m!(u64);
+        $m!(u128);
+        $m!(usize);
+    }
+}
