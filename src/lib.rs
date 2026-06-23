@@ -324,7 +324,7 @@ pub fn checked_div_floor<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
 pub fn unbounded_div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
     if rhs.is_safe::<T::Unsigned>() {
         div_floor(lhs, rhs)
-    } else if lhs >= T::zero() {
+    } else if T::is_unsigned() || lhs >= T::zero() {
         T::zero()
     } else {
         T::minus_one()
