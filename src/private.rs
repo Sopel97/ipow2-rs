@@ -16,18 +16,20 @@ where
         + Not<Output = Self>
         + BitAnd<Output = Self>,
 {
-    type Signed;
-    type Unsigned;
+    type Signed: Int;
+    type Unsigned: Int;
 
     fn is_power_of_two(self) -> bool;
     fn ilog2(self) -> u32;
     fn cast_signed(self) -> Self::Signed;
     fn cast_unsigned(self) -> Self::Unsigned;
     fn from_bool(b: bool) -> Self;
+    fn is_zero(self) -> bool;
     fn is_not_zero(self) -> bool;
     fn zero() -> Self;
     fn one() -> Self;
     fn safe_shift_bits() -> u32;
+    fn trailing_zeros(self) -> u32;
 }
 
 macro_rules! impl_common_int {
@@ -43,6 +45,11 @@ macro_rules! impl_common_int {
         }
 
         #[inline(always)]
+        fn is_zero(self) -> bool {
+            self == 0
+        }
+
+        #[inline(always)]
         fn is_not_zero(self) -> bool {
             self != 0
         }
@@ -55,6 +62,11 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn one() -> Self {
             1
+        }
+
+        #[inline(always)]
+        fn trailing_zeros(self) -> u32 {
+            self.trailing_zeros()
         }
     };
 }

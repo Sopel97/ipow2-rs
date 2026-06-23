@@ -29,7 +29,7 @@ impl Pow2 {
     pub const VAL_128: Pow2 = Pow2::from_exponent(7);
     pub const VAL_256: Pow2 = Pow2::from_exponent(8);
     pub const VAL_512: Pow2 = Pow2::from_exponent(9);
-    
+
     pub const KIBI: Pow2 = Pow2::from_exponent(10);
     pub const MEBI: Pow2 = Pow2::from_exponent(20);
     pub const GIBI: Pow2 = Pow2::from_exponent(30);
@@ -162,8 +162,19 @@ pub fn div_floor<T: Int>(a: T, b: Pow2) -> T {
 }
 
 #[inline(always)]
+pub fn checked_div_floor<T: Int>(a: T, b: Pow2) -> Option<T> {
+    (b.exponent as u32 <= T::safe_shift_bits()).then(|| div_floor(a, b))
+}
+
+#[inline(always)]
 pub fn mod_floor<T: Int>(a: T, b: Pow2) -> T {
+    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
     a - floor_to_multiple(a, b)
+}
+
+#[inline(always)]
+pub fn checked_mod_floor<T: Int>(a: T, b: Pow2) -> Option<T> {
+    (b.exponent as u32 <= T::safe_shift_bits()).then(|| mod_floor(a, b))
 }
 
 #[inline(always)]
@@ -177,8 +188,25 @@ pub fn div_ceil<T: Int>(a: T, b: Pow2) -> T {
 }
 
 #[inline(always)]
+pub fn checked_div_ceil<T: Int>(a: T, b: Pow2) -> Option<T> {
+    (b.exponent as u32 <= T::safe_shift_bits()).then(|| div_ceil(a, b))
+}
+
+#[inline(always)]
 pub fn is_multiple_of<T: Int>(a: T, b: Pow2) -> bool {
+    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
     floor_to_multiple(a, b) == a
+}
+
+#[inline(always)]
+pub fn unbounded_is_multiple_of<T: Int>(a: T, b: Pow2) -> bool {
+    if b.exponent as u32 > T::Unsigned::safe_shift_bits() {
+        a.is_zero()
+    } else {
+        // This actually works for signed integers being shifted by `BITS-1` too.
+        // It's important, because we need to check for `Int::MIN`
+        a >> b.exponent << b.exponent == a
+    }
 }
 
 #[inline(always)]
@@ -188,12 +216,22 @@ pub fn floor_to_multiple<T: Int>(a: T, b: Pow2) -> T {
 }
 
 #[inline(always)]
+pub fn checked_floor_to_multiple<T: Int>(a: T, b: Pow2) -> Option<T> {
+    (b.exponent as u32 <= T::safe_shift_bits()).then(|| floor_to_multiple(a, b))
+}
+
+#[inline(always)]
 pub fn ceil_to_multiple<T: Int>(a: T, b: Pow2) -> T {
     debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
     // We can actually use the mask method here because if the intermediate `a + mask` overflows
     // then the actual result would overflow too.
     let mask = (T::one() << b.exponent) - T::one();
     (a + mask) & !mask
+}
+
+#[inline(always)]
+pub fn checked_ceil_to_multiple<T: Int>(a: T, b: Pow2) -> Option<T> {
+    (b.exponent as u32 <= T::safe_shift_bits()).then(|| ceil_to_multiple(a, b))
 }
 
 #[cfg(test)]
@@ -413,6 +451,15 @@ mod tests {
     }
 
     #[test]
+    fn checked_div_floor_boundary() {
+        assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(30)), Some(0));
+        assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(31)), None);
+
+        assert_eq!(checked_div_floor(0_u32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div_floor(0_u32, Pow2::from_exponent(32)), None);
+    }
+
+    #[test]
     fn div_ceil_u64_exact() {
         assert_eq!(div_ceil(32u64, Pow2::from_exponent(5)), 1);
     }
@@ -451,6 +498,15 @@ mod tests {
     fn div_ceil_max() {
         assert_eq!(div_ceil(i32::MAX, Pow2::from_exponent(30)), 2);
         assert_eq!(div_ceil(u32::MAX, Pow2::from_exponent(31)), 2);
+    }
+
+    #[test]
+    fn checked_div_ceil_boundary() {
+        assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(30)), Some(0));
+        assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(31)), None);
+
+        assert_eq!(checked_div_ceil(0_u32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div_ceil(0_u32, Pow2::from_exponent(32)), None);
     }
 
     #[test]
@@ -506,6 +562,27 @@ mod tests {
     }
 
     #[test]
+    fn checked_floor_to_multiple_boundary() {
+        assert_eq!(
+            checked_floor_to_multiple(0_i32, Pow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_floor_to_multiple(0_i32, Pow2::from_exponent(31)),
+            None
+        );
+
+        assert_eq!(
+            checked_floor_to_multiple(0_u32, Pow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_floor_to_multiple(0_u32, Pow2::from_exponent(32)),
+            None
+        );
+    }
+
+    #[test]
     fn ceil_to_multiple_u64_already_aligned() {
         assert_eq!(ceil_to_multiple(64u64, Pow2::from_exponent(6)), 64);
     }
@@ -552,6 +629,27 @@ mod tests {
     }
 
     #[test]
+    fn checked_ceil_to_multiple_boundary() {
+        assert_eq!(
+            checked_ceil_to_multiple(0_i32, Pow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_ceil_to_multiple(0_i32, Pow2::from_exponent(31)),
+            None
+        );
+
+        assert_eq!(
+            checked_ceil_to_multiple(0_u32, Pow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_ceil_to_multiple(0_u32, Pow2::from_exponent(32)),
+            None
+        );
+    }
+
+    #[test]
     fn mod_floor_u64_exact() {
         assert_eq!(mod_floor(32u64, Pow2::from_exponent(5)), 0);
     }
@@ -578,6 +676,15 @@ mod tests {
     }
 
     #[test]
+    fn checked_mod_floor_boundary() {
+        assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(30)), Some(0));
+        assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(31)), None);
+
+        assert_eq!(checked_mod_floor(0_u32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_mod_floor(0_u32, Pow2::from_exponent(32)), None);
+    }
+
+    #[test]
     fn is_multiple_of_u64_true() {
         assert!(is_multiple_of(0u64, Pow2::from_exponent(5)));
         assert!(is_multiple_of(32u64, Pow2::from_exponent(5)));
@@ -594,6 +701,15 @@ mod tests {
     fn is_multiple_of_i64_negative() {
         assert!(is_multiple_of(-32i64, Pow2::from_exponent(5)));
         assert!(!is_multiple_of(-31i64, Pow2::from_exponent(5)));
+    }
+
+    #[test]
+    fn unbounded_is_multiple_of_boundary() {
+        assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(30)));
+        assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(31)));
+        assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(32)));
+        assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(33)));
+        assert!(unbounded_is_multiple_of(0_i32, Pow2::from_exponent(255)));
     }
 
     #[test]
