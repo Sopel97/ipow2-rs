@@ -12,10 +12,12 @@ pub struct Pow2 {
 pub struct NotPow2;
 
 impl Pow2 {
+    #[inline(always)]
     pub fn from_exponent(exponent: u8) -> Pow2 {
         Pow2 { exponent }
     }
 
+    #[inline(always)]
     pub fn exponent(&self) -> u8 {
         self.exponent
     }
@@ -24,6 +26,7 @@ impl Pow2 {
 macro_rules! impl_as {
     ($name:ident, $t:ty) => {
         impl Pow2 {
+            #[inline(always)]
             pub fn $name(self) -> $t {
                 1 << self.exponent
             }
@@ -50,6 +53,7 @@ macro_rules! impl_try_from {
         impl TryFrom<$t> for Pow2 {
             type Error = NotPow2;
 
+            #[inline(always)]
             fn try_from(value: $t) -> Result<Self, Self::Error> {
                 if !value.is_power_of_two() {
                     Err(NotPow2)
@@ -79,6 +83,7 @@ impl Mul for Pow2 {
     type Output = Pow2;
 
     #[allow(clippy::suspicious_arithmetic_impl)]
+    #[inline(always)]
     fn mul(self, other: Pow2) -> Pow2 {
         Pow2::from_exponent(self.exponent + other.exponent)
     }
@@ -86,6 +91,7 @@ impl Mul for Pow2 {
 
 impl MulAssign for Pow2 {
     #[allow(clippy::suspicious_arithmetic_impl)]
+    #[inline(always)]
     fn mul_assign(&mut self, other: Pow2) {
         self.exponent += other.exponent;
     }
@@ -93,6 +99,7 @@ impl MulAssign for Pow2 {
 
 impl Div for Pow2 {
     type Output = Pow2;
+    #[inline(always)]
     fn div(self, other: Pow2) -> Pow2 {
         Pow2::from_exponent(self.exponent.saturating_sub(other.exponent))
     }
@@ -100,6 +107,7 @@ impl Div for Pow2 {
 
 impl DivAssign for Pow2 {
     #[allow(clippy::suspicious_arithmetic_impl)]
+    #[inline(always)]
     fn div_assign(&mut self, other: Pow2) {
         self.exponent = self.exponent.saturating_sub(other.exponent);
     }
