@@ -157,29 +157,29 @@ impl DivAssign for Pow2 {
 
 #[inline(always)]
 pub fn div_floor<T: Int>(a: T, b: Pow2) -> T {
-    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
+    debug_assert!(b.exponent as u32 <= T::Unsigned::safe_shift_bits());
     a >> b.exponent
 }
 
 #[inline(always)]
 pub fn checked_div_floor<T: Int>(a: T, b: Pow2) -> Option<T> {
-    (b.exponent as u32 <= T::safe_shift_bits()).then(|| div_floor(a, b))
+    (b.exponent as u32 <= T::Unsigned::safe_shift_bits()).then(|| div_floor(a, b))
 }
 
 #[inline(always)]
 pub fn mod_floor<T: Int>(a: T, b: Pow2) -> T {
-    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
+    debug_assert!(b.exponent as u32 <= T::Unsigned::safe_shift_bits());
     a - floor_to_multiple(a, b)
 }
 
 #[inline(always)]
 pub fn checked_mod_floor<T: Int>(a: T, b: Pow2) -> Option<T> {
-    (b.exponent as u32 <= T::safe_shift_bits()).then(|| mod_floor(a, b))
+    (b.exponent as u32 <= T::Unsigned::safe_shift_bits()).then(|| mod_floor(a, b))
 }
 
 #[inline(always)]
 pub fn div_ceil<T: Int>(a: T, b: Pow2) -> T {
-    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
+    debug_assert!(b.exponent as u32 <= T::Unsigned::safe_shift_bits());
     // Can't use a faster implementation with a mask due to possible overflow
     // of the intermediate `a + mask`
     let floored = div_floor(a, b);
@@ -189,12 +189,12 @@ pub fn div_ceil<T: Int>(a: T, b: Pow2) -> T {
 
 #[inline(always)]
 pub fn checked_div_ceil<T: Int>(a: T, b: Pow2) -> Option<T> {
-    (b.exponent as u32 <= T::safe_shift_bits()).then(|| div_ceil(a, b))
+    (b.exponent as u32 <= T::Unsigned::safe_shift_bits()).then(|| div_ceil(a, b))
 }
 
 #[inline(always)]
 pub fn is_multiple_of<T: Int>(a: T, b: Pow2) -> bool {
-    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
+    debug_assert!(b.exponent as u32 <= T::Unsigned::safe_shift_bits());
     floor_to_multiple(a, b) == a
 }
 
@@ -211,13 +211,13 @@ pub fn unbounded_is_multiple_of<T: Int>(a: T, b: Pow2) -> bool {
 
 #[inline(always)]
 pub fn floor_to_multiple<T: Int>(a: T, b: Pow2) -> T {
-    debug_assert!(b.exponent as u32 <= T::safe_shift_bits());
+    debug_assert!(b.exponent as u32 <= T::Unsigned::safe_shift_bits());
     a >> b.exponent << b.exponent
 }
 
 #[inline(always)]
 pub fn checked_floor_to_multiple<T: Int>(a: T, b: Pow2) -> Option<T> {
-    (b.exponent as u32 <= T::safe_shift_bits()).then(|| floor_to_multiple(a, b))
+    (b.exponent as u32 <= T::Unsigned::safe_shift_bits()).then(|| floor_to_multiple(a, b))
 }
 
 #[inline(always)]
@@ -442,18 +442,21 @@ mod tests {
     #[test]
     fn div_floor_min() {
         assert_eq!(div_floor(i32::MIN, Pow2::from_exponent(30)), -2);
+        assert_eq!(div_floor(i32::MIN, Pow2::from_exponent(31)), -1);
     }
 
     #[test]
     fn div_floor_max() {
         assert_eq!(div_floor(i32::MAX, Pow2::from_exponent(30)), 1);
+        assert_eq!(div_floor(i32::MAX, Pow2::from_exponent(31)), 0);
         assert_eq!(div_floor(u32::MAX, Pow2::from_exponent(31)), 1);
     }
 
     #[test]
     fn checked_div_floor_boundary() {
         assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(31)), None);
+        assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div_floor(0_i32, Pow2::from_exponent(32)), None);
 
         assert_eq!(checked_div_floor(0_u32, Pow2::from_exponent(31)), Some(0));
         assert_eq!(checked_div_floor(0_u32, Pow2::from_exponent(32)), None);
@@ -492,18 +495,21 @@ mod tests {
     #[test]
     fn div_ceil_min() {
         assert_eq!(div_ceil(i32::MIN, Pow2::from_exponent(30)), -2);
+        assert_eq!(div_ceil(i32::MIN, Pow2::from_exponent(31)), -1);
     }
 
     #[test]
     fn div_ceil_max() {
         assert_eq!(div_ceil(i32::MAX, Pow2::from_exponent(30)), 2);
+        assert_eq!(div_ceil(i32::MAX, Pow2::from_exponent(31)), 1);
         assert_eq!(div_ceil(u32::MAX, Pow2::from_exponent(31)), 2);
     }
 
     #[test]
     fn checked_div_ceil_boundary() {
         assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(31)), None);
+        assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div_ceil(0_i32, Pow2::from_exponent(32)), None);
 
         assert_eq!(checked_div_ceil(0_u32, Pow2::from_exponent(31)), Some(0));
         assert_eq!(checked_div_ceil(0_u32, Pow2::from_exponent(32)), None);
@@ -547,6 +553,10 @@ mod tests {
             floor_to_multiple(i32::MIN, Pow2::from_exponent(30)),
             i32::MIN
         );
+        assert_eq!(
+            floor_to_multiple(i32::MIN, Pow2::from_exponent(31)),
+            i32::MIN
+        );
     }
 
     #[test]
@@ -554,6 +564,10 @@ mod tests {
         assert_eq!(
             floor_to_multiple(i32::MAX, Pow2::from_exponent(30)),
             1 << 30
+        );
+        assert_eq!(
+            floor_to_multiple(i32::MAX, Pow2::from_exponent(31)),
+            0
         );
         assert_eq!(
             floor_to_multiple(u32::MAX, Pow2::from_exponent(31)),
@@ -569,6 +583,10 @@ mod tests {
         );
         assert_eq!(
             checked_floor_to_multiple(0_i32, Pow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_floor_to_multiple(0_i32, Pow2::from_exponent(32)),
             None
         );
 
@@ -666,6 +684,20 @@ mod tests {
     }
 
     #[test]
+    fn mod_floor_min() {
+        assert_eq!(mod_floor(i32::MIN, Pow2::from_exponent(2)), 0);
+        assert_eq!(mod_floor(i32::MIN, Pow2::from_exponent(31)), 0);
+    }
+
+    #[test]
+    fn mod_floor_max() {
+        assert_eq!(mod_floor(i32::MAX, Pow2::from_exponent(2)), 3);
+        assert_eq!(mod_floor(i32::MAX, Pow2::from_exponent(31)), i32::MAX);
+        assert_eq!(mod_floor(u32::MAX, Pow2::from_exponent(2)), 3);
+        assert_eq!(mod_floor(u32::MAX, Pow2::from_exponent(31)), i32::MAX as u32);
+    }
+
+    #[test]
     fn mod_floor_i64_negative_is_always_nonnegative() {
         // div_floor(-37, 32) = -64, so mod = -37 - (-64) = 27
         assert_eq!(mod_floor(-37i64, Pow2::from_exponent(5)), 27);
@@ -678,7 +710,8 @@ mod tests {
     #[test]
     fn checked_mod_floor_boundary() {
         assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(31)), None);
+        assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_mod_floor(0_i32, Pow2::from_exponent(32)), None);
 
         assert_eq!(checked_mod_floor(0_u32, Pow2::from_exponent(31)), Some(0));
         assert_eq!(checked_mod_floor(0_u32, Pow2::from_exponent(32)), None);
