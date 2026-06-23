@@ -3,10 +3,14 @@ use std::ops::{Div, DivAssign, Mul, MulAssign};
 
 mod private;
 
+#[repr(transparent)]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
 pub struct Pow2 {
     exponent: u8,
 }
+
+const _: () = assert!(size_of::<Pow2>() == size_of::<u8>());
+const _: () = assert!(align_of::<Pow2>() == align_of::<u8>());
 
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct NotPow2;
