@@ -240,6 +240,26 @@ impl_for_signed!(impl_mul);
 impl_for_unsigned!(impl_mul);
 
 #[inline(always)]
+pub fn checked_div<T>(lhs: T, rhs: Pow2) -> Option<T>
+where
+    T: Int + Div<Pow2, Output = T>,
+{
+    rhs.is_safe::<T::Unsigned>().then(|| lhs / rhs)
+}
+
+#[inline(always)]
+pub fn unbounded_div<T>(lhs: T, rhs: Pow2) -> T
+where
+    T: Int + Div<Pow2, Output = T>,
+{
+    if rhs.is_safe::<T::Unsigned>() {
+        lhs / rhs
+    } else {
+        T::zero()
+    }
+}
+
+#[inline(always)]
 pub fn div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
     debug_assert!(rhs.is_safe::<T::Unsigned>());
     lhs >> rhs.exponent
@@ -775,6 +795,26 @@ mod tests {
         let mut v = u32::MAX;
         v /= Pow2::from_exponent(31);
         assert_eq!(v, 1);
+    }
+
+    #[test]
+    fn checked_div_boundary() {
+        assert_eq!(checked_div(i32::MAX, Pow2::from_exponent(30)), Some(1));
+        assert_eq!(checked_div(i32::MIN, Pow2::from_exponent(30)), Some(-2));
+        assert_eq!(checked_div(123_i32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div(-123_i32, Pow2::from_exponent(31)), Some(0));
+        assert_eq!(checked_div(123_i32, Pow2::from_exponent(32)), None);
+        assert_eq!(checked_div(-123_i32, Pow2::from_exponent(32)), None);
+    }
+
+    #[test]
+    fn unbounded_div_boundary() {
+        assert_eq!(unbounded_div(i32::MAX, Pow2::from_exponent(30)), 1);
+        assert_eq!(unbounded_div(i32::MIN, Pow2::from_exponent(30)), -2);
+        assert_eq!(unbounded_div(123_i32, Pow2::from_exponent(31)), 0);
+        assert_eq!(unbounded_div(-123_i32, Pow2::from_exponent(31)), 0);
+        assert_eq!(unbounded_div(123_i32, Pow2::from_exponent(32)), 0);
+        assert_eq!(unbounded_div(-123_i32, Pow2::from_exponent(32)), 0);
     }
 
     #[test]
