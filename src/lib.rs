@@ -199,6 +199,23 @@ macro_rules! impl_div_unsigned {
 impl_for_signed!(impl_div_signed);
 impl_for_unsigned!(impl_div_unsigned);
 
+macro_rules! impl_mul {
+    ($t:ty) => {
+        impl Mul<Pow2> for $t {
+            type Output = $t;
+
+            #[inline(always)]
+            fn mul(self, other: Pow2) -> $t {
+                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+                self << other.exponent
+            }
+        }
+    };
+}
+
+impl_for_signed!(impl_mul);
+impl_for_unsigned!(impl_mul);
+
 #[inline(always)]
 pub fn div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
     debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -523,6 +540,21 @@ mod tests {
     fn pow2_div_self() {
         let v = Pow2::from_exponent(123);
         assert_eq!(v / v, Pow2::from_exponent(0));
+    }
+
+    #[test]
+    fn mul_one() {
+        assert_eq!(123 * Pow2::from_exponent(0), 123);
+        assert_eq!(-123 * Pow2::from_exponent(0), -123);
+    }
+
+    #[test]
+    fn mul() {
+        assert_eq!(123_i32 * Pow2::from_exponent(15), 123 << 15);
+        assert_eq!(-123_i32 * Pow2::from_exponent(15), -123 << 15);
+        assert_eq!(123_i64 * Pow2::from_exponent(32), 123 << 32);
+        assert_eq!(-123_i64 * Pow2::from_exponent(32), -123 << 32);
+        assert_eq!(123_u64 * Pow2::from_exponent(46), 123 << 46);
     }
 
     #[test]
