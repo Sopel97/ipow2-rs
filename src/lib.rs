@@ -70,6 +70,18 @@ impl Pow2 {
     pub fn is_safe<T: Int>(self) -> bool {
         self.exponent as u32 <= T::safe_shift_bits()
     }
+
+    #[inline(always)]
+    pub fn checked_mul(self, other: Pow2) -> Option<Pow2> {
+        Some(Pow2::from_exponent(
+            self.exponent.checked_add(other.exponent)?,
+        ))
+    }
+
+    #[inline(always)]
+    pub fn saturating_mul(self, other: Pow2) -> Pow2 {
+        Pow2::from_exponent(self.exponent.saturating_add(other.exponent))
+    }
 }
 
 macro_rules! impl_as {
@@ -612,6 +624,30 @@ mod tests {
         let mut new_rhs = rhs;
         new_rhs *= lhs;
         assert_eq!(new_rhs, lhs);
+    }
+
+    #[test]
+    fn pow2_checked_mul_boundary() {
+        assert_eq!(
+            Pow2::from_exponent(254).checked_mul(Pow2::from_exponent(1)),
+            Some(Pow2::from_exponent(255))
+        );
+        assert_eq!(
+            Pow2::from_exponent(254).checked_mul(Pow2::from_exponent(2)),
+            None
+        );
+    }
+
+    #[test]
+    fn pow2_saturating_mul_boundary() {
+        assert_eq!(
+            Pow2::from_exponent(254).saturating_mul(Pow2::from_exponent(1)),
+            Pow2::from_exponent(255)
+        );
+        assert_eq!(
+            Pow2::from_exponent(254).saturating_mul(Pow2::from_exponent(2)),
+            Pow2::from_exponent(255)
+        );
     }
 
     #[test]
