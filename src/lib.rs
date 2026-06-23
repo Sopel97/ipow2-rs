@@ -174,7 +174,8 @@ macro_rules! impl_div_signed {
                 } else {
                     // The mask computation needs to be done as unsigned, because it can overflow
                     // to the sign bit before we subtract one.
-                    let mask = (((1 as <$t as Int>::Unsigned) << other.exponent) - 1) as <$t as Int>::Signed;
+                    let mask = (((1 as <$t as Int>::Unsigned) << other.exponent) - 1)
+                        as <$t as Int>::Signed;
                     (self + mask) >> other.exponent
                 }
             }
@@ -199,6 +200,21 @@ macro_rules! impl_div_unsigned {
 impl_for_signed!(impl_div_signed);
 impl_for_unsigned!(impl_div_unsigned);
 
+macro_rules! impl_div_assign {
+    ($t:ty) => {
+        impl DivAssign<Pow2> for $t {
+            #[inline(always)]
+            fn div_assign(&mut self, other: Pow2) {
+                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+                *self = *self / other;
+            }
+        }
+    };
+}
+
+impl_for_signed!(impl_div_assign);
+impl_for_unsigned!(impl_div_assign);
+
 macro_rules! impl_mul {
     ($t:ty) => {
         impl Mul<Pow2> for $t {
@@ -208,6 +224,13 @@ macro_rules! impl_mul {
             fn mul(self, other: Pow2) -> $t {
                 debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
                 self << other.exponent
+            }
+        }
+
+        impl MulAssign<Pow2> for $t {
+            #[inline(always)]
+            fn mul_assign(&mut self, other: Pow2) {
+                *self = *self * other;
             }
         }
     };
@@ -508,11 +531,37 @@ mod tests {
     }
 
     #[test]
+    fn pow2_mul_assign() {
+        let lhs = Pow2::from_exponent(6);
+        let rhs = Pow2::from_exponent(7);
+        let mut new_lhs = lhs;
+        new_lhs *= rhs;
+        assert_eq!(new_lhs, Pow2::from_exponent(13));
+
+        let mut new_rhs = rhs;
+        new_rhs *= lhs;
+        assert_eq!(new_rhs, Pow2::from_exponent(13));
+    }
+
+    #[test]
     fn pow2_mul_zero() {
         let lhs = Pow2::from_exponent(65);
         let rhs = Pow2::from_exponent(0);
         assert_eq!(lhs * rhs, lhs);
         assert_eq!(rhs * lhs, lhs);
+    }
+
+    #[test]
+    fn pow2_mul_assign_zero() {
+        let lhs = Pow2::from_exponent(65);
+        let rhs = Pow2::from_exponent(0);
+        let mut new_lhs = lhs;
+        new_lhs *= rhs;
+        assert_eq!(new_lhs, lhs);
+
+        let mut new_rhs = rhs;
+        new_rhs *= lhs;
+        assert_eq!(new_rhs, lhs);
     }
 
     #[test]
@@ -523,10 +572,26 @@ mod tests {
     }
 
     #[test]
+    fn pow2_div_assign_positive() {
+        let mut lhs = Pow2::from_exponent(6);
+        let rhs = Pow2::from_exponent(3);
+        lhs /= rhs;
+        assert_eq!(lhs, Pow2::from_exponent(3));
+    }
+
+    #[test]
     fn pow2_div_zero() {
         let lhs = Pow2::from_exponent(3);
         let rhs = Pow2::from_exponent(6);
         assert_eq!(lhs / rhs, Pow2::from_exponent(0));
+    }
+
+    #[test]
+    fn pow2_div_assign_zero() {
+        let mut lhs = Pow2::from_exponent(3);
+        let rhs = Pow2::from_exponent(6);
+        lhs /= rhs;
+        assert_eq!(lhs, Pow2::from_exponent(0));
     }
 
     #[test]
@@ -537,15 +602,42 @@ mod tests {
     }
 
     #[test]
+    fn pow2_div_assign_one() {
+        let lhs = Pow2::from_exponent(3);
+        let rhs = Pow2::from_exponent(0);
+        let mut new_lhs = lhs;
+        new_lhs /= rhs;
+        assert_eq!(new_lhs, lhs);
+    }
+
+    #[test]
     fn pow2_div_self() {
         let v = Pow2::from_exponent(123);
         assert_eq!(v / v, Pow2::from_exponent(0));
     }
 
     #[test]
+    fn pow2_div_assign_self() {
+        let mut v = Pow2::from_exponent(123);
+        v /= v;
+        assert_eq!(v, Pow2::from_exponent(0));
+    }
+
+    #[test]
     fn mul_one() {
         assert_eq!(123 * Pow2::from_exponent(0), 123);
         assert_eq!(-123 * Pow2::from_exponent(0), -123);
+    }
+
+    #[test]
+    fn mul_assign_one() {
+        let mut v = 123;
+        v *= Pow2::from_exponent(0);
+        assert_eq!(v, 123);
+
+        let mut v = -123;
+        v *= Pow2::from_exponent(0);
+        assert_eq!(v, -123);
     }
 
     #[test]
@@ -558,10 +650,48 @@ mod tests {
     }
 
     #[test]
+    fn mul_assign() {
+        let mut v = 123_i32;
+        v *= Pow2::from_exponent(15);
+        assert_eq!(v, 123 << 15);
+
+        let mut v = -123_i32;
+        v *= Pow2::from_exponent(15);
+        assert_eq!(v, -123 << 15);
+
+        let mut v = 123_i64;
+        v *= Pow2::from_exponent(32);
+        assert_eq!(v, 123 << 32);
+
+        let mut v = -123_i64;
+        v *= Pow2::from_exponent(32);
+        assert_eq!(v, -123 << 32);
+
+        let mut v = 123_u64;
+        v *= Pow2::from_exponent(46);
+        assert_eq!(v, 123 << 46);
+    }
+
+    #[test]
     fn div_exact() {
         assert_eq!(32u64 / Pow2::from_exponent(5), 1);
         assert_eq!(64u64 / Pow2::from_exponent(3), 8);
         assert_eq!(-64i64 / Pow2::from_exponent(3), -8);
+    }
+
+    #[test]
+    fn div_assign_exact() {
+        let mut v = 32u64;
+        v /= Pow2::from_exponent(5);
+        assert_eq!(v, 1);
+
+        let mut v = 64u64;
+        v /= Pow2::from_exponent(3);
+        assert_eq!(v, 8);
+
+        let mut v = -64i64;
+        v /= Pow2::from_exponent(3);
+        assert_eq!(v, -8);
     }
 
     #[test]
@@ -573,9 +703,39 @@ mod tests {
     }
 
     #[test]
+    fn div_assign_rounds_towards_zero() {
+        let mut v = 37u64;
+        v /= Pow2::from_exponent(5);
+        assert_eq!(v, 1);
+
+        let mut v = 63u64;
+        v /= Pow2::from_exponent(5);
+        assert_eq!(v, 1);
+
+        let mut v = -37i64;
+        v /= Pow2::from_exponent(5);
+        assert_eq!(v, -1);
+
+        let mut v = -1i64;
+        v /= Pow2::from_exponent(5);
+        assert_eq!(v, 0);
+    }
+
+    #[test]
     fn div_by_one_is_identity() {
         assert_eq!(42i64 / Pow2::from_exponent(0), 42);
         assert_eq!(-42i64 / Pow2::from_exponent(0), -42);
+    }
+
+    #[test]
+    fn div_assign_by_one_is_identity() {
+        let mut v = 42i64;
+        v /= Pow2::from_exponent(0);
+        assert_eq!(v, 42);
+
+        let mut v = -42i64;
+        v /= Pow2::from_exponent(0);
+        assert_eq!(v, -42);
     }
 
     #[test]
@@ -585,10 +745,36 @@ mod tests {
     }
 
     #[test]
+    fn div_assign_min() {
+        let mut v = i32::MIN;
+        v /= Pow2::from_exponent(30);
+        assert_eq!(v, -2);
+
+        let mut v = i32::MIN;
+        v /= Pow2::from_exponent(31);
+        assert_eq!(v, -1);
+    }
+
+    #[test]
     fn div_max() {
         assert_eq!(i32::MAX / Pow2::from_exponent(30), 1);
         assert_eq!(i32::MAX / Pow2::from_exponent(31), 0);
         assert_eq!(u32::MAX / Pow2::from_exponent(31), 1);
+    }
+
+    #[test]
+    fn div_assign_max() {
+        let mut v = i32::MAX;
+        v /= Pow2::from_exponent(30);
+        assert_eq!(v, 1);
+
+        let mut v = i32::MAX;
+        v /= Pow2::from_exponent(31);
+        assert_eq!(v, 0);
+
+        let mut v = u32::MAX;
+        v /= Pow2::from_exponent(31);
+        assert_eq!(v, 1);
     }
 
     #[test]
