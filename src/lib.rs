@@ -82,6 +82,18 @@ impl Pow2 {
     pub fn saturating_mul(self, other: Pow2) -> Pow2 {
         Pow2::from_exponent(self.exponent.saturating_add(other.exponent))
     }
+
+    #[inline(always)]
+    pub fn checked_div(self, other: Pow2) -> Option<Pow2> {
+        Some(Pow2::from_exponent(
+            self.exponent.checked_sub(other.exponent)?,
+        ))
+    }
+
+    #[inline(always)]
+    pub fn saturating_div(self, other: Pow2) -> Pow2 {
+        Pow2::from_exponent(self.exponent.saturating_sub(other.exponent))
+    }
 }
 
 macro_rules! impl_as {
@@ -175,7 +187,7 @@ impl Div for Pow2 {
     type Output = Pow2;
     #[inline(always)]
     fn div(self, other: Pow2) -> Pow2 {
-        Pow2::from_exponent(self.exponent.saturating_sub(other.exponent))
+        Pow2::from_exponent(self.exponent - other.exponent)
     }
 }
 
@@ -183,7 +195,7 @@ impl DivAssign for Pow2 {
     #[allow(clippy::suspicious_arithmetic_impl)]
     #[inline(always)]
     fn div_assign(&mut self, other: Pow2) {
-        self.exponent = self.exponent.saturating_sub(other.exponent);
+        self.exponent -= other.exponent;
     }
 }
 
@@ -666,18 +678,19 @@ mod tests {
     }
 
     #[test]
-    fn pow2_div_zero() {
+    fn pow2_checked_div_overflow() {
         let lhs = Pow2::from_exponent(3);
         let rhs = Pow2::from_exponent(6);
-        assert_eq!(lhs / rhs, Pow2::from_exponent(0));
+        assert_eq!(lhs.checked_div(rhs), None);
+        assert_eq!(rhs.checked_div(lhs), Some(Pow2::from_exponent(3)));
     }
 
     #[test]
-    fn pow2_div_assign_zero() {
-        let mut lhs = Pow2::from_exponent(3);
+    fn pow2_saturating_div_overflow() {
+        let lhs = Pow2::from_exponent(3);
         let rhs = Pow2::from_exponent(6);
-        lhs /= rhs;
-        assert_eq!(lhs, Pow2::from_exponent(0));
+        assert_eq!(lhs.saturating_div(rhs), Pow2::from_exponent(0));
+        assert_eq!(rhs.saturating_div(lhs), Pow2::from_exponent(3));
     }
 
     #[test]
