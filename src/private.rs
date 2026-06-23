@@ -32,8 +32,10 @@ where
     fn min_value() -> Self;
     fn safe_shift_bits() -> u32;
     fn trailing_zeros(self) -> u32;
+    fn leading_zeros(self) -> u32;
     fn is_signed() -> bool;
     fn is_unsigned() -> bool;
+    fn checked_shl(self, rhs: u32) -> Option<Self>;
 }
 
 macro_rules! impl_common_int {
@@ -74,8 +76,18 @@ macro_rules! impl_common_int {
         }
 
         #[inline(always)]
+        fn leading_zeros(self) -> u32 {
+            self.leading_zeros()
+        }
+
+        #[inline(always)]
         fn min_value() -> Self {
             <$t>::MIN
+        }
+        
+        #[inline(always)]
+        fn checked_shl(self, rhs: u32) -> Option<Self> {
+            <$t>::checked_shl(self, rhs)
         }
     };
 }

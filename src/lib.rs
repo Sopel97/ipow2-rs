@@ -261,6 +261,8 @@ macro_rules! impl_mul {
             #[inline(always)]
             fn mul(self, other: Pow2) -> $t {
                 debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+                // Check for overflow.
+                debug_assert!(self == self << other.exponent >> other.exponent);
                 self << other.exponent
             }
         }
@@ -276,6 +278,16 @@ macro_rules! impl_mul {
 
 impl_for_signed!(impl_mul);
 impl_for_unsigned!(impl_mul);
+
+#[inline(always)]
+pub fn checked_mul<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
+    let result = lhs.checked_shl(rhs.exponent as u32)?;
+    if lhs == result >> rhs.exponent {
+        Some(result)
+    } else {
+        None
+    }
+}
 
 #[inline(always)]
 pub fn checked_div<T>(lhs: T, rhs: Pow2) -> Option<T>
@@ -799,6 +811,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn mul_overflow() {
+        let _ = 123_i32 * Pow2::from_exponent(27);
+    }
+
+    #[test]
     fn mul_assign_one() {
         let mut v = 123;
         v *= Pow2::from_exponent(0);
@@ -807,6 +826,14 @@ mod tests {
         let mut v = -123;
         v *= Pow2::from_exponent(0);
         assert_eq!(v, -123);
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn mul_assign_overflow() {
+        let mut lhs = 123_i32;
+        lhs *= Pow2::from_exponent(27);
     }
 
     #[test]
@@ -839,6 +866,18 @@ mod tests {
         let mut v = 123_u64;
         v *= Pow2::from_exponent(46);
         assert_eq!(v, 123 << 46);
+    }
+
+    #[test]
+    fn checked_mul_boundary() {
+        assert_eq!(
+            checked_mul(i32::MAX as u32 + 1, Pow2::from_exponent(1)),
+            None
+        );
+        assert_eq!(
+            checked_mul(i32::MAX as u32, Pow2::from_exponent(1)),
+            Some(u32::MAX - 1)
+        );
     }
 
     #[test]
