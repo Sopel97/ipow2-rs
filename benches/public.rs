@@ -63,7 +63,7 @@ samples_for_int!(u32, false);
 samples_for_int!(u64, false);
 samples_for_int!(u128, false);
 
-const INPUT_SAMPLE_COUNT: usize = 256;
+const INPUT_SAMPLE_COUNT: usize = 1000;
 const DIVAN_SAMPLE_SIZE: u32 = 1000;
 
 const CONST_POW2: Pow2 = Pow2::from_exponent(6);
