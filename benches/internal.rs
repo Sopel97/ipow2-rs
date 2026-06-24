@@ -59,7 +59,7 @@ mod div_ceil {
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = (!(!0u32 << b)) as i64;
-                    let _ = divan::black_box(((a as i64 + mask) >> b) as i32);
+                    divan::black_box(((a as i64 + mask) >> b) as i32);
                 }
             });
     }
@@ -71,7 +71,7 @@ mod div_ceil {
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = ((!0u32 >> 1) >> (31 - b)) as i64;
-                    let _ = divan::black_box(((a as i64 + mask) >> b) as i32);
+                    divan::black_box(((a as i64 + mask) >> b) as i32);
                 }
             });
     }
