@@ -36,6 +36,7 @@ where
     fn checked_shl(self, rhs: u32) -> Option<Self>;
     fn checked_add(self, rhs: Self) -> Option<Self>;
     fn mask(bits: u32) -> Self;
+    fn trailing_zeros(self) -> u32;
 }
 
 macro_rules! impl_common_int {
@@ -83,6 +84,11 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn checked_add(self, rhs: Self) -> Option<Self> {
             <$t>::checked_add(self, rhs)
+        }
+
+        #[inline(always)]
+        fn trailing_zeros(self) -> u32 {
+            self.trailing_zeros()
         }
     };
 }

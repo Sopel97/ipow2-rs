@@ -368,18 +368,12 @@ pub fn unbounded_div_ceil<T: Int>(lhs: T, rhs: Pow2) -> T {
 #[inline(always)]
 pub fn is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
     debug_assert!(rhs.is_safe::<T::Unsigned>());
-    floor_to_multiple(lhs, rhs) == lhs
+    lhs.trailing_zeros() >= rhs.exponent as u32
 }
 
 #[inline(always)]
 pub fn unbounded_is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
-    if !rhs.is_safe::<T::Unsigned>() {
-        lhs.is_zero()
-    } else {
-        // This actually works for signed integers being shifted by `BITS-1` too.
-        // It's important, because we need to check for `Int::MIN`
-        lhs >> rhs.exponent << rhs.exponent == lhs
-    }
+    lhs.is_zero() || lhs.trailing_zeros() >= rhs.exponent as u32
 }
 
 #[inline(always)]
