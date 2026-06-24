@@ -5,31 +5,31 @@ fn main() {
 }
 
 trait MakeSample: Sized {
-    fn make_sample(i: usize) -> (Self, Self);
-    fn make_sample_pow2(i: usize) -> (Self, Pow2);
-    fn make_sample_single(i: usize) -> Self;
-    fn make_rhs() -> Self;
-    fn make_rhs_pow2() -> Pow2;
+    fn make_sample_val_lhs_val_rhs(i: usize) -> (Self, Self);
+    fn make_sample_val_lhs_pow2_rhs(i: usize) -> (Self, Pow2);
+    fn make_sample_val_lhs(i: usize) -> Self;
+    fn make_sample_val_rhs() -> Self;
+    fn make_sample_pow2_rhs() -> Pow2;
 }
 
 macro_rules! samples_for_int {
     ($t:ty, $signed:literal) => {
         impl MakeSample for $t {
-            fn make_sample(i: usize) -> (Self, Self) {
+            fn make_sample_val_lhs_val_rhs(i: usize) -> (Self, Self) {
                 (
-                    Self::make_sample_single(i),
+                    Self::make_sample_val_lhs(i),
                     1 << (i % <$t>::BITS as usize) as u8,
                 )
             }
 
-            fn make_sample_pow2(i: usize) -> (Self, Pow2) {
+            fn make_sample_val_lhs_pow2_rhs(i: usize) -> (Self, Pow2) {
                 (
-                    Self::make_sample_single(i),
+                    Self::make_sample_val_lhs(i),
                     Pow2::from_exponent((i % <$t>::BITS as usize) as u8),
                 )
             }
 
-            fn make_sample_single(i: usize) -> Self {
+            fn make_sample_val_lhs(i: usize) -> Self {
                 if $signed {
                     if i.is_multiple_of(2) {
                         ((<$t>::MIN as i128) / (i + 1) as i128) as Self
@@ -41,11 +41,11 @@ macro_rules! samples_for_int {
                 }
             }
 
-            fn make_rhs_pow2() -> Pow2 {
+            fn make_sample_pow2_rhs() -> Pow2 {
                 Pow2::from_exponent((<$t>::BITS / 3) as u8)
             }
 
-            fn make_rhs() -> Self {
+            fn make_sample_val_rhs() -> Self {
                 1 << (<$t>::BITS / 3)
             }
         }
@@ -73,16 +73,16 @@ macro_rules! const_int {
     };
 }
 
-fn make_inputs_pow2<T: MakeSample>() -> [(T, Pow2); INPUT_SAMPLE_COUNT] {
-    std::array::from_fn(T::make_sample_pow2)
+fn make_samples_val_lhs_pow2_rhs<T: MakeSample>() -> [(T, Pow2); INPUT_SAMPLE_COUNT] {
+    std::array::from_fn(T::make_sample_val_lhs_pow2_rhs)
 }
 
-fn make_inputs<T: MakeSample>() -> [(T, T); INPUT_SAMPLE_COUNT] {
-    std::array::from_fn(T::make_sample)
+fn make_samples_val_lhs_val_rhs<T: MakeSample>() -> [(T, T); INPUT_SAMPLE_COUNT] {
+    std::array::from_fn(T::make_sample_val_lhs_val_rhs)
 }
 
-fn make_inputs_single<T: MakeSample>() -> [T; INPUT_SAMPLE_COUNT] {
-    std::array::from_fn(T::make_sample_single)
+fn make_samples_val_lhs<T: MakeSample>() -> [T; INPUT_SAMPLE_COUNT] {
+    std::array::from_fn(T::make_sample_val_lhs)
 }
 
 macro_rules! make_bench_single {
@@ -90,7 +90,7 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_inputs_pow2::<$t>())
+                .with_inputs(|| make_samples_val_lhs_pow2_rhs::<$t>())
                 .bench_values(|inputs| {
                     for (a, b) in inputs {
                         divan::black_box($block(a, b));
@@ -103,12 +103,7 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(||
-                    (
-                        make_inputs_single::<$t>(),
-                        <$t>::make_rhs_pow2(),
-                    )
-                )
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_sample_pow2_rhs()))
                 .bench_values(|(inputs, b)| {
                     for a in inputs {
                         divan::black_box($block(a, b));
@@ -121,12 +116,7 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(||
-                    (
-                        make_inputs_single::<$t>(),
-                        <$t>::make_rhs(),
-                    )
-                )
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_sample_val_rhs()))
                 .bench_values(|(inputs, b)| {
                     for a in inputs {
                         divan::black_box($block(a, b));
@@ -139,7 +129,7 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_inputs::<$t>())
+                .with_inputs(|| make_samples_val_lhs_val_rhs::<$t>())
                 .bench_values(|inputs| {
                     for (a, b) in inputs {
                         divan::black_box($block(a, b));
@@ -152,7 +142,7 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_inputs_single::<$t>())
+                .with_inputs(|| make_samples_val_lhs::<$t>())
                 .bench_values(|inputs| {
                     for a in inputs {
                         divan::black_box($block(a));
@@ -219,63 +209,67 @@ macro_rules! make_bench_for_all_ints {
 mod div {
     use super::*;
 
+    #[rustfmt::skip]
     make_bench_for_all_ints!(
-        pow2_div_floor: for_pow2 => |a, b| ipow2::div_floor(a, b),
-        pow2_div_floor_const: for_const => |a| ipow2::div_floor(a, CONST_POW2),
-        pow2_div_floor_reuse: for_pow2_reuse => |a, b| ipow2::div_floor(a, b),
-        pow2_div_ceil: for_pow2 => |a, b| ipow2::div_ceil(a, b),
-        pow2_div_ceil_const: for_const => |a| ipow2::div_ceil(a, CONST_POW2),
-        pow2_div_ceil_reuse: for_pow2_reuse => |a, b| ipow2::div_ceil(a, b),
-        pow2_div: for_pow2 => |a, b| a / b,
-        pow2_div_const: for_const => |a| a / CONST_POW2,
-        pow2_div_reuse: for_pow2_reuse => |a, b| a / b,
-        std_div: for_std => |a, b| a / b,
-        std_div_const: for_const => |a| a / const_int!(),
-        std_div_reuse: for_std_reuse => |a, b| a / b,
+        pow2_div_floor       : for_pow2       => |a, b| ipow2::div_floor(a, b),
+        pow2_div_floor_const : for_const      => |a|    ipow2::div_floor(a, CONST_POW2),
+        pow2_div_floor_reuse : for_pow2_reuse => |a, b| ipow2::div_floor(a, b),
+        pow2_div_ceil        : for_pow2       => |a, b| ipow2::div_ceil(a, b),
+        pow2_div_ceil_const  : for_const      => |a|    ipow2::div_ceil(a, CONST_POW2),
+        pow2_div_ceil_reuse  : for_pow2_reuse => |a, b| ipow2::div_ceil(a, b),
+        pow2_div             : for_pow2       => |a, b| a / b,
+        pow2_div_const       : for_const      => |a|    a / CONST_POW2,
+        pow2_div_reuse       : for_pow2_reuse => |a, b| a / b,
+        std_div              : for_std        => |a, b| a / b,
+        std_div_const        : for_const      => |a|    a / const_int!(),
+        std_div_reuse        : for_std_reuse  => |a, b| a / b,
     );
 }
 
 mod mul {
     use super::*;
 
+    #[rustfmt::skip]
     make_bench_for_all_ints!(
-        pow2_mul: for_pow2 => |a, b| a * b,
-        pow2_mul_const: for_const => |a| a * CONST_POW2,
-        pow2_mul_reuse: for_pow2_reuse => |a, b| a * b,
-        std_mul: for_std => |a, b| a * b,
-        std_mul_const: for_const => |a| a * const_int!(),
-        std_mul_reuse: for_std_reuse => |a, b| a * b,
+        pow2_mul       : for_pow2       => |a, b| a * b,
+        pow2_mul_const : for_const      => |a|    a * CONST_POW2,
+        pow2_mul_reuse : for_pow2_reuse => |a, b| a * b,
+        std_mul        : for_std        => |a, b| a * b,
+        std_mul_const  : for_const      => |a|    a * const_int!(),
+        std_mul_reuse  : for_std_reuse  => |a, b| a * b,
     );
 }
 
 mod round {
     use super::*;
 
+    #[rustfmt::skip]
     make_bench_for_all_ints!(
-        pow2_floor_to_multiple: for_pow2 => |a, b| ipow2::floor_to_multiple(a, b),
-        pow2_floor_to_multiple_const: for_const => |a| ipow2::floor_to_multiple(a, CONST_POW2),
-        pow2_floor_to_multiple_reuse: for_pow2_reuse => |a, b| ipow2::floor_to_multiple(a, b),
-        pow2_ceil_to_multiple: for_pow2 => |a, b| ipow2::ceil_to_multiple(a, b),
-        pow2_ceil_to_multiple_const: for_const => |a| ipow2::ceil_to_multiple(a, CONST_POW2),
-        pow2_ceil_to_multiple_reuse: for_pow2_reuse => |a, b| ipow2::ceil_to_multiple(a, b),
-        std_div_mul: for_std => |a, b| a / b * b,
-        std_div_mul_const: for_const => |a| a / const_int!() * const_int!(),
-        std_div_mul_reuse: for_std_reuse => |a, b| a / b * b,
+        pow2_floor_to_multiple       : for_pow2       => |a, b| ipow2::floor_to_multiple(a, b),
+        pow2_floor_to_multiple_const : for_const      => |a|    ipow2::floor_to_multiple(a, CONST_POW2),
+        pow2_floor_to_multiple_reuse : for_pow2_reuse => |a, b| ipow2::floor_to_multiple(a, b),
+        pow2_ceil_to_multiple        : for_pow2       => |a, b| ipow2::ceil_to_multiple(a, b),
+        pow2_ceil_to_multiple_const  : for_const      => |a|    ipow2::ceil_to_multiple(a, CONST_POW2),
+        pow2_ceil_to_multiple_reuse  : for_pow2_reuse => |a, b| ipow2::ceil_to_multiple(a, b),
+        std_div_mul                  : for_std        => |a, b| a / b * b,
+        std_div_mul_const            : for_const      => |a|    a / const_int!() * const_int!(),
+        std_div_mul_reuse            : for_std_reuse  => |a, b| a / b * b,
     );
 }
 
 mod modulo {
     use super::*;
 
+    #[rustfmt::skip]
     make_bench_for_all_ints!(
-        pow2_is_multiple_of: for_pow2 => |a, b| ipow2::is_multiple_of(a, b),
-        pow2_is_multiple_of_const: for_const => |a| ipow2::is_multiple_of(a, CONST_POW2),
-        pow2_is_multiple_of_reuse: for_pow2_reuse => |a, b| ipow2::is_multiple_of(a, b),
-        pow2_mod_floor: for_pow2 => |a, b| ipow2::mod_floor(a, b),
-        pow2_mod_floor_const: for_const => |a| ipow2::mod_floor(a, CONST_POW2),
-        pow2_mod_floor_reuse: for_pow2_reuse => |a, b| ipow2::mod_floor(a, b),
-        std_mod: for_std => |a, b| a % b,
-        std_mod_const: for_const => |a| a % const_int!(),
-        std_mod_reuse: for_std_reuse => |a, b| a % b,
+        pow2_is_multiple_of       : for_pow2       => |a, b| ipow2::is_multiple_of(a, b),
+        pow2_is_multiple_of_const : for_const      => |a|    ipow2::is_multiple_of(a, CONST_POW2),
+        pow2_is_multiple_of_reuse : for_pow2_reuse => |a, b| ipow2::is_multiple_of(a, b),
+        pow2_mod_floor            : for_pow2       => |a, b| ipow2::mod_floor(a, b),
+        pow2_mod_floor_const      : for_const      => |a|    ipow2::mod_floor(a, CONST_POW2),
+        pow2_mod_floor_reuse      : for_pow2_reuse => |a, b| ipow2::mod_floor(a, b),
+        std_mod                   : for_std        => |a, b| a % b,
+        std_mod_const             : for_const      => |a|    a % const_int!(),
+        std_mod_reuse             : for_std_reuse  => |a, b| a % b,
     );
 }
