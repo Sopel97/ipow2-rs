@@ -342,11 +342,16 @@ pub fn checked_mod_floor<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
 #[inline(always)]
 pub fn div_ceil<T: Int>(lhs: T, rhs: Pow2) -> T {
     debug_assert!(rhs.is_safe::<T::Unsigned>());
-    // Can't use a faster implementation with a mask due to possible overflow
-    // of the intermediate `a + mask`
-    let floored = div_floor(lhs, rhs);
-    let rem = lhs - (floored << rhs.exponent);
-    floored + T::from_bool(rem.is_not_zero())
+    if T::is_smaller_than_isize() {
+        let mask = (1_isize << rhs.exponent) - 1;
+        T::from_isize((lhs.as_isize() + mask) >> rhs.exponent)
+    } else {
+        // Can't use a faster implementation with a mask due to possible overflow
+        // of the intermediate `a + mask`
+        let floored = div_floor(lhs, rhs);
+        let rem = lhs - (floored << rhs.exponent);
+        floored + T::from_bool(rem.is_not_zero())
+    }
 }
 
 #[inline(always)]
@@ -1144,6 +1149,8 @@ mod tests {
     fn div_ceil_min() {
         assert_eq!(div_ceil(i32::MIN, Pow2::from_exponent(30)), -2);
         assert_eq!(div_ceil(i32::MIN, Pow2::from_exponent(31)), -1);
+        assert_eq!(div_ceil(i64::MIN, Pow2::from_exponent(62)), -2);
+        assert_eq!(div_ceil(i64::MIN, Pow2::from_exponent(63)), -1);
     }
 
     #[test]
@@ -1151,6 +1158,9 @@ mod tests {
         assert_eq!(div_ceil(i32::MAX, Pow2::from_exponent(30)), 2);
         assert_eq!(div_ceil(i32::MAX, Pow2::from_exponent(31)), 1);
         assert_eq!(div_ceil(u32::MAX, Pow2::from_exponent(31)), 2);
+        assert_eq!(div_ceil(i64::MAX, Pow2::from_exponent(62)), 2);
+        assert_eq!(div_ceil(i64::MAX, Pow2::from_exponent(63)), 1);
+        assert_eq!(div_ceil(u64::MAX, Pow2::from_exponent(63)), 2);
     }
 
     #[test]

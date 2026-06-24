@@ -37,6 +37,9 @@ where
     fn checked_add(self, rhs: Self) -> Option<Self>;
     fn mask(bits: u32) -> Self;
     fn trailing_zeros(self) -> u32;
+    fn is_smaller_than_isize() -> bool;
+    fn from_isize(val: isize) -> Self;
+    fn as_isize(self) -> isize;
 }
 
 macro_rules! impl_common_int {
@@ -89,6 +92,21 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn trailing_zeros(self) -> u32 {
             self.trailing_zeros()
+        }
+
+        #[inline(always)]
+        fn is_smaller_than_isize() -> bool {
+            <$t>::BITS < isize::BITS
+        }
+
+        #[inline(always)]
+        fn from_isize(val: isize) -> Self {
+            val as Self
+        }
+
+        #[inline(always)]
+        fn as_isize(self) -> isize {
+            self as isize
         }
     };
 }
