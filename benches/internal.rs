@@ -2,19 +2,31 @@
     divan::main();
 }
 
-fn make_inputs() -> [(i32, u8); 256] {
+fn make_inputs_i16() -> [(i16, u8); 256] {
+    let inputs: [(i16, u8); 256] =
+        std::array::from_fn(|i| (1231i16 + i as i16, 1u8 + (i % 13) as u8));
+    inputs
+}
+
+fn make_inputs_i32() -> [(i32, u8); 256] {
     let inputs: [(i32, u8); 256] =
         std::array::from_fn(|i| (123123123i32 + i as i32, 1u8 + (i % 13) as u8));
     inputs
 }
 
+fn make_inputs_i64() -> [(i64, u8); 256] {
+    let inputs: [(i64, u8); 256] =
+        std::array::from_fn(|i| (123123123123123i64 + i as i64, 1u8 + (i % 13) as u8));
+    inputs
+}
+
 mod ceil_to_multiple {
-    use crate::make_inputs;
+    use crate::make_inputs_i32;
 
     #[divan::bench]
     fn ceil_to_multiple_mask(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = ((1u32 << b) - 1) as i32;
@@ -26,7 +38,7 @@ mod ceil_to_multiple {
     #[divan::bench]
     fn ceil_to_multiple_no_mask(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let floored = a >> b;
@@ -38,12 +50,12 @@ mod ceil_to_multiple {
 }
 
 mod div_ceil {
-    use crate::make_inputs;
+    use crate::{make_inputs_i16, make_inputs_i32, make_inputs_i64};
 
     #[divan::bench]
-    fn div_ceil_mask_a(bencher: divan::Bencher) {
+    fn div_ceil_mask_a_i32_via_i64(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = (!(!0u32 << b)) as i64;
@@ -53,9 +65,9 @@ mod div_ceil {
     }
 
     #[divan::bench]
-    fn div_ceil_mask_b(bencher: divan::Bencher) {
+    fn div_ceil_mask_b_i32_via_i64(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = ((!0u32 >> 1) >> (31 - b)) as i64;
@@ -65,9 +77,21 @@ mod div_ceil {
     }
 
     #[divan::bench]
-    fn div_ceil_mask_c(bencher: divan::Bencher) {
+    fn div_ceil_mask_c_i16_via_i64(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i16())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let mask = (1 << b) - 1;
+                    divan::black_box(((a as i64 + mask) >> b) as i16);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_ceil_mask_c_i32_via_i64(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = (1 << b) - 1;
@@ -77,26 +101,51 @@ mod div_ceil {
     }
 
     #[divan::bench]
-    fn div_ceil_no_mask(bencher: divan::Bencher) {
+    fn div_ceil_mask_c_i64_via_i128(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let mask = (1 << b) - 1;
+                    divan::black_box(((a as i128 + mask) >> b) as i64);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_ceil_no_mask_i16(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i16())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let floored = a >> b;
                     let rem = a - (floored << b);
-                    divan::black_box(floored + (rem != 0) as i32);
+                    divan::black_box(floored + (rem != 0) as i16);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_ceil_no_mask_i64(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let floored = a >> b;
+                    let rem = a - (floored << b);
+                    divan::black_box(floored + (rem != 0) as i64);
                 }
             });
     }
 }
 
 mod floor_to_multiple {
-    use crate::make_inputs;
+    use crate::make_inputs_i32;
 
     #[divan::bench]
     fn floor_to_multiple_mask(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = ((1u32 << b) - 1) as i32;
@@ -108,7 +157,7 @@ mod floor_to_multiple {
     #[divan::bench]
     fn floor_to_multiple_no_mask(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     divan::black_box(a >> b << b);
@@ -118,12 +167,12 @@ mod floor_to_multiple {
 }
 
 mod is_multiple_of {
-    use crate::make_inputs;
+    use crate::make_inputs_i32;
 
     #[divan::bench]
     fn is_multiple_of_mask(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let mask = ((1u32 << b) - 1) as i32;
@@ -135,7 +184,7 @@ mod is_multiple_of {
     #[divan::bench]
     fn is_multiple_of_via_floor_to_multiple(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     divan::black_box(a << b >> b == a);
@@ -146,7 +195,7 @@ mod is_multiple_of {
     #[divan::bench]
     fn is_multiple_of_via_tzc(bencher: divan::Bencher) {
         bencher
-            .with_inputs(|| make_inputs())
+            .with_inputs(|| make_inputs_i32())
             .bench_values(|inputs| {
                 for (a, b) in inputs {
                     let tzc = a.trailing_zeros();
