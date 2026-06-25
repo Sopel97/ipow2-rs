@@ -16,8 +16,8 @@ where
         + Not<Output = Self>
         + BitAnd<Output = Self>,
 {
-    type Signed: Int;
-    type Unsigned: Int;
+    type Signed: SignedInt;
+    type Unsigned: UnsignedInt;
 
     const BITS: u32;
 
@@ -49,6 +49,24 @@ where
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
     unsafe fn unchecked_shl(self, rhs: u32) -> Self;
 }
+
+pub trait UnsignedInt: Int {}
+
+impl UnsignedInt for u8 {}
+impl UnsignedInt for u16 {}
+impl UnsignedInt for u32 {}
+impl UnsignedInt for u64 {}
+impl UnsignedInt for u128 {}
+impl UnsignedInt for usize {}
+
+pub trait SignedInt: Int {}
+
+impl SignedInt for i8 {}
+impl SignedInt for i16 {}
+impl SignedInt for i32 {}
+impl SignedInt for i64 {}
+impl SignedInt for i128 {}
+impl SignedInt for isize {}
 
 macro_rules! impl_common_int {
     ($t:ty) => {
@@ -283,7 +301,7 @@ impl_int!(usize, isize);
 
 pub trait IntAtLeastAsWide<T>: Int
 where
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
 }
 

@@ -6,7 +6,7 @@ mod private;
 
 // Expose the private Int trait as API to allow users to specify generic bounds.
 pub use crate::private::Int;
-use crate::private::IntAtLeastAsWide;
+pub use crate::private::{IntAtLeastAsWide, UnsignedInt};
 
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
@@ -215,8 +215,17 @@ const _: () = assert!(align_of::<SafePow2<u128>>() == align_of::<u8>());
 
 impl<T> SafePow2<T>
 where
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
+    pub const VAL_1: Self = Self { exponent: 0, _marker: marker::PhantomData };
+    pub const VAL_2: Self = Self { exponent: 1, _marker: marker::PhantomData };
+    pub const VAL_4: Self = Self { exponent: 2, _marker: marker::PhantomData };
+    pub const VAL_8: Self = Self { exponent: 3, _marker: marker::PhantomData };
+    pub const VAL_16: Self = Self { exponent: 4, _marker: marker::PhantomData };
+    pub const VAL_32: Self = Self { exponent: 5, _marker: marker::PhantomData };
+    pub const VAL_64: Self = Self { exponent: 6, _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7, _marker: marker::PhantomData };
+    
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> Result<Self, Pow2OutOfRange> {
         if exponent as u32 >= T::BITS {
@@ -297,7 +306,7 @@ impl<T> From<SafePow2<T>> for Pow2 {
 
 impl<T> TryFrom<Pow2> for SafePow2<T>
 where
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Error = Pow2OutOfRange;
 
@@ -341,7 +350,7 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    <T> Div<SafePow2<T>> where { T: Int<Unsigned = T> },
+    <T> Div<SafePow2<T>> where { T: UnsignedInt },
     signed_body {
         type Output = Self;
 
@@ -380,7 +389,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> DivAssign<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+    <T> DivAssign<SafePow2<T>> where { T: UnsignedInt } => {
         #[inline(always)]
         fn div_assign(&mut self, other: SafePow2<T>) {
             *self = *self / other;
@@ -403,7 +412,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> Mul<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+    <T> Mul<SafePow2<T>> where { T: UnsignedInt } => {
         type Output = Self;
 
         #[inline(always)]
@@ -426,7 +435,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> MulAssign<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+    <T> MulAssign<SafePow2<T>> where { T: UnsignedInt } => {
         #[inline(always)]
         fn mul_assign(&mut self, other: SafePow2<T>) {
             *self = *self * other;
@@ -470,7 +479,7 @@ where
 impl<L, T> CheckedMul<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Option<Self>;
 
@@ -537,7 +546,7 @@ where
 impl<L, T> DivFloor<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Self;
 
@@ -600,7 +609,7 @@ where
 impl<L, T> ModFloor<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Self;
 
@@ -651,7 +660,7 @@ where
 impl<L, T> DivCeil<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Self;
 
@@ -724,7 +733,7 @@ where
 impl<L, T> IsMultipleOf<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = bool;
 
@@ -765,7 +774,7 @@ where
 impl<L, T> FloorToMultiple<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Self;
 
@@ -844,7 +853,7 @@ where
 impl<L, T> CeilToMultiple<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Self;
 
@@ -880,7 +889,7 @@ where
 impl<L, T> CheckedCeilToMultiple<SafePow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
-    T: Int<Unsigned = T>,
+    T: UnsignedInt,
 {
     type Output = Option<Self>;
 
