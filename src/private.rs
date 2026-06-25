@@ -274,6 +274,12 @@ macro_rules! impl_trait_signed_unsigned {
     };
 }
 
+macro_rules! impl_trait_all_ints {
+    ($trait:ty => $body:tt) => {
+        impl_trait_signed_unsigned!($trait, signed_body $body, unsigned_body $body);
+    };
+}
+
 macro_rules! impl_for_signed {
     ($m:ident) => {
         $m!(i8);

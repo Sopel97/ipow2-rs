@@ -228,46 +228,38 @@ impl_trait_signed_unsigned!(
     }
 );
 
-macro_rules! impl_div_assign {
-    ($t:ty) => {
-        impl DivAssign<Pow2> for $t {
-            #[inline(always)]
-            fn div_assign(&mut self, other: Pow2) {
-                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
-                *self = *self / other;
-            }
+impl_trait_all_ints!(
+    DivAssign<Pow2> => {
+        #[inline(always)]
+        fn div_assign(&mut self, other: Pow2) {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            *self = *self / other;
         }
-    };
-}
+    }
+);
 
-impl_for_signed!(impl_div_assign);
-impl_for_unsigned!(impl_div_assign);
+impl_trait_all_ints!(
+    Mul<Pow2> => {
+        type Output = Self;
 
-macro_rules! impl_mul {
-    ($t:ty) => {
-        impl Mul<Pow2> for $t {
-            type Output = $t;
-
-            #[inline(always)]
-            fn mul(self, other: Pow2) -> $t {
-                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
-                // Check for overflow.
-                debug_assert!(self == self << other.exponent >> other.exponent);
-                self << other.exponent
-            }
+        #[inline(always)]
+        fn mul(self, other: Pow2) -> Self {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            // Check for overflow.
+            debug_assert!(self == self << other.exponent >> other.exponent);
+            self << other.exponent
         }
+    }
+);
 
-        impl MulAssign<Pow2> for $t {
-            #[inline(always)]
-            fn mul_assign(&mut self, other: Pow2) {
-                *self = *self * other;
-            }
+impl_trait_all_ints!(
+    MulAssign<Pow2> => {
+        #[inline(always)]
+        fn mul_assign(&mut self, other: Pow2) {
+            *self = *self * other;
         }
-    };
-}
-
-impl_for_signed!(impl_mul);
-impl_for_unsigned!(impl_mul);
+    }
+);
 
 macro_rules! make_func_trait {
     ($trait_name:ident, $func_name:ident) => {
