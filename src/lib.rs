@@ -6,6 +6,7 @@ mod private;
 
 // Expose the private Int trait as API to allow users to specify generic bounds.
 pub use crate::private::Int;
+use crate::private::IntAtLeastAsWide;
 
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
@@ -337,11 +338,45 @@ impl_trait_signed_unsigned!(
     }
 );
 
+impl_generic_trait_signed_unsigned!(
+    <T> Div<SafePow2<T>> where { T: Int<Unsigned = T> },
+    signed_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn div(self, other: SafePow2<T>) -> Self {
+            if self >= 0 {
+                self >> other.exponent
+            } else {
+                let mask = <Self as Int>::mask(other.exponent as u32);
+                (self + mask) >> other.exponent
+            }
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn div(self, other: SafePow2<T>) -> Self {
+            self >> other.exponent
+        }
+    }
+);
+
 impl_trait_all_ints!(
     DivAssign<Pow2> => {
         #[inline(always)]
         fn div_assign(&mut self, other: Pow2) {
             debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            *self = *self / other;
+        }
+    }
+);
+
+impl_generic_trait_all_ints!(
+    <T> DivAssign<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+        #[inline(always)]
+        fn div_assign(&mut self, other: SafePow2<T>) {
             *self = *self / other;
         }
     }
@@ -361,10 +396,32 @@ impl_trait_all_ints!(
     }
 );
 
+impl_generic_trait_all_ints!(
+    <T> Mul<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+        type Output = Self;
+
+        #[inline(always)]
+        fn mul(self, other: SafePow2<T>) -> Self {
+            // Check for overflow.
+            debug_assert!(self == self << other.exponent >> other.exponent);
+            self << other.exponent
+        }
+    }
+);
+
 impl_trait_all_ints!(
     MulAssign<Pow2> => {
         #[inline(always)]
         fn mul_assign(&mut self, other: Pow2) {
+            *self = *self * other;
+        }
+    }
+);
+
+impl_generic_trait_all_ints!(
+    <T> MulAssign<SafePow2<T>> where { T: Int<Unsigned = T> } => {
+        #[inline(always)]
+        fn mul_assign(&mut self, other: SafePow2<T>) {
             *self = *self * other;
         }
     }
@@ -395,6 +452,24 @@ where
     #[inline(always)]
     fn checked_mul(self, rhs: Pow2) -> Self::Output {
         let result = self.checked_shl(rhs.exponent as u32)?;
+        if self == result >> rhs.exponent {
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
+impl<L, T> CheckedMul<SafePow2<T>> for L
+where
+    L: IntAtLeastAsWide<T>,
+    T: Int<Unsigned = T>,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_mul(self, rhs: SafePow2<T>) -> Self::Output {
+        let result = self << rhs.exponent;
         if self == result >> rhs.exponent {
             Some(result)
         } else {
@@ -1248,6 +1323,29 @@ mod tests {
     }
 
     #[test]
+    fn safe_checked_mul_boundary() {
+        assert_eq!(
+            checked_mul(i32::MAX as u32 + 1, SafePow2::<u32>::from_exponent(1).unwrap()),
+            None
+        );
+        assert_eq!(
+            checked_mul(i32::MAX as u32 + 1, SafePow2::<u8>::from_exponent(1).unwrap()),
+            None
+        );
+        assert_eq!(
+            checked_mul(i32::MAX as u32, SafePow2::<u32>::from_exponent(1).unwrap()),
+            Some(u32::MAX - 1)
+        );
+
+        /* // Should not compile.
+        assert_eq!(
+            checked_mul(i32::MAX as u32, SafePow2::<u64>::from_exponent(1).unwrap()),
+            Some(u32::MAX - 1)
+        );
+        */
+    }
+
+    #[test]
     fn div_exact() {
         assert_eq!(32u64 / Pow2::from_exponent(5), 1);
         assert_eq!(64u64 / Pow2::from_exponent(3), 8);
@@ -1292,6 +1390,14 @@ mod tests {
     }
 
     #[test]
+    fn safe_div_rounds_towards_zero() {
+        assert_eq!(37u64 / SafePow2::<u8>::from_exponent(5).unwrap(), 1);
+        assert_eq!(63u64 / SafePow2::<u8>::from_exponent(5).unwrap(), 1);
+        assert_eq!(-37i64 / SafePow2::<u8>::from_exponent(5).unwrap(), -1);
+        assert_eq!(-1i64 / SafePow2::<u8>::from_exponent(5).unwrap(), 0);
+    }
+
+    #[test]
     fn div_assign_rounds_towards_zero() {
         let mut v = 37u64;
         v /= Pow2::from_exponent(5);
@@ -1307,6 +1413,25 @@ mod tests {
 
         let mut v = -1i64;
         v /= Pow2::from_exponent(5);
+        assert_eq!(v, 0);
+    }
+
+    #[test]
+    fn safe_div_assign_rounds_towards_zero() {
+        let mut v = 37u64;
+        v /= SafePow2::<u8>::from_exponent(5).unwrap();
+        assert_eq!(v, 1);
+
+        let mut v = 63u64;
+        v /= SafePow2::<u8>::from_exponent(5).unwrap();
+        assert_eq!(v, 1);
+
+        let mut v = -37i64;
+        v /= SafePow2::<u8>::from_exponent(5).unwrap();
+        assert_eq!(v, -1);
+
+        let mut v = -1i64;
+        v /= SafePow2::<u8>::from_exponent(5).unwrap();
         assert_eq!(v, 0);
     }
 

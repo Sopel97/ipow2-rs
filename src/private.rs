@@ -18,7 +18,7 @@ where
 {
     type Signed: Int;
     type Unsigned: Int;
-    
+
     const BITS: u32;
 
     fn is_power_of_two(self) -> bool;
@@ -51,7 +51,7 @@ where
 macro_rules! impl_common_int {
     ($t:ty) => {
         const BITS: u32 = <$t>::BITS;
-        
+
         #[inline(always)]
         fn ilog2(self) -> u32 {
             self.ilog2()
@@ -260,6 +260,41 @@ impl_int!(u64, i64);
 impl_int!(u128, i128);
 impl_int!(usize, isize);
 
+pub trait IntAtLeastAsWide<T>: Int
+where
+    T: Int<Unsigned = T>,
+{
+}
+
+macro_rules! impl_int_at_least_as_wide {
+    ($u:ty => [$($t:ty),*]) => {
+        $(impl IntAtLeastAsWide<$u> for $t {})*
+    };
+}
+
+impl_int_at_least_as_wide!(u8 => [i8, u8, i16, u16, i32, u32, i64, u64, i128, u128, isize, usize]);
+impl_int_at_least_as_wide!(u16 => [i16, u16, i32, u32, i64, u64, i128, u128, isize, usize]);
+
+#[cfg(target_pointer_width = "16")]
+impl_int_at_least_as_wide!(u32 => [i32, u32, i64, u64, i128, u128]);
+
+#[cfg(target_pointer_width = "32")]
+impl_int_at_least_as_wide!(u32 => [i32, u32, i64, u64, i128, u128, isize, usize]);
+
+#[cfg(target_pointer_width = "64")]
+impl_int_at_least_as_wide!(u32 => [i32, u32, i64, u64, i128, u128, isize, usize]);
+
+#[cfg(target_pointer_width = "16")]
+impl_int_at_least_as_wide!(u64 => [i64, u64, i128, u128]);
+
+#[cfg(target_pointer_width = "32")]
+impl_int_at_least_as_wide!(u64 => [i64, u64, i128, u128]);
+
+#[cfg(target_pointer_width = "64")]
+impl_int_at_least_as_wide!(u64 => [i64, u64, i128, u128, isize, usize]);
+
+impl_int_at_least_as_wide!(u128 => [i128, u128]);
+
 macro_rules! impl_trait_signed_unsigned {
     ($trait:ty, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
         impl $trait for u8  $unsigned_body
@@ -278,8 +313,32 @@ macro_rules! impl_trait_signed_unsigned {
     };
 }
 
+macro_rules! impl_generic_trait_signed_unsigned {
+    (<$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ }, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
+        impl<$($gen_t),*> $trait for u8 where $($wc)+ $unsigned_body
+        impl<$($gen_t),*> $trait for u16 where $($wc)+ $unsigned_body
+        impl<$($gen_t),*> $trait for u32 where $($wc)+ $unsigned_body
+        impl<$($gen_t),*> $trait for u64 where $($wc)+ $unsigned_body
+        impl<$($gen_t),*> $trait for u128 where $($wc)+ $unsigned_body
+        impl<$($gen_t),*> $trait for usize where $($wc)+ $unsigned_body
+
+        impl<$($gen_t),*> $trait for i8 where $($wc)+ $signed_body
+        impl<$($gen_t),*> $trait for i16 where $($wc)+ $signed_body
+        impl<$($gen_t),*> $trait for i32 where $($wc)+ $signed_body
+        impl<$($gen_t),*> $trait for i64 where $($wc)+ $signed_body
+        impl<$($gen_t),*> $trait for i128 where $($wc)+ $signed_body
+        impl<$($gen_t),*> $trait for isize where $($wc)+ $signed_body
+    };
+}
+
 macro_rules! impl_trait_all_ints {
     ($trait:ty => $body:tt) => {
         impl_trait_signed_unsigned!($trait, signed_body $body, unsigned_body $body);
+    };
+}
+
+macro_rules! impl_generic_trait_all_ints {
+    (<$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ } => $body:tt) => {
+        impl_generic_trait_signed_unsigned!(<$($gen_t),*> $trait where { $($wc)+ }, signed_body $body, unsigned_body $body);
     };
 }
