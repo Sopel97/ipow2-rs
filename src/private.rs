@@ -82,7 +82,7 @@ macro_rules! impl_common_int {
         fn min_value() -> Self {
             <$t>::MIN
         }
-        
+
         #[inline(always)]
         fn checked_shl(self, rhs: u32) -> Option<Self> {
             <$t>::checked_shl(self, rhs)
@@ -278,26 +278,4 @@ macro_rules! impl_trait_all_ints {
     ($trait:ty => $body:tt) => {
         impl_trait_signed_unsigned!($trait, signed_body $body, unsigned_body $body);
     };
-}
-
-macro_rules! impl_for_signed {
-    ($m:ident) => {
-        $m!(i8);
-        $m!(i16);
-        $m!(i32);
-        $m!(i64);
-        $m!(i128);
-        $m!(isize);
-    }
-}
-
-macro_rules! impl_for_unsigned {
-    ($m:ident) => {
-        $m!(u8);
-        $m!(u16);
-        $m!(u32);
-        $m!(u64);
-        $m!(u128);
-        $m!(usize);
-    }
 }
