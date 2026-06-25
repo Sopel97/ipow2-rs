@@ -38,6 +38,7 @@ where
     fn checked_shl(self, rhs: u32) -> Option<Self>;
     fn checked_add(self, rhs: Self) -> Option<Self>;
     fn mask(bits: u32) -> Self;
+    unsafe fn unchecked_mask(bits: u32) -> Self;
     fn trailing_zeros(self) -> u32;
     fn is_smaller_than_isize() -> bool;
     fn from_isize(val: isize) -> Self;
@@ -46,6 +47,7 @@ where
     fn from_i32(val: i32) -> Self;
     fn as_i32(self) -> i32;
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
+    unsafe fn unchecked_shl(self, rhs: u32) -> Self;
 }
 
 macro_rules! impl_common_int {
@@ -136,6 +138,11 @@ macro_rules! impl_common_int {
         unsafe fn unchecked_shr(self, rhs: u32) -> Self {
             unsafe { self.unchecked_shr(rhs) }
         }
+
+        #[inline(always)]
+        unsafe fn unchecked_shl(self, rhs: u32) -> Self {
+            unsafe { self.unchecked_shl(rhs) }
+        }
     };
 }
 
@@ -182,6 +189,12 @@ macro_rules! impl_uint {
         fn mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::safe_shift_bits());
             (1 << bits) - 1
+        }
+
+        #[inline(always)]
+        unsafe fn unchecked_mask(bits: u32) -> Self {
+            debug_assert!(bits <= Self::safe_shift_bits());
+            unsafe { 1.unchecked_shl(bits) - 1 }
         }
     };
 }
@@ -231,6 +244,14 @@ macro_rules! impl_sint {
             // The mask computation needs to be done as unsigned, because it can overflow
             // to the sign bit before we subtract one.
             (((1 as $t_uint) << bits) - 1) as $t
+        }
+
+        #[inline(always)]
+        unsafe fn unchecked_mask(bits: u32) -> Self {
+            debug_assert!(bits <= Self::Unsigned::safe_shift_bits());
+            // The mask computation needs to be done as unsigned, because it can overflow
+            // to the sign bit before we subtract one.
+            unsafe { ((1 as $t_uint).unchecked_shl(bits) - 1) as $t }
         }
     };
 }
