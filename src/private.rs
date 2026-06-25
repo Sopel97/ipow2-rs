@@ -256,10 +256,8 @@ impl_int!(u64, i64);
 impl_int!(u128, i128);
 impl_int!(usize, isize);
 
-macro_rules! impl_signed_unsigned_trait {
-    ($trait:ident, trait_body $base_body:tt, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
-        trait $trait: Int $base_body
-
+macro_rules! impl_trait_signed_unsigned {
+    ($trait:ty, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
         impl $trait for u8  $unsigned_body
         impl $trait for u16 $unsigned_body
         impl $trait for u32 $unsigned_body

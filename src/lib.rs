@@ -1,8 +1,10 @@
-use crate::private::Int;
 use std::ops::{Div, DivAssign, Mul, MulAssign};
 
 #[macro_use]
 mod private;
+
+// Expose the private Int trait as API to allow users to specify generic bounds.
+pub use crate::private::Int;
 
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
@@ -276,138 +278,276 @@ macro_rules! impl_mul {
 impl_for_signed!(impl_mul);
 impl_for_unsigned!(impl_mul);
 
-#[inline(always)]
-pub fn checked_mul<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    let result = lhs.checked_shl(rhs.exponent as u32)?;
-    if lhs == result >> rhs.exponent {
-        Some(result)
-    } else {
-        None
+macro_rules! make_func_trait {
+    ($trait_name:ident, $func_name:ident) => {
+        pub trait $trait_name<Rhs> {
+            type Output;
+            fn $func_name(self, rhs: Rhs) -> Self::Output;
+        }
+
+        #[inline(always)]
+        pub fn $func_name<L: $trait_name<R>, R>(lhs: L, rhs: R) -> L::Output {
+            lhs.$func_name(rhs)
+        }
+    };
+}
+
+make_func_trait!(CheckedMul, checked_mul);
+
+impl<T> CheckedMul<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_mul(self, rhs: Pow2) -> Self::Output {
+        let result = self.checked_shl(rhs.exponent as u32)?;
+        if self == result >> rhs.exponent {
+            Some(result)
+        } else {
+            None
+        }
     }
 }
 
-#[inline(always)]
-pub fn checked_div<T>(lhs: T, rhs: Pow2) -> Option<T>
+make_func_trait!(CheckedDiv, checked_div);
+
+impl<T> CheckedDiv<Pow2> for T
 where
     T: Int + Div<Pow2, Output = T>,
 {
-    rhs.is_safe::<T::Unsigned>().then(|| lhs / rhs)
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_div(self, rhs: Pow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| self / rhs)
+    }
 }
 
-#[inline(always)]
-pub fn unbounded_div<T>(lhs: T, rhs: Pow2) -> T
+make_func_trait!(UnboundedDiv, unbounded_div);
+
+impl<T> UnboundedDiv<Pow2> for T
 where
     T: Int + Div<Pow2, Output = T>,
 {
-    if rhs.is_safe::<T::Unsigned>() {
-        lhs / rhs
-    } else {
-        T::zero()
+    type Output = Self;
+
+    #[inline(always)]
+    fn unbounded_div(self, rhs: Pow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            self / rhs
+        } else {
+            T::zero()
+        }
     }
 }
 
-#[inline(always)]
-pub fn div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    lhs >> rhs.exponent
-}
+make_func_trait!(DivFloor, div_floor);
 
-#[inline(always)]
-pub fn checked_div_floor<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    rhs.is_safe::<T::Unsigned>().then(|| div_floor(lhs, rhs))
-}
+impl<T> DivFloor<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
 
-#[inline(always)]
-pub fn unbounded_div_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
-    if rhs.is_safe::<T::Unsigned>() {
-        div_floor(lhs, rhs)
-    } else if T::is_unsigned() || lhs >= T::zero() {
-        T::zero()
-    } else {
-        T::minus_one()
+    #[inline(always)]
+    fn div_floor(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        self >> rhs.exponent
     }
 }
 
-#[inline(always)]
-pub fn mod_floor<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    lhs - floor_to_multiple(lhs, rhs)
-}
+make_func_trait!(CheckedDivFloor, checked_div_floor);
 
-#[inline(always)]
-pub fn checked_mod_floor<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    rhs.is_safe::<T::Unsigned>().then(|| mod_floor(lhs, rhs))
-}
+impl<T> CheckedDivFloor<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
 
-#[inline(always)]
-pub fn div_ceil<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    if T::is_smaller_than_isize() {
-        let mask = (1_isize << rhs.exponent) - 1;
-        T::from_isize((lhs.as_isize() + mask) >> rhs.exponent)
-    } else {
-        // Can't use a faster implementation with a mask due to possible overflow
-        // of the intermediate `a + mask`
-        let floored = div_floor(lhs, rhs);
-        let rem = lhs - (floored << rhs.exponent);
-        floored + T::from_bool(rem.is_not_zero())
+    #[inline(always)]
+    fn checked_div_floor(self, rhs: Pow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| div_floor(self, rhs))
     }
 }
 
-#[inline(always)]
-pub fn checked_div_ceil<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    rhs.is_safe::<T::Unsigned>().then(|| div_ceil(lhs, rhs))
-}
+make_func_trait!(UnboundedDivFloor, unbounded_div_floor);
 
-#[inline(always)]
-pub fn unbounded_div_ceil<T: Int>(lhs: T, rhs: Pow2) -> T {
-    if rhs.is_safe::<T::Unsigned>() {
-        div_ceil(lhs, rhs)
-    } else if lhs <= T::zero() {
-        T::zero()
-    } else {
-        T::one()
+impl<T> UnboundedDivFloor<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn unbounded_div_floor(self, rhs: Pow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            div_floor(self, rhs)
+        } else if T::is_unsigned() || self >= T::zero() {
+            T::zero()
+        } else {
+            T::minus_one()
+        }
     }
 }
 
-#[inline(always)]
-pub fn is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    lhs.trailing_zeros() >= rhs.exponent as u32
+make_func_trait!(ModFloor, mod_floor);
+
+impl<T> ModFloor<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn mod_floor(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        self - floor_to_multiple(self, rhs)
+    }
 }
 
-#[inline(always)]
-pub fn unbounded_is_multiple_of<T: Int>(lhs: T, rhs: Pow2) -> bool {
-    lhs.is_zero() || lhs.trailing_zeros() >= rhs.exponent as u32
+make_func_trait!(CheckedModFloor, checked_mod_floor);
+
+impl<T> CheckedModFloor<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_mod_floor(self, rhs: Pow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| mod_floor(self, rhs))
+    }
 }
 
-#[inline(always)]
-pub fn floor_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    lhs >> rhs.exponent << rhs.exponent
+make_func_trait!(DivCeil, div_ceil);
+
+impl<T> DivCeil<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn div_ceil(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        if T::is_smaller_than_isize() {
+            let mask = (1_isize << rhs.exponent) - 1;
+            T::from_isize((self.as_isize() + mask) >> rhs.exponent)
+        } else {
+            // Can't use a faster implementation with a mask due to possible overflow
+            // of the intermediate `a + mask`
+            let floored = div_floor(self, rhs);
+            let rem = self - (floored << rhs.exponent);
+            floored + T::from_bool(rem.is_not_zero())
+        }
+    }
 }
 
-#[inline(always)]
-pub fn checked_floor_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    rhs.is_safe::<T::Unsigned>()
-        .then(|| floor_to_multiple(lhs, rhs))
+make_func_trait!(CheckedDivCeil, checked_div_ceil);
+
+impl<T> CheckedDivCeil<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_div_ceil(self, rhs: Pow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| div_ceil(self, rhs))
+    }
 }
 
-impl_signed_unsigned_trait!(
-    IntForUnboundedFloorToMultiple,
-    trait_body {
-        type ResultType;
+make_func_trait!(UnboundedDivCeil, unbounded_div_ceil);
 
-        fn unbounded_floor_to_multiple(lhs: Self, rhs: Pow2) -> Self::ResultType;
-    },
+impl<T> UnboundedDivCeil<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    fn unbounded_div_ceil(self, rhs: Pow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            div_ceil(self, rhs)
+        } else if self <= T::zero() {
+            T::zero()
+        } else {
+            T::one()
+        }
+    }
+}
+
+make_func_trait!(IsMultipleOf, is_multiple_of);
+
+impl<T> IsMultipleOf<Pow2> for T
+where
+    T: Int,
+{
+    type Output = bool;
+
+    #[inline(always)]
+    fn is_multiple_of(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        self.trailing_zeros() >= rhs.exponent as u32
+    }
+}
+
+make_func_trait!(UnboundedIsMultipleOf, unbounded_is_multiple_of);
+
+impl<T> UnboundedIsMultipleOf<Pow2> for T
+where
+    T: Int,
+{
+    type Output = bool;
+
+    fn unbounded_is_multiple_of(self, rhs: Pow2) -> Self::Output {
+        self.is_zero() || self.trailing_zeros() >= rhs.exponent as u32
+    }
+}
+
+make_func_trait!(FloorToMultiple, floor_to_multiple);
+
+impl<T> FloorToMultiple<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn floor_to_multiple(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        self >> rhs.exponent << rhs.exponent
+    }
+}
+
+make_func_trait!(CheckedFloorToMultiple, checked_floor_to_multiple);
+
+impl<T> CheckedFloorToMultiple<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_floor_to_multiple(self, rhs: Pow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>()
+            .then(|| floor_to_multiple(self, rhs))
+    }
+}
+
+make_func_trait!(UnboundedFloorToMultiple, unbounded_floor_to_multiple);
+
+impl_trait_signed_unsigned!(
+    UnboundedFloorToMultiple<Pow2>,
     signed_body {
-        type ResultType = Option<Self>;
+        type Output = Option<Self>;
 
-        fn unbounded_floor_to_multiple(lhs: Self, rhs: Pow2) -> Self::ResultType {
+        fn unbounded_floor_to_multiple(self, rhs: Pow2) -> Self::Output {
             debug_assert!(Self::is_signed());
-            if rhs.is_safe::<Self::Unsigned>() {
-                Some(floor_to_multiple(lhs, rhs))
-            } else if lhs >= Self::zero() {
+            if rhs.is_safe::<<Self as Int>::Unsigned>() {
+                Some(floor_to_multiple(self, rhs))
+            } else if self >= Self::zero() {
                 Some(Self::zero())
             } else {
                 None
@@ -415,12 +555,12 @@ impl_signed_unsigned_trait!(
         }
     },
     unsigned_body {
-        type ResultType = Self;
+        type Output = Self;
 
-        fn unbounded_floor_to_multiple(lhs: Self, rhs: Pow2) -> Self::ResultType {
+        fn unbounded_floor_to_multiple(self, rhs: Pow2) -> Self::Output {
             debug_assert!(Self::is_unsigned());
             if rhs.is_safe::<Self>() {
-                floor_to_multiple(lhs, rhs)
+                floor_to_multiple(self, rhs)
             } else {
                 Self::zero()
             }
@@ -428,43 +568,60 @@ impl_signed_unsigned_trait!(
     }
 );
 
-#[inline(always)]
-#[allow(private_interfaces)]
-#[allow(private_bounds)]
-pub fn unbounded_floor_to_multiple<T: IntForUnboundedFloorToMultiple>(
-    lhs: T,
-    rhs: Pow2,
-) -> T::ResultType {
-    T::unbounded_floor_to_multiple(lhs, rhs)
-}
+make_func_trait!(CeilToMultiple, ceil_to_multiple);
 
-#[inline(always)]
-pub fn ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> T {
-    debug_assert!(rhs.is_safe::<T::Unsigned>());
-    // We can actually use the mask method here because if the intermediate `a + mask` overflows
-    // then the actual result would overflow too.
-    let mask = T::mask(rhs.exponent as u32);
-    (lhs + mask) & !mask
-}
+impl<T> CeilToMultiple<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
 
-#[inline(always)]
-pub fn checked_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    if rhs.is_safe::<T::Unsigned>() {
+    #[inline(always)]
+    fn ceil_to_multiple(self, rhs: Pow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        // We can actually use the mask method here because if the intermediate `a + mask` overflows
+        // then the actual result would overflow too.
         let mask = T::mask(rhs.exponent as u32);
-        Some(lhs.checked_add(mask)? & !mask)
-    } else {
-        None
+        (self + mask) & !mask
     }
 }
 
-#[inline(always)]
-pub fn unbounded_ceil_to_multiple<T: Int>(lhs: T, rhs: Pow2) -> Option<T> {
-    if rhs.is_safe::<T::Unsigned>() {
-        checked_ceil_to_multiple(lhs, rhs)
-    } else if lhs <= T::zero() {
-        Some(T::zero())
-    } else {
-        None
+make_func_trait!(CheckedCeilToMultiple, checked_ceil_to_multiple);
+
+impl<T> CheckedCeilToMultiple<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_ceil_to_multiple(self, rhs: Pow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            let mask = T::mask(rhs.exponent as u32);
+            Some(self.checked_add(mask)? & !mask)
+        } else {
+            None
+        }
+    }
+}
+
+make_func_trait!(UnboundedCeilToMultiple, unbounded_ceil_to_multiple);
+
+impl<T> UnboundedCeilToMultiple<Pow2> for T
+where
+    T: Int,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn unbounded_ceil_to_multiple(self, rhs: Pow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            checked_ceil_to_multiple(self, rhs)
+        } else if self <= T::zero() {
+            Some(T::zero())
+        } else {
+            None
+        }
     }
 }
 
