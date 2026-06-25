@@ -201,41 +201,32 @@ impl DivAssign for Pow2 {
     }
 }
 
-macro_rules! impl_div_signed {
-    ($t:ty) => {
-        impl Div<Pow2> for $t {
-            type Output = $t;
+impl_trait_signed_unsigned!(
+    Div<Pow2>,
+    signed_body {
+        type Output = Self;
 
-            #[inline(always)]
-            fn div(self, other: Pow2) -> $t {
-                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
-                if self >= 0 {
-                    self >> other.exponent
-                } else {
-                    let mask = <$t as Int>::mask(other.exponent as u32);
-                    (self + mask) >> other.exponent
-                }
-            }
-        }
-    };
-}
-
-macro_rules! impl_div_unsigned {
-    ($t:ty) => {
-        impl Div<Pow2> for $t {
-            type Output = $t;
-
-            #[inline(always)]
-            fn div(self, other: Pow2) -> $t {
-                debug_assert!(other.is_safe::<<$t as Int>::Unsigned>());
+        #[inline(always)]
+        fn div(self, other: Pow2) -> Self {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            if self >= 0 {
                 self >> other.exponent
+            } else {
+                let mask = <Self as Int>::mask(other.exponent as u32);
+                (self + mask) >> other.exponent
             }
         }
-    };
-}
+    },
+    unsigned_body {
+        type Output = Self;
 
-impl_for_signed!(impl_div_signed);
-impl_for_unsigned!(impl_div_unsigned);
+        #[inline(always)]
+        fn div(self, other: Pow2) -> Self {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            self >> other.exponent
+        }
+    }
+);
 
 macro_rules! impl_div_assign {
     ($t:ty) => {
