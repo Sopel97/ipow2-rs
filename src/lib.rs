@@ -22,29 +22,32 @@ pub struct NotPow2;
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Pow2OutOfRange;
 
+#[rustfmt::skip]
 impl UnboundedPow2 {
-    pub const VAL_1: UnboundedPow2 = UnboundedPow2::from_exponent(0);
-    pub const VAL_2: UnboundedPow2 = UnboundedPow2::from_exponent(1);
-    pub const VAL_4: UnboundedPow2 = UnboundedPow2::from_exponent(2);
-    pub const VAL_8: UnboundedPow2 = UnboundedPow2::from_exponent(3);
-    pub const VAL_16: UnboundedPow2 = UnboundedPow2::from_exponent(4);
-    pub const VAL_32: UnboundedPow2 = UnboundedPow2::from_exponent(5);
-    pub const VAL_64: UnboundedPow2 = UnboundedPow2::from_exponent(6);
-    pub const VAL_128: UnboundedPow2 = UnboundedPow2::from_exponent(7);
-    pub const VAL_256: UnboundedPow2 = UnboundedPow2::from_exponent(8);
-    pub const VAL_512: UnboundedPow2 = UnboundedPow2::from_exponent(9);
+    pub const VAL_1: Self = Self::from_exponent(0);
+    pub const VAL_2: Self = Self::from_exponent(1);
+    pub const VAL_4: Self = Self::from_exponent(2);
+    pub const VAL_8: Self = Self::from_exponent(3);
+    pub const VAL_16: Self = Self::from_exponent(4);
+    pub const VAL_32: Self = Self::from_exponent(5);
+    pub const VAL_64: Self = Self::from_exponent(6);
+    pub const VAL_128: Self = Self::from_exponent(7);
+    pub const VAL_256: Self = Self::from_exponent(8);
+    pub const VAL_512: Self = Self::from_exponent(9);
 
-    pub const KIBI: UnboundedPow2 = UnboundedPow2::from_exponent(10);
-    pub const MEBI: UnboundedPow2 = UnboundedPow2::from_exponent(20);
-    pub const GIBI: UnboundedPow2 = UnboundedPow2::from_exponent(30);
-    pub const TEBI: UnboundedPow2 = UnboundedPow2::from_exponent(40);
-    pub const PEBI: UnboundedPow2 = UnboundedPow2::from_exponent(50);
-    pub const EXBI: UnboundedPow2 = UnboundedPow2::from_exponent(60);
-    pub const ZEBI: UnboundedPow2 = UnboundedPow2::from_exponent(70);
-    pub const YOBI: UnboundedPow2 = UnboundedPow2::from_exponent(80);
-    pub const ROBI: UnboundedPow2 = UnboundedPow2::from_exponent(90);
-    pub const QUEBI: UnboundedPow2 = UnboundedPow2::from_exponent(100);
+    pub const KIBI: Self = Self::from_exponent(10);
+    pub const MEBI: Self = Self::from_exponent(20);
+    pub const GIBI: Self = Self::from_exponent(30);
+    pub const TEBI: Self = Self::from_exponent(40);
+    pub const PEBI: Self = Self::from_exponent(50);
+    pub const EXBI: Self = Self::from_exponent(60);
+    pub const ZEBI: Self = Self::from_exponent(70);
+    pub const YOBI: Self = Self::from_exponent(80);
+    pub const ROBI: Self = Self::from_exponent(90);
+    pub const QUEBI: Self = Self::from_exponent(100);
+}
 
+impl UnboundedPow2 {
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> UnboundedPow2 {
         UnboundedPow2 { exponent }
@@ -216,15 +219,6 @@ impl<T> Pow2<T>
 where
     T: UnsignedInt,
 {
-    pub const VAL_1: Self = Self { exponent: 0, _marker: marker::PhantomData };
-    pub const VAL_2: Self = Self { exponent: 1, _marker: marker::PhantomData };
-    pub const VAL_4: Self = Self { exponent: 2, _marker: marker::PhantomData };
-    pub const VAL_8: Self = Self { exponent: 3, _marker: marker::PhantomData };
-    pub const VAL_16: Self = Self { exponent: 4, _marker: marker::PhantomData };
-    pub const VAL_32: Self = Self { exponent: 5, _marker: marker::PhantomData };
-    pub const VAL_64: Self = Self { exponent: 6, _marker: marker::PhantomData };
-    pub const VAL_128: Self = Self { exponent: 7, _marker: marker::PhantomData };
-
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> Result<Self, Pow2OutOfRange> {
         if exponent as u32 >= T::BITS {
@@ -293,6 +287,156 @@ where
             _marker: marker::PhantomData,
         }
     }
+}
+
+#[rustfmt::skip]
+impl Pow2<u8> {
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip] 
+impl Pow2<u16> { 
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip] 
+impl Pow2<u32> { 
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+    pub const MEBI   : Self = Self { exponent: 20,  _marker: marker::PhantomData };
+    pub const GIBI   : Self = Self { exponent: 30,  _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip] 
+impl Pow2<u64> { 
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+    pub const MEBI   : Self = Self { exponent: 20,  _marker: marker::PhantomData };
+    pub const GIBI   : Self = Self { exponent: 30,  _marker: marker::PhantomData };
+    pub const TEBI   : Self = Self { exponent: 40,  _marker: marker::PhantomData };
+    pub const PEBI   : Self = Self { exponent: 50,  _marker: marker::PhantomData };
+    pub const EXBI   : Self = Self { exponent: 60,  _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip]
+impl Pow2<u128> {
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+    pub const MEBI   : Self = Self { exponent: 20,  _marker: marker::PhantomData };
+    pub const GIBI   : Self = Self { exponent: 30,  _marker: marker::PhantomData };
+    pub const TEBI   : Self = Self { exponent: 40,  _marker: marker::PhantomData };
+    pub const PEBI   : Self = Self { exponent: 50,  _marker: marker::PhantomData };
+    pub const EXBI   : Self = Self { exponent: 60,  _marker: marker::PhantomData };
+    pub const ZEBI   : Self = Self { exponent: 70,  _marker: marker::PhantomData };
+    pub const YOBI   : Self = Self { exponent: 80,  _marker: marker::PhantomData };
+    pub const ROBI   : Self = Self { exponent: 90,  _marker: marker::PhantomData };
+    pub const QUEBI  : Self = Self { exponent: 100, _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip]
+#[cfg(target_pointer_width = "16")]
+impl Pow2<usize> {
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip]
+#[cfg(target_pointer_width = "32")]
+impl Pow2<usize> {
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+    pub const MEBI   : Self = Self { exponent: 20,  _marker: marker::PhantomData };
+    pub const GIBI   : Self = Self { exponent: 30,  _marker: marker::PhantomData };
+}
+
+#[rustfmt::skip]
+#[cfg(target_pointer_width = "64")]
+impl Pow2<usize> {
+    pub const VAL_1  : Self = Self { exponent: 0,   _marker: marker::PhantomData };
+    pub const VAL_2  : Self = Self { exponent: 1,   _marker: marker::PhantomData };
+    pub const VAL_4  : Self = Self { exponent: 2,   _marker: marker::PhantomData };
+    pub const VAL_8  : Self = Self { exponent: 3,   _marker: marker::PhantomData };
+    pub const VAL_16 : Self = Self { exponent: 4,   _marker: marker::PhantomData };
+    pub const VAL_32 : Self = Self { exponent: 5,   _marker: marker::PhantomData };
+    pub const VAL_64 : Self = Self { exponent: 6,   _marker: marker::PhantomData };
+    pub const VAL_128: Self = Self { exponent: 7,   _marker: marker::PhantomData };
+    pub const VAL_256: Self = Self { exponent: 8,   _marker: marker::PhantomData };
+    pub const VAL_512: Self = Self { exponent: 9,   _marker: marker::PhantomData };
+ 
+    pub const KIBI   : Self = Self { exponent: 10,  _marker: marker::PhantomData };
+    pub const MEBI   : Self = Self { exponent: 20,  _marker: marker::PhantomData };
+    pub const GIBI   : Self = Self { exponent: 30,  _marker: marker::PhantomData };
+    pub const TEBI   : Self = Self { exponent: 40,  _marker: marker::PhantomData };
+    pub const PEBI   : Self = Self { exponent: 50,  _marker: marker::PhantomData };
+    pub const EXBI   : Self = Self { exponent: 60,  _marker: marker::PhantomData };
 }
 
 impl<T> From<Pow2<T>> for UnboundedPow2 {
@@ -780,7 +924,10 @@ where
     #[inline(always)]
     fn floor_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
-        unsafe { self.unchecked_shr(rhs.exponent as u32).unchecked_shl(rhs.exponent as u32) }
+        unsafe {
+            self.unchecked_shr(rhs.exponent as u32)
+                .unchecked_shl(rhs.exponent as u32)
+        }
     }
 }
 
@@ -935,34 +1082,94 @@ mod tests {
 
     #[test]
     fn unb_pow2_constructible_from_align_of() {
-        assert_eq!(UnboundedPow2::align_of::<()>(), UnboundedPow2::from_exponent(0));
-        assert_eq!(UnboundedPow2::align_of::<u8>(), UnboundedPow2::from_exponent(0));
-        assert_eq!(UnboundedPow2::align_of::<u32>(), UnboundedPow2::from_exponent(2));
-        assert_eq!(UnboundedPow2::align_of::<u128>(), UnboundedPow2::from_exponent(4));
+        assert_eq!(
+            UnboundedPow2::align_of::<()>(),
+            UnboundedPow2::from_exponent(0)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of::<u8>(),
+            UnboundedPow2::from_exponent(0)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of::<u32>(),
+            UnboundedPow2::from_exponent(2)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of::<u128>(),
+            UnboundedPow2::from_exponent(4)
+        );
     }
 
     #[test]
     fn unb_pow2_constructible_from_align_of_val() {
-        assert_eq!(UnboundedPow2::align_of_val(&()), UnboundedPow2::from_exponent(0));
-        assert_eq!(UnboundedPow2::align_of_val(&0_u8), UnboundedPow2::from_exponent(0));
-        assert_eq!(UnboundedPow2::align_of_val(&0_u32), UnboundedPow2::from_exponent(2));
-        assert_eq!(UnboundedPow2::align_of_val(&0_u128), UnboundedPow2::from_exponent(4));
+        assert_eq!(
+            UnboundedPow2::align_of_val(&()),
+            UnboundedPow2::from_exponent(0)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of_val(&0_u8),
+            UnboundedPow2::from_exponent(0)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of_val(&0_u32),
+            UnboundedPow2::from_exponent(2)
+        );
+        assert_eq!(
+            UnboundedPow2::align_of_val(&0_u128),
+            UnboundedPow2::from_exponent(4)
+        );
     }
 
     #[test]
     fn unb_pow2_try_from_power_of_two_int() {
-        assert_eq!(UnboundedPow2::try_from(32_i8), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_u8), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_i16), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_u16), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_i32), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_u32), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_i64), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_u64), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_i128), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_u128), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_isize), Ok(UnboundedPow2::from_exponent(5)));
-        assert_eq!(UnboundedPow2::try_from(32_usize), Ok(UnboundedPow2::from_exponent(5)));
+        assert_eq!(
+            UnboundedPow2::try_from(32_i8),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_u8),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_i16),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_u16),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_i32),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_u32),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_i64),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_u64),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_i128),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_u128),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_isize),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
+        assert_eq!(
+            UnboundedPow2::try_from(32_usize),
+            Ok(UnboundedPow2::from_exponent(5))
+        );
     }
 
     #[test]
@@ -1053,36 +1260,66 @@ mod tests {
     #[test]
     fn unb_pow2_to_int() {
         assert_eq!(i8::try_from(UnboundedPow2::from_exponent(6)), Ok(1 << 6));
-        assert_eq!(i8::try_from(UnboundedPow2::from_exponent(7)), Err(Pow2OutOfRange));
+        assert_eq!(
+            i8::try_from(UnboundedPow2::from_exponent(7)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(u8::try_from(UnboundedPow2::from_exponent(7)), Ok(1 << 7));
-        assert_eq!(u8::try_from(UnboundedPow2::from_exponent(8)), Err(Pow2OutOfRange));
+        assert_eq!(
+            u8::try_from(UnboundedPow2::from_exponent(8)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(i16::try_from(UnboundedPow2::from_exponent(14)), Ok(1 << 14));
-        assert_eq!(i16::try_from(UnboundedPow2::from_exponent(15)), Err(Pow2OutOfRange));
+        assert_eq!(
+            i16::try_from(UnboundedPow2::from_exponent(15)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(u16::try_from(UnboundedPow2::from_exponent(15)), Ok(1 << 15));
-        assert_eq!(u16::try_from(UnboundedPow2::from_exponent(16)), Err(Pow2OutOfRange));
+        assert_eq!(
+            u16::try_from(UnboundedPow2::from_exponent(16)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(i32::try_from(UnboundedPow2::from_exponent(30)), Ok(1 << 30));
-        assert_eq!(i32::try_from(UnboundedPow2::from_exponent(31)), Err(Pow2OutOfRange));
+        assert_eq!(
+            i32::try_from(UnboundedPow2::from_exponent(31)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(u32::try_from(UnboundedPow2::from_exponent(31)), Ok(1 << 31));
-        assert_eq!(u32::try_from(UnboundedPow2::from_exponent(32)), Err(Pow2OutOfRange));
+        assert_eq!(
+            u32::try_from(UnboundedPow2::from_exponent(32)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(i64::try_from(UnboundedPow2::from_exponent(62)), Ok(1 << 62));
-        assert_eq!(i64::try_from(UnboundedPow2::from_exponent(63)), Err(Pow2OutOfRange));
+        assert_eq!(
+            i64::try_from(UnboundedPow2::from_exponent(63)),
+            Err(Pow2OutOfRange)
+        );
 
         assert_eq!(u64::try_from(UnboundedPow2::from_exponent(63)), Ok(1 << 63));
-        assert_eq!(u64::try_from(UnboundedPow2::from_exponent(64)), Err(Pow2OutOfRange));
+        assert_eq!(
+            u64::try_from(UnboundedPow2::from_exponent(64)),
+            Err(Pow2OutOfRange)
+        );
 
-        assert_eq!(i128::try_from(UnboundedPow2::from_exponent(126)), Ok(1 << 126));
+        assert_eq!(
+            i128::try_from(UnboundedPow2::from_exponent(126)),
+            Ok(1 << 126)
+        );
         assert_eq!(
             i128::try_from(UnboundedPow2::from_exponent(127)),
             Err(Pow2OutOfRange)
         );
 
-        assert_eq!(u128::try_from(UnboundedPow2::from_exponent(127)), Ok(1 << 127));
+        assert_eq!(
+            u128::try_from(UnboundedPow2::from_exponent(127)),
+            Ok(1 << 127)
+        );
         assert_eq!(
             u128::try_from(UnboundedPow2::from_exponent(128)),
             Err(Pow2OutOfRange)
@@ -1621,18 +1858,36 @@ mod tests {
 
     #[test]
     fn unb_pow2_checked_div_boundary() {
-        assert_eq!(checked_div(i32::MAX, UnboundedPow2::from_exponent(30)), Some(1));
-        assert_eq!(checked_div(i32::MIN, UnboundedPow2::from_exponent(30)), Some(-2));
-        assert_eq!(checked_div(123_i32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_div(-123_i32, UnboundedPow2::from_exponent(31)), Some(0));
+        assert_eq!(
+            checked_div(i32::MAX, UnboundedPow2::from_exponent(30)),
+            Some(1)
+        );
+        assert_eq!(
+            checked_div(i32::MIN, UnboundedPow2::from_exponent(30)),
+            Some(-2)
+        );
+        assert_eq!(
+            checked_div(123_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div(-123_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
         assert_eq!(checked_div(123_i32, UnboundedPow2::from_exponent(32)), None);
-        assert_eq!(checked_div(-123_i32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_div(-123_i32, UnboundedPow2::from_exponent(32)),
+            None
+        );
     }
 
     #[test]
     fn unb_pow2_unbounded_div_boundary() {
         assert_eq!(unbounded_div(i32::MAX, UnboundedPow2::from_exponent(30)), 1);
-        assert_eq!(unbounded_div(i32::MIN, UnboundedPow2::from_exponent(30)), -2);
+        assert_eq!(
+            unbounded_div(i32::MIN, UnboundedPow2::from_exponent(30)),
+            -2
+        );
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(-123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(32)), 0);
@@ -1721,7 +1976,10 @@ mod tests {
     #[test]
     fn pow2_div_floor_by_one_is_identity() {
         assert_eq!(div_floor(42i64, Pow2::<u8>::from_exponent(0).unwrap()), 42);
-        assert_eq!(div_floor(-42i64, Pow2::<u8>::from_exponent(0).unwrap()), -42);
+        assert_eq!(
+            div_floor(-42i64, Pow2::<u8>::from_exponent(0).unwrap()),
+            -42
+        );
     }
 
     #[test]
@@ -1732,8 +1990,14 @@ mod tests {
 
     #[test]
     fn pow2_div_floor_min() {
-        assert_eq!(div_floor(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()), -2);
-        assert_eq!(div_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()), -1);
+        assert_eq!(
+            div_floor(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()),
+            -2
+        );
+        assert_eq!(
+            div_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
+            -1
+        );
     }
 
     #[test]
@@ -1745,40 +2009,112 @@ mod tests {
 
     #[test]
     fn pow2_div_floor_max() {
-        assert_eq!(div_floor(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()), 1);
-        assert_eq!(div_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), 0);
-        assert_eq!(div_floor(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), 1);
+        assert_eq!(
+            div_floor(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()),
+            1
+        );
+        assert_eq!(
+            div_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            0
+        );
+        assert_eq!(
+            div_floor(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            1
+        );
     }
 
     #[test]
     fn unb_pow2_checked_div_floor_boundary() {
-        assert_eq!(checked_div_floor(0_i32, UnboundedPow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_div_floor(0_i32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_div_floor(0_i32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_div_floor(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_floor(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_floor(0_i32, UnboundedPow2::from_exponent(32)),
+            None
+        );
 
-        assert_eq!(checked_div_floor(0_u32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_div_floor(0_u32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_div_floor(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_floor(0_u32, UnboundedPow2::from_exponent(32)),
+            None
+        );
     }
 
     #[test]
     fn unb_pow2_unbounded_div_floor_boundary() {
-        assert_eq!(unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(30)), 0);
-        assert_eq!(unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(30)), -2);
-        assert_eq!(unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(31)), 0);
-        assert_eq!(unbounded_div_floor(-1_i32, UnboundedPow2::from_exponent(31)), -1);
-        assert_eq!(unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(31)), -1);
-        assert_eq!(unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_floor(-1_i32, UnboundedPow2::from_exponent(32)), -1);
-        assert_eq!(unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_floor(i32::MAX, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(255)), -1);
+        assert_eq!(
+            unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(30)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(30)),
+            -2
+        );
+        assert_eq!(
+            unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(-1_i32, UnboundedPow2::from_exponent(31)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(31)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(-1_i32, UnboundedPow2::from_exponent(32)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_floor(0_i32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(i32::MAX, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(i32::MIN, UnboundedPow2::from_exponent(255)),
+            -1
+        );
 
-        assert_eq!(unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(31)), 0);
-        assert_eq!(unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(31)), 1);
-        assert_eq!(unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(255)), 0);
+        assert_eq!(
+            unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(31)),
+            1
+        );
+        assert_eq!(
+            unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(0_u32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_floor(u32::MAX, UnboundedPow2::from_exponent(255)),
+            0
+        );
     }
 
     #[test]
@@ -1858,10 +2194,22 @@ mod tests {
 
     #[test]
     fn pow2_div_ceil_min() {
-        assert_eq!(div_ceil(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()), -2);
-        assert_eq!(div_ceil(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()), -1);
-        assert_eq!(div_ceil(i64::MIN, Pow2::<u64>::from_exponent(62).unwrap()), -2);
-        assert_eq!(div_ceil(i64::MIN, Pow2::<u64>::from_exponent(63).unwrap()), -1);
+        assert_eq!(
+            div_ceil(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()),
+            -2
+        );
+        assert_eq!(
+            div_ceil(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
+            -1
+        );
+        assert_eq!(
+            div_ceil(i64::MIN, Pow2::<u64>::from_exponent(62).unwrap()),
+            -2
+        );
+        assert_eq!(
+            div_ceil(i64::MIN, Pow2::<u64>::from_exponent(63).unwrap()),
+            -1
+        );
     }
 
     #[test]
@@ -1876,52 +2224,136 @@ mod tests {
 
     #[test]
     fn pow2_div_ceil_max() {
-        assert_eq!(div_ceil(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()), 2);
-        assert_eq!(div_ceil(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), 1);
-        assert_eq!(div_ceil(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), 2);
-        assert_eq!(div_ceil(i64::MAX, Pow2::<u64>::from_exponent(62).unwrap()), 2);
-        assert_eq!(div_ceil(i64::MAX, Pow2::<u64>::from_exponent(63).unwrap()), 1);
-        assert_eq!(div_ceil(u64::MAX, Pow2::<u64>::from_exponent(63).unwrap()), 2);
+        assert_eq!(
+            div_ceil(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_ceil(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            1
+        );
+        assert_eq!(
+            div_ceil(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_ceil(i64::MAX, Pow2::<u64>::from_exponent(62).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_ceil(i64::MAX, Pow2::<u64>::from_exponent(63).unwrap()),
+            1
+        );
+        assert_eq!(
+            div_ceil(u64::MAX, Pow2::<u64>::from_exponent(63).unwrap()),
+            2
+        );
     }
 
     #[test]
     fn unb_pow2_checked_div_ceil_boundary() {
-        assert_eq!(checked_div_ceil(0_i32, UnboundedPow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_div_ceil(0_i32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_div_ceil(0_i32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_div_ceil(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_ceil(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_ceil(0_i32, UnboundedPow2::from_exponent(32)),
+            None
+        );
 
-        assert_eq!(checked_div_ceil(0_u32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_div_ceil(0_u32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_div_ceil(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_ceil(0_u32, UnboundedPow2::from_exponent(32)),
+            None
+        );
     }
 
     #[test]
     fn unb_pow2_unbounded_div_ceil_boundary() {
-        assert_eq!(unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(30)), 0);
-        assert_eq!(unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(30)), 2);
-        assert_eq!(unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(31)), 0);
-        assert_eq!(unbounded_div_ceil(i32::MIN, UnboundedPow2::from_exponent(31)), -1);
-        assert_eq!(unbounded_div_ceil(-1_i32, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_ceil(1_i32, UnboundedPow2::from_exponent(32)), 1);
-        assert_eq!(unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(32)), 1);
-        assert_eq!(unbounded_div_ceil(-1_i32, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_ceil(i32::MIN, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(255)), 1);
+        assert_eq!(
+            unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(30)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(30)),
+            2
+        );
+        assert_eq!(
+            unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(i32::MIN, UnboundedPow2::from_exponent(31)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_ceil(-1_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(0_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(1_i32, UnboundedPow2::from_exponent(32)),
+            1
+        );
+        assert_eq!(
+            unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(32)),
+            1
+        );
+        assert_eq!(
+            unbounded_div_ceil(-1_i32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(i32::MIN, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(i32::MAX, UnboundedPow2::from_exponent(255)),
+            1
+        );
 
-        assert_eq!(unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(31)), 0);
-        assert_eq!(unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(32)), 0);
-        assert_eq!(unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(255)), 0);
-        assert_eq!(unbounded_div_ceil(u32::MAX, UnboundedPow2::from_exponent(255)), 1);
+        assert_eq!(
+            unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(0_u32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_ceil(u32::MAX, UnboundedPow2::from_exponent(255)),
+            1
+        );
     }
 
     #[test]
     fn unb_pow2_floor_to_multiple_u64_already_aligned() {
-        assert_eq!(floor_to_multiple(64u64, UnboundedPow2::from_exponent(6)), 64);
+        assert_eq!(
+            floor_to_multiple(64u64, UnboundedPow2::from_exponent(6)),
+            64
+        );
     }
 
     #[test]
     fn pow2_floor_to_multiple_u64_already_aligned() {
-        assert_eq!(floor_to_multiple(64u64, Pow2::<u8>::from_exponent(6).unwrap()), 64);
+        assert_eq!(
+            floor_to_multiple(64u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            64
+        );
     }
 
     #[test]
@@ -1933,48 +2365,90 @@ mod tests {
 
     #[test]
     fn unb_pow2_floor_to_multiple_u64_unaligned() {
-        assert_eq!(floor_to_multiple(65u64, UnboundedPow2::from_exponent(6)), 64);
-        assert_eq!(floor_to_multiple(127u64, UnboundedPow2::from_exponent(6)), 64);
+        assert_eq!(
+            floor_to_multiple(65u64, UnboundedPow2::from_exponent(6)),
+            64
+        );
+        assert_eq!(
+            floor_to_multiple(127u64, UnboundedPow2::from_exponent(6)),
+            64
+        );
     }
 
     #[test]
     fn pow2_floor_to_multiple_u64_unaligned() {
-        assert_eq!(floor_to_multiple(65u64, Pow2::<u8>::from_exponent(6).unwrap()), 64);
-        assert_eq!(floor_to_multiple(127u64, Pow2::<u8>::from_exponent(6).unwrap()), 64);
+        assert_eq!(
+            floor_to_multiple(65u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            64
+        );
+        assert_eq!(
+            floor_to_multiple(127u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            64
+        );
     }
 
     #[test]
     fn unb_pow2_floor_to_multiple_i64_positive() {
-        assert_eq!(floor_to_multiple(37i64, UnboundedPow2::from_exponent(5)), 32);
+        assert_eq!(
+            floor_to_multiple(37i64, UnboundedPow2::from_exponent(5)),
+            32
+        );
     }
 
     #[test]
     fn pow2_floor_to_multiple_i64_positive() {
-        assert_eq!(floor_to_multiple(37i64, Pow2::<u8>::from_exponent(5).unwrap()), 32);
+        assert_eq!(
+            floor_to_multiple(37i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            32
+        );
     }
 
     #[test]
     fn unb_pow2_floor_to_multiple_i64_negative() {
-        assert_eq!(floor_to_multiple(-37i64, UnboundedPow2::from_exponent(5)), -64);
-        assert_eq!(floor_to_multiple(-32i64, UnboundedPow2::from_exponent(5)), -32);
+        assert_eq!(
+            floor_to_multiple(-37i64, UnboundedPow2::from_exponent(5)),
+            -64
+        );
+        assert_eq!(
+            floor_to_multiple(-32i64, UnboundedPow2::from_exponent(5)),
+            -32
+        );
     }
 
     #[test]
     fn pow2_floor_to_multiple_i64_negative() {
-        assert_eq!(floor_to_multiple(-37i64, Pow2::<u8>::from_exponent(5).unwrap()), -64);
-        assert_eq!(floor_to_multiple(-32i64, Pow2::<u8>::from_exponent(5).unwrap()), -32);
+        assert_eq!(
+            floor_to_multiple(-37i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            -64
+        );
+        assert_eq!(
+            floor_to_multiple(-32i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            -32
+        );
     }
 
     #[test]
     fn unb_pow2_floor_to_multiple_by_one_is_identity() {
-        assert_eq!(floor_to_multiple(37i64, UnboundedPow2::from_exponent(0)), 37);
-        assert_eq!(floor_to_multiple(-37i64, UnboundedPow2::from_exponent(0)), -37);
+        assert_eq!(
+            floor_to_multiple(37i64, UnboundedPow2::from_exponent(0)),
+            37
+        );
+        assert_eq!(
+            floor_to_multiple(-37i64, UnboundedPow2::from_exponent(0)),
+            -37
+        );
     }
 
     #[test]
     fn pow2_floor_to_multiple_by_one_is_identity() {
-        assert_eq!(floor_to_multiple(37i64, Pow2::<u8>::from_exponent(0).unwrap()), 37);
-        assert_eq!(floor_to_multiple(-37i64, Pow2::<u8>::from_exponent(0).unwrap()), -37);
+        assert_eq!(
+            floor_to_multiple(37i64, Pow2::<u8>::from_exponent(0).unwrap()),
+            37
+        );
+        assert_eq!(
+            floor_to_multiple(-37i64, Pow2::<u8>::from_exponent(0).unwrap()),
+            -37
+        );
     }
 
     #[test]
@@ -2015,7 +2489,10 @@ mod tests {
             floor_to_multiple(i32::MAX, UnboundedPow2::from_exponent(30)),
             1 << 30
         );
-        assert_eq!(floor_to_multiple(i32::MAX, UnboundedPow2::from_exponent(31)), 0);
+        assert_eq!(
+            floor_to_multiple(i32::MAX, UnboundedPow2::from_exponent(31)),
+            0
+        );
         assert_eq!(
             floor_to_multiple(u32::MAX, UnboundedPow2::from_exponent(31)),
             1 << 31
@@ -2028,7 +2505,10 @@ mod tests {
             floor_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()),
             1 << 30
         );
-        assert_eq!(floor_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), 0);
+        assert_eq!(
+            floor_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            0
+        );
         assert_eq!(
             floor_to_multiple(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
             1 << 31
@@ -2112,7 +2592,10 @@ mod tests {
 
     #[test]
     fn pow2_ceil_to_multiple_u64_already_aligned() {
-        assert_eq!(ceil_to_multiple(64u64, Pow2::<u8>::from_exponent(6).unwrap()), 64);
+        assert_eq!(
+            ceil_to_multiple(64u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            64
+        );
     }
 
     #[test]
@@ -2138,14 +2621,23 @@ mod tests {
 
     #[test]
     fn unb_pow2_ceil_to_multiple_u64_unaligned() {
-        assert_eq!(ceil_to_multiple(65u64, UnboundedPow2::from_exponent(6)), 128);
+        assert_eq!(
+            ceil_to_multiple(65u64, UnboundedPow2::from_exponent(6)),
+            128
+        );
         assert_eq!(ceil_to_multiple(1u64, UnboundedPow2::from_exponent(6)), 64);
     }
 
     #[test]
     fn pow2_ceil_to_multiple_u64_unaligned() {
-        assert_eq!(ceil_to_multiple(65u64, Pow2::<u8>::from_exponent(6).unwrap()), 128);
-        assert_eq!(ceil_to_multiple(1u64, Pow2::<u8>::from_exponent(6).unwrap()), 64);
+        assert_eq!(
+            ceil_to_multiple(65u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            128
+        );
+        assert_eq!(
+            ceil_to_multiple(1u64, Pow2::<u8>::from_exponent(6).unwrap()),
+            64
+        );
     }
 
     #[test]
@@ -2155,7 +2647,10 @@ mod tests {
 
     #[test]
     fn pow2_ceil_to_multiple_u64_zero() {
-        assert_eq!(ceil_to_multiple(0u64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(
+            ceil_to_multiple(0u64, Pow2::<u8>::from_exponent(5).unwrap()),
+            0
+        );
     }
 
     #[test]
@@ -2166,27 +2661,51 @@ mod tests {
 
     #[test]
     fn pow2_ceil_to_multiple_i64_positive() {
-        assert_eq!(ceil_to_multiple(33i64, Pow2::<u8>::from_exponent(5).unwrap()), 64);
-        assert_eq!(ceil_to_multiple(32i64, Pow2::<u8>::from_exponent(5).unwrap()), 32);
+        assert_eq!(
+            ceil_to_multiple(33i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            64
+        );
+        assert_eq!(
+            ceil_to_multiple(32i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            32
+        );
     }
 
     #[test]
     fn unb_pow2_ceil_to_multiple_i64_negative() {
-        assert_eq!(ceil_to_multiple(-33i64, UnboundedPow2::from_exponent(5)), -32);
-        assert_eq!(ceil_to_multiple(-32i64, UnboundedPow2::from_exponent(5)), -32);
+        assert_eq!(
+            ceil_to_multiple(-33i64, UnboundedPow2::from_exponent(5)),
+            -32
+        );
+        assert_eq!(
+            ceil_to_multiple(-32i64, UnboundedPow2::from_exponent(5)),
+            -32
+        );
         assert_eq!(ceil_to_multiple(-16i64, UnboundedPow2::from_exponent(5)), 0);
     }
 
     #[test]
     fn pow2_ceil_to_multiple_i64_negative() {
-        assert_eq!(ceil_to_multiple(-33i64, Pow2::<u8>::from_exponent(5).unwrap()), -32);
-        assert_eq!(ceil_to_multiple(-32i64, Pow2::<u8>::from_exponent(5).unwrap()), -32);
-        assert_eq!(ceil_to_multiple(-16i64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(
+            ceil_to_multiple(-33i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            -32
+        );
+        assert_eq!(
+            ceil_to_multiple(-32i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            -32
+        );
+        assert_eq!(
+            ceil_to_multiple(-16i64, Pow2::<u8>::from_exponent(5).unwrap()),
+            0
+        );
     }
 
     #[test]
     fn unb_pow2_ceil_to_multiple_min() {
-        assert_eq!(ceil_to_multiple(i32::MIN, UnboundedPow2::from_exponent(2)), i32::MIN);
+        assert_eq!(
+            ceil_to_multiple(i32::MIN, UnboundedPow2::from_exponent(2)),
+            i32::MIN
+        );
         assert_eq!(
             ceil_to_multiple(i32::MIN, UnboundedPow2::from_exponent(30)),
             i32::MIN
@@ -2195,7 +2714,10 @@ mod tests {
 
     #[test]
     fn pow2_ceil_to_multiple_min() {
-        assert_eq!(ceil_to_multiple(i32::MIN, Pow2::<u32>::from_exponent(2).unwrap()), i32::MIN);
+        assert_eq!(
+            ceil_to_multiple(i32::MIN, Pow2::<u32>::from_exponent(2).unwrap()),
+            i32::MIN
+        );
         assert_eq!(
             ceil_to_multiple(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()),
             i32::MIN
@@ -2204,13 +2726,19 @@ mod tests {
 
     #[test]
     fn unb_pow2_ceil_to_multiple_max() {
-        assert_eq!(ceil_to_multiple(i32::MAX, UnboundedPow2::from_exponent(0)), i32::MAX);
+        assert_eq!(
+            ceil_to_multiple(i32::MAX, UnboundedPow2::from_exponent(0)),
+            i32::MAX
+        );
         assert_eq!(
             ceil_to_multiple(i32::MAX - 1, UnboundedPow2::from_exponent(1)),
             i32::MAX - 1
         );
 
-        assert_eq!(ceil_to_multiple(u32::MAX, UnboundedPow2::from_exponent(0)), u32::MAX);
+        assert_eq!(
+            ceil_to_multiple(u32::MAX, UnboundedPow2::from_exponent(0)),
+            u32::MAX
+        );
         assert_eq!(
             ceil_to_multiple(u32::MAX - 1, UnboundedPow2::from_exponent(1)),
             u32::MAX - 1
@@ -2219,13 +2747,19 @@ mod tests {
 
     #[test]
     fn pow2_ceil_to_multiple_max() {
-        assert_eq!(ceil_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(0).unwrap()), i32::MAX);
+        assert_eq!(
+            ceil_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(0).unwrap()),
+            i32::MAX
+        );
         assert_eq!(
             ceil_to_multiple(i32::MAX - 1, Pow2::<u32>::from_exponent(1).unwrap()),
             i32::MAX - 1
         );
 
-        assert_eq!(ceil_to_multiple(u32::MAX, Pow2::<u32>::from_exponent(0).unwrap()), u32::MAX);
+        assert_eq!(
+            ceil_to_multiple(u32::MAX, Pow2::<u32>::from_exponent(0).unwrap()),
+            u32::MAX
+        );
         assert_eq!(
             ceil_to_multiple(u32::MAX - 1, Pow2::<u32>::from_exponent(1).unwrap()),
             u32::MAX - 1
@@ -2407,7 +2941,7 @@ mod tests {
 
     #[test]
     fn pow2_mod_floor_i64_positive() {
-        assert_eq!(mod_floor(37i64, Pow2::<u8>::from_exponent(5). unwrap()), 5);
+        assert_eq!(mod_floor(37i64, Pow2::<u8>::from_exponent(5).unwrap()), 5);
     }
 
     #[test]
@@ -2428,14 +2962,23 @@ mod tests {
 
     #[test]
     fn pow2_mod_floor_min() {
-        assert_eq!(mod_floor(i32::MIN, Pow2::<u8>::from_exponent(2).unwrap()), 0);
-        assert_eq!(mod_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()), 0);
+        assert_eq!(
+            mod_floor(i32::MIN, Pow2::<u8>::from_exponent(2).unwrap()),
+            0
+        );
+        assert_eq!(
+            mod_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
+            0
+        );
     }
 
     #[test]
     fn unb_pow2_mod_floor_max() {
         assert_eq!(mod_floor(i32::MAX, UnboundedPow2::from_exponent(2)), 3);
-        assert_eq!(mod_floor(i32::MAX, UnboundedPow2::from_exponent(31)), i32::MAX);
+        assert_eq!(
+            mod_floor(i32::MAX, UnboundedPow2::from_exponent(31)),
+            i32::MAX
+        );
         assert_eq!(mod_floor(u32::MAX, UnboundedPow2::from_exponent(2)), 3);
         assert_eq!(
             mod_floor(u32::MAX, UnboundedPow2::from_exponent(31)),
@@ -2445,9 +2988,18 @@ mod tests {
 
     #[test]
     fn pow2_mod_floor_max() {
-        assert_eq!(mod_floor(i32::MAX, Pow2::<u8>::from_exponent(2).unwrap()), 3);
-        assert_eq!(mod_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()), i32::MAX);
-        assert_eq!(mod_floor(u32::MAX, Pow2::<u8>::from_exponent(2).unwrap()), 3);
+        assert_eq!(
+            mod_floor(i32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
+            3
+        );
+        assert_eq!(
+            mod_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            i32::MAX
+        );
+        assert_eq!(
+            mod_floor(u32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
+            3
+        );
         assert_eq!(
             mod_floor(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
             i32::MAX as u32
@@ -2476,12 +3028,27 @@ mod tests {
 
     #[test]
     fn unb_pow2_checked_mod_floor_boundary() {
-        assert_eq!(checked_mod_floor(0_i32, UnboundedPow2::from_exponent(30)), Some(0));
-        assert_eq!(checked_mod_floor(0_i32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_mod_floor(0_i32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(32)),
+            None
+        );
 
-        assert_eq!(checked_mod_floor(0_u32, UnboundedPow2::from_exponent(31)), Some(0));
-        assert_eq!(checked_mod_floor(0_u32, UnboundedPow2::from_exponent(32)), None);
+        assert_eq!(
+            checked_mod_floor(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_mod_floor(0_u32, UnboundedPow2::from_exponent(32)),
+            None
+        );
     }
 
     #[test]
@@ -2494,8 +3061,14 @@ mod tests {
     #[test]
     fn pow2_is_multiple_of_u64_true() {
         assert!(is_multiple_of(0u64, Pow2::<u64>::from_exponent(5).unwrap()));
-        assert!(is_multiple_of(32u64, Pow2::<u64>::from_exponent(5).unwrap()));
-        assert!(is_multiple_of(64u64, Pow2::<u64>::from_exponent(5).unwrap()));
+        assert!(is_multiple_of(
+            32u64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
+        assert!(is_multiple_of(
+            64u64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
     }
 
     #[test]
@@ -2506,8 +3079,14 @@ mod tests {
 
     #[test]
     fn pow2_is_multiple_of_u64_false() {
-        assert!(!is_multiple_of(31u64, Pow2::<u64>::from_exponent(5).unwrap()));
-        assert!(!is_multiple_of(33u64, Pow2::<u64>::from_exponent(5).unwrap()));
+        assert!(!is_multiple_of(
+            31u64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
+        assert!(!is_multiple_of(
+            33u64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
     }
 
     #[test]
@@ -2519,19 +3098,46 @@ mod tests {
 
     #[test]
     fn pow2_is_multiple_of_i64_negative() {
-        assert!(is_multiple_of(-32i64, Pow2::<u64>::from_exponent(5).unwrap()));
-        assert!(is_multiple_of(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()));
-        assert!(!is_multiple_of(-31i64, Pow2::<u64>::from_exponent(5).unwrap()));
+        assert!(is_multiple_of(
+            -32i64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
+        assert!(is_multiple_of(
+            i32::MIN,
+            Pow2::<u32>::from_exponent(31).unwrap()
+        ));
+        assert!(!is_multiple_of(
+            -31i64,
+            Pow2::<u64>::from_exponent(5).unwrap()
+        ));
     }
 
     #[test]
     fn unb_pow2_unbounded_is_multiple_of_boundary() {
-        assert!(unbounded_is_multiple_of(0_i32, UnboundedPow2::from_exponent(30)));
-        assert!(unbounded_is_multiple_of(i32::MIN, UnboundedPow2::from_exponent(31)));
-        assert!(unbounded_is_multiple_of(0_i32, UnboundedPow2::from_exponent(31)));
-        assert!(unbounded_is_multiple_of(0_i32, UnboundedPow2::from_exponent(32)));
-        assert!(unbounded_is_multiple_of(0_i32, UnboundedPow2::from_exponent(33)));
-        assert!(unbounded_is_multiple_of(0_i32, UnboundedPow2::from_exponent(255)));
+        assert!(unbounded_is_multiple_of(
+            0_i32,
+            UnboundedPow2::from_exponent(30)
+        ));
+        assert!(unbounded_is_multiple_of(
+            i32::MIN,
+            UnboundedPow2::from_exponent(31)
+        ));
+        assert!(unbounded_is_multiple_of(
+            0_i32,
+            UnboundedPow2::from_exponent(31)
+        ));
+        assert!(unbounded_is_multiple_of(
+            0_i32,
+            UnboundedPow2::from_exponent(32)
+        ));
+        assert!(unbounded_is_multiple_of(
+            0_i32,
+            UnboundedPow2::from_exponent(33)
+        ));
+        assert!(unbounded_is_multiple_of(
+            0_i32,
+            UnboundedPow2::from_exponent(255)
+        ));
         assert!(!unbounded_is_multiple_of(
             i32::MIN,
             UnboundedPow2::from_exponent(255)
