@@ -2,6 +2,12 @@
     divan::main();
 }
 
+fn make_inputs_i8() -> [(i8, u8); 256] {
+    let inputs: [(i8, u8); 256] =
+        std::array::from_fn(|i| (13i8 + (i % 79) as i8, 1u8 + (i % 5) as u8));
+    inputs
+}
+
 fn make_inputs_i16() -> [(i16, u8); 256] {
     let inputs: [(i16, u8); 256] =
         std::array::from_fn(|i| (1231i16 + i as i16, 1u8 + (i % 13) as u8));
@@ -18,6 +24,65 @@ fn make_inputs_i64() -> [(i64, u8); 256] {
     let inputs: [(i64, u8); 256] =
         std::array::from_fn(|i| (123123123123123i64 + i as i64, 1u8 + (i % 13) as u8));
     inputs
+}
+
+mod div_floor {
+    use super::*;
+
+    #[divan::bench]
+    fn div_floor_i8(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i8())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let _ = divan::black_box(a >> b);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_floor_i8_via_i32(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i8())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let _ = divan::black_box(((a as i32) >> b) as i8);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_floor_i8_via_unchecked(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i8())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let _ = divan::black_box(unsafe { a.unchecked_shr(b as u32) });
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_floor_i32(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i32())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let _ = divan::black_box(a >> b);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_floor_i32_via_unchecked(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i32())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let _ = divan::black_box(unsafe { a.unchecked_shr(b as u32) });
+                }
+            });
+    }
 }
 
 mod ceil_to_multiple {

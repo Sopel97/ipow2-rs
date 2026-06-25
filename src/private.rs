@@ -40,6 +40,10 @@ where
     fn is_smaller_than_isize() -> bool;
     fn from_isize(val: isize) -> Self;
     fn as_isize(self) -> isize;
+    fn is_smaller_than_i32() -> bool;
+    fn from_i32(val: i32) -> Self;
+    fn as_i32(self) -> i32;
+    unsafe fn unchecked_shr(self, rhs: u32) -> Self;
 }
 
 macro_rules! impl_common_int {
@@ -107,6 +111,26 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn as_isize(self) -> isize {
             self as isize
+        }
+
+        #[inline(always)]
+        fn is_smaller_than_i32() -> bool {
+            <$t>::BITS < i32::BITS
+        }
+
+        #[inline(always)]
+        fn from_i32(val: i32) -> Self {
+            val as Self
+        }
+
+        #[inline(always)]
+        fn as_i32(self) -> i32 {
+            self as i32
+        }
+
+        #[inline(always)]
+        unsafe fn unchecked_shr(self, rhs: u32) -> Self {
+            unsafe { self.unchecked_shr(rhs) }
         }
     };
 }
