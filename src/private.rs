@@ -20,6 +20,15 @@ where
     type Unsigned: UnsignedInt;
 
     const BITS: u32;
+    const ZERO: Self;
+    const ONE: Self;
+    const MINUS_ONE: Self;
+    const MIN: Self;
+    const MAX: Self;
+    const IS_SIGNED: bool;
+    const IS_UNSIGNED: bool;
+    const SAFE_SHIFT: u32;
+    const IS_SMALLER_THAN_ISIZE: bool;
 
     fn is_power_of_two(self) -> bool;
     fn ilog2(self) -> u32;
@@ -28,19 +37,11 @@ where
     fn from_bool(b: bool) -> Self;
     fn is_zero(self) -> bool;
     fn is_not_zero(self) -> bool;
-    fn zero() -> Self;
-    fn one() -> Self;
-    fn minus_one() -> Self;
-    fn min_value() -> Self;
-    fn safe_shift_bits() -> u32;
-    fn is_signed() -> bool;
-    fn is_unsigned() -> bool;
     fn checked_shl(self, rhs: u32) -> Option<Self>;
     fn checked_add(self, rhs: Self) -> Option<Self>;
     fn mask(bits: u32) -> Self;
     unsafe fn unchecked_mask(bits: u32) -> Self;
     fn trailing_zeros(self) -> u32;
-    fn is_smaller_than_isize() -> bool;
     fn from_isize(val: isize) -> Self;
     fn as_isize(self) -> isize;
     fn is_smaller_than_i32() -> bool;
@@ -71,6 +72,11 @@ impl SignedInt for isize {}
 macro_rules! impl_common_int {
     ($t:ty) => {
         const BITS: u32 = <$t>::BITS;
+        const ZERO: Self = 0;
+        const ONE: Self = 1;
+        const MIN: Self = <$t>::MIN;
+        const MAX: Self = <$t>::MAX;
+        const IS_SMALLER_THAN_ISIZE: bool = <$t>::BITS < isize::BITS;
 
         #[inline(always)]
         fn ilog2(self) -> u32 {
@@ -93,21 +99,6 @@ macro_rules! impl_common_int {
         }
 
         #[inline(always)]
-        fn zero() -> Self {
-            0
-        }
-
-        #[inline(always)]
-        fn one() -> Self {
-            1
-        }
-
-        #[inline(always)]
-        fn min_value() -> Self {
-            <$t>::MIN
-        }
-
-        #[inline(always)]
         fn checked_shl(self, rhs: u32) -> Option<Self> {
             <$t>::checked_shl(self, rhs)
         }
@@ -120,11 +111,6 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn trailing_zeros(self) -> u32 {
             self.trailing_zeros()
-        }
-
-        #[inline(always)]
-        fn is_smaller_than_isize() -> bool {
-            <$t>::BITS < isize::BITS
         }
 
         #[inline(always)]
@@ -167,6 +153,11 @@ macro_rules! impl_common_int {
 macro_rules! impl_uint {
     ($t:ty, $t_sint:ty) => {
         impl_common_int!($t);
+        
+        const MINUS_ONE: Self = <$t>::MAX;
+        const IS_SIGNED: bool = false;
+        const IS_UNSIGNED: bool = true;
+        const SAFE_SHIFT: u32 = <$t>::BITS - 1;
 
         #[inline(always)]
         fn is_power_of_two(self) -> bool {
@@ -184,34 +175,14 @@ macro_rules! impl_uint {
         }
 
         #[inline(always)]
-        fn safe_shift_bits() -> u32 {
-            <$t>::BITS - 1
-        }
-
-        #[inline(always)]
-        fn minus_one() -> Self {
-            <$t>::MAX
-        }
-
-        #[inline(always)]
-        fn is_signed() -> bool {
-            false
-        }
-
-        #[inline(always)]
-        fn is_unsigned() -> bool {
-            true
-        }
-
-        #[inline(always)]
         fn mask(bits: u32) -> Self {
-            debug_assert!(bits <= Self::safe_shift_bits());
+            debug_assert!(bits <= Self::SAFE_SHIFT);
             (1 << bits) - 1
         }
 
         #[inline(always)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
-            debug_assert!(bits <= Self::safe_shift_bits());
+            debug_assert!(bits <= Self::SAFE_SHIFT);
             unsafe { 1.unchecked_shl(bits) - 1 }
         }
     };
@@ -220,6 +191,11 @@ macro_rules! impl_uint {
 macro_rules! impl_sint {
     ($t:ty, $t_uint:ty) => {
         impl_common_int!($t);
+        
+        const MINUS_ONE: Self = -1;
+        const IS_SIGNED: bool = true;
+        const IS_UNSIGNED: bool = false;
+        const SAFE_SHIFT: u32 = <$t>::BITS - 2;
 
         #[inline(always)]
         fn is_power_of_two(self) -> bool {
@@ -237,28 +213,8 @@ macro_rules! impl_sint {
         }
 
         #[inline(always)]
-        fn safe_shift_bits() -> u32 {
-            <$t>::BITS - 2
-        }
-
-        #[inline(always)]
-        fn minus_one() -> Self {
-            -1
-        }
-
-        #[inline(always)]
-        fn is_signed() -> bool {
-            true
-        }
-
-        #[inline(always)]
-        fn is_unsigned() -> bool {
-            false
-        }
-
-        #[inline(always)]
         fn mask(bits: u32) -> Self {
-            debug_assert!(bits <= Self::Unsigned::safe_shift_bits());
+            debug_assert!(bits <= Self::Unsigned::SAFE_SHIFT);
             // The mask computation needs to be done as unsigned, because it can overflow
             // to the sign bit before we subtract one.
             (((1 as $t_uint) << bits) - 1) as $t
@@ -266,7 +222,7 @@ macro_rules! impl_sint {
 
         #[inline(always)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
-            debug_assert!(bits <= Self::Unsigned::safe_shift_bits());
+            debug_assert!(bits <= Self::Unsigned::SAFE_SHIFT);
             // The mask computation needs to be done as unsigned, because it can overflow
             // to the sign bit before we subtract one.
             unsafe { ((1 as $t_uint).unchecked_shl(bits) - 1) as $t }

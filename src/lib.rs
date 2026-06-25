@@ -5,7 +5,7 @@ use std::{cmp, marker};
 mod private;
 
 // Expose the private Int trait as API to allow users to specify generic bounds.
-pub use crate::private::{Int, IntAtLeastAsWide, UnsignedInt, SignedInt};
+pub use crate::private::{Int, IntAtLeastAsWide, SignedInt, UnsignedInt};
 
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
@@ -74,7 +74,7 @@ impl UnboundedPow2 {
 
     #[inline(always)]
     pub fn is_safe<T: Int>(self) -> bool {
-        self.exponent as u32 <= T::safe_shift_bits()
+        self.exponent as u32 <= T::SAFE_SHIFT
     }
 
     #[inline(always)]
@@ -249,7 +249,7 @@ where
     #[inline(always)]
     pub fn value(self) -> T {
         // SAFETY: SafePow2 guarantees a valid shift
-        unsafe { T::one().unchecked_shl(self.exponent as u32) }
+        unsafe { T::ONE.unchecked_shl(self.exponent as u32) }
     }
 
     #[inline(always)]
@@ -666,7 +666,7 @@ where
         if rhs.is_safe::<T::Unsigned>() {
             self / rhs
         } else {
-            T::zero()
+            T::ZERO
         }
     }
 }
@@ -726,10 +726,10 @@ where
     fn unbounded_div_floor(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
             div_floor(self, rhs)
-        } else if T::is_unsigned() || self >= T::zero() {
-            T::zero()
+        } else if T::IS_UNSIGNED || self >= T::ZERO {
+            T::ZERO
         } else {
-            T::minus_one()
+            T::MINUS_ONE
         }
     }
 }
@@ -787,7 +787,7 @@ where
     #[inline(always)]
     fn div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
-        if T::is_smaller_than_isize() {
+        if T::IS_SMALLER_THAN_ISIZE {
             let mask = (1_isize << rhs.exponent) - 1;
             T::from_isize((self.as_isize() + mask) >> rhs.exponent)
         } else {
@@ -809,7 +809,7 @@ where
 
     #[inline(always)]
     fn div_ceil(self, rhs: Pow2<T>) -> Self::Output {
-        if L::is_smaller_than_isize() {
+        if L::IS_SMALLER_THAN_ISIZE {
             // SAFETY: SafePow2 guarantees a valid shift
             let mask = unsafe { 1_isize.unchecked_shl(rhs.exponent as u32) - 1 };
             // SAFETY: SafePow2 guarantees a valid shift
@@ -850,10 +850,10 @@ where
     fn unbounded_div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
             div_ceil(self, rhs)
-        } else if self <= T::zero() {
-            T::zero()
+        } else if self <= T::ZERO {
+            T::ZERO
         } else {
-            T::one()
+            T::ONE
         }
     }
 }
@@ -954,11 +954,11 @@ impl_trait_signed_unsigned!(
         type Output = Option<Self>;
 
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
-            debug_assert!(Self::is_signed());
+            debug_assert!(Self::IS_SIGNED);
             if rhs.is_safe::<<Self as Int>::Unsigned>() {
                 Some(floor_to_multiple(self, rhs))
-            } else if self >= Self::zero() {
-                Some(Self::zero())
+            } else if self >= Self::ZERO {
+                Some(Self::ZERO)
             } else {
                 None
             }
@@ -968,11 +968,11 @@ impl_trait_signed_unsigned!(
         type Output = Self;
 
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
-            debug_assert!(Self::is_unsigned());
+            debug_assert!(Self::IS_UNSIGNED);
             if rhs.is_safe::<Self>() {
                 floor_to_multiple(self, rhs)
             } else {
-                Self::zero()
+                Self::ZERO
             }
         }
     }
@@ -1059,8 +1059,8 @@ where
     fn unbounded_ceil_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
             checked_ceil_to_multiple(self, rhs)
-        } else if self <= T::zero() {
-            Some(T::zero())
+        } else if self <= T::ZERO {
+            Some(T::ZERO)
         } else {
             None
         }
