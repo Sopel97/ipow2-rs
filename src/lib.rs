@@ -303,6 +303,13 @@ where
     }
 }
 
+pub type SafePow2u8 = SafePow2<u8>;
+pub type SafePow2u16 = SafePow2<u16>;
+pub type SafePow2u32 = SafePow2<u32>;
+pub type SafePow2u64 = SafePow2<u64>;
+pub type SafePow2u128 = SafePow2<u128>;
+pub type SafePow2usize = SafePow2<usize>;
+
 impl_trait_signed_unsigned!(
     Div<Pow2>,
     signed_body {
