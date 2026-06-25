@@ -1,4 +1,5 @@
 use std::ops::{Div, DivAssign, Mul, MulAssign};
+use std::{cmp, marker};
 
 #[macro_use]
 mod private;
@@ -198,6 +199,107 @@ impl DivAssign for Pow2 {
     #[inline(always)]
     fn div_assign(&mut self, other: Pow2) {
         self.exponent -= other.exponent;
+    }
+}
+
+#[repr(transparent)]
+#[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
+pub struct SafePow2<T> {
+    exponent: u8,
+    _marker: marker::PhantomData<T>,
+}
+
+const _: () = assert!(size_of::<SafePow2<u128>>() == size_of::<u8>());
+const _: () = assert!(align_of::<SafePow2<u128>>() == align_of::<u8>());
+
+impl<T> SafePow2<T>
+where
+    T: Int<Unsigned = T>,
+{
+    #[inline(always)]
+    pub const fn from_exponent(exponent: u8) -> Result<Self, Pow2OutOfRange> {
+        if exponent as u32 >= T::BITS {
+            Err(Pow2OutOfRange)
+        } else {
+            Ok(Self {
+                exponent,
+                _marker: marker::PhantomData,
+            })
+        }
+    }
+
+    #[inline(always)]
+    pub fn align_of<U>() -> Result<Self, Pow2OutOfRange> {
+        Self::from_exponent(align_of::<U>().ilog2() as u8)
+    }
+
+    #[inline(always)]
+    pub fn align_of_val<U: ?Sized>(val: &U) -> Result<Self, Pow2OutOfRange> {
+        Self::from_exponent(align_of_val(val).ilog2() as u8)
+    }
+
+    #[inline(always)]
+    pub fn exponent(self) -> u8 {
+        self.exponent
+    }
+
+    #[inline(always)]
+    pub fn value(self) -> T {
+        T::one() << self.exponent
+    }
+
+    #[inline(always)]
+    pub fn mask(self) -> T {
+        T::mask(self.exponent as u32)
+    }
+
+    #[inline(always)]
+    pub fn checked_mul(self, other: Self) -> Option<Self> {
+        // The addition does not overflow because it's at most 127+127<=255 for u128
+        Self::from_exponent(self.exponent + other.exponent).ok()
+    }
+
+    #[inline(always)]
+    pub fn saturating_mul(self, other: Self) -> Self {
+        Self {
+            exponent: cmp::min(self.exponent + other.exponent, (T::BITS - 1) as u8),
+            _marker: marker::PhantomData,
+        }
+    }
+
+    #[inline(always)]
+    pub fn checked_div(self, other: Self) -> Option<Self> {
+        Some(Self {
+            exponent: self.exponent.checked_sub(other.exponent)?,
+            _marker: marker::PhantomData,
+        })
+    }
+
+    #[inline(always)]
+    pub fn saturating_div(self, other: Self) -> Self {
+        Self {
+            exponent: self.exponent.saturating_sub(other.exponent),
+            _marker: marker::PhantomData,
+        }
+    }
+}
+
+impl<T> From<SafePow2<T>> for Pow2 {
+    fn from(value: SafePow2<T>) -> Self {
+        Self {
+            exponent: value.exponent,
+        }
+    }
+}
+
+impl<T> TryFrom<Pow2> for SafePow2<T>
+where
+    T: Int<Unsigned = T>,
+{
+    type Error = Pow2OutOfRange;
+
+    fn try_from(value: Pow2) -> Result<Self, Self::Error> {
+        Self::from_exponent(value.exponent)
     }
 }
 
@@ -680,6 +782,34 @@ mod tests {
     }
 
     #[test]
+    fn pow2_from_safe_pow2() {
+        assert_eq!(
+            Pow2::from(SafePow2::<u32>::from_exponent(13).unwrap()).exponent(),
+            13
+        );
+        assert_eq!(
+            Pow2::from(SafePow2::<u128>::from_exponent(127).unwrap()).exponent(),
+            127
+        );
+    }
+
+    #[test]
+    fn safe_pow2_try_from_pow2() {
+        assert_eq!(
+            SafePow2::<u32>::try_from(Pow2::from_exponent(123)),
+            Err(Pow2OutOfRange)
+        );
+        assert_eq!(
+            SafePow2::<u64>::try_from(Pow2::from_exponent(123)),
+            Err(Pow2OutOfRange)
+        );
+        assert_eq!(
+            SafePow2::<u128>::try_from(Pow2::from_exponent(123)),
+            Ok(SafePow2::<u128>::from_exponent(123).unwrap())
+        );
+    }
+
+    #[test]
     fn as_int_all_types() {
         let p = Pow2::from_exponent(6);
         assert_eq!(p.as_i8(), 64);
@@ -747,6 +877,34 @@ mod tests {
             u128::try_from(Pow2::from_exponent(128)),
             Err(Pow2OutOfRange)
         );
+    }
+
+    #[test]
+    fn safe_pow2_from_exponent() {
+        let v = SafePow2::<u8>::from_exponent(7);
+        assert!(v.is_ok());
+        assert_eq!(v.unwrap().exponent(), 7);
+
+        let v = SafePow2::<u8>::from_exponent(8);
+        assert!(v.is_err());
+
+        let v = SafePow2::<u128>::from_exponent(127);
+        assert!(v.is_ok());
+        assert_eq!(v.unwrap().exponent(), 127);
+
+        let v = SafePow2::<u128>::from_exponent(128);
+        assert!(v.is_err());
+    }
+
+    #[test]
+    fn safe_pow2_value() {
+        let v = SafePow2::<u8>::from_exponent(0);
+        assert!(v.is_ok());
+        assert_eq!(v.unwrap().value(), 1);
+
+        let v = SafePow2::<u8>::from_exponent(7);
+        assert!(v.is_ok());
+        assert_eq!(v.unwrap().value(), 128);
     }
 
     #[test]
@@ -838,6 +996,22 @@ mod tests {
     }
 
     #[test]
+    fn safe_pow2_checked_mul_boundary() {
+        assert_eq!(
+            SafePow2::<u32>::from_exponent(12)
+                .unwrap()
+                .checked_mul(SafePow2::<u32>::from_exponent(19).unwrap()),
+            Some(SafePow2::<u32>::from_exponent(31).unwrap())
+        );
+        assert_eq!(
+            SafePow2::<u32>::from_exponent(12)
+                .unwrap()
+                .checked_mul(SafePow2::<u32>::from_exponent(20).unwrap()),
+            None
+        );
+    }
+
+    #[test]
     fn pow2_saturating_mul() {
         assert_eq!(
             Pow2::from_exponent(13).saturating_mul(Pow2::from_exponent(14)),
@@ -862,6 +1036,28 @@ mod tests {
         assert_eq!(
             Pow2::from_exponent(254).saturating_mul(Pow2::from_exponent(2)),
             Pow2::from_exponent(255)
+        );
+    }
+
+    #[test]
+    fn safe_pow2_saturating_mul_boundary() {
+        assert_eq!(
+            SafePow2::<u32>::from_exponent(12)
+                .unwrap()
+                .saturating_mul(SafePow2::<u32>::from_exponent(18).unwrap()),
+            SafePow2::<u32>::from_exponent(30).unwrap()
+        );
+        assert_eq!(
+            SafePow2::<u32>::from_exponent(12)
+                .unwrap()
+                .saturating_mul(SafePow2::<u32>::from_exponent(19).unwrap()),
+            SafePow2::<u32>::from_exponent(31).unwrap()
+        );
+        assert_eq!(
+            SafePow2::<u32>::from_exponent(12)
+                .unwrap()
+                .saturating_mul(SafePow2::<u32>::from_exponent(20).unwrap()),
+            SafePow2::<u32>::from_exponent(31).unwrap()
         );
     }
 
@@ -907,11 +1103,36 @@ mod tests {
     }
 
     #[test]
+    fn safe_pow2_checked_div_overflow() {
+        let lhs = SafePow2::<u32>::from_exponent(3).unwrap();
+        let rhs = SafePow2::<u32>::from_exponent(6).unwrap();
+        assert_eq!(lhs.checked_div(rhs), None);
+        assert_eq!(
+            rhs.checked_div(lhs),
+            Some(SafePow2::<u32>::from_exponent(3).unwrap())
+        );
+    }
+
+    #[test]
     fn pow2_saturating_div_overflow() {
         let lhs = Pow2::from_exponent(3);
         let rhs = Pow2::from_exponent(6);
         assert_eq!(lhs.saturating_div(rhs), Pow2::from_exponent(0));
         assert_eq!(rhs.saturating_div(lhs), Pow2::from_exponent(3));
+    }
+
+    #[test]
+    fn safe_pow2_saturating_div_overflow() {
+        let lhs = SafePow2::<u32>::from_exponent(3).unwrap();
+        let rhs = SafePow2::<u32>::from_exponent(6).unwrap();
+        assert_eq!(
+            lhs.saturating_div(rhs),
+            SafePow2::<u32>::from_exponent(0).unwrap()
+        );
+        assert_eq!(
+            rhs.saturating_div(lhs),
+            SafePow2::<u32>::from_exponent(3).unwrap()
+        );
     }
 
     #[test]

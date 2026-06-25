@@ -18,6 +18,8 @@ where
 {
     type Signed: Int;
     type Unsigned: Int;
+    
+    const BITS: u32;
 
     fn is_power_of_two(self) -> bool;
     fn ilog2(self) -> u32;
@@ -48,6 +50,8 @@ where
 
 macro_rules! impl_common_int {
     ($t:ty) => {
+        const BITS: u32 = <$t>::BITS;
+        
         #[inline(always)]
         fn ilog2(self) -> u32 {
             self.ilog2()
