@@ -5,8 +5,7 @@ use std::{cmp, marker};
 mod private;
 
 // Expose the private Int trait as API to allow users to specify generic bounds.
-pub use crate::private::Int;
-pub use crate::private::{IntAtLeastAsWide, UnsignedInt};
+pub use crate::private::{Int, IntAtLeastAsWide, UnsignedInt};
 
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
