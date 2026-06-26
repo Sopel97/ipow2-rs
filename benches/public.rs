@@ -5,29 +5,23 @@ fn main() {
 }
 
 trait MakeSample: Sized {
-    fn make_sample_val_lhs_val_rhs(i: usize) -> (Self, Self);
-    fn make_sample_val_lhs_unb_pow2_rhs(i: usize) -> (Self, UnboundedPow2);
+    fn make_sample_val_rhs(i: usize) -> Self;
+    fn make_sample_unb_pow2_rhs(i: usize) -> UnboundedPow2;
     fn make_sample_val_lhs(i: usize) -> Self;
-    fn make_sample_val_rhs() -> Self;
-    fn make_sample_unb_pow2_rhs() -> UnboundedPow2;
-    fn make_sample_pow2_rhs<T: Int>() -> Pow2<T::Unsigned>;
+    fn make_one_sample_val_rhs() -> Self;
+    fn make_one_sample_unb_pow2_rhs() -> UnboundedPow2;
+    fn make_one_sample_pow2_rhs<T: Int>() -> Pow2<T::Unsigned>;
 }
 
 macro_rules! samples_for_int {
     ($t:ty, $signed:literal) => {
         impl MakeSample for $t {
-            fn make_sample_val_lhs_val_rhs(i: usize) -> (Self, Self) {
-                (
-                    Self::make_sample_val_lhs(i),
-                    1 << (i % <$t>::BITS as usize) as u8,
-                )
+            fn make_sample_val_rhs(i: usize) -> Self {
+                1 << (i % <$t>::BITS as usize) as u8
             }
 
-            fn make_sample_val_lhs_unb_pow2_rhs(i: usize) -> (Self, UnboundedPow2) {
-                (
-                    Self::make_sample_val_lhs(i),
-                    UnboundedPow2::from_exponent((i % <$t>::BITS as usize) as u8),
-                )
+            fn make_sample_unb_pow2_rhs(i: usize) -> UnboundedPow2 {
+                UnboundedPow2::from_exponent((i % <$t>::BITS as usize) as u8)
             }
 
             fn make_sample_val_lhs(i: usize) -> Self {
@@ -42,15 +36,15 @@ macro_rules! samples_for_int {
                 }
             }
 
-            fn make_sample_unb_pow2_rhs() -> UnboundedPow2 {
+            fn make_one_sample_unb_pow2_rhs() -> UnboundedPow2 {
                 UnboundedPow2::from_exponent((<$t>::BITS / 3) as u8)
             }
 
-            fn make_sample_val_rhs() -> Self {
+            fn make_one_sample_val_rhs() -> Self {
                 1 << (<$t>::BITS / 3)
             }
 
-            fn make_sample_pow2_rhs<T: Int>() -> Pow2<T::Unsigned> {
+            fn make_one_sample_pow2_rhs<T: Int>() -> Pow2<T::Unsigned> {
                 Pow2::from_exponent((<$t>::BITS / 3) as u8).unwrap()
             }
         }
@@ -68,7 +62,7 @@ samples_for_int!(u32, false);
 samples_for_int!(u64, false);
 samples_for_int!(u128, false);
 
-const INPUT_SAMPLE_COUNT: usize = 1000;
+const INPUT_SAMPLE_COUNT: usize = 1024;
 const DIVAN_SAMPLE_SIZE: u32 = 1000;
 
 const CONST_UNB_POW2: UnboundedPow2 = UnboundedPow2::from_exponent(6);
@@ -79,21 +73,34 @@ macro_rules! const_int {
     };
 }
 
-fn make_samples_val_lhs_unb_pow2_rhs<T: MakeSample>() -> [(T, UnboundedPow2); INPUT_SAMPLE_COUNT] {
-    std::array::from_fn(T::make_sample_val_lhs_unb_pow2_rhs)
+fn make_samples_val_lhs_unb_pow2_rhs<T: MakeSample>() -> ([T; INPUT_SAMPLE_COUNT], [UnboundedPow2; INPUT_SAMPLE_COUNT]) {
+    (
+        std::array::from_fn(T::make_sample_val_lhs),
+        std::array::from_fn(T::make_sample_unb_pow2_rhs),
+    )
 }
 
-fn make_samples_val_lhs_pow2_rhs<T: MakeSample + Int>() -> [(T, Pow2<T::Unsigned>); INPUT_SAMPLE_COUNT]
+fn make_samples_val_lhs_pow2_rhs<T: MakeSample + Int>() -> ([T; INPUT_SAMPLE_COUNT], [Pow2<T::Unsigned>; INPUT_SAMPLE_COUNT])
 where Pow2<<T as Int>::Unsigned>: TryFrom<UnboundedPow2, Error=Pow2OutOfRange> {
-    std::array::from_fn(T::make_sample_val_lhs_unb_pow2_rhs).map(|(a, b)| (a, Pow2::try_from(b).unwrap()))
+    (
+        std::array::from_fn(T::make_sample_val_lhs),
+        std::array::from_fn(T::make_sample_unb_pow2_rhs).map(|b| Pow2::try_from(b).unwrap())
+    )
 }
 
-fn make_samples_val_lhs_val_rhs<T: MakeSample>() -> [(T, T); INPUT_SAMPLE_COUNT] {
-    std::array::from_fn(T::make_sample_val_lhs_val_rhs)
+fn make_samples_val_lhs_val_rhs<T: MakeSample>() -> ([T; INPUT_SAMPLE_COUNT], [T; INPUT_SAMPLE_COUNT]) {
+    (
+        std::array::from_fn(T::make_sample_val_lhs),
+        std::array::from_fn(T::make_sample_val_rhs),
+    )
 }
 
 fn make_samples_val_lhs<T: MakeSample>() -> [T; INPUT_SAMPLE_COUNT] {
     std::array::from_fn(T::make_sample_val_lhs)
+}
+
+fn make_samples_output<T: Default + Copy>() -> [T; INPUT_SAMPLE_COUNT] {
+    [T::default(); INPUT_SAMPLE_COUNT]
 }
 
 macro_rules! make_bench_single {
@@ -101,11 +108,15 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_samples_val_lhs_unb_pow2_rhs::<$t>())
-                .bench_values(|inputs| {
-                    for (a, b) in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs_unb_pow2_rhs::<$t>(), make_samples_output()))
+                .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
+                    let len = lhs.len();
+                    assert!(rhs.len() >= len);
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], rhs[i]);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -114,11 +125,15 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_samples_val_lhs_pow2_rhs::<$t>())
-                .bench_values(|inputs| {
-                    for (a, b) in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs_pow2_rhs::<$t>(), make_samples_output()))
+                .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
+                    let len = lhs.len();
+                    assert!(rhs.len() >= len);
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], rhs[i]);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -127,11 +142,14 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_sample_unb_pow2_rhs()))
-                .bench_values(|(inputs, b)| {
-                    for a in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_unb_pow2_rhs(), make_samples_output()))
+                .bench_refs(|&mut (lhs, b, mut outputs)| {
+                    let len = lhs.len();
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], b);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -140,11 +158,14 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_sample_pow2_rhs::<$t>()))
-                .bench_values(|(inputs, b)| {
-                    for a in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_pow2_rhs::<$t>(), make_samples_output()))
+                .bench_refs(|&mut (lhs, b, mut outputs)| {
+                    let len = lhs.len();
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], b);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -153,11 +174,14 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_sample_val_rhs()))
-                .bench_values(|(inputs, b)| {
-                    for a in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_val_rhs(), make_samples_output()))
+                .bench_refs(|&mut (lhs, b, mut outputs)| {
+                    let len = lhs.len();
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], b);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -166,11 +190,15 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_samples_val_lhs_val_rhs::<$t>())
-                .bench_values(|inputs| {
-                    for (a, b) in inputs {
-                        divan::black_box($block(a, b));
+                .with_inputs(|| (make_samples_val_lhs_val_rhs::<$t>(), make_samples_output()))
+                .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
+                    let len = lhs.len();
+                    assert!(rhs.len() >= len);
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i], rhs[i]);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };
@@ -179,11 +207,14 @@ macro_rules! make_bench_single {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
             bencher
-                .with_inputs(|| make_samples_val_lhs::<$t>())
-                .bench_values(|inputs| {
-                    for a in inputs {
-                        divan::black_box($block(a));
+                .with_inputs(|| (make_samples_val_lhs::<$t>(), make_samples_output()))
+                .bench_refs(|&mut (lhs, mut outputs)| {
+                    let len = lhs.len();
+                    assert!(outputs.len() >= len);
+                    for i in 0..len {
+                        outputs[i] = $block(lhs[i]);
                     }
+                    std::hint::black_box(&mut outputs);
                 });
         }
     };

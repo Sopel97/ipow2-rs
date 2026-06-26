@@ -1,5 +1,4 @@
-﻿use std::hint::black_box;
-use ipow2::Pow2;
+﻿use ipow2::Pow2;
 
 #[unsafe(no_mangle)]
 pub fn div_floor_i8_pow2(lhs: i8, rhs: Pow2<u8>) -> i8 {
