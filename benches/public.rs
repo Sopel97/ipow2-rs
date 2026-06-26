@@ -286,6 +286,7 @@ mod div {
 
     #[rustfmt::skip]
     make_bench_for_all_ints!(
+        baseline_identity        : for_const          => |a|    a,
         unb_pow2_div_floor       : for_unb_pow2       => |a, b| ipow2::div_floor(a, b),
         unb_pow2_div_floor_const : for_const          => |a|    ipow2::div_floor(a, CONST_UNB_POW2),
         unb_pow2_div_floor_reuse : for_unb_pow2_reuse => |a, b| ipow2::div_floor(a, b),
@@ -315,6 +316,7 @@ mod mul {
 
     #[rustfmt::skip]
     make_bench_for_all_ints!(
+        baseline_identity  : for_const          => |a|    a,
         unb_pow2_mul       : for_unb_pow2       => |a, b| a * b,
         unb_pow2_mul_const : for_const          => |a|    a * CONST_UNB_POW2,
         unb_pow2_mul_reuse : for_unb_pow2_reuse => |a, b| a * b,
@@ -332,6 +334,7 @@ mod round {
 
     #[rustfmt::skip]
     make_bench_for_all_ints!(
+        baseline_identity                : for_const          => |a|    a,
         unb_pow2_floor_to_multiple       : for_unb_pow2       => |a, b| ipow2::floor_to_multiple(a, b),
         unb_pow2_floor_to_multiple_const : for_const          => |a|    ipow2::floor_to_multiple(a, CONST_UNB_POW2),
         unb_pow2_floor_to_multiple_reuse : for_unb_pow2_reuse => |a, b| ipow2::floor_to_multiple(a, b),
@@ -355,6 +358,7 @@ mod modulo {
 
     #[rustfmt::skip]
     make_bench_for_all_ints!(
+        baseline_identity             : for_const          => |a|    a,
         unb_pow2_is_multiple_of       : for_unb_pow2       => |a, b| ipow2::is_multiple_of(a, b),
         unb_pow2_is_multiple_of_const : for_const          => |a|    ipow2::is_multiple_of(a, CONST_UNB_POW2),
         unb_pow2_is_multiple_of_reuse : for_unb_pow2_reuse => |a, b| ipow2::is_multiple_of(a, b),
