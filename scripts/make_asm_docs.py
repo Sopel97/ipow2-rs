@@ -10,7 +10,7 @@ ASM_DIR = Path("asm")
 ASM_DIR.mkdir(exist_ok=True)
 
 
-CARGO_ASM_LIST_CMD = [
+CARGO_ASM_LIST_CMD: list[str] = [
     "cargo",
     "asm",
     "--bench",
@@ -19,7 +19,7 @@ CARGO_ASM_LIST_CMD = [
 
 
 # Things we don't want to dump.
-SKIP_PREFIXES = (
+SKIP_PREFIXES: tuple[str, ...] = (
     "core::",
     "std::",
     "alloc::",
@@ -33,17 +33,18 @@ WINDOWS_AARCH64_TARGET = "aarch64-pc-windows-msvc"
 LINUX_X86_64_TARGET = "x86_64-unknown-linux-gnu"
 LINUX_AARCH64_TARGET = "aarch64-unknown-linux-gnu"
 
-CPUS_X86_64 = ["znver4", "raptorlake"]
-CPUS_AARCH64 = ["apple-m1"]
+CPUS_X86_64: list[str] = ["znver4", "raptorlake"]
+CPUS_AARCH64: list[str] = ["apple-m1"]
 
 ASM_FILEPATH_X86_64 = "./docs/asm-x86_64.md"
 ASM_FILEPATH_AARCH64 = "./docs/asm-aarch64.md"
 
-def make_mca_filepath(cpu):
+
+def make_mca_filepath(cpu: str) -> str:
     return f"./docs/mca-{cpu}.md"
 
 
-def get_host_os():
+def get_host_os() -> str:
     sysname = platform.system().lower()
     if "windows" in sysname:
         return "windows"
@@ -52,13 +53,12 @@ def get_host_os():
     raise RuntimeError(f"Unsupported OS: {sysname}")
 
 
-def get_target_triples(host_os: str):
+def get_target_triples(host_os: str) -> list[str]:
     """
     Returns the most reasonable Rust target triples for:
     - x86_64 native
     - aarch64 native (if applicable ecosystem exists)
     """
-
     if host_os == "windows":
         return [
             WINDOWS_X86_64_TARGET,
@@ -74,7 +74,7 @@ def get_target_triples(host_os: str):
     raise RuntimeError(f"No targets defined for OS: {host_os}")
 
 
-def get_installed_targets():
+def get_installed_targets() -> set[str]:
     result = subprocess.run(
         ["rustup", "target", "list", "--installed"],
         capture_output=True,
@@ -84,9 +84,12 @@ def get_installed_targets():
     return set(result.stdout.splitlines())
 
 
-def check_targets(installed, targets):
-    available = []
-    missing = []
+def check_targets(
+    installed: set[str],
+    targets: list[str],
+) -> tuple[list[str], list[str]]:
+    available: list[str] = []
+    missing: list[str] = []
 
     for t in targets:
         if t in installed:
@@ -97,16 +100,17 @@ def check_targets(installed, targets):
     return available, missing
 
 
-def strip_trailing_empty_lines(lines: list[str]):
-    # remove trailing empty lines first
+def strip_trailing_empty_lines(lines: list[str]) -> None:
     while lines and not lines[-1].strip():
         lines.pop()
 
 
-def extract_llvm_mca_legends(stdout: str):
-    remaining_lines = []
-    instruction_legend_lines = []
-    resources_legend_lines = []
+def extract_llvm_mca_legends(
+    stdout: str,
+) -> tuple[str, str, str]:
+    remaining_lines: list[str] = []
+    instruction_legend_lines: list[str] = []
+    resources_legend_lines: list[str] = []
 
     lines_output_ptr = remaining_lines
 
@@ -123,17 +127,23 @@ def extract_llvm_mca_legends(stdout: str):
                 lines_output_ptr = remaining_lines
 
             # Do not duplicate empty lines
-            if not curr_line_is_empty or len(lines_output_ptr) == 0 or (lines_output_ptr[-1] != "" and not lines_output_ptr[-1].isspace()):
+            if not curr_line_is_empty or len(lines_output_ptr) == 0 or (
+                lines_output_ptr[-1] != "" and not lines_output_ptr[-1].isspace()
+            ):
                 lines_output_ptr.append(line)
 
     strip_trailing_empty_lines(remaining_lines)
     strip_trailing_empty_lines(instruction_legend_lines)
     strip_trailing_empty_lines(resources_legend_lines)
 
-    return "\n".join(remaining_lines), "\n".join(instruction_legend_lines), "\n".join(resources_legend_lines)
+    return (
+        "\n".join(remaining_lines),
+        "\n".join(instruction_legend_lines),
+        "\n".join(resources_legend_lines),
+    )
 
 
-def run_llvm_mca(asm: str, arch: str, cpu: str):
+def run_llvm_mca(asm: str, arch: str, cpu: str) -> str:
     # NOTE: We can only reliably do a single iteration because we can't control register allocations
     #       and it may lead to loop-carried dependencies that we don't want.
     p = subprocess.run(
@@ -142,7 +152,7 @@ def run_llvm_mca(asm: str, arch: str, cpu: str):
         text=True,
         capture_output=True,
     )
-    
+
     if p.returncode != 0:
         print("Command failed!")
         print("STDOUT:\n", p.stdout)
@@ -152,7 +162,7 @@ def run_llvm_mca(asm: str, arch: str, cpu: str):
     return p.stdout
 
 
-def cargo_asm_list():
+def cargo_asm_list() -> str:
     return subprocess.run(
         CARGO_ASM_LIST_CMD,
         text=True,
@@ -160,7 +170,7 @@ def cargo_asm_list():
     ).stdout
 
 
-def cargo_asm(number, name, target):
+def cargo_asm(number: str, name: str, target: str) -> str:
     cargo_asm_cmd = [
         "cargo",
         "asm",
@@ -187,10 +197,10 @@ def cargo_asm(number, name, target):
     return p.stdout
 
 
-def list_functions():
+def list_functions() -> list[tuple[str, str]]:
     output = cargo_asm_list()
 
-    functions = []
+    functions: list[tuple[str, str]] = []
 
     for line in output.splitlines():
         # Matches:
@@ -210,65 +220,70 @@ def list_functions():
     return functions
 
 
-def get_function_asm(number, name, target):
+def get_function_asm(number: str, name: str, target: str) -> str:
     return cargo_asm(number, name, target)
 
 
-def get_llvm_mca(asm, arch, cpu):
+def get_llvm_mca(asm: str, arch: str, cpu: str) -> str:
     return run_llvm_mca(asm, arch, cpu)
 
 
 def strip_trailing_ret(s: str) -> str:
     lines = s.splitlines()
 
-    # remove trailing empty lines first
     while lines and not lines[-1].strip():
         lines.pop()
 
-    # now check last instruction
     if lines and lines[-1].strip().startswith("ret"):
         lines.pop()
 
     return "\n".join(lines)
 
 
-def natural_key(s: str):
-    # splits into ["div", 16, "pow", 2] style chunks
+def natural_key(s: str) -> list[int | str]:
     return [
         int(part) if part.isdigit() else part
         for part in re.split(r"(\d+)", s)
     ]
 
 
-def sort_functions(functions):
+def sort_functions(functions: list[tuple[str, str]]) -> list[tuple[str, str]]:
     return sorted(functions, key=lambda x: natural_key(x[1]))
 
 
-def choose_x86_64_target(targets):
+def choose_x86_64_target(targets: list[str]) -> str | None:
     for target in targets:
         if "x86_64" in target:
             return target
-    
-def choose_aarch64_target(targets):
+    return None
+
+
+def choose_aarch64_target(targets: list[str]) -> str | None:
     for target in targets:
         if "aarch64" in target:
             return target
+    return None
 
 
-def produce_docs(target_x86_64, target_aarch64, cpus_x86_64, cpus_aarch64):
+def produce_docs(
+    target_x86_64: str,
+    target_aarch64: str,
+    cpus_x86_64: list[str],
+    cpus_aarch64: list[str],
+) -> None:
     functions = list_functions()
     functions = sort_functions(functions)
 
     print(f"Found {len(functions)} functions")
 
-    jobs = [
+    jobs: list[tuple[str, str, list[str], str]] = [
         # march    target         cpus         asm filepath
-        ("x86-64", target_x86_64, cpus_x86_64, ASM_FILEPATH_X86_64),
+        ("x86-64",  target_x86_64,  cpus_x86_64,  ASM_FILEPATH_X86_64),
         ("aarch64", target_aarch64, cpus_aarch64, ASM_FILEPATH_AARCH64),
     ]
 
     for (march, target, cpus, asm_filepath) in jobs:
-        asms = dict()
+        asms: dict[str, str] = {}
 
         for (number, fn) in functions:
             print(f"Extracting {march} asm for {fn}")
@@ -286,10 +301,10 @@ def produce_docs(target_x86_64, target_aarch64, cpus_x86_64, cpus_aarch64):
 
         for cpu in cpus:
             with open(make_mca_filepath(cpu), "w", encoding="utf-8") as outfile:
-                instructions_legend = None
-                resources_legend = None
+                instructions_legend: str = ""
+                resources_legend: str = ""
 
-                mcas = dict()
+                mcas: dict[str, str] = {}
                 for fn, asm in asms.items():
                     print(f"Extracting mca for {fn} on {cpu}")
 
@@ -304,7 +319,7 @@ def produce_docs(target_x86_64, target_aarch64, cpus_x86_64, cpus_aarch64):
 
                 outfile.write("# Resources:\n")
                 outfile.write(f"```\n{resources_legend}\n```\n")
-                
+
                 outfile.write("# Functions:\n")
 
                 for fn, mca in mcas.items():
@@ -312,7 +327,7 @@ def produce_docs(target_x86_64, target_aarch64, cpus_x86_64, cpus_aarch64):
                     outfile.write(f"```asm\n{mca}\n```\n")
 
 
-def main():
+def main() -> None:
     host_os = get_host_os()
     print(f"Detected OS: {host_os}")
 
@@ -347,17 +362,17 @@ def main():
 
     if missing:
         return
-    
+
     target_x86_64 = choose_x86_64_target(available)
     if target_x86_64 is None:
         print("Unexpectedly missing an x86_64 target")
         return
-    
+
     target_aarch64 = choose_aarch64_target(available)
     if target_aarch64 is None:
         print("Unexpectedly missing an aarch64 target")
         return
-    
+
     produce_docs(
         target_x86_64=target_x86_64,
         target_aarch64=target_aarch64,
