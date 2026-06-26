@@ -107,8 +107,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_unb_pow2 => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let inputs = make_samples_val_lhs_unb_pow2_rhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs_unb_pow2_rhs::<$t>(), make_samples_output()))
+                .with_inputs(|| (inputs, make_samples_output()))
                 .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
                     let len = lhs.len();
                     assert!(rhs.len() >= len);
@@ -124,8 +125,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_pow2 => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let inputs = make_samples_val_lhs_pow2_rhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs_pow2_rhs::<$t>(), make_samples_output()))
+                .with_inputs(|| (inputs, make_samples_output()))
                 .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
                     let len = lhs.len();
                     assert!(rhs.len() >= len);
@@ -141,8 +143,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_unb_pow2_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_unb_pow2_rhs(), make_samples_output()))
+                .with_inputs(|| (lhs, <$t>::make_one_sample_unb_pow2_rhs(), make_samples_output()))
                 .bench_refs(|&mut (lhs, b, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
@@ -157,8 +160,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_pow2_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_pow2_rhs::<$t>(), make_samples_output()))
+                .with_inputs(|| (lhs, <$t>::make_one_sample_pow2_rhs::<$t>(), make_samples_output()))
                 .bench_refs(|&mut (lhs, b, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
@@ -173,8 +177,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_std_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), <$t>::make_one_sample_val_rhs(), make_samples_output()))
+                .with_inputs(|| (lhs, <$t>::make_one_sample_val_rhs(), make_samples_output()))
                 .bench_refs(|&mut (lhs, b, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
@@ -189,8 +194,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_std => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let inputs = make_samples_val_lhs_val_rhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs_val_rhs::<$t>(), make_samples_output()))
+                .with_inputs(|| (inputs, make_samples_output()))
                 .bench_refs(|&mut ((lhs, rhs), mut outputs)| {
                     let len = lhs.len();
                     assert!(rhs.len() >= len);
@@ -206,8 +212,9 @@ macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_const => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
         fn $func_name(bencher: divan::Bencher) {
+            let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (make_samples_val_lhs::<$t>(), make_samples_output()))
+                .with_inputs(|| (lhs, make_samples_output()))
                 .bench_refs(|&mut (lhs, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
