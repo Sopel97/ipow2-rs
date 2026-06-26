@@ -160,7 +160,7 @@ def cargo_asm_list():
     ).stdout
 
 
-def cargo_asm(name, target):
+def cargo_asm(number, name, target):
     cargo_asm_cmd = [
         "cargo",
         "asm",
@@ -169,7 +169,7 @@ def cargo_asm(name, target):
         "--intel",
         "--bench",
         "asm",
-        name,
+        number,
     ]
 
     p = subprocess.run(
@@ -177,13 +177,13 @@ def cargo_asm(name, target):
         text=True,
         capture_output=True,
     )
-    
+
     if p.returncode != 0:
         print("Command failed!")
         print("STDOUT:\n", p.stdout)
         print("STDERR:\n", p.stderr)
         raise RuntimeError("cargo asm call failed")
-    
+
     return p.stdout
 
 
@@ -195,22 +195,23 @@ def list_functions():
     for line in output.splitlines():
         # Matches:
         #  2 "div_floor_i128_pow2" [29]
-        m = re.match(r'\s*\d+\s+"([^"]+)"', line)
+        m = re.match(r'\s*(\d+)\s+"([^"]+)"', line)
         if not m:
             continue
 
-        name = m.group(1)
+        number = m.group(1)
+        name = m.group(2)
 
         if name.startswith(SKIP_PREFIXES):
             continue
 
-        functions.append(name)
+        functions.append((number, name))
 
     return functions
 
 
-def get_function_asm(name, target):
-    return cargo_asm(name, target)
+def get_function_asm(number, name, target):
+    return cargo_asm(number, name, target)
 
 
 def get_llvm_mca(asm, arch, cpu):
@@ -239,8 +240,8 @@ def natural_key(s: str):
     ]
 
 
-def sort_function_names(names):
-    return sorted(names, key=natural_key)
+def sort_functions(functions):
+    return sorted(functions, key=lambda x: natural_key(x[1]))
 
 
 def choose_x86_64_target(targets):
@@ -256,93 +257,59 @@ def choose_aarch64_target(targets):
 
 def produce_docs(target_x86_64, target_aarch64, cpus_x86_64, cpus_aarch64):
     functions = list_functions()
-    functions = sort_function_names(functions)
+    functions = sort_functions(functions)
 
     print(f"Found {len(functions)} functions")
 
-    asms_x86_64 = dict()
-    asms_aarch64 = dict()
-    
-    for fn in functions:
-        print(f"Extracting x86_64 asm for {fn}")
+    jobs = [
+        # march    target         cpus         asm filepath
+        ("x86-64", target_x86_64, cpus_x86_64, ASM_FILEPATH_X86_64),
+        ("aarch64", target_aarch64, cpus_aarch64, ASM_FILEPATH_AARCH64),
+    ]
 
-        asm_x86_64 = get_function_asm(fn, target_x86_64)
-        asm_x86_64 = strip_trailing_ret(asm_x86_64)
+    for (march, target, cpus, asm_filepath) in jobs:
+        asms = dict()
 
-        asms_x86_64[fn] = asm_x86_64
-        
-        print(f"Extracting aarch64 asm for {fn}")
+        for (number, fn) in functions:
+            print(f"Extracting {march} asm for {fn}")
 
-        asm_aarch64 = get_function_asm(fn, target_aarch64)
-        asm_aarch64 = strip_trailing_ret(asm_aarch64)
+            asm = get_function_asm(number, fn, target)
+            asm = strip_trailing_ret(asm)
 
-        asms_aarch64[fn] = asm_aarch64
+            asms[fn] = asm
 
-    print(f"Writing x86_64 asm to {ASM_FILEPATH_X86_64}")
-    with open(ASM_FILEPATH_X86_64, "w", encoding="utf-8") as outfile:
-        for fn, asm in asms_x86_64.items():
-            outfile.write(f"## `{fn}`\n")
-            outfile.write(f"```asm\n{asm}\n```\n")
-
-    print(f"Writing aarch64 asm to {ASM_FILEPATH_AARCH64}")
-    with open(ASM_FILEPATH_AARCH64, "w", encoding="utf-8") as outfile:
-        for fn, asm in asms_aarch64.items():
-            outfile.write(f"## `{fn}`\n")
-            outfile.write(f"```asm\n{asm}\n```\n")
-
-    for cpu_x86_64 in cpus_x86_64:
-        with open(make_mca_filepath(cpu_x86_64), "w", encoding="utf-8") as outfile:
-            instructions_legend = None
-            resources_legend = None
-
-            mcas = dict()
-            for fn, asm in asms_x86_64.items():
-                print(f"Extracting mca for {fn} on {cpus_x86_64}")
-
-                mca = get_llvm_mca(asm, "x86-64", cpu_x86_64)
-
-                mca, instructions_legend, resources_legend = extract_llvm_mca_legends(mca)
-
-                mcas[fn] = mca
-
-            outfile.write("# Instruction Info:\n")
-            outfile.write(f"```\n{instructions_legend}\n```\n")
-
-            outfile.write("# Resources:\n")
-            outfile.write(f"```\n{resources_legend}\n```\n")
-            
-            outfile.write("# Functions:\n")
-
-            for fn, mca in mcas.items():
+        print(f"Writing {march} asm to {asm_filepath}")
+        with open(asm_filepath, "w", encoding="utf-8") as outfile:
+            for fn, asm in asms.items():
                 outfile.write(f"## `{fn}`\n")
-                outfile.write(f"```asm\n{mca}\n```\n")
+                outfile.write(f"```asm\n{asm}\n```\n")
 
-    for cpu_aarch64 in cpus_aarch64:
-        with open(make_mca_filepath(cpu_aarch64), "w", encoding="utf-8") as outfile:
-            instructions_legend = None
-            resources_legend = None
+        for cpu in cpus:
+            with open(make_mca_filepath(cpu), "w", encoding="utf-8") as outfile:
+                instructions_legend = None
+                resources_legend = None
 
-            mcas = dict()
-            for fn, asm in asms_aarch64.items():
-                print(f"Extracting mca for {fn} on {cpus_aarch64}")
+                mcas = dict()
+                for fn, asm in asms.items():
+                    print(f"Extracting mca for {fn} on {cpu}")
 
-                mca = get_llvm_mca(asm, "aarch64", cpu_aarch64)
+                    mca = get_llvm_mca(asm, march, cpu)
 
-                mca, instructions_legend, resources_legend = extract_llvm_mca_legends(mca)
+                    mca, instructions_legend, resources_legend = extract_llvm_mca_legends(mca)
 
-                mcas[fn] = mca
+                    mcas[fn] = mca
 
-            outfile.write("# Instruction Info:\n")
-            outfile.write(f"```\n{instructions_legend}\n```\n")
+                outfile.write("# Instruction Info:\n")
+                outfile.write(f"```\n{instructions_legend}\n```\n")
 
-            outfile.write("# Resources:\n")
-            outfile.write(f"```\n{resources_legend}\n```\n")
-            
-            outfile.write("# Functions:\n")
+                outfile.write("# Resources:\n")
+                outfile.write(f"```\n{resources_legend}\n```\n")
+                
+                outfile.write("# Functions:\n")
 
-            for fn, mca in mcas.items():
-                outfile.write(f"## `{fn}`\n")
-                outfile.write(f"```asm\n{mca}\n```\n")
+                for fn, mca in mcas.items():
+                    outfile.write(f"## `{fn}`\n")
+                    outfile.write(f"```asm\n{mca}\n```\n")
 
 
 def main():
