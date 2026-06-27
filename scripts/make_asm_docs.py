@@ -36,12 +36,13 @@ LINUX_AARCH64_TARGET = "aarch64-unknown-linux-gnu"
 CPUS_X86_64: list[str] = ["znver4", "raptorlake"]
 CPUS_AARCH64: list[str] = ["apple-m1"]
 
-ASM_FILEPATH_X86_64 = "./docs/asm-x86_64.md"
-ASM_FILEPATH_AARCH64 = "./docs/asm-aarch64.md"
-
 
 def make_mca_filepath(cpu: str) -> str:
     return f"./docs/mca-{cpu}.md"
+
+
+def make_asm_filepath(target: str, cpu: str) -> str:
+    return f"./docs/asm-{target}-{cpu}.md"
 
 
 def get_host_os() -> str:
@@ -278,13 +279,14 @@ def produce_docs(
 
     jobs: list[tuple[str, str, list[str], str]] = [
         # march    target         cpus         asm filepath
-        ("x86-64",  target_x86_64,  cpus_x86_64,  ASM_FILEPATH_X86_64),
-        ("aarch64", target_aarch64, cpus_aarch64, ASM_FILEPATH_AARCH64),
+        ("x86-64",  target_x86_64,  cpus_x86_64),
+        ("aarch64", target_aarch64, cpus_aarch64),
     ]
 
-    for (march, target, cpus, asm_filepath) in jobs:
+    for (march, target, cpus) in jobs:
         asms: dict[str, str] = {}
 
+        # Generic asm for no specific cpu on this target
         for (number, fn) in functions:
             print(f"Extracting {march} asm for {fn}")
 
@@ -293,6 +295,7 @@ def produce_docs(
 
             asms[fn] = asm
 
+        asm_filepath = make_asm_filepath(target, "generic")
         print(f"Writing {march} asm to {asm_filepath}")
         with open(asm_filepath, "w", encoding="utf-8") as outfile:
             for fn, asm in asms.items():
@@ -300,6 +303,22 @@ def produce_docs(
                 outfile.write(f"```asm\n{asm}\n```\n")
 
         for cpu in cpus:
+            # Asm for this specific cpu
+            for (number, fn) in functions:
+                print(f"Extracting {march} asm for {fn}")
+
+                asm = get_function_asm(number, fn, target)
+                asm = strip_trailing_ret(asm)
+
+                asms[fn] = asm
+
+            asm_filepath = make_asm_filepath(target, cpu)
+            print(f"Writing {march} asm to {asm_filepath}")
+            with open(asm_filepath, "w", encoding="utf-8") as outfile:
+                for fn, asm in asms.items():
+                    outfile.write(f"## `{fn}`\n")
+                    outfile.write(f"```asm\n{asm}\n```\n")
+
             with open(make_mca_filepath(cpu), "w", encoding="utf-8") as outfile:
                 instructions_legend: str = ""
                 resources_legend: str = ""

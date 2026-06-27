@@ -561,19 +561,21 @@ checked_ceil_to_multiple_u128_unb_pow2:
 ## `checked_div_ceil_i8_unb_pow2`
 ```asm
 checked_div_ceil_i8_unb_pow2:
-	mov eax, edx
-	cmp al, 7
+	mov r8d, edx
+	cmp r8b, 7
 	ja .LBB39_2
-	mov r8d, ecx
-	mov r9, -1
-	mov ecx, eax
-	shl r9, cl
-	not r9
-	movsx rdx, r8b
-	add rdx, r9
-	sar rdx, cl
+	mov eax, ecx
+	mov r9b, -1
+	mov ecx, r8d
+	shl r9b, cl
+	not r9b
+	mov edx, eax
+	sar dl, cl
+	and r9b, al
+	cmp r9b, 1
+	sbb dl, -1
 .LBB39_2:
-	cmp al, 8
+	cmp r8b, 8
 	setb al
 ```
 ## `checked_div_ceil_i16_unb_pow2`
@@ -583,13 +585,16 @@ checked_div_ceil_i16_unb_pow2:
 	cmp dl, 15
 	ja .LBB36_1
 	mov edx, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, eax
-	shl r8, cl
-	not r8
-	movsx rdx, dx
-	add rdx, r8
-	sar rdx, cl
+	shl r8d, cl
+	not r8d
+	movsx edx, dx
+	mov r9d, edx
+	sar edx, cl
+	and r8d, r9d
+	cmp r8w, 1
+	sbb dx, -1
 	mov ax, 1
 	ret
 .LBB36_1:
@@ -598,17 +603,18 @@ checked_div_ceil_i16_unb_pow2:
 ## `checked_div_ceil_i32_unb_pow2`
 ```asm
 checked_div_ceil_i32_unb_pow2:
-	mov eax, edx
 	cmp dl, 31
 	ja .LBB37_1
-	mov edx, ecx
-	mov r8, -1
-	mov ecx, eax
-	shl r8, cl
-	not r8
-	movsxd rdx, edx
-	add rdx, r8
-	sar rdx, cl
+	mov eax, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov edx, eax
+	sar edx, cl
+	and r9d, eax
+	cmp r9d, 1
+	sbb edx, -1
 	mov eax, 1
 	ret
 .LBB37_1:
@@ -620,15 +626,15 @@ checked_div_ceil_i64_unb_pow2:
 	cmp dl, 63
 	ja .LBB38_1
 	mov rax, rcx
-	mov r8, rcx
+	mov r9, -1
 	mov ecx, edx
-	sar rax, cl
-	mov r9, rax
 	shl r9, cl
-	xor edx, edx
-	cmp r8, r9
-	setne dl
-	add rdx, rax
+	not r9
+	mov rdx, rax
+	sar rdx, cl
+	and r9, rax
+	cmp r9, 1
+	sbb rdx, -1
 	mov eax, 1
 	ret
 .LBB38_1:
@@ -643,35 +649,33 @@ checked_div_ceil_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
 	js .LBB35_1
-	mov r10, rdx
+	mov r11, -1
 	mov ecx, r9d
+	shl r11, cl
+	mov r10, rdx
 	shrd r10, r8, cl
-	mov r11, r8
-	sar r11, cl
+	mov rsi, r8
+	sar rsi, cl
+	mov rdi, -1
+	mov rcx, r8
+	sar rcx, 63
+	xor ebx, ebx
 	test r9b, 64
-	cmovne r10, r11
-	mov rsi, r10
-	shl rsi, cl
-	xor edi, edi
-	test r9b, 64
-	cmove rdi, rsi
-	mov rbx, r8
-	sar rbx, 63
-	test r9b, 64
+	cmovne rdi, r11
 	cmove rbx, r11
-	mov r11, rbx
-	shld r11, r10, cl
-	test r9b, 64
-	cmovne r11, rsi
-	xor r11, r8
-	xor rdi, rdx
-	xor ecx, ecx
-	or rdi, r11
-	setne cl
-	add rcx, r10
-	adc rbx, 0
-	mov qword ptr [rax + 16], rcx
-	mov qword ptr [rax + 24], rbx
+	not rbx
+	not rdi
+	cmovne r10, rsi
+	cmove rcx, rsi
+	and rdi, r8
+	and rbx, rdx
+	xor edx, edx
+	or rbx, rdi
+	setne dl
+	add rdx, r10
+	adc rcx, 0
+	mov qword ptr [rax + 16], rdx
+	mov qword ptr [rax + 24], rcx
 	mov ecx, 1
 	jmp .LBB35_3
 .LBB35_1:
@@ -686,19 +690,21 @@ checked_div_ceil_i128_unb_pow2:
 ## `checked_div_ceil_u8_unb_pow2`
 ```asm
 checked_div_ceil_u8_unb_pow2:
-	mov eax, edx
-	cmp al, 7
+	mov r8d, edx
+	cmp r8b, 7
 	ja .LBB44_2
-	mov r8d, ecx
-	mov r9, -1
-	mov ecx, eax
-	shl r9, cl
-	not r9
-	movzx edx, r8b
-	add rdx, r9
-	shr rdx, cl
+	mov eax, ecx
+	mov r9b, -1
+	mov ecx, r8d
+	shl r9b, cl
+	not r9b
+	mov edx, eax
+	shr dl, cl
+	and r9b, al
+	cmp r9b, 1
+	sbb dl, -1
 .LBB44_2:
-	cmp al, 8
+	cmp r8b, 8
 	setb al
 ```
 ## `checked_div_ceil_u16_unb_pow2`
@@ -708,13 +714,16 @@ checked_div_ceil_u16_unb_pow2:
 	cmp dl, 15
 	ja .LBB41_1
 	mov edx, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, eax
-	shl r8, cl
-	not r8
+	shl r8d, cl
+	not r8d
 	movzx edx, dx
-	add rdx, r8
-	shr rdx, cl
+	mov r9d, edx
+	shr edx, cl
+	and r8d, r9d
+	cmp r8w, 1
+	sbb dx, -1
 	mov ax, 1
 	ret
 .LBB41_1:
@@ -723,17 +732,18 @@ checked_div_ceil_u16_unb_pow2:
 ## `checked_div_ceil_u32_unb_pow2`
 ```asm
 checked_div_ceil_u32_unb_pow2:
-	mov eax, edx
 	cmp dl, 31
 	ja .LBB42_1
-	mov edx, ecx
-	mov r8, -1
-	mov ecx, eax
-	shl r8, cl
-	not r8
-	mov edx, edx
-	add rdx, r8
-	shr rdx, cl
+	mov eax, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov edx, eax
+	shr edx, cl
+	and r9d, eax
+	cmp r9d, 1
+	sbb edx, -1
 	mov eax, 1
 	ret
 .LBB42_1:
@@ -745,15 +755,15 @@ checked_div_ceil_u64_unb_pow2:
 	cmp dl, 63
 	ja .LBB43_1
 	mov rax, rcx
-	mov r8, rcx
+	mov r9, -1
 	mov ecx, edx
-	shr rax, cl
-	mov r9, rax
 	shl r9, cl
-	xor edx, edx
-	cmp r8, r9
-	setne dl
-	add rdx, rax
+	not r9
+	mov rdx, rax
+	shr rdx, cl
+	and r9, rax
+	cmp r9, 1
+	sbb rdx, -1
 	mov eax, 1
 	ret
 .LBB43_1:
@@ -764,31 +774,29 @@ checked_div_ceil_u64_unb_pow2:
 checked_div_ceil_u128_unb_pow2:
 	push rsi
 	push rdi
-	push rbx
 	mov rax, rcx
 	test r9b, r9b
 	js .LBB40_1
-	mov r10, rdx
+	mov rsi, -1
 	mov ecx, r9d
+	shl rsi, cl
+	mov r10, rdx
 	shrd r10, r8, cl
+	mov rdi, -1
 	mov r11, r8
 	shr r11, cl
-	test r9b, 64
-	cmovne r10, r11
-	mov rsi, r10
-	shl rsi, cl
-	xor edi, edi
-	test r9b, 64
-	cmovne r11, rdi
-	cmove rdi, rsi
-	mov rbx, r11
-	shld rbx, r10, cl
-	test r9b, 64
-	cmovne rbx, rsi
-	xor rbx, r8
-	xor rdi, rdx
 	xor ecx, ecx
-	or rdi, rbx
+	test r9b, 64
+	cmovne rdi, rsi
+	cmovne rsi, rcx
+	not rsi
+	not rdi
+	cmovne r10, r11
+	cmovne r11, rcx
+	and rdi, r8
+	and rsi, rdx
+	xor ecx, ecx
+	or rsi, rdi
 	setne cl
 	add rcx, r10
 	adc r11, 0
@@ -801,7 +809,6 @@ checked_div_ceil_u128_unb_pow2:
 .LBB40_3:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
-	pop rbx
 	pop rdi
 	pop rsi
 ```
@@ -1094,6 +1101,308 @@ checked_div_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
+## `checked_div_round_i8_unb_pow2`
+```asm
+checked_div_round_i8_unb_pow2:
+	mov eax, edx
+	cmp al, 7
+	ja .LBB64_2
+	mov r8d, ecx
+	mov r9b, -1
+	mov ecx, eax
+	shl r9b, cl
+	not r9b
+	mov edx, r8d
+	sar dl, cl
+	and r9b, r8b
+	shr r8b, 7
+	xor ecx, ecx
+	sub r9b, r8b
+	movzx r8d, r9b
+	cmovb r8d, ecx
+	add r8b, r8b
+	movzx ecx, r8b
+	movzx r8d, al
+	bt ecx, r8d
+	adc dl, 0
+.LBB64_2:
+	cmp al, 8
+	setb al
+```
+## `checked_div_round_i16_unb_pow2`
+```asm
+checked_div_round_i16_unb_pow2:
+	mov r8d, edx
+	xor eax, eax
+	cmp dl, 15
+	ja .LBB61_1
+	mov edx, ecx
+	mov r9d, -1
+	mov ecx, r8d
+	shl r9d, cl
+	not r9d
+	movsx r10d, dx
+	mov edx, r10d
+	sar edx, cl
+	mov ecx, r10d
+	and r10d, r9d
+	movzx ecx, cx
+	shr ecx, 15
+	sub r10w, cx
+	cmovb r10d, eax
+	add r10d, r10d
+	movzx eax, r8b
+	bt r10d, eax
+	adc dx, 0
+	mov ax, 1
+	ret
+.LBB61_1:
+```
+## `checked_div_round_i32_unb_pow2`
+```asm
+checked_div_round_i32_unb_pow2:
+	cmp dl, 31
+	ja .LBB62_1
+	mov eax, edx
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov edx, r8d
+	sar edx, cl
+	and r9d, r8d
+	shr r8d, 31
+	xor ecx, ecx
+	sub r9d, r8d
+	cmovb r9d, ecx
+	add r9d, r9d
+	movzx eax, al
+	bt r9d, eax
+	adc edx, 0
+	mov eax, 1
+	ret
+.LBB62_1:
+	xor eax, eax
+```
+## `checked_div_round_i64_unb_pow2`
+```asm
+checked_div_round_i64_unb_pow2:
+	cmp dl, 63
+	ja .LBB63_1
+	mov eax, edx
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
+	mov rdx, r8
+	sar rdx, cl
+	and r9, r8
+	shr r8, 63
+	xor ecx, ecx
+	sub r9, r8
+	cmovae rcx, r9
+	add rcx, rcx
+	movzx eax, al
+	bt rcx, rax
+	adc rdx, 0
+	mov eax, 1
+	ret
+.LBB63_1:
+	xor eax, eax
+```
+## `checked_div_round_i128_unb_pow2`
+```asm
+checked_div_round_i128_unb_pow2:
+	push rsi
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB60_1
+	mov r10, -1
+	mov r11, -1
+	mov ecx, r9d
+	shl r11, cl
+	xor ecx, ecx
+	test r9b, 64
+	cmovne r10, r11
+	cmovne r11, rcx
+	not r11
+	not r10
+	and r10, r8
+	and r11, rdx
+	mov rsi, r8
+	shr rsi, 63
+	sub r11, rsi
+	sbb r10, 0
+	cmovb r10, rcx
+	cmovb r11, rcx
+	shld r10, r11, 1
+	add r11, r11
+	mov ecx, r9d
+	shrd r11, r10, cl
+	shr r10, cl
+	test r9b, 64
+	cmove r10, r11
+	mov r11, r8
+	sar r11, cl
+	mov rsi, r8
+	sar rsi, 63
+	test r9b, 64
+	cmove rsi, r11
+	shrd rdx, r8, cl
+	test r9b, 64
+	cmovne rdx, r11
+	and r10d, 1
+	add r10, rdx
+	adc rsi, 0
+	mov qword ptr [rax + 16], r10
+	mov qword ptr [rax + 24], rsi
+	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+	ret
+.LBB60_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+```
+## `checked_div_round_u8_unb_pow2`
+```asm
+checked_div_round_u8_unb_pow2:
+	mov eax, edx
+	mov edx, ecx
+	cmp al, 7
+	ja .LBB69_2
+	mov r8b, 1
+	mov ecx, eax
+	shl r8b, cl
+	shr r8b
+	and r8b, dl
+	shr dl, cl
+	cmp r8b, 1
+	sbb dl, -1
+.LBB69_2:
+	cmp al, 8
+	setb al
+```
+## `checked_div_round_u16_unb_pow2`
+```asm
+checked_div_round_u16_unb_pow2:
+	mov eax, edx
+	cmp dl, 15
+	ja .LBB66_1
+	mov edx, ecx
+	mov r8d, 1
+	mov ecx, eax
+	shl r8d, cl
+	movzx r8d, r8w
+	shr r8d
+	movzx r9d, dx
+	mov edx, r9d
+	shr edx, cl
+	and r9d, r8d
+	cmp r9w, 1
+	sbb dx, -1
+	mov ax, 1
+	ret
+.LBB66_1:
+	xor eax, eax
+```
+## `checked_div_round_u32_unb_pow2`
+```asm
+checked_div_round_u32_unb_pow2:
+	mov eax, edx
+	cmp dl, 31
+	ja .LBB67_1
+	mov edx, ecx
+	mov r8d, 1
+	mov ecx, eax
+	shl r8d, cl
+	shr r8d
+	and r8d, edx
+	shr edx, cl
+	mov eax, 1
+	cmp r8d, 1
+	sbb edx, -1
+	ret
+.LBB67_1:
+	xor eax, eax
+```
+## `checked_div_round_u64_unb_pow2`
+```asm
+checked_div_round_u64_unb_pow2:
+	mov eax, edx
+	cmp dl, 63
+	ja .LBB68_1
+	mov rdx, rcx
+	mov r8d, 1
+	mov ecx, eax
+	shl r8, cl
+	shr r8
+	and r8, rdx
+	shr rdx, cl
+	mov eax, 1
+	cmp r8, 1
+	sbb rdx, -1
+	ret
+.LBB68_1:
+	xor eax, eax
+```
+## `checked_div_round_u128_unb_pow2`
+```asm
+checked_div_round_u128_unb_pow2:
+	push r14
+	push rsi
+	push rdi
+	push rbx
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB65_1
+	mov r11, r8
+	mov ecx, r9d
+	shr r11, cl
+	xor edi, edi
+	test r9b, 64
+	mov r10, r11
+	cmovne r10, rdi
+	mov rsi, rdx
+	shrd rsi, r8, cl
+	test r9b, 64
+	cmovne rsi, r11
+	mov r11d, 1
+	mov ebx, 1
+	shl rbx, cl
+	test r9b, 64
+	mov r14, rbx
+	cmovne r14, rdi
+	shld rdi, r11, cl
+	test r9b, 64
+	cmovne rdi, rbx
+	shrd r14, rdi, 1
+	shr rdi
+	and rdi, r8
+	and r14, rdx
+	xor ecx, ecx
+	or r14, rdi
+	setne cl
+	add rcx, rsi
+	adc r10, 0
+	mov qword ptr [rax + 16], rcx
+	mov qword ptr [rax + 24], r10
+	jmp .LBB65_3
+.LBB65_1:
+	xor r11d, r11d
+.LBB65_3:
+	mov qword ptr [rax], r11
+	mov qword ptr [rax + 8], 0
+	pop rbx
+	pop rdi
+	pop rsi
+	pop r14
+```
 ## `checked_floor_to_multiple_i8_unb_pow2`
 ```asm
 checked_floor_to_multiple_i8_unb_pow2:
@@ -1150,7 +1459,7 @@ checked_floor_to_multiple_i64_unb_pow2:
 checked_floor_to_multiple_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB60_1
+	js .LBB70_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
@@ -1167,7 +1476,7 @@ checked_floor_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB60_1:
+.LBB70_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
@@ -1232,7 +1541,7 @@ checked_mod_floor_i64_unb_pow2:
 checked_mod_floor_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB65_1
+	js .LBB75_1
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -1251,7 +1560,7 @@ checked_mod_floor_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB65_1:
+.LBB75_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
@@ -1307,7 +1616,7 @@ checked_mul_i16_pow2:
 ```asm
 checked_mul_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB73_1
+	ja .LBB83_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1319,7 +1628,7 @@ checked_mul_i16_unb_pow2:
 	cmp r8w, r9w
 	sete al
 	ret
-.LBB73_1:
+.LBB83_1:
 	xor eax, eax
 ```
 ## `checked_mul_i32_pow2`
@@ -1340,7 +1649,7 @@ checked_mul_i32_pow2:
 ```asm
 checked_mul_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB75_1
+	ja .LBB85_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1352,7 +1661,7 @@ checked_mul_i32_unb_pow2:
 	cmp r8d, r9d
 	sete al
 	ret
-.LBB75_1:
+.LBB85_1:
 	xor eax, eax
 ```
 ## `checked_mul_i64_pow2`
@@ -1373,7 +1682,7 @@ checked_mul_i64_pow2:
 ```asm
 checked_mul_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB77_1
+	ja .LBB87_1
 	mov eax, edx
 	mov rdx, rcx
 	mov r8, rcx
@@ -1385,7 +1694,7 @@ checked_mul_i64_unb_pow2:
 	cmp r8, r9
 	sete al
 	ret
-.LBB77_1:
+.LBB87_1:
 	xor eax, eax
 ```
 ## `checked_mul_i128_pow2`
@@ -1418,11 +1727,11 @@ checked_mul_i128_pow2:
 	xor rbx, r8
 	xor r14, rdx
 	or r14, rbx
-	jne .LBB70_2
+	jne .LBB80_2
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-.LBB70_2:
+.LBB80_2:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1439,7 +1748,7 @@ checked_mul_i128_unb_pow2:
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB71_1
+	js .LBB81_1
 	mov r10, r8
 	mov ecx, r9d
 	shld r10, rdx, cl
@@ -1462,14 +1771,14 @@ checked_mul_i128_unb_pow2:
 	xor rbx, r8
 	xor r14, rdx
 	or r14, rbx
-	jne .LBB71_4
+	jne .LBB81_4
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-	jmp .LBB71_4
-.LBB71_1:
+	jmp .LBB81_4
+.LBB81_1:
 	xor esi, esi
-.LBB71_4:
+.LBB81_4:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1528,7 +1837,7 @@ checked_mul_u16_pow2:
 ```asm
 checked_mul_u16_unb_pow2:
 	cmp dl, 15
-	ja .LBB83_1
+	ja .LBB93_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1540,7 +1849,7 @@ checked_mul_u16_unb_pow2:
 	cmp r8w, r9w
 	sete al
 	ret
-.LBB83_1:
+.LBB93_1:
 	xor eax, eax
 ```
 ## `checked_mul_u32_pow2`
@@ -1561,7 +1870,7 @@ checked_mul_u32_pow2:
 ```asm
 checked_mul_u32_unb_pow2:
 	cmp dl, 31
-	ja .LBB85_1
+	ja .LBB95_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1573,7 +1882,7 @@ checked_mul_u32_unb_pow2:
 	cmp r8d, r9d
 	sete al
 	ret
-.LBB85_1:
+.LBB95_1:
 	xor eax, eax
 ```
 ## `checked_mul_u64_pow2`
@@ -1594,7 +1903,7 @@ checked_mul_u64_pow2:
 ```asm
 checked_mul_u64_unb_pow2:
 	cmp dl, 63
-	ja .LBB87_1
+	ja .LBB97_1
 	mov eax, edx
 	mov rdx, rcx
 	mov r8, rcx
@@ -1606,7 +1915,7 @@ checked_mul_u64_unb_pow2:
 	cmp r8, r9
 	sete al
 	ret
-.LBB87_1:
+.LBB97_1:
 	xor eax, eax
 ```
 ## `checked_mul_u128_pow2`
@@ -1638,11 +1947,11 @@ checked_mul_u128_pow2:
 	xor r14, rdx
 	xor rbx, r8
 	or rbx, r14
-	jne .LBB80_2
+	jne .LBB90_2
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-.LBB80_2:
+.LBB90_2:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1659,7 +1968,7 @@ checked_mul_u128_unb_pow2:
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB81_1
+	js .LBB91_1
 	mov r10, r8
 	mov ecx, r9d
 	shld r10, rdx, cl
@@ -1681,14 +1990,14 @@ checked_mul_u128_unb_pow2:
 	xor r14, rdx
 	xor rbx, r8
 	or rbx, r14
-	jne .LBB81_4
+	jne .LBB91_4
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-	jmp .LBB81_4
-.LBB81_1:
+	jmp .LBB91_4
+.LBB91_1:
 	xor esi, esi
-.LBB81_4:
+.LBB91_4:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1700,101 +2009,109 @@ checked_mul_u128_unb_pow2:
 ```asm
 div_ceil_i8_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movsx rax, al
-	add rax, r8
-	sar rax, cl
+	shl r8b, cl
+	not r8b
+	and r8b, al
+	sar al, cl
+	cmp r8b, 1
+	sbb al, -1
 ```
 ## `div_ceil_i8_unb_pow2`
 ```asm
 div_ceil_i8_unb_pow2:
 	mov eax, ecx
-	mov r8, -1
+	and dl, 7
+	mov r8b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movsx rax, al
-	add rax, r8
-	sar rax, cl
+	shl r8b, cl
+	not r8b
+	and r8b, al
+	sar al, cl
+	cmp r8b, 1
+	sbb al, -1
 ```
 ## `div_ceil_i16_pow2`
 ```asm
 div_ceil_i16_pow2:
-	mov eax, ecx
-	mov r8, -1
+	mov r8d, ecx
+	mov r9d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movsx rax, ax
-	add rax, r8
-	sar rax, cl
+	shl r9d, cl
+	movsx eax, r8w
+	not r9d
+	and r9d, r8d
+	sar eax, cl
+	cmp r9w, 1
+	sbb ax, -1
 ```
 ## `div_ceil_i16_unb_pow2`
 ```asm
 div_ceil_i16_unb_pow2:
-	mov eax, ecx
-	mov r8, -1
+	mov r8d, ecx
+	and dl, 15
+	mov r9d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movsx rax, ax
-	add rax, r8
-	sar rax, cl
+	shl r9d, cl
+	movsx eax, r8w
+	not r9d
+	and r9d, r8d
+	sar eax, cl
+	cmp r9w, 1
+	sbb ax, -1
 ```
 ## `div_ceil_i32_pow2`
 ```asm
 div_ceil_i32_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	cdqe
-	add rax, r8
-	sar rax, cl
+	shl r8d, cl
+	not r8d
+	and r8d, eax
+	sar eax, cl
+	cmp r8d, 1
+	sbb eax, -1
 ```
 ## `div_ceil_i32_unb_pow2`
 ```asm
 div_ceil_i32_unb_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	cdqe
-	add rax, r8
-	sar rax, cl
+	shl r8d, cl
+	not r8d
+	and r8d, eax
+	sar eax, cl
+	cmp r8d, 1
+	sbb eax, -1
 ```
 ## `div_ceil_i64_pow2`
 ```asm
 div_ceil_i64_pow2:
-	mov r8, rcx
-	mov r9, rcx
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	sar r9, cl
-	mov r10, r9
-	shl r10, cl
-	xor eax, eax
-	cmp r8, r10
-	setne al
-	add rax, r9
+	shl r8, cl
+	not r8
+	and r8, rax
+	sar rax, cl
+	cmp r8, 1
+	sbb rax, -1
 ```
 ## `div_ceil_i64_unb_pow2`
 ```asm
 div_ceil_i64_unb_pow2:
-	mov r8, rcx
-	mov r9, rcx
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	sar r9, cl
-	mov r10, r9
-	shl r10, cl
-	xor eax, eax
-	cmp r8, r10
-	setne al
-	add rax, r9
+	shl r8, cl
+	not r8
+	and r8, rax
+	sar rax, cl
+	cmp r8, 1
+	sbb rax, -1
 ```
 ## `div_ceil_i128_pow2`
 ```asm
@@ -1802,34 +2119,31 @@ div_ceil_i128_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
-	mov r10, rcx
+	mov r11, -1
 	mov ecx, r8d
-	shrd r10, rdx, cl
-	mov r11, rdx
-	sar r11, cl
-	test r8b, 64
-	cmovne r10, r11
-	mov rsi, r10
-	shl rsi, cl
-	xor edi, edi
-	test r8b, 64
-	cmove rdi, rsi
+	shl r11, cl
 	mov r9, rdx
-	sar r9, 63
+	mov r10, rax
+	shrd r10, rdx, cl
+	mov rsi, -1
+	mov rdi, rdx
+	sar rdi, cl
+	sar rdx, 63
+	xor ecx, ecx
 	test r8b, 64
-	cmove r9, r11
-	mov r11, r9
-	shld r11, r10, cl
-	test r8b, 64
-	cmovne r11, rsi
-	xor r11, rdx
-	xor rdi, rax
+	cmovne rsi, r11
+	cmove rcx, r11
+	not rcx
+	not rsi
+	cmovne r10, rdi
+	cmove rdx, rdi
+	and rsi, r9
+	and rcx, rax
 	xor eax, eax
-	or rdi, r11
+	or rcx, rsi
 	setne al
 	add rax, r10
-	adc r9, 0
-	mov rdx, r9
+	adc rdx, 0
 	pop rdi
 	pop rsi
 ```
@@ -1839,34 +2153,31 @@ div_ceil_i128_unb_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
-	mov r10, rcx
+	mov r11, -1
 	mov ecx, r8d
-	shrd r10, rdx, cl
-	mov r11, rdx
-	sar r11, cl
-	test r8b, 64
-	cmovne r10, r11
-	mov rsi, r10
-	shl rsi, cl
-	xor edi, edi
-	test r8b, 64
-	cmove rdi, rsi
+	shl r11, cl
 	mov r9, rdx
-	sar r9, 63
+	mov r10, rax
+	shrd r10, rdx, cl
+	mov rsi, -1
+	mov rdi, rdx
+	sar rdi, cl
+	sar rdx, 63
+	xor ecx, ecx
 	test r8b, 64
-	cmove r9, r11
-	mov r11, r9
-	shld r11, r10, cl
-	test r8b, 64
-	cmovne r11, rsi
-	xor r11, rdx
-	xor rdi, rax
+	cmovne rsi, r11
+	cmove rcx, r11
+	not rcx
+	not rsi
+	cmovne r10, rdi
+	cmove rdx, rdi
+	and rsi, r9
+	and rcx, rax
 	xor eax, eax
-	or rdi, r11
+	or rcx, rsi
 	setne al
 	add rax, r10
-	adc r9, 0
-	mov rdx, r9
+	adc rdx, 0
 	pop rdi
 	pop rsi
 ```
@@ -1874,168 +2185,168 @@ div_ceil_i128_unb_pow2:
 ```asm
 div_ceil_u8_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movzx eax, al
-	add rax, r8
-	sar rax, cl
+	shl r8b, cl
+	not r8b
+	and r8b, al
+	shr al, cl
+	cmp r8b, 1
+	sbb al, -1
 ```
 ## `div_ceil_u8_unb_pow2`
 ```asm
 div_ceil_u8_unb_pow2:
 	mov eax, ecx
-	mov r8, -1
+	and dl, 7
+	mov r8b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movzx eax, al
-	add rax, r8
-	sar rax, cl
+	shl r8b, cl
+	not r8b
+	and r8b, al
+	shr al, cl
+	cmp r8b, 1
+	sbb al, -1
 ```
 ## `div_ceil_u16_pow2`
 ```asm
 div_ceil_u16_pow2:
-	mov eax, ecx
-	mov r8, -1
+	mov r8d, ecx
+	mov r9d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movzx eax, ax
-	add rax, r8
-	sar rax, cl
+	shl r9d, cl
+	movzx eax, r8w
+	not r9d
+	and r9d, r8d
+	shr eax, cl
+	cmp r9w, 1
+	sbb ax, -1
 ```
 ## `div_ceil_u16_unb_pow2`
 ```asm
 div_ceil_u16_unb_pow2:
-	mov eax, ecx
-	mov r8, -1
+	mov r8d, ecx
+	and dl, 15
+	mov r9d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movzx eax, ax
-	add rax, r8
-	sar rax, cl
+	shl r9d, cl
+	movzx eax, r8w
+	not r9d
+	and r9d, r8d
+	shr eax, cl
+	cmp r9w, 1
+	sbb ax, -1
 ```
 ## `div_ceil_u32_pow2`
 ```asm
 div_ceil_u32_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	mov eax, eax
-	add rax, r8
-	sar rax, cl
+	shl r8d, cl
+	not r8d
+	and r8d, eax
+	shr eax, cl
+	cmp r8d, 1
+	sbb eax, -1
 ```
 ## `div_ceil_u32_unb_pow2`
 ```asm
 div_ceil_u32_unb_pow2:
 	mov eax, ecx
-	mov r8, -1
+	mov r8d, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	mov eax, eax
-	add rax, r8
-	sar rax, cl
+	shl r8d, cl
+	not r8d
+	and r8d, eax
+	shr eax, cl
+	cmp r8d, 1
+	sbb eax, -1
 ```
 ## `div_ceil_u64_pow2`
 ```asm
 div_ceil_u64_pow2:
-	mov r8, rcx
-	mov r9, rcx
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	shr r9, cl
-	mov r10, r9
-	shl r10, cl
-	xor eax, eax
-	cmp r8, r10
-	setne al
-	add rax, r9
+	shl r8, cl
+	not r8
+	and r8, rax
+	shr rax, cl
+	cmp r8, 1
+	sbb rax, -1
 ```
 ## `div_ceil_u64_unb_pow2`
 ```asm
 div_ceil_u64_unb_pow2:
-	mov r8, rcx
-	mov r9, rcx
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	shr r9, cl
-	mov r10, r9
-	shl r10, cl
-	xor eax, eax
-	cmp r8, r10
-	setne al
-	add rax, r9
+	shl r8, cl
+	not r8
+	and r8, rax
+	shr rax, cl
+	cmp r8, 1
+	sbb rax, -1
 ```
 ## `div_ceil_u128_pow2`
 ```asm
 div_ceil_u128_pow2:
 	push rsi
-	push rdi
-	mov r9d, r8d
-	mov r8, rdx
 	mov rax, rcx
-	mov r10, rcx
-	mov ecx, r9d
+	mov r11, -1
+	mov ecx, r8d
+	shl r11, cl
+	mov r9, rdx
+	mov r10, rax
 	shrd r10, rdx, cl
 	shr rdx, cl
-	test r9b, 64
-	cmovne r10, rdx
-	mov r11, r10
-	shl r11, cl
+	mov rcx, -1
 	xor esi, esi
-	test r9b, 64
+	test r8b, 64
+	cmovne rcx, r11
+	cmovne r11, rsi
+	not r11
+	not rcx
+	cmovne r10, rdx
 	cmovne rdx, rsi
-	cmove rsi, r11
-	mov rdi, rdx
-	shld rdi, r10, cl
-	test r9b, 64
-	cmovne rdi, r11
-	xor rdi, r8
-	xor rsi, rax
+	and rcx, r9
+	and r11, rax
 	xor eax, eax
-	or rsi, rdi
+	or r11, rcx
 	setne al
 	add rax, r10
 	adc rdx, 0
-	pop rdi
 	pop rsi
 ```
 ## `div_ceil_u128_unb_pow2`
 ```asm
 div_ceil_u128_unb_pow2:
 	push rsi
-	push rdi
-	mov r9d, r8d
-	mov r8, rdx
 	mov rax, rcx
-	mov r10, rcx
-	mov ecx, r9d
+	mov r11, -1
+	mov ecx, r8d
+	shl r11, cl
+	mov r9, rdx
+	mov r10, rax
 	shrd r10, rdx, cl
 	shr rdx, cl
-	test r9b, 64
-	cmovne r10, rdx
-	mov r11, r10
-	shl r11, cl
+	mov rcx, -1
 	xor esi, esi
-	test r9b, 64
+	test r8b, 64
+	cmovne rcx, r11
+	cmovne r11, rsi
+	not r11
+	not rcx
+	cmovne r10, rdx
 	cmovne rdx, rsi
-	cmove rsi, r11
-	mov rdi, rdx
-	shld rdi, r10, cl
-	test r9b, 64
-	cmovne rdi, r11
-	xor rdi, r8
-	xor rsi, rax
+	and rcx, r9
+	and r11, rax
 	xor eax, eax
-	or rsi, rdi
+	or r11, rcx
 	setne al
 	add rax, r10
 	adc rdx, 0
-	pop rdi
 	pop rsi
 ```
 ## `div_floor_i8_pow2`
@@ -2209,11 +2520,11 @@ div_floor_u128_unb_pow2:
 div_i8_pow2:
 	mov eax, ecx
 	test cl, cl
-	js .LBB138_1
+	js .LBB148_1
 	mov ecx, edx
 	shr al, cl
 	ret
-.LBB138_1:
+.LBB148_1:
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
@@ -2227,11 +2538,11 @@ div_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	test cl, cl
-	js .LBB139_1
+	js .LBB149_1
 	mov ecx, edx
 	shr al, cl
 	ret
-.LBB139_1:
+.LBB149_1:
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
@@ -2245,11 +2556,11 @@ div_i16_pow2:
 	mov eax, ecx
 	movzx ecx, dl
 	test ax, ax
-	js .LBB132_1
+	js .LBB142_1
 	movzx eax, ax
 	shr eax, cl
 	ret
-.LBB132_1:
+.LBB142_1:
 	mov edx, -1
 	shl edx, cl
 	not edx
@@ -2264,11 +2575,11 @@ div_i16_unb_pow2:
 	and dl, 15
 	movzx ecx, dl
 	test ax, ax
-	js .LBB133_1
+	js .LBB143_1
 	movzx eax, ax
 	shr eax, cl
 	ret
-.LBB133_1:
+.LBB143_1:
 	mov edx, -1
 	shl edx, cl
 	not edx
@@ -2281,11 +2592,11 @@ div_i16_unb_pow2:
 div_i32_pow2:
 	mov eax, ecx
 	test ecx, ecx
-	js .LBB134_1
+	js .LBB144_1
 	mov ecx, edx
 	shr eax, cl
 	ret
-.LBB134_1:
+.LBB144_1:
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -2299,11 +2610,11 @@ div_i32_unb_pow2:
 	mov eax, ecx
 	and dl, 31
 	test ecx, ecx
-	js .LBB135_1
+	js .LBB145_1
 	mov ecx, edx
 	shr eax, cl
 	ret
-.LBB135_1:
+.LBB145_1:
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -2317,10 +2628,10 @@ div_i64_pow2:
 	mov rax, rcx
 	movzx ecx, dl
 	test rax, rax
-	js .LBB136_1
+	js .LBB146_1
 	shr rax, cl
 	ret
-.LBB136_1:
+.LBB146_1:
 	mov rdx, -1
 	shl rdx, cl
 	not rdx
@@ -2334,10 +2645,10 @@ div_i64_unb_pow2:
 	and dl, 63
 	movzx ecx, dl
 	test rax, rax
-	js .LBB137_1
+	js .LBB147_1
 	shr rax, cl
 	ret
-.LBB137_1:
+.LBB147_1:
 	mov rdx, -1
 	shl rdx, cl
 	not rdx
@@ -2349,7 +2660,7 @@ div_i64_unb_pow2:
 div_i128_pow2:
 	mov rax, rcx
 	test rdx, rdx
-	js .LBB130_1
+	js .LBB140_1
 	mov ecx, r8d
 	shrd rax, rdx, cl
 	shr rdx, cl
@@ -2358,7 +2669,7 @@ div_i128_pow2:
 	cmovne rax, rdx
 	cmovne rdx, rcx
 	ret
-.LBB130_1:
+.LBB140_1:
 	mov r9, -1
 	mov r10, -1
 	mov ecx, r8d
@@ -2387,7 +2698,7 @@ div_i128_unb_pow2:
 	mov rax, rcx
 	and r8b, 127
 	test rdx, rdx
-	js .LBB131_1
+	js .LBB141_1
 	mov ecx, r8d
 	shrd rax, rdx, cl
 	shr rdx, cl
@@ -2396,7 +2707,7 @@ div_i128_unb_pow2:
 	cmovne rax, rdx
 	cmovne rdx, rcx
 	ret
-.LBB131_1:
+.LBB141_1:
 	mov r9, -1
 	mov r10, -1
 	mov ecx, r8d
@@ -2418,6 +2729,455 @@ div_i128_unb_pow2:
 	sar rdx, 63
 	test r8b, 64
 	cmove rdx, r9
+```
+## `div_round_i8_pow2`
+```asm
+div_round_i8_pow2:
+	mov r8d, ecx
+	mov r9b, -1
+	mov ecx, edx
+	shl r9b, cl
+	mov eax, r8d
+	sar al, cl
+	not r9b
+	and r9b, r8b
+	shr r8b, 7
+	xor ecx, ecx
+	sub r9b, r8b
+	movzx r8d, r9b
+	cmovb r8d, ecx
+	add r8b, r8b
+	movzx ecx, r8b
+	movzx edx, dl
+	bt ecx, edx
+	adc al, 0
+```
+## `div_round_i8_unb_pow2`
+```asm
+div_round_i8_unb_pow2:
+	mov r8d, ecx
+	and dl, 7
+	mov r9b, -1
+	mov ecx, edx
+	shl r9b, cl
+	mov eax, r8d
+	sar al, cl
+	not r9b
+	and r9b, r8b
+	shr r8b, 7
+	xor ecx, ecx
+	sub r9b, r8b
+	movzx r8d, r9b
+	cmovb r8d, ecx
+	add r8b, r8b
+	movzx ecx, r8b
+	movzx edx, dl
+	bt ecx, edx
+	adc al, 0
+```
+## `div_round_i16_pow2`
+```asm
+div_round_i16_pow2:
+	mov r8d, ecx
+	movzx r9d, cx
+	movsx eax, r9w
+	mov r10d, -1
+	mov ecx, edx
+	shl r10d, cl
+	not r10d
+	sar eax, cl
+	and r10d, r8d
+	shr r9d, 15
+	xor ecx, ecx
+	sub r10w, r9w
+	cmovb r10d, ecx
+	add r10d, r10d
+	movzx ecx, dl
+	bt r10d, ecx
+	adc ax, 0
+```
+## `div_round_i16_unb_pow2`
+```asm
+div_round_i16_unb_pow2:
+	mov r8d, ecx
+	movzx r9d, cx
+	movsx eax, r9w
+	and dl, 15
+	mov r10d, -1
+	mov ecx, edx
+	shl r10d, cl
+	not r10d
+	sar eax, cl
+	and r10d, r8d
+	shr r9d, 15
+	xor ecx, ecx
+	sub r10w, r9w
+	cmovb r10d, ecx
+	add r10d, r10d
+	movzx ecx, dl
+	bt r10d, ecx
+	adc ax, 0
+```
+## `div_round_i32_pow2`
+```asm
+div_round_i32_pow2:
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov eax, r8d
+	sar eax, cl
+	and r9d, r8d
+	shr r8d, 31
+	xor ecx, ecx
+	sub r9d, r8d
+	cmovb r9d, ecx
+	add r9d, r9d
+	movzx ecx, dl
+	bt r9d, ecx
+	adc eax, 0
+```
+## `div_round_i32_unb_pow2`
+```asm
+div_round_i32_unb_pow2:
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov eax, r8d
+	sar eax, cl
+	and r9d, r8d
+	shr r8d, 31
+	xor ecx, ecx
+	sub r9d, r8d
+	cmovb r9d, ecx
+	add r9d, r9d
+	movzx ecx, dl
+	bt r9d, ecx
+	adc eax, 0
+```
+## `div_round_i64_pow2`
+```asm
+div_round_i64_pow2:
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
+	mov rax, r8
+	sar rax, cl
+	and r9, r8
+	shr r8, 63
+	xor ecx, ecx
+	sub r9, r8
+	cmovae rcx, r9
+	add rcx, rcx
+	movzx edx, dl
+	bt rcx, rdx
+	adc rax, 0
+```
+## `div_round_i64_unb_pow2`
+```asm
+div_round_i64_unb_pow2:
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
+	mov rax, r8
+	sar rax, cl
+	and r9, r8
+	shr r8, 63
+	xor ecx, ecx
+	sub r9, r8
+	cmovae rcx, r9
+	add rcx, rcx
+	movzx edx, dl
+	bt rcx, rdx
+	adc rax, 0
+```
+## `div_round_i128_pow2`
+```asm
+div_round_i128_pow2:
+	mov r9d, r8d
+	mov r8, rcx
+	mov rax, -1
+	mov r10, -1
+	mov ecx, r9d
+	shl r10, cl
+	xor ecx, ecx
+	test r9b, 64
+	cmovne rax, r10
+	cmovne r10, rcx
+	not r10
+	not rax
+	and rax, rdx
+	and r10, r8
+	mov r11, rdx
+	shr r11, 63
+	sub r10, r11
+	sbb rax, 0
+	cmovb rax, rcx
+	cmovb r10, rcx
+	shld rax, r10, 1
+	add r10, r10
+	mov ecx, r9d
+	shrd r10, rax, cl
+	shr rax, cl
+	test r9b, 64
+	cmove rax, r10
+	mov r11, rdx
+	sar r11, cl
+	mov r10, rdx
+	sar r10, 63
+	test r9b, 64
+	cmove r10, r11
+	shrd r8, rdx, cl
+	test r9b, 64
+	cmovne r8, r11
+	and eax, 1
+	add rax, r8
+	adc r10, 0
+	mov rdx, r10
+```
+## `div_round_i128_unb_pow2`
+```asm
+div_round_i128_unb_pow2:
+	mov r9d, r8d
+	mov r8, rcx
+	mov rax, -1
+	mov r10, -1
+	mov ecx, r9d
+	shl r10, cl
+	xor ecx, ecx
+	test r9b, 64
+	cmovne rax, r10
+	cmovne r10, rcx
+	not r10
+	not rax
+	and rax, rdx
+	and r10, r8
+	mov r11, rdx
+	shr r11, 63
+	sub r10, r11
+	sbb rax, 0
+	cmovb rax, rcx
+	cmovb r10, rcx
+	shld rax, r10, 1
+	add r10, r10
+	mov ecx, r9d
+	shrd r10, rax, cl
+	shr rax, cl
+	test r9b, 64
+	cmove rax, r10
+	mov r11, rdx
+	sar r11, cl
+	mov r10, rdx
+	sar r10, 63
+	test r9b, 64
+	cmove r10, r11
+	shrd r8, rdx, cl
+	test r9b, 64
+	cmovne r8, r11
+	and eax, 1
+	add rax, r8
+	adc r10, 0
+	mov rdx, r10
+```
+## `div_round_u8_pow2`
+```asm
+div_round_u8_pow2:
+	mov eax, ecx
+	mov r8b, 1
+	mov ecx, edx
+	shl r8b, cl
+	shr r8b
+	and r8b, al
+	shr al, cl
+	cmp r8b, 1
+	sbb al, -1
+```
+## `div_round_u8_unb_pow2`
+```asm
+div_round_u8_unb_pow2:
+	mov eax, ecx
+	and dl, 7
+	mov r8b, 1
+	mov ecx, edx
+	shl r8b, cl
+	shr r8b
+	and r8b, al
+	shr al, cl
+	cmp r8b, 1
+	sbb al, -1
+```
+## `div_round_u16_pow2`
+```asm
+div_round_u16_pow2:
+	mov r8d, ecx
+	mov r9d, 1
+	mov ecx, edx
+	shl r9d, cl
+	movzx eax, r8w
+	movzx r9d, r9w
+	shr r9d
+	and r9d, r8d
+	shr eax, cl
+	cmp r9w, 1
+	sbb ax, -1
+```
+## `div_round_u16_unb_pow2`
+```asm
+div_round_u16_unb_pow2:
+	mov r8d, ecx
+	and dl, 15
+	mov r9d, 1
+	mov ecx, edx
+	shl r9d, cl
+	movzx eax, r8w
+	shr r9d
+	and r9d, r8d
+	shr eax, cl
+	cmp r9w, 1
+	sbb ax, -1
+```
+## `div_round_u32_pow2`
+```asm
+div_round_u32_pow2:
+	mov eax, ecx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8d, cl
+	shr r8d
+	and r8d, eax
+	shr eax, cl
+	cmp r8d, 1
+	sbb eax, -1
+```
+## `div_round_u32_unb_pow2`
+```asm
+div_round_u32_unb_pow2:
+	mov eax, ecx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8d, cl
+	shr r8d
+	and r8d, eax
+	shr eax, cl
+	cmp r8d, 1
+	sbb eax, -1
+```
+## `div_round_u64_pow2`
+```asm
+div_round_u64_pow2:
+	mov rax, rcx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8, cl
+	shr r8
+	and r8, rax
+	shr rax, cl
+	cmp r8, 1
+	sbb rax, -1
+```
+## `div_round_u64_unb_pow2`
+```asm
+div_round_u64_unb_pow2:
+	mov rax, rcx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8, cl
+	shr r8
+	and r8, rax
+	shr rax, cl
+	cmp r8, 1
+	sbb rax, -1
+```
+## `div_round_u128_pow2`
+```asm
+div_round_u128_pow2:
+	push rsi
+	push rdi
+	push rbx
+	mov r9d, r8d
+	mov r8, rdx
+	mov rax, rcx
+	mov rsi, rdx
+	mov ecx, r9d
+	shr rsi, cl
+	xor r11d, r11d
+	test r9b, 64
+	mov rdx, rsi
+	cmovne rdx, r11
+	mov r10, rax
+	shrd r10, r8, cl
+	test r9b, 64
+	cmovne r10, rsi
+	mov esi, 1
+	mov edi, 1
+	shl rdi, cl
+	test r9b, 64
+	mov rbx, rdi
+	cmovne rbx, r11
+	shld r11, rsi, cl
+	test r9b, 64
+	cmovne r11, rdi
+	shrd rbx, r11, 1
+	shr r11
+	and r11, r8
+	and rbx, rax
+	xor eax, eax
+	or rbx, r11
+	setne al
+	add rax, r10
+	adc rdx, 0
+	pop rbx
+	pop rdi
+	pop rsi
+```
+## `div_round_u128_unb_pow2`
+```asm
+div_round_u128_unb_pow2:
+	push rsi
+	push rdi
+	push rbx
+	mov r9d, r8d
+	mov r8, rdx
+	mov rax, rcx
+	mov rsi, rdx
+	mov ecx, r9d
+	shr rsi, cl
+	xor r11d, r11d
+	test r9b, 64
+	mov rdx, rsi
+	cmovne rdx, r11
+	mov r10, rax
+	shrd r10, r8, cl
+	test r9b, 64
+	cmovne r10, rsi
+	mov esi, 1
+	mov edi, 1
+	shl rdi, cl
+	test r9b, 64
+	mov rbx, rdi
+	cmovne rbx, r11
+	shld r11, rsi, cl
+	test r9b, 64
+	cmovne r11, rdi
+	shrd rbx, r11, 1
+	shr r11
+	and r11, r8
+	and rbx, rax
+	xor eax, eax
+	or rbx, r11
+	setne al
+	add rax, r10
+	adc rdx, 0
+	pop rbx
+	pop rdi
+	pop rsi
 ```
 ## `floor_to_multiple_i8_pow2`
 ```asm
@@ -2767,7 +3527,7 @@ mul_i128_unb_pow2:
 unbounded_ceil_to_multiple_i8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB179_1
+	jae .LBB209_1
 	mov r9b, -1
 	mov ecx, edx
 	shl r9b, cl
@@ -2778,7 +3538,7 @@ unbounded_ceil_to_multiple_i8_unb_pow2:
 	and r8b, r9b
 	mov edx, r8d
 	ret
-.LBB179_1:
+.LBB209_1:
 	test r8b, r8b
 	setle al
 	xor r8d, r8d
@@ -2789,7 +3549,7 @@ unbounded_ceil_to_multiple_i8_unb_pow2:
 unbounded_ceil_to_multiple_i16_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 16
-	jae .LBB176_1
+	jae .LBB206_1
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -2801,7 +3561,7 @@ unbounded_ceil_to_multiple_i16_unb_pow2:
 	movzx eax, al
 	mov edx, r8d
 	ret
-.LBB176_1:
+.LBB206_1:
 	test r8w, r8w
 	setle al
 	xor r8d, r8d
@@ -2813,7 +3573,7 @@ unbounded_ceil_to_multiple_i16_unb_pow2:
 unbounded_ceil_to_multiple_i32_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 32
-	jae .LBB177_1
+	jae .LBB207_1
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -2825,7 +3585,7 @@ unbounded_ceil_to_multiple_i32_unb_pow2:
 	movzx eax, al
 	mov edx, r8d
 	ret
-.LBB177_1:
+.LBB207_1:
 	test r8d, r8d
 	setle al
 	xor r8d, r8d
@@ -2837,7 +3597,7 @@ unbounded_ceil_to_multiple_i32_unb_pow2:
 unbounded_ceil_to_multiple_i64_unb_pow2:
 	mov r8, rcx
 	cmp dl, 64
-	jae .LBB178_1
+	jae .LBB208_1
 	mov r9, -1
 	mov ecx, edx
 	shl r9, cl
@@ -2849,7 +3609,7 @@ unbounded_ceil_to_multiple_i64_unb_pow2:
 	movzx eax, al
 	mov rdx, r8
 	ret
-.LBB178_1:
+.LBB208_1:
 	test r8, r8
 	setle al
 	xor r8d, r8d
@@ -2862,7 +3622,7 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB175_4
+	js .LBB205_4
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -2878,11 +3638,11 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	not rsi
 	add rdx, rsi
 	adc r8, r11
-	jo .LBB175_5
+	jo .LBB205_5
 	and rdx, r9
 	and r8, r10
 	mov rcx, rdx
-.LBB175_3:
+.LBB205_3:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r8
 	mov ecx, 1
@@ -2890,13 +3650,13 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 	ret
-.LBB175_4:
+.LBB205_4:
 	xor ecx, ecx
 	cmp rdx, 1
 	sbb r8, 0
 	mov r8d, 0
-	jl .LBB175_3
-.LBB175_5:
+	jl .LBB205_3
+.LBB205_5:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rsi
@@ -2906,7 +3666,7 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 unbounded_ceil_to_multiple_u8_unb_pow2:
 	mov eax, ecx
 	cmp dl, 8
-	jae .LBB184_1
+	jae .LBB214_1
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
@@ -2917,7 +3677,7 @@ unbounded_ceil_to_multiple_u8_unb_pow2:
 	setae al
 	and dl, r8b
 	ret
-.LBB184_1:
+.LBB214_1:
 	test al, al
 	sete al
 	xor edx, edx
@@ -2927,7 +3687,7 @@ unbounded_ceil_to_multiple_u8_unb_pow2:
 unbounded_ceil_to_multiple_u16_unb_pow2:
 	mov eax, ecx
 	cmp dl, 16
-	jae .LBB181_1
+	jae .LBB211_1
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -2939,7 +3699,7 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB181_1:
+.LBB211_1:
 	test ax, ax
 	sete al
 	xor edx, edx
@@ -2950,7 +3710,7 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 unbounded_ceil_to_multiple_u32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 32
-	jae .LBB182_1
+	jae .LBB212_1
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -2962,7 +3722,7 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB182_1:
+.LBB212_1:
 	test eax, eax
 	sete al
 	xor edx, edx
@@ -2973,7 +3733,7 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 unbounded_ceil_to_multiple_u64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 64
-	jae .LBB183_1
+	jae .LBB213_1
 	mov r8, -1
 	mov ecx, edx
 	shl r8, cl
@@ -2985,7 +3745,7 @@ unbounded_ceil_to_multiple_u64_unb_pow2:
 	and rdx, r8
 	movzx eax, al
 	ret
-.LBB183_1:
+.LBB213_1:
 	test rax, rax
 	sete al
 	xor edx, edx
@@ -2997,7 +3757,7 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB180_4
+	js .LBB210_4
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -3013,11 +3773,11 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	not rsi
 	add rdx, rsi
 	adc r8, r11
-	jb .LBB180_5
+	jb .LBB210_5
 	and rdx, r9
 	and r8, r10
 	mov rcx, rdx
-.LBB180_3:
+.LBB210_3:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r8
 	mov ecx, 1
@@ -3025,12 +3785,12 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 	ret
-.LBB180_4:
+.LBB210_4:
 	xor ecx, ecx
 	or rdx, r8
 	mov r8d, 0
-	je .LBB180_3
-.LBB180_5:
+	je .LBB210_3
+.LBB210_5:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rsi
@@ -3038,78 +3798,87 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 ## `unbounded_div_ceil_i8_unb_pow2`
 ```asm
 unbounded_div_ceil_i8_unb_pow2:
-	mov eax, ecx
+	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB189_1
-	mov r8, -1
+	jae .LBB219_1
+	mov r9b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movsx rax, al
-	add rax, r8
-	sar rax, cl
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	sar al, cl
+	and r9b, r8b
+	cmp r9b, 1
+	sbb al, -1
 	ret
-.LBB189_1:
-	test al, al
+.LBB219_1:
+	test r8b, r8b
 	setg al
 ```
 ## `unbounded_div_ceil_i16_unb_pow2`
 ```asm
 unbounded_div_ceil_i16_unb_pow2:
-	mov r8d, ecx
-	cmp dl, 16
-	jae .LBB186_1
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	not r9
-	movsx rax, r8w
-	add rax, r9
-	sar rax, cl
+	mov r8d, edx
+	mov edx, ecx
+	cmp r8b, 16
+	jae .LBB216_1
+	mov r9d, -1
+	mov ecx, r8d
+	shl r9d, cl
+	not r9d
+	movsx eax, dx
+	sar eax, cl
+	and edx, r9d
+	cmp dx, 1
+	sbb ax, -1
 	ret
-.LBB186_1:
+.LBB216_1:
 	xor eax, eax
-	test r8w, r8w
+	test dx, dx
 	setg al
 ```
 ## `unbounded_div_ceil_i32_unb_pow2`
 ```asm
 unbounded_div_ceil_i32_unb_pow2:
-	mov r8d, ecx
-	cmp dl, 32
-	jae .LBB187_1
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	not r9
-	movsxd rax, r8d
-	add rax, r9
-	sar rax, cl
+	mov r8d, edx
+	mov edx, ecx
+	cmp r8b, 32
+	jae .LBB217_1
+	mov r9d, -1
+	mov ecx, r8d
+	shl r9d, cl
+	not r9d
+	mov eax, edx
+	sar eax, cl
+	and r9d, edx
+	cmp r9d, 1
+	sbb eax, -1
 	ret
-.LBB187_1:
+.LBB217_1:
 	xor eax, eax
-	test r8d, r8d
+	test edx, edx
 	setg al
 ```
 ## `unbounded_div_ceil_i64_unb_pow2`
 ```asm
 unbounded_div_ceil_i64_unb_pow2:
-	cmp dl, 64
-	jae .LBB188_1
-	mov r8, rcx
-	mov r9, rcx
-	mov ecx, edx
-	sar r8, cl
-	mov r10, r8
-	shl r10, cl
-	xor eax, eax
-	cmp r9, r10
-	setne al
-	add rax, r8
+	mov r8d, edx
+	mov rdx, rcx
+	cmp r8b, 64
+	jae .LBB218_1
+	mov r9, -1
+	mov ecx, r8d
+	shl r9, cl
+	not r9
+	mov rax, rdx
+	sar rax, cl
+	and r9, rdx
+	cmp r9, 1
+	sbb rax, -1
 	ret
-.LBB188_1:
+.LBB218_1:
 	xor eax, eax
-	test rcx, rcx
+	test rdx, rdx
 	setg al
 ```
 ## `unbounded_div_ceil_i128_unb_pow2`
@@ -3117,170 +3886,173 @@ unbounded_div_ceil_i64_unb_pow2:
 unbounded_div_ceil_i128_unb_pow2:
 	push rsi
 	push rdi
-	test r8b, r8b
-	js .LBB185_1
-	mov eax, r8d
-	mov r9, rcx
-	mov r10, rcx
-	mov ecx, r8d
-	shrd r9, rdx, cl
-	mov r11, rdx
-	sar r11, cl
-	test r8b, 64
-	cmovne r9, r11
-	mov rsi, r9
-	shl rsi, cl
+	mov r9d, r8d
+	mov rax, rdx
+	mov r8, rcx
+	test r9b, r9b
+	js .LBB215_1
+	mov r11, -1
+	mov ecx, r9d
+	shl r11, cl
+	mov r10, r8
+	shrd r10, rax, cl
+	mov rsi, rax
+	sar rsi, cl
+	mov rcx, -1
+	mov rdx, rax
+	sar rdx, 63
 	xor edi, edi
-	test r8b, 64
-	cmove rdi, rsi
-	mov r8, rdx
-	sar r8, 63
-	test al, 64
-	cmove r8, r11
-	mov r11, r8
-	shld r11, r9, cl
-	test al, 64
-	cmovne r11, rsi
-	xor r11, rdx
-	xor rdi, r10
+	test r9b, 64
+	cmovne rcx, r11
+	cmove rdi, r11
+	not rdi
+	not rcx
+	cmovne r10, rsi
+	cmove rdx, rsi
+	and rcx, rax
+	and rdi, r8
 	xor eax, eax
-	or rdi, r11
+	or rdi, rcx
 	setne al
-	add rax, r9
-	adc r8, 0
-	mov rdx, r8
+	add rax, r10
+	adc rdx, 0
 	pop rdi
 	pop rsi
 	ret
-.LBB185_1:
-	xor r8d, r8d
-	neg rcx
-	mov eax, 0
-	sbb rax, rdx
+.LBB215_1:
+	xor edx, edx
+	neg r8
+	mov ecx, 0
+	sbb rcx, rax
 	setl al
 	movzx eax, al
-	mov rdx, r8
 	pop rdi
 	pop rsi
 ```
 ## `unbounded_div_ceil_u8_unb_pow2`
 ```asm
 unbounded_div_ceil_u8_unb_pow2:
-	mov eax, ecx
+	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB194_1
-	mov r8, -1
+	jae .LBB224_1
+	mov r9b, -1
 	mov ecx, edx
-	shl r8, cl
-	not r8
-	movzx eax, al
-	add rax, r8
-	shr rax, cl
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	shr al, cl
+	and r9b, r8b
+	cmp r9b, 1
+	sbb al, -1
 	ret
-.LBB194_1:
-	test al, al
+.LBB224_1:
+	test r8b, r8b
 	setne al
 ```
 ## `unbounded_div_ceil_u16_unb_pow2`
 ```asm
 unbounded_div_ceil_u16_unb_pow2:
-	mov r8d, ecx
-	cmp dl, 16
-	jae .LBB191_1
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	not r9
-	movzx eax, r8w
-	add rax, r9
-	shr rax, cl
+	mov r8d, edx
+	mov edx, ecx
+	cmp r8b, 16
+	jae .LBB221_1
+	mov r9d, -1
+	mov ecx, r8d
+	shl r9d, cl
+	not r9d
+	movzx eax, dx
+	shr eax, cl
+	and edx, r9d
+	cmp dx, 1
+	sbb ax, -1
 	ret
-.LBB191_1:
+.LBB221_1:
 	xor eax, eax
-	test r8w, r8w
+	test dx, dx
 	setne al
 ```
 ## `unbounded_div_ceil_u32_unb_pow2`
 ```asm
 unbounded_div_ceil_u32_unb_pow2:
-	mov r8d, ecx
-	cmp dl, 32
-	jae .LBB192_1
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	not r9
-	mov eax, r8d
-	add rax, r9
-	shr rax, cl
+	mov r8d, edx
+	mov edx, ecx
+	cmp r8b, 32
+	jae .LBB222_1
+	mov r9d, -1
+	mov ecx, r8d
+	shl r9d, cl
+	not r9d
+	mov eax, edx
+	shr eax, cl
+	and r9d, edx
+	cmp r9d, 1
+	sbb eax, -1
 	ret
-.LBB192_1:
+.LBB222_1:
 	xor eax, eax
-	test r8d, r8d
+	test edx, edx
 	setne al
 ```
 ## `unbounded_div_ceil_u64_unb_pow2`
 ```asm
 unbounded_div_ceil_u64_unb_pow2:
-	cmp dl, 64
-	jae .LBB193_1
-	mov r8, rcx
-	mov r9, rcx
-	mov ecx, edx
-	shr r8, cl
-	mov r10, r8
-	shl r10, cl
-	xor eax, eax
-	cmp r9, r10
-	setne al
-	add rax, r8
+	mov r8d, edx
+	mov rdx, rcx
+	cmp r8b, 64
+	jae .LBB223_1
+	mov r9, -1
+	mov ecx, r8d
+	shl r9, cl
+	not r9
+	mov rax, rdx
+	shr rax, cl
+	and r9, rdx
+	cmp r9, 1
+	sbb rax, -1
 	ret
-.LBB193_1:
+.LBB223_1:
 	xor eax, eax
-	test rcx, rcx
+	test rdx, rdx
 	setne al
 ```
 ## `unbounded_div_ceil_u128_unb_pow2`
 ```asm
 unbounded_div_ceil_u128_unb_pow2:
 	push rsi
-	push rdi
-	test r8b, r8b
-	js .LBB190_1
-	mov r9, rcx
-	mov r10, rcx
-	mov ecx, r8d
-	shrd r9, rdx, cl
-	mov rax, rdx
-	shr rdx, cl
-	test r8b, 64
-	cmovne r9, rdx
-	mov r11, r9
+	mov eax, r8d
+	mov r8, rcx
+	test al, al
+	js .LBB220_1
+	mov r11, -1
+	mov ecx, eax
 	shl r11, cl
-	xor esi, esi
-	test r8b, 64
-	cmovne rdx, rsi
-	cmove rsi, r11
-	mov rdi, rdx
-	shld rdi, r9, cl
-	test r8b, 64
-	cmovne rdi, r11
-	xor rdi, rax
-	xor rsi, r10
+	mov r10, r8
+	shrd r10, rdx, cl
+	mov rsi, -1
+	mov r9, rdx
+	shr rdx, cl
+	xor ecx, ecx
+	test al, 64
+	cmovne rsi, r11
+	cmovne r11, rcx
+	not r11
+	not rsi
+	cmovne r10, rdx
+	cmovne rdx, rcx
+	and rsi, r9
+	and r11, r8
 	xor eax, eax
-	or rsi, rdi
+	or r11, rsi
 	setne al
-	add rax, r9
+	add rax, r10
 	adc rdx, 0
-	pop rdi
 	pop rsi
 	ret
-.LBB190_1:
+.LBB220_1:
 	xor eax, eax
-	or rcx, rdx
+	or r8, rdx
 	setne al
 	xor edx, edx
-	pop rdi
 	pop rsi
 ```
 ## `unbounded_div_floor_i8_unb_pow2`
@@ -3399,17 +4171,17 @@ unbounded_div_floor_u128_unb_pow2:
 ```asm
 unbounded_div_i8_unb_pow2:
 	cmp dl, 7
-	ja .LBB209_1
+	ja .LBB239_1
 	mov eax, ecx
 	test cl, cl
-	js .LBB209_4
+	js .LBB239_4
 	mov ecx, edx
 	shr al, cl
 	ret
-.LBB209_1:
+.LBB239_1:
 	xor eax, eax
 	ret
-.LBB209_4:
+.LBB239_4:
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
@@ -3421,18 +4193,18 @@ unbounded_div_i8_unb_pow2:
 ```asm
 unbounded_div_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB206_1
+	ja .LBB236_1
 	mov eax, ecx
 	movzx ecx, dl
 	test ax, ax
-	js .LBB206_4
+	js .LBB236_4
 	movzx eax, ax
 	shr eax, cl
 	ret
-.LBB206_1:
+.LBB236_1:
 	xor eax, eax
 	ret
-.LBB206_4:
+.LBB236_4:
 	mov edx, -1
 	shl edx, cl
 	not edx
@@ -3445,39 +4217,39 @@ unbounded_div_i16_unb_pow2:
 unbounded_div_i32_unb_pow2:
 	xor eax, eax
 	cmp dl, 31
-	ja .LBB207_4
+	ja .LBB237_4
 	mov r8d, ecx
 	test ecx, ecx
-	js .LBB207_2
+	js .LBB237_2
 	mov ecx, edx
 	shr r8d, cl
-	jmp .LBB207_3
-.LBB207_2:
+	jmp .LBB237_3
+.LBB237_2:
 	mov eax, -1
 	mov ecx, edx
 	shl eax, cl
 	not eax
 	add r8d, eax
 	sar r8d, cl
-.LBB207_3:
+.LBB237_3:
 	mov eax, r8d
-.LBB207_4:
+.LBB237_4:
 ```
 ## `unbounded_div_i64_unb_pow2`
 ```asm
 unbounded_div_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB208_1
+	ja .LBB238_1
 	mov rax, rcx
 	movzx ecx, dl
 	test rax, rax
-	js .LBB208_4
+	js .LBB238_4
 	shr rax, cl
 	ret
-.LBB208_1:
+.LBB238_1:
 	xor eax, eax
 	ret
-.LBB208_4:
+.LBB238_4:
 	mov rdx, -1
 	shl rdx, cl
 	not rdx
@@ -3488,10 +4260,10 @@ unbounded_div_i64_unb_pow2:
 ```asm
 unbounded_div_i128_unb_pow2:
 	test r8b, r8b
-	js .LBB205_1
+	js .LBB235_1
 	mov rax, rcx
 	test rdx, rdx
-	js .LBB205_4
+	js .LBB235_4
 	mov ecx, r8d
 	shrd rax, rdx, cl
 	shr rdx, cl
@@ -3500,11 +4272,11 @@ unbounded_div_i128_unb_pow2:
 	cmovne rax, rdx
 	cmovne rdx, rcx
 	ret
-.LBB205_1:
+.LBB235_1:
 	xor eax, eax
 	xor edx, edx
 	ret
-.LBB205_4:
+.LBB235_4:
 	mov r9, -1
 	mov r10, -1
 	mov ecx, r8d
@@ -3527,6 +4299,319 @@ unbounded_div_i128_unb_pow2:
 	test r8b, 64
 	cmove rdx, r9
 ```
+## `unbounded_div_round_i8_unb_pow2`
+```asm
+unbounded_div_round_i8_unb_pow2:
+	mov r8d, ecx
+	cmp dl, 7
+	ja .LBB244_2
+	mov r9b, -1
+	mov ecx, edx
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	sar al, cl
+	and r9b, r8b
+	shr r8b, 7
+	xor ecx, ecx
+	sub r9b, r8b
+	movzx r8d, r9b
+	cmovb r8d, ecx
+	add r8b, r8b
+	movzx ecx, r8b
+	movzx edx, dl
+	bt ecx, edx
+	adc al, 0
+	ret
+.LBB244_2:
+	neg r8b
+	jno .LBB244_3
+	cmp dl, 8
+	sete al
+	neg al
+	ret
+.LBB244_3:
+	xor eax, eax
+```
+## `unbounded_div_round_i16_unb_pow2`
+```asm
+unbounded_div_round_i16_unb_pow2:
+	mov r8d, ecx
+	cmp dl, 15
+	ja .LBB241_2
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	movsx eax, r8w
+	sar eax, cl
+	and r9d, r8d
+	movzx ecx, r8w
+	shr ecx, 15
+	xor r8d, r8d
+	sub r9w, cx
+	cmovb r9d, r8d
+	add r9d, r9d
+	movzx ecx, dl
+	bt r9d, ecx
+	adc ax, 0
+	ret
+.LBB241_2:
+	xor eax, eax
+	neg r8w
+	jno .LBB241_4
+	cmp dl, 16
+	sete al
+	neg eax
+.LBB241_4:
+```
+## `unbounded_div_round_i32_unb_pow2`
+```asm
+unbounded_div_round_i32_unb_pow2:
+	mov r8d, ecx
+	cmp dl, 31
+	ja .LBB242_2
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	mov eax, r8d
+	sar eax, cl
+	not r9d
+	and r9d, r8d
+	shr r8d, 31
+	xor ecx, ecx
+	sub r9d, r8d
+	cmovb r9d, ecx
+	add r9d, r9d
+	movzx ecx, dl
+	bt r9d, ecx
+	adc eax, 0
+	ret
+.LBB242_2:
+	xor eax, eax
+	neg r8d
+	jno .LBB242_4
+	xor eax, eax
+	cmp dl, 32
+	sete al
+	neg eax
+.LBB242_4:
+```
+## `unbounded_div_round_i64_unb_pow2`
+```asm
+unbounded_div_round_i64_unb_pow2:
+	mov r8, rcx
+	cmp dl, 63
+	ja .LBB243_2
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	mov rax, r8
+	sar rax, cl
+	not r9
+	and r9, r8
+	shr r8, 63
+	xor ecx, ecx
+	sub r9, r8
+	cmovae rcx, r9
+	add rcx, rcx
+	movzx edx, dl
+	bt rcx, rdx
+	adc rax, 0
+	ret
+.LBB243_2:
+	xor eax, eax
+	neg r8
+	jno .LBB243_4
+	cmp dl, 64
+	sete al
+	neg rax
+.LBB243_4:
+```
+## `unbounded_div_round_i128_unb_pow2`
+```asm
+unbounded_div_round_i128_unb_pow2:
+	mov r9, rcx
+	test r8b, r8b
+	js .LBB240_2
+	mov rax, -1
+	mov r10, -1
+	mov ecx, r8d
+	shl r10, cl
+	xor ecx, ecx
+	test r8b, 64
+	cmovne rax, r10
+	cmovne r10, rcx
+	not r10
+	not rax
+	and rax, rdx
+	and r10, r9
+	mov r11, rdx
+	shr r11, 63
+	sub r10, r11
+	sbb rax, 0
+	cmovb rax, rcx
+	cmovb r10, rcx
+	shld rax, r10, 1
+	add r10, r10
+	mov ecx, r8d
+	shrd r10, rax, cl
+	shr rax, cl
+	test r8b, 64
+	cmove rax, r10
+	mov r11, rdx
+	sar r11, cl
+	mov r10, rdx
+	sar r10, 63
+	test r8b, 64
+	cmove r10, r11
+	shrd r9, rdx, cl
+	mov rdx, r10
+	test r8b, 64
+	cmovne r9, r11
+	and eax, 1
+	add rax, r9
+	adc rdx, 0
+	ret
+.LBB240_2:
+	movabs rax, -9223372036854775808
+	xor rdx, rax
+	xor eax, eax
+	or r9, rdx
+	mov edx, 0
+	jne .LBB240_4
+	xor eax, eax
+	neg r8b
+	seto al
+	neg rax
+	mov rdx, rax
+.LBB240_4:
+```
+## `unbounded_div_round_u8_unb_pow2`
+```asm
+unbounded_div_round_u8_unb_pow2:
+	cmp dl, 7
+	ja .LBB249_1
+	mov eax, ecx
+	mov r8b, 1
+	mov ecx, edx
+	shl r8b, cl
+	shr r8b
+	and r8b, al
+	shr al, cl
+	cmp r8b, 1
+	sbb al, -1
+	ret
+.LBB249_1:
+	xor eax, eax
+```
+## `unbounded_div_round_u16_unb_pow2`
+```asm
+unbounded_div_round_u16_unb_pow2:
+	cmp dl, 15
+	ja .LBB246_1
+	mov eax, ecx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8d, cl
+	movzx r8d, r8w
+	shr r8d
+	movzx r9d, ax
+	mov eax, r9d
+	shr eax, cl
+	and r9d, r8d
+	cmp r9w, 1
+	sbb ax, -1
+	ret
+.LBB246_1:
+	xor eax, eax
+```
+## `unbounded_div_round_u32_unb_pow2`
+```asm
+unbounded_div_round_u32_unb_pow2:
+	xor eax, eax
+	cmp dl, 31
+	ja .LBB247_2
+	mov r8d, ecx
+	mov eax, 1
+	mov ecx, edx
+	shl eax, cl
+	shr eax
+	and eax, r8d
+	shr r8d, cl
+	cmp eax, 1
+	sbb r8d, -1
+	mov eax, r8d
+.LBB247_2:
+```
+## `unbounded_div_round_u64_unb_pow2`
+```asm
+unbounded_div_round_u64_unb_pow2:
+	cmp dl, 63
+	ja .LBB248_1
+	mov rax, rcx
+	mov r8d, 1
+	mov ecx, edx
+	shl r8, cl
+	shr r8
+	and r8, rax
+	shr rax, cl
+	cmp r8, 1
+	sbb rax, -1
+	ret
+.LBB248_1:
+	xor eax, eax
+```
+## `unbounded_div_round_u128_unb_pow2`
+```asm
+unbounded_div_round_u128_unb_pow2:
+	push rsi
+	push rdi
+	push rbx
+	test r8b, r8b
+	js .LBB245_1
+	mov rax, rcx
+	mov r11, rdx
+	mov ecx, r8d
+	shr r11, cl
+	xor r10d, r10d
+	test r8b, 64
+	mov rsi, rdx
+	mov rdx, r11
+	cmovne rdx, r10
+	mov r9, rax
+	shrd r9, rsi, cl
+	test r8b, 64
+	cmovne r9, r11
+	mov r11d, 1
+	mov edi, 1
+	shl rdi, cl
+	test r8b, 64
+	mov rbx, rdi
+	cmovne rbx, r10
+	shld r10, r11, cl
+	test r8b, 64
+	cmovne r10, rdi
+	shrd rbx, r10, 1
+	shr r10
+	and r10, rsi
+	and rbx, rax
+	xor eax, eax
+	or rbx, r10
+	setne al
+	add rax, r9
+	adc rdx, 0
+	pop rbx
+	pop rdi
+	pop rsi
+	ret
+.LBB245_1:
+	xor eax, eax
+	xor edx, edx
+	pop rbx
+	pop rdi
+	pop rsi
+```
 ## `unbounded_floor_to_multiple_i8_unb_pow2`
 ```asm
 unbounded_floor_to_multiple_i8_unb_pow2:
@@ -3548,7 +4633,7 @@ unbounded_floor_to_multiple_i8_unb_pow2:
 ```asm
 unbounded_floor_to_multiple_i16_unb_pow2:
 	cmp dl, 16
-	jae .LBB211_1
+	jae .LBB251_1
 	mov eax, edx
 	movzx edx, cx
 	mov ecx, eax
@@ -3556,7 +4641,7 @@ unbounded_floor_to_multiple_i16_unb_pow2:
 	shl edx, cl
 	mov ax, 1
 	ret
-.LBB211_1:
+.LBB251_1:
 	not ecx
 	movzx eax, cx
 	shr eax, 15
@@ -3567,14 +4652,14 @@ unbounded_floor_to_multiple_i16_unb_pow2:
 unbounded_floor_to_multiple_i32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 32
-	jae .LBB212_1
+	jae .LBB252_1
 	mov ecx, edx
 	shr eax, cl
 	shl eax, cl
 	mov edx, eax
 	mov eax, 1
 	ret
-.LBB212_1:
+.LBB252_1:
 	not eax
 	shr eax, 31
 	xor edx, edx
@@ -3584,14 +4669,14 @@ unbounded_floor_to_multiple_i32_unb_pow2:
 unbounded_floor_to_multiple_i64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 64
-	jae .LBB213_1
+	jae .LBB253_1
 	mov ecx, edx
 	shr rax, cl
 	shl rax, cl
 	mov rdx, rax
 	mov eax, 1
 	ret
-.LBB213_1:
+.LBB253_1:
 	not rax
 	shr rax, 63
 	xor edx, edx
@@ -3601,7 +4686,7 @@ unbounded_floor_to_multiple_i64_unb_pow2:
 unbounded_floor_to_multiple_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB210_1
+	js .LBB250_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
@@ -3617,15 +4702,15 @@ unbounded_floor_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	mov qword ptr [rax], 1
 	ret
-.LBB210_1:
+.LBB250_1:
 	xorps xmm0, xmm0
 	test r8, r8
-	js .LBB210_2
+	js .LBB250_2
 	movups xmmword ptr [rax + 8], xmm0
 	mov qword ptr [rax], 1
 	mov qword ptr [rax + 24], 0
 	ret
-.LBB210_2:
+.LBB250_2:
 	movaps xmmword ptr [rax], xmm0
 ```
 ## `unbounded_floor_to_multiple_u8_unb_pow2`
@@ -3743,7 +4828,7 @@ unbounded_is_multiple_of_i64_unb_pow2:
 unbounded_is_multiple_of_i128_unb_pow2:
 	mov rax, rcx
 	or rax, rdx
-	je .LBB220_1
+	je .LBB260_1
 	rep bsf	rax, rcx
 	rep bsf	rdx, rdx
 	add edx, 64
@@ -3753,6 +4838,6 @@ unbounded_is_multiple_of_i128_unb_pow2:
 	cmp edx, eax
 	setae al
 	ret
-.LBB220_1:
+.LBB260_1:
 	mov al, 1
 ```
