@@ -1165,6 +1165,205 @@ where
     }
 }
 
+make_func_trait!(RoundToMultiple, round_to_multiple);
+
+impl_trait_signed_unsigned!(
+    RoundToMultiple<UnboundedPow2>,
+    signed_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_SIGNED);
+            debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
+            let mask = Self::mask(rhs.exponent as u32);
+            let bit = Self::self_from_unsigned(
+                // Bias:
+                <Self as Int>::Unsigned::highest_mask_bit(rhs.exponent as u32)
+                // We bias the bias for negative lhs to get correct rounding away from zero.
+                // Saturating sub must be against zero (so unsigned)
+                .saturating_sub(
+                    <Self as Int>::Unsigned::from_bool(self < Self::ZERO)
+                )
+            );
+
+            // We can actually use the mask method here because if the intermediate `a + mask` overflows
+            // then the actual result would overflow too.
+            (self + bit) & !mask
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_UNSIGNED);
+            debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
+            let mask = Self::mask(rhs.exponent as u32);
+            let bit = Self::highest_mask_bit(rhs.exponent as u32);
+            // We can actually use the mask method here because if the intermediate `a + mask` overflows
+            // then the actual result would overflow too.
+            (self + bit) & !mask
+        }
+    }
+);
+
+impl_generic_trait_signed_unsigned!(
+    <T> RoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
+    signed_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn round_to_multiple(self, rhs: Pow2<T>) -> Self {
+            debug_assert!(Self::IS_SIGNED);
+            // SAFETY: SafePow2 guarantees a valid shift
+            let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
+            let bit = Self::self_from_unsigned(
+                // Bias:
+                // SAFETY: SafePow2 guarantees a valid shift
+                unsafe { <Self as Int>::Unsigned::unchecked_highest_mask_bit(rhs.exponent as u32) }
+                // We bias the bias for negative lhs to get correct rounding away from zero.
+                // Saturating sub must be against zero (so unsigned)
+                .saturating_sub(
+                    <Self as Int>::Unsigned::from_bool(self < Self::ZERO)
+                )
+            );
+
+            // We can actually use the mask method here because if the intermediate `a + mask` overflows
+            // then the actual result would overflow too.
+            (self + bit) & !mask
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
+            debug_assert!(Self::IS_UNSIGNED);
+            // SAFETY: SafePow2 guarantees a valid shift
+            let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
+            // SAFETY: SafePow2 guarantees a valid shift
+            let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
+            // We can actually use the mask method here because if the intermediate `a + mask` overflows
+            // then the actual result would overflow too.
+            (self + bit) & !mask
+        }
+    }
+);
+
+make_func_trait!(CheckedRoundToMultiple, checked_round_to_multiple);
+
+impl_trait_signed_unsigned!(
+    CheckedRoundToMultiple<UnboundedPow2>,
+    signed_body {
+        type Output = Option<Self>;
+
+        #[inline(always)]
+        fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_SIGNED);
+            if !rhs.is_safe::<<Self as Int>::Unsigned>() {
+                return None;
+            }
+
+            let mask = Self::mask(rhs.exponent as u32);
+            let bit = Self::self_from_unsigned(
+                // Bias:
+                <Self as Int>::Unsigned::highest_mask_bit(rhs.exponent as u32)
+                // We bias the bias for negative lhs to get correct rounding away from zero.
+                // Saturating sub must be against zero (so unsigned)
+                .saturating_sub(
+                    <Self as Int>::Unsigned::from_bool(self < Self::ZERO)
+                )
+            );
+
+            Some(self.checked_add(bit)? & !mask)
+        }
+    },
+    unsigned_body {
+        type Output = Option<Self>;
+
+        #[inline(always)]
+        fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_UNSIGNED);
+            if !rhs.is_safe::<<Self as Int>::Unsigned>() {
+                return None;
+            }
+
+            let mask = Self::mask(rhs.exponent as u32);
+            let bit = Self::highest_mask_bit(rhs.exponent as u32);
+
+            Some(self.checked_add(bit)? & !mask)
+        }
+    }
+);
+
+impl_generic_trait_signed_unsigned!(
+    <T> CheckedRoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
+    signed_body {
+        type Output = Option<Self>;
+
+        #[inline(always)]
+        fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
+            debug_assert!(Self::IS_SIGNED);
+            // SAFETY: SafePow2 guarantees a valid shift
+            let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
+            let bit = Self::self_from_unsigned(
+                // Bias:
+                // SAFETY: SafePow2 guarantees a valid shift
+                unsafe { <Self as Int>::Unsigned::unchecked_highest_mask_bit(rhs.exponent as u32) }
+                // We bias the bias for negative lhs to get correct rounding away from zero.
+                // Saturating sub must be against zero (so unsigned)
+                .saturating_sub(
+                    <Self as Int>::Unsigned::from_bool(self < Self::ZERO)
+                )
+            );
+
+            Some(self.checked_add(bit)? & !mask)
+        }
+    },
+    unsigned_body {
+        type Output = Option<Self>;
+
+        #[inline(always)]
+        fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
+            debug_assert!(Self::IS_UNSIGNED);
+            // SAFETY: SafePow2 guarantees a valid shift
+            let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
+            // SAFETY: SafePow2 guarantees a valid shift
+            let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
+
+            Some(self.checked_add(bit)? & !mask)
+        }
+    }
+);
+
+make_func_trait!(UnboundedRoundToMultiple, unbounded_round_to_multiple);
+
+impl<T> UnboundedRoundToMultiple<UnboundedPow2> for T
+where
+    T: Int + CheckedRoundToMultiple<UnboundedPow2, Output = Option<Self>>,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn unbounded_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            checked_round_to_multiple(self, rhs)
+        } else if Self::IS_SIGNED && self == Self::MIN && rhs.exponent as u32 == Self::BITS {
+            // would round to twice Self::MIN
+            None
+        } else if Self::IS_UNSIGNED
+            && self >= ((Self::MAX >> 1) + Self::ONE)
+            && rhs.exponent as u32 == Self::BITS
+        {
+            // would round to Self::MAX + 1
+            None
+        } else {
+            Some(T::ZERO)
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1991,10 +2190,7 @@ mod tests {
             unbounded_div(i32::MIN, UnboundedPow2::from_exponent(31)),
             -1
         );
-        assert_eq!(
-            unbounded_div(i32::MIN, UnboundedPow2::from_exponent(32)),
-            0
-        );
+        assert_eq!(unbounded_div(i32::MIN, UnboundedPow2::from_exponent(32)), 0);
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(-123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(32)), 0);
@@ -3257,6 +3453,165 @@ mod tests {
         assert_eq!(
             unbounded_ceil_to_multiple(i32::MAX as u32 + 2, UnboundedPow2::from_exponent(31)),
             None
+        );
+    }
+
+    #[test]
+    fn unb_pow2_checked_round_to_multiple_boundary() {
+        assert_eq!(
+            checked_round_to_multiple(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX, UnboundedPow2::from_exponent(0)),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX, UnboundedPow2::from_exponent(1)),
+            None
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MIN, UnboundedPow2::from_exponent(1)),
+            Some(i32::MIN)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MIN + 1, UnboundedPow2::from_exponent(1)),
+            Some(i32::MIN)
+        );
+
+        assert_eq!(
+            checked_round_to_multiple(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX as u32 + 2, UnboundedPow2::from_exponent(31)),
+            Some(i32::MAX as u32 + 1)
+        );
+        assert_eq!(
+            checked_round_to_multiple(0_u32, UnboundedPow2::from_exponent(32)),
+            None
+        );
+    }
+
+    #[test]
+    fn pow2_checked_round_to_multiple_boundary() {
+        assert_eq!(
+            checked_round_to_multiple(0_i32, Pow2::<u32>::from_exponent(30).unwrap()),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(0_i32, Pow2::<u32>::from_exponent(31).unwrap()),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(0).unwrap()),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX, Pow2::<u32>::from_exponent(1).unwrap()),
+            None
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MIN, Pow2::<u32>::from_exponent(1).unwrap()),
+            Some(i32::MIN)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MIN + 1, Pow2::<u32>::from_exponent(1).unwrap()),
+            Some(i32::MIN)
+        );
+
+        assert_eq!(
+            checked_round_to_multiple(0_u32, Pow2::<u32>::from_exponent(31).unwrap()),
+            Some(0)
+        );
+        assert_eq!(
+            checked_round_to_multiple(i32::MAX as u32 + 2, Pow2::<u32>::from_exponent(31).unwrap()),
+            Some(i32::MAX as u32 + 1)
+        );
+    }
+
+    #[test]
+    fn unb_pow2_unbounded_round_to_multiple_boundary() {
+        assert_eq!(
+            unbounded_round_to_multiple(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(-1_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MIN, UnboundedPow2::from_exponent(31)),
+            Some(i32::MIN)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MIN, UnboundedPow2::from_exponent(32)),
+            None
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(1_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(-1_i32, UnboundedPow2::from_exponent(255)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(0_i32, UnboundedPow2::from_exponent(255)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(1_i32, UnboundedPow2::from_exponent(255)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MIN, UnboundedPow2::from_exponent(255)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MAX, UnboundedPow2::from_exponent(0)),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MAX, UnboundedPow2::from_exponent(1)),
+            None
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MAX as u32 + 1, UnboundedPow2::from_exponent(31)),
+            Some(i32::MAX as u32 + 1)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(i32::MAX as u32 + 1, UnboundedPow2::from_exponent(32)),
+            None
+        );
+
+        assert_eq!(
+            unbounded_round_to_multiple(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(0_u32, UnboundedPow2::from_exponent(32)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(1_u32, UnboundedPow2::from_exponent(32)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(0_u32, UnboundedPow2::from_exponent(255)),
+            Some(0)
+        );
+        assert_eq!(
+            unbounded_round_to_multiple(1_u32, UnboundedPow2::from_exponent(255)),
+            Some(0)
         );
     }
 
