@@ -806,9 +806,9 @@ where
     #[inline(always)]
     fn div_ceil(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
-        let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+        let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         let floored = div_floor(self, rhs);
-        floored + L::from_bool((self & mask).is_not_zero())
+        floored + Self::from_bool((self & mask).is_not_zero())
     }
 }
 
@@ -1106,7 +1106,7 @@ where
         // We can actually use the mask method here because if the intermediate `a + mask` overflows
         // then the actual result would overflow too.
         // SAFETY: SafePow2 guarantees a valid shift
-        let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+        let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         (self + mask) & !mask
     }
 }
@@ -1140,7 +1140,7 @@ where
     #[inline(always)]
     fn checked_ceil_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
-        let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+        let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         Some(self.checked_add(mask)? & !mask)
     }
 }
