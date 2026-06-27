@@ -1,6 +1,24 @@
 use std::ops::{Add, BitAnd, Not, Shl, Shr, Sub};
 
-pub trait Int
+mod seals {
+    pub trait SealedInt {}
+
+    impl SealedInt for u8 {}
+    impl SealedInt for u16 {}
+    impl SealedInt for u32 {}
+    impl SealedInt for u64 {}
+    impl SealedInt for u128 {}
+    impl SealedInt for usize {}
+
+    impl SealedInt for i8 {}
+    impl SealedInt for i16 {}
+    impl SealedInt for i32 {}
+    impl SealedInt for i64 {}
+    impl SealedInt for i128 {}
+    impl SealedInt for isize {}
+}
+
+pub trait Int: seals::SealedInt
 where
     Self: Sized
         + Copy

@@ -216,7 +216,7 @@ impl MulAssign for UnboundedPow2 {
 
 impl Div for UnboundedPow2 {
     type Output = UnboundedPow2;
-    
+
     #[inline(always)]
     fn div(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent - other.exponent)
@@ -700,7 +700,7 @@ macro_rules! make_func_trait {
     ($trait_name:ident, $func_name:ident) => {
         pub trait $trait_name<Rhs> {
             type Output;
-            
+
             #[must_use]
             fn $func_name(self, rhs: Rhs) -> Self::Output;
         }
