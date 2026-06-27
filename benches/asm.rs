@@ -1,8 +1,9 @@
 ﻿use ipow2::{
     CeilToMultiple, CheckedCeilToMultiple, CheckedDiv, CheckedDivCeil, CheckedDivFloor,
-    CheckedFloorToMultiple, CheckedModFloor, CheckedMul, DivCeil, DivFloor, FloorToMultiple,
-    IsMultipleOf, ModFloor, Pow2, UnboundedCeilToMultiple, UnboundedDiv, UnboundedDivCeil,
-    UnboundedDivFloor, UnboundedFloorToMultiple, UnboundedIsMultipleOf, UnboundedPow2,
+    CheckedDivRound, CheckedFloorToMultiple, CheckedModFloor, CheckedMul, DivCeil, DivFloor,
+    DivRound, FloorToMultiple, IsMultipleOf, ModFloor, Pow2, UnboundedCeilToMultiple, UnboundedDiv,
+    UnboundedDivCeil, UnboundedDivFloor, UnboundedDivRound, UnboundedFloorToMultiple,
+    UnboundedIsMultipleOf, UnboundedPow2,
 };
 use paste::paste;
 use std::ops::{Div, Mul};
@@ -40,7 +41,8 @@ impl_binops!(
     [IsMultipleOf, is_multiple_of],
     [DivCeil, div_ceil],
     [ModFloor, mod_floor],
-    [DivFloor, div_floor]
+    [DivFloor, div_floor],
+    [DivRound, div_round]
 );
 
 impl_binops!(
@@ -66,5 +68,8 @@ impl_binops!(
     [CheckedModFloor, checked_mod_floor],
     [DivFloor, div_floor],
     [CheckedDivFloor, checked_div_floor],
-    [UnboundedDivFloor, unbounded_div_floor]
+    [UnboundedDivFloor, unbounded_div_floor],
+    [DivRound, div_round],
+    [CheckedDivRound, checked_div_round],
+    [UnboundedDivRound, unbounded_div_round]
 );
