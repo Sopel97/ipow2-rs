@@ -845,6 +845,71 @@ where
     }
 }
 
+make_func_trait!(DivRound, div_round);
+
+impl<T> DivRound<UnboundedPow2> for T
+where
+    T: Int,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
+        debug_assert!(rhs.is_safe::<T::Unsigned>());
+        if T::IS_UNSIGNED {
+            let bit = T::highest_mask_bit(rhs.exponent as u32);
+            let floored = div_floor(self, rhs);
+            // this is only valid for unsigned a
+            floored + T::from_bool((self & bit).is_not_zero())
+        } else {
+            let mask = T::mask(rhs.exponent as u32);
+            let floored = div_floor(self, rhs);
+            // Account for signedness of a
+            // for a >= 0 we need rem != 0 and rem >= mask_highest_bit
+            // for a < 0 we need rem > mask_highest_bit
+            // make sure the saturating sub saturates to zero (unsigned)
+            let rem = (self & mask)
+                .cast_unsigned()
+                .saturating_sub(T::Unsigned::from_bool(self < Self::ZERO));
+            let rems = (rem << 1) >> rhs.exponent;
+            floored + T::self_from_unsigned(rems & T::Unsigned::ONE)
+        }
+    }
+}
+
+impl<L, T> DivRound<Pow2<T>> for L
+where
+    L: IntAtLeastAsWide<T>,
+    T: UnsignedInt,
+{
+    type Output = Self;
+
+    #[inline(always)]
+    fn div_round(self, rhs: Pow2<T>) -> Self::Output {
+        if L::IS_UNSIGNED {
+            // SAFETY: SafePow2 guarantees a valid shift
+            let bit = unsafe { L::unchecked_highest_mask_bit(rhs.exponent as u32) };
+            let floored = div_floor(self, rhs);
+            // this is only valid for unsigned a
+            floored + L::from_bool((self & bit).is_not_zero())
+        } else {
+            // SAFETY: SafePow2 guarantees a valid shift
+            let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+            let floored = div_floor(self, rhs);
+            // Account for signedness of a
+            // for a >= 0 we need rem != 0 and rem >= mask_highest_bit
+            // for a < 0 we need rem > mask_highest_bit
+            // make sure the saturating sub saturates to zero (unsigned)
+            let rem = (self & mask)
+                .cast_unsigned()
+                .saturating_sub(L::Unsigned::from_bool(self < Self::ZERO));
+            // SAFETY: SafePow2 guarantees a valid shift
+            let rems = unsafe { rem.unchecked_shl(1).unchecked_shr(rhs.exponent as u32) };
+            floored + L::self_from_unsigned(rems & L::Unsigned::ONE)
+        }
+    }
+}
+
 make_func_trait!(IsMultipleOf, is_multiple_of);
 
 impl<T> IsMultipleOf<UnboundedPow2> for T
@@ -2324,6 +2389,159 @@ mod tests {
         assert_eq!(
             unbounded_div_ceil(u32::MAX, UnboundedPow2::from_exponent(255)),
             1
+        );
+    }
+    #[test]
+    fn unb_pow2_div_round_u64_exact() {
+        assert_eq!(div_round(32u64, UnboundedPow2::from_exponent(5)), 1);
+    }
+
+    #[test]
+    fn pow2_div_round_u64_exact() {
+        assert_eq!(div_round(32u64, Pow2::<u8>::from_exponent(5).unwrap()), 1);
+    }
+
+    #[test]
+    #[cfg(debug_assertions)]
+    #[should_panic]
+    fn unb_pow2_div_round_divisor_out_of_range() {
+        let _ = div_round(32u64, UnboundedPow2::from_exponent(64));
+    }
+
+    #[test]
+    fn unb_pow2_div_round_u64_rounds() {
+        assert_eq!(div_round(17u64, UnboundedPow2::from_exponent(5)), 1);
+        assert_eq!(div_round(16u64, UnboundedPow2::from_exponent(5)), 1);
+        assert_eq!(div_round(15u64, UnboundedPow2::from_exponent(5)), 0);
+        assert_eq!(div_round(33u64, UnboundedPow2::from_exponent(5)), 1);
+        assert_eq!(div_round(48u64, UnboundedPow2::from_exponent(5)), 2);
+        assert_eq!(div_round(47u64, UnboundedPow2::from_exponent(5)), 1);
+    }
+
+    #[test]
+    fn pow2_div_round_u64_rounds() {
+        assert_eq!(div_round(17u64, Pow2::<u8>::from_exponent(5).unwrap()), 1);
+        assert_eq!(div_round(16u64, Pow2::<u8>::from_exponent(5).unwrap()), 1);
+        assert_eq!(div_round(15u64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(div_round(33u64, Pow2::<u8>::from_exponent(5).unwrap()), 1);
+        assert_eq!(div_round(48u64, Pow2::<u8>::from_exponent(5).unwrap()), 2);
+        assert_eq!(div_round(47u64, Pow2::<u8>::from_exponent(5).unwrap()), 1);
+    }
+
+    #[test]
+    fn unb_pow2_div_round_u64_zero() {
+        assert_eq!(div_round(0u64, UnboundedPow2::from_exponent(5)), 0);
+    }
+
+    #[test]
+    fn pow2_div_round_u64_zero() {
+        assert_eq!(div_round(0u64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+    }
+
+    #[test]
+    fn unb_pow2_div_round_i64_negative() {
+        assert_eq!(div_round(-37i64, UnboundedPow2::from_exponent(5)), -1);
+        assert_eq!(div_round(-32i64, UnboundedPow2::from_exponent(5)), -1);
+        assert_eq!(div_round(-16i64, UnboundedPow2::from_exponent(5)), -1);
+        assert_eq!(div_round(-17i64, UnboundedPow2::from_exponent(5)), -1);
+        assert_eq!(div_round(-15i64, UnboundedPow2::from_exponent(5)), 0);
+        assert_eq!(div_round(-1i64, UnboundedPow2::from_exponent(5)), 0);
+        assert_eq!(div_round(-33i64, UnboundedPow2::from_exponent(5)), -1);
+        assert_eq!(div_round(-48i64, UnboundedPow2::from_exponent(5)), -2);
+        assert_eq!(div_round(-47i64, UnboundedPow2::from_exponent(5)), -1);
+    }
+
+    #[test]
+    fn pow2_div_round_i64_negative() {
+        assert_eq!(div_round(-37i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+        assert_eq!(div_round(-32i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+        assert_eq!(div_round(-16i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+        assert_eq!(div_round(-17i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+        assert_eq!(div_round(-15i64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(div_round(-1i64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(div_round(-33i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+        assert_eq!(div_round(-48i64, Pow2::<u8>::from_exponent(5).unwrap()), -2);
+        assert_eq!(div_round(-47i64, Pow2::<u8>::from_exponent(5).unwrap()), -1);
+    }
+
+    #[test]
+    fn unb_pow2_div_round_by_one_is_identity() {
+        assert_eq!(div_round(42i64, UnboundedPow2::from_exponent(0)), 42);
+        assert_eq!(div_round(-42i64, UnboundedPow2::from_exponent(0)), -42);
+    }
+
+    #[test]
+    fn pow2_div_round_by_one_is_identity() {
+        assert_eq!(div_round(42i64, Pow2::<u8>::from_exponent(0).unwrap()), 42);
+        assert_eq!(
+            div_round(-42i64, Pow2::<u8>::from_exponent(0).unwrap()),
+            -42
+        );
+    }
+
+    #[test]
+    fn unb_pow2_div_round_min() {
+        assert_eq!(div_round(i32::MIN, UnboundedPow2::from_exponent(30)), -2);
+        assert_eq!(div_round(i32::MIN, UnboundedPow2::from_exponent(31)), -1);
+        assert_eq!(div_round(i64::MIN, UnboundedPow2::from_exponent(62)), -2);
+        assert_eq!(div_round(i64::MIN, UnboundedPow2::from_exponent(63)), -1);
+    }
+
+    #[test]
+    fn pow2_div_round_min() {
+        assert_eq!(
+            div_round(i32::MIN, Pow2::<u32>::from_exponent(30).unwrap()),
+            -2
+        );
+        assert_eq!(
+            div_round(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
+            -1
+        );
+        assert_eq!(
+            div_round(i64::MIN, Pow2::<u64>::from_exponent(62).unwrap()),
+            -2
+        );
+        assert_eq!(
+            div_round(i64::MIN, Pow2::<u64>::from_exponent(63).unwrap()),
+            -1
+        );
+    }
+
+    #[test]
+    fn unb_pow2_div_round_max() {
+        assert_eq!(div_round(i32::MAX, UnboundedPow2::from_exponent(30)), 2);
+        assert_eq!(div_round(i32::MAX, UnboundedPow2::from_exponent(31)), 1);
+        assert_eq!(div_round(u32::MAX, UnboundedPow2::from_exponent(31)), 2);
+        assert_eq!(div_round(i64::MAX, UnboundedPow2::from_exponent(62)), 2);
+        assert_eq!(div_round(i64::MAX, UnboundedPow2::from_exponent(63)), 1);
+        assert_eq!(div_round(u64::MAX, UnboundedPow2::from_exponent(63)), 2);
+    }
+
+    #[test]
+    fn pow2_div_round_max() {
+        assert_eq!(
+            div_round(i32::MAX, Pow2::<u32>::from_exponent(30).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_round(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            1
+        );
+        assert_eq!(
+            div_round(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_round(i64::MAX, Pow2::<u64>::from_exponent(62).unwrap()),
+            2
+        );
+        assert_eq!(
+            div_round(i64::MAX, Pow2::<u64>::from_exponent(63).unwrap()),
+            1
+        );
+        assert_eq!(
+            div_round(u64::MAX, Pow2::<u64>::from_exponent(63).unwrap()),
+            2
         );
     }
 

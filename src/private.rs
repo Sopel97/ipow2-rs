@@ -16,8 +16,8 @@ where
         + Not<Output = Self>
         + BitAnd<Output = Self>,
 {
-    type Signed: SignedInt;
-    type Unsigned: UnsignedInt;
+    type Signed: SignedInt<Signed=Self::Signed, Unsigned=Self::Unsigned>;
+    type Unsigned: UnsignedInt<Signed=Self::Signed, Unsigned=Self::Unsigned>;
 
     const BITS: u32;
     const ZERO: Self;
@@ -40,7 +40,9 @@ where
     fn checked_shl(self, rhs: u32) -> Option<Self>;
     fn checked_add(self, rhs: Self) -> Option<Self>;
     fn mask(bits: u32) -> Self;
+    fn highest_mask_bit(bits: u32) -> Self;
     unsafe fn unchecked_mask(bits: u32) -> Self;
+    unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self;
     fn trailing_zeros(self) -> u32;
     fn from_isize(val: isize) -> Self;
     fn as_isize(self) -> isize;
@@ -49,9 +51,12 @@ where
     fn as_i32(self) -> i32;
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
     unsafe fn unchecked_shl(self, rhs: u32) -> Self;
+    fn saturating_sub(self, rhs: Self) -> Self;
+    fn self_from_signed(rhs: Self::Signed) -> Self;
+    fn self_from_unsigned(rhs: Self::Unsigned) -> Self;
 }
 
-pub trait UnsignedInt: Int {}
+pub trait UnsignedInt: Int<Unsigned=Self> {}
 
 impl UnsignedInt for u8 {}
 impl UnsignedInt for u16 {}
@@ -60,7 +65,7 @@ impl UnsignedInt for u64 {}
 impl UnsignedInt for u128 {}
 impl UnsignedInt for usize {}
 
-pub trait SignedInt: Int {}
+pub trait SignedInt: Int<Signed=Self> {}
 
 impl SignedInt for i8 {}
 impl SignedInt for i16 {}
@@ -147,6 +152,21 @@ macro_rules! impl_common_int {
         unsafe fn unchecked_shl(self, rhs: u32) -> Self {
             unsafe { self.unchecked_shl(rhs) }
         }
+
+        #[inline(always)]
+        fn saturating_sub(self, rhs: Self) -> Self {
+            self.saturating_sub(rhs)
+        }
+
+        #[inline(always)]
+        fn self_from_signed(rhs: Self::Signed) -> Self {
+            rhs as Self
+        }
+
+        #[inline(always)]
+        fn self_from_unsigned(rhs: Self::Unsigned) -> Self {
+            rhs as Self
+        }
     };
 }
 
@@ -181,9 +201,21 @@ macro_rules! impl_uint {
         }
 
         #[inline(always)]
+        fn highest_mask_bit(bits: u32) -> Self {
+            debug_assert!(bits <= Self::SAFE_SHIFT);
+            (1 << bits) >> 1
+        }
+
+        #[inline(always)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
             unsafe { 1.unchecked_shl(bits) - 1 }
+        }
+
+        #[inline(always)]
+        unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self {
+            debug_assert!(bits <= Self::SAFE_SHIFT);
+            unsafe { 1.unchecked_shl(bits).unchecked_shr(1) }
         }
     };
 }
@@ -221,11 +253,27 @@ macro_rules! impl_sint {
         }
 
         #[inline(always)]
+        fn highest_mask_bit(bits: u32) -> Self {
+            debug_assert!(bits <= Self::Unsigned::SAFE_SHIFT);
+            // The mask computation needs to be done as unsigned, because it can overflow
+            // to the sign bit before we shift right.
+            (((1 as $t_uint) << bits) >> 1) as $t
+        }
+
+        #[inline(always)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::Unsigned::SAFE_SHIFT);
             // The mask computation needs to be done as unsigned, because it can overflow
             // to the sign bit before we subtract one.
             unsafe { ((1 as $t_uint).unchecked_shl(bits) - 1) as $t }
+        }
+
+        #[inline(always)]
+        unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self {
+            debug_assert!(bits <= Self::Unsigned::SAFE_SHIFT);
+            // The mask computation needs to be done as unsigned, because it can overflow
+            // to the sign bit before we shift right.
+            unsafe { (1 as $t_uint).unchecked_shl(bits).unchecked_shr(1) as $t }
         }
     };
 }

@@ -335,6 +335,53 @@ mod div_round {
                 }
             });
     }
+
+    #[divan::bench]
+    fn div_round_d_safe(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let floored = a >> b.saturating_sub(1);
+                    divan::black_box((floored + 1) >> 1);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_round_e_safe(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    // make sure there's no sign bit being shifted right
+                    let bit = ((1u64 << b) >> 1) as i64;
+                    let floored = a >> b;
+                    // this is only valid for unsigned a
+                    divan::black_box(floored + ((a & bit) != 0) as i64);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_round_j_safe(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {    
+                    // make sure there's no sign bit being shifted right
+                    let mask = ((1u64 << b) - 1) as i64;
+                    let floored = a >> b;
+                    // Account for signedness of a
+                    // for a >= 0 we need rem != 0 and rem >= mask_highest_bit
+                    // for a < 0 we need rem > mask_highest_bit
+                    // make sure the saturating sub saturates to zero (unsigned)
+                    let rem = ((a & mask) as u64).saturating_sub((a < 0) as u64);
+                    let rems = ((rem << 1) >> b) as i64;
+                    divan::black_box(floored + (rems & 1));
+                }
+            });
+    }
 }
 
 mod floor_to_multiple {
