@@ -458,6 +458,79 @@ where
     }
 }
 
+macro_rules! impl_pow2_self_conv_from {
+    ($t:ty => $($into:ty),*) => {
+        $(
+            impl From<Pow2<$t>> for Pow2<$into> {
+                fn from(value: Pow2<$t>) -> Self {
+                    Self {
+                        exponent: value.exponent,
+                        _marker: marker::PhantomData,
+                    }
+                }
+            }
+        )*
+    };
+}
+
+impl_pow2_self_conv_from!(u8 => u16, u32, u64, u128, usize);
+
+#[cfg(target_pointer_width = "16")]
+impl_pow2_self_conv_from!(u16 => u32, u64, u128);
+
+#[cfg(target_pointer_width = "32")]
+impl_pow2_self_conv_from!(u16 => u32, u64, u128, usize);
+
+#[cfg(target_pointer_width = "64")]
+impl_pow2_self_conv_from!(u16 => u32, u64, u128, usize);
+
+#[cfg(target_pointer_width = "16")]
+impl_pow2_self_conv_from!(u32 => u64, u128);
+
+#[cfg(target_pointer_width = "32")]
+impl_pow2_self_conv_from!(u32 => u64, u128);
+
+#[cfg(target_pointer_width = "64")]
+impl_pow2_self_conv_from!(u32 => u64, u128, usize);
+
+impl_pow2_self_conv_from!(u64 => u128);
+
+macro_rules! impl_pow2_self_conv_try_from {
+    ($t:ty => $($into:ty),*) => {
+        $(
+            impl TryFrom<Pow2<$t>> for Pow2<$into> {
+                type Error = Pow2OutOfRange;
+
+                fn try_from(value: Pow2<$t>) -> Result<Self, Self::Error> {
+                    Pow2::from_exponent(value.exponent)
+                }
+            }
+        )*
+    };
+}
+
+impl_pow2_self_conv_try_from!(u16 => u8);
+
+#[cfg(target_pointer_width = "16")]
+impl_pow2_self_conv_try_from!(u32 => u8, u16, usize);
+
+#[cfg(target_pointer_width = "32")]
+impl_pow2_self_conv_try_from!(u32 => u8, u16);
+
+#[cfg(target_pointer_width = "64")]
+impl_pow2_self_conv_try_from!(u32 => u8, u16);
+
+#[cfg(target_pointer_width = "16")]
+impl_pow2_self_conv_try_from!(u64 => u8, u16, u32, usize);
+
+#[cfg(target_pointer_width = "32")]
+impl_pow2_self_conv_try_from!(u64 => u8, u16, u32, usize);
+
+#[cfg(target_pointer_width = "64")]
+impl_pow2_self_conv_try_from!(u64 => u8, u16, u32);
+
+impl_pow2_self_conv_try_from!(u128 => u8, u16, u32, u64);
+
 pub type SafePow2u8 = Pow2<u8>;
 pub type SafePow2u16 = Pow2<u16>;
 pub type SafePow2u32 = Pow2<u32>;
@@ -1657,6 +1730,58 @@ mod tests {
         let rhs = UnboundedPow2::from_exponent(7);
         assert_eq!(lhs * rhs, UnboundedPow2::from_exponent(13));
         assert_eq!(rhs * lhs, UnboundedPow2::from_exponent(13));
+    }
+
+    #[test]
+    fn pow2_from_other() {
+        assert_eq!(
+            Pow2::<u16>::from(Pow2::<u8>::from_exponent(7).unwrap()),
+            Pow2::<u16>::from_exponent(7).unwrap()
+        );
+        assert_eq!(
+            Pow2::<u32>::from(Pow2::<u8>::from_exponent(7).unwrap()),
+            Pow2::<u32>::from_exponent(7).unwrap()
+        );
+        assert_eq!(
+            Pow2::<u64>::from(Pow2::<u8>::from_exponent(7).unwrap()),
+            Pow2::<u64>::from_exponent(7).unwrap()
+        );
+        assert_eq!(
+            Pow2::<u64>::from(Pow2::<u32>::from_exponent(31).unwrap()),
+            Pow2::<u64>::from_exponent(31).unwrap()
+        );
+
+        /* // should not compile
+        assert_eq!(Pow2::<u32>::from(Pow2::<u64>::from_exponent(31).unwrap()), Pow2::<u32>::from_exponent(31).unwrap());
+        */
+    }
+
+    #[test]
+    fn pow2_try_from_other() {
+        assert_eq!(
+            Pow2::<u8>::try_from(Pow2::<u16>::from_exponent(7).unwrap()),
+            Ok(Pow2::<u8>::from_exponent(7).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(Pow2::<u16>::from_exponent(8).unwrap()),
+            Err(Pow2OutOfRange)
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(Pow2::<u32>::from_exponent(7).unwrap()),
+            Ok(Pow2::<u8>::from_exponent(7).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(Pow2::<u64>::from_exponent(7).unwrap()),
+            Ok(Pow2::<u8>::from_exponent(7).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u32>::try_from(Pow2::<u128>::from_exponent(31).unwrap()),
+            Ok(Pow2::<u32>::from_exponent(31).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u32>::try_from(Pow2::<u128>::from_exponent(32).unwrap()),
+            Err(Pow2OutOfRange)
+        );
     }
 
     #[test]
