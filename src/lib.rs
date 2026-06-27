@@ -493,7 +493,7 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    <T> Div<Pow2<T>> where { T: UnsignedInt },
+    <T> Div<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Self;
 
@@ -532,7 +532,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> DivAssign<Pow2<T>> where { T: UnsignedInt } => {
+    <T> DivAssign<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
         #[inline(always)]
         fn div_assign(&mut self, other: Pow2<T>) {
             *self = *self / other;
