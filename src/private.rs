@@ -197,25 +197,25 @@ macro_rules! impl_uint {
         #[inline(always)]
         fn mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
-            (1 << bits) - 1
+            ((1 as Self) << bits) - 1
         }
 
         #[inline(always)]
         fn highest_mask_bit(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
-            (1 << bits) >> 1
+            ((1 as Self) << bits) >> 1
         }
 
         #[inline(always)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
-            unsafe { 1.unchecked_shl(bits) - 1 }
+            unsafe { (1 as Self).unchecked_shl(bits) - 1 }
         }
 
         #[inline(always)]
         unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
-            unsafe { 1.unchecked_shl(bits).unchecked_shr(1) }
+            unsafe { (1 as Self).unchecked_shl(bits).unchecked_shr(1) }
         }
     };
 }
