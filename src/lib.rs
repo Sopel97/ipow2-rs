@@ -922,6 +922,40 @@ impl_generic_trait_signed_unsigned!(
     }
 );
 
+make_func_trait!(CheckedDivRound, checked_div_round);
+
+impl<T> CheckedDivRound<UnboundedPow2> for T
+where
+    T: Int + DivRound<UnboundedPow2, Output = Self>,
+{
+    type Output = Option<Self>;
+
+    #[inline(always)]
+    fn checked_div_round(self, rhs: UnboundedPow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| div_round(self, rhs))
+    }
+}
+
+make_func_trait!(UnboundedDivRound, unbounded_div_round);
+
+impl<T> UnboundedDivRound<UnboundedPow2> for T
+where
+    T: Int + DivRound<UnboundedPow2, Output = Self>,
+{
+    type Output = Self;
+
+    fn unbounded_div_round(self, rhs: UnboundedPow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            div_round(self, rhs)
+        } else if T::IS_SIGNED && self == T::MIN && rhs.exponent as u32 == T::BITS {
+            // result would be -0.5, so round to -1
+            T::MINUS_ONE
+        } else {
+            T::ZERO
+        }
+    }
+}
+
 make_func_trait!(IsMultipleOf, is_multiple_of);
 
 impl<T> IsMultipleOf<UnboundedPow2> for T
@@ -2403,6 +2437,7 @@ mod tests {
             1
         );
     }
+
     #[test]
     fn unb_pow2_div_round_u64_exact() {
         assert_eq!(div_round(32u64, UnboundedPow2::from_exponent(5)), 1);
@@ -2554,6 +2589,100 @@ mod tests {
         assert_eq!(
             div_round(u64::MAX, Pow2::<u64>::from_exponent(63).unwrap()),
             2
+        );
+    }
+
+    #[test]
+    fn unb_pow2_checked_div_round_boundary() {
+        assert_eq!(
+            checked_div_round(0_i32, UnboundedPow2::from_exponent(30)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_round(0_i32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_round(0_i32, UnboundedPow2::from_exponent(32)),
+            None
+        );
+
+        assert_eq!(
+            checked_div_round(0_u32, UnboundedPow2::from_exponent(31)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_div_round(0_u32, UnboundedPow2::from_exponent(32)),
+            None
+        );
+    }
+
+    #[test]
+    fn unb_pow2_unbounded_div_round_boundary() {
+        assert_eq!(
+            unbounded_div_round(0_i32, UnboundedPow2::from_exponent(30)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MAX, UnboundedPow2::from_exponent(30)),
+            2
+        );
+        assert_eq!(
+            unbounded_div_round(0_i32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MIN, UnboundedPow2::from_exponent(31)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MIN, UnboundedPow2::from_exponent(32)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div_round(-1_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(0_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(1_i32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MAX, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(-1_i32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MIN, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(i32::MAX, UnboundedPow2::from_exponent(255)),
+            0
+        );
+
+        assert_eq!(
+            unbounded_div_round(0_u32, UnboundedPow2::from_exponent(31)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(0_u32, UnboundedPow2::from_exponent(32)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(0_u32, UnboundedPow2::from_exponent(255)),
+            0
+        );
+        assert_eq!(
+            unbounded_div_round(u32::MAX, UnboundedPow2::from_exponent(255)),
+            0
         );
     }
 
