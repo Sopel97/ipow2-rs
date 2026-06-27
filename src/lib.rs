@@ -787,16 +787,12 @@ where
     #[inline(always)]
     fn div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
-        if T::IS_SMALLER_THAN_ISIZE {
-            let mask = (1_isize << rhs.exponent) - 1;
-            T::from_isize((self.as_isize() + mask) >> rhs.exponent)
-        } else {
-            // Can't use a faster implementation with a mask due to possible overflow
-            // of the intermediate `a + mask`
-            let floored = div_floor(self, rhs);
-            let rem = self - (floored << rhs.exponent);
-            floored + T::from_bool(rem.is_not_zero())
-        }
+        // While slightly slower on a single value, this implementation is chosen
+        // because it is better when performed with at least 2 values with the same rhs,
+        // and also uses the same mask as other operations, and also vectorizable.
+        let mask = T::mask(rhs.exponent as u32);
+        let floored = div_floor(self, rhs);
+        floored + T::from_bool((self & mask).is_not_zero())
     }
 }
 
@@ -809,19 +805,10 @@ where
 
     #[inline(always)]
     fn div_ceil(self, rhs: Pow2<T>) -> Self::Output {
-        if L::IS_SMALLER_THAN_ISIZE {
-            // SAFETY: SafePow2 guarantees a valid shift
-            let mask = unsafe { 1_isize.unchecked_shl(rhs.exponent as u32) - 1 };
-            // SAFETY: SafePow2 guarantees a valid shift
-            L::from_isize(unsafe { (self.as_isize() + mask).unchecked_shr(rhs.exponent as u32) })
-        } else {
-            // Can't use a faster implementation with a mask due to possible overflow
-            // of the intermediate `a + mask`
-            let floored = div_floor(self, rhs);
-            // SAFETY: SafePow2 guarantees a valid shift
-            let rem = self - unsafe { floored.unchecked_shl(rhs.exponent as u32) };
-            floored + L::from_bool(rem.is_not_zero())
-        }
+        // SAFETY: SafePow2 guarantees a valid shift
+        let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+        let floored = div_floor(self, rhs);
+        floored + L::from_bool((self & mask).is_not_zero())
     }
 }
 
