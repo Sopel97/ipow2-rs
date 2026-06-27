@@ -1982,9 +1982,18 @@ mod tests {
     #[test]
     fn unb_pow2_unbounded_div_boundary() {
         assert_eq!(unbounded_div(i32::MAX, UnboundedPow2::from_exponent(30)), 1);
+        assert_eq!(unbounded_div(i32::MAX, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(
             unbounded_div(i32::MIN, UnboundedPow2::from_exponent(30)),
             -2
+        );
+        assert_eq!(
+            unbounded_div(i32::MIN, UnboundedPow2::from_exponent(31)),
+            -1
+        );
+        assert_eq!(
+            unbounded_div(i32::MIN, UnboundedPow2::from_exponent(32)),
+            0
         );
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(-123_i32, UnboundedPow2::from_exponent(31)), 0);
