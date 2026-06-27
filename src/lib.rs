@@ -63,11 +63,13 @@ impl UnboundedPow2 {
 }
 
 impl UnboundedPow2 {
+    #[must_use]
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> UnboundedPow2 {
         UnboundedPow2 { exponent }
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn align_of<T>() -> UnboundedPow2 {
         UnboundedPow2 {
@@ -75,6 +77,7 @@ impl UnboundedPow2 {
         }
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn align_of_val<T: ?Sized>(val: &T) -> UnboundedPow2 {
         UnboundedPow2 {
@@ -82,16 +85,19 @@ impl UnboundedPow2 {
         }
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn exponent(self) -> u8 {
         self.exponent
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn is_safe<T: Int>(self) -> bool {
         self.exponent as u32 <= T::SAFE_SHIFT
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn checked_mul(self, other: UnboundedPow2) -> Option<UnboundedPow2> {
         Some(UnboundedPow2::from_exponent(
@@ -99,11 +105,13 @@ impl UnboundedPow2 {
         ))
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn saturating_mul(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent.saturating_add(other.exponent))
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn checked_div(self, other: UnboundedPow2) -> Option<UnboundedPow2> {
         Some(UnboundedPow2::from_exponent(
@@ -111,6 +119,7 @@ impl UnboundedPow2 {
         ))
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn saturating_div(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent.saturating_sub(other.exponent))
@@ -120,6 +129,7 @@ impl UnboundedPow2 {
 macro_rules! impl_as {
     ($name:ident, $t:ty) => {
         impl UnboundedPow2 {
+            #[must_use]
             #[inline(always)]
             pub fn $name(self) -> $t {
                 1 << self.exponent
@@ -206,6 +216,7 @@ impl MulAssign for UnboundedPow2 {
 
 impl Div for UnboundedPow2 {
     type Output = UnboundedPow2;
+    
     #[inline(always)]
     fn div(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent - other.exponent)
@@ -256,29 +267,34 @@ where
         Self::from_exponent(align_of_val(val).ilog2() as u8)
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn exponent(self) -> u8 {
         self.exponent
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn value(self) -> T {
         // SAFETY: SafePow2 guarantees a valid shift
         unsafe { T::ONE.unchecked_shl(self.exponent as u32) }
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn mask(self) -> T {
         // SAFETY: SafePow2 guarantees a valid shift
         unsafe { T::unchecked_mask(self.exponent as u32) }
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn checked_mul(self, other: Self) -> Option<Self> {
         // The addition does not overflow because it's at most 127+127<=255 for u128
         Self::from_exponent(self.exponent + other.exponent).ok()
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn saturating_mul(self, other: Self) -> Self {
         Self {
@@ -287,6 +303,7 @@ where
         }
     }
 
+    #[must_use]
     #[inline(always)]
     pub fn checked_div(self, other: Self) -> Option<Self> {
         Some(Self {
@@ -295,6 +312,7 @@ where
         })
     }
 
+    #[must_use]
     #[inline(always)]
     pub const fn saturating_div(self, other: Self) -> Self {
         Self {
@@ -455,6 +473,7 @@ impl Pow2<usize> {
 }
 
 impl<T> From<Pow2<T>> for UnboundedPow2 {
+    #[inline(always)]
     fn from(value: Pow2<T>) -> Self {
         Self {
             exponent: value.exponent,
@@ -468,6 +487,7 @@ where
 {
     type Error = Pow2OutOfRange;
 
+    #[inline(always)]
     fn try_from(value: UnboundedPow2) -> Result<Self, Self::Error> {
         Self::from_exponent(value.exponent)
     }
@@ -477,6 +497,7 @@ macro_rules! impl_pow2_self_conv_from {
     ($t:ty => $($into:ty),*) => {
         $(
             impl From<Pow2<$t>> for Pow2<$into> {
+                #[inline(always)]
                 fn from(value: Pow2<$t>) -> Self {
                     Self {
                         exponent: value.exponent,
@@ -516,6 +537,7 @@ macro_rules! impl_pow2_self_conv_try_from {
             impl TryFrom<Pow2<$t>> for Pow2<$into> {
                 type Error = Pow2OutOfRange;
 
+                #[inline(always)]
                 fn try_from(value: Pow2<$t>) -> Result<Self, Self::Error> {
                     Pow2::from_exponent(value.exponent)
                 }
@@ -678,9 +700,12 @@ macro_rules! make_func_trait {
     ($trait_name:ident, $func_name:ident) => {
         pub trait $trait_name<Rhs> {
             type Output;
+            
+            #[must_use]
             fn $func_name(self, rhs: Rhs) -> Self::Output;
         }
 
+        #[must_use]
         #[inline(always)]
         pub fn $func_name<L: $trait_name<R>, R>(lhs: L, rhs: R) -> L::Output {
             lhs.$func_name(rhs)

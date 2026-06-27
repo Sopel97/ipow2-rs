@@ -29,24 +29,61 @@ where
     const IS_UNSIGNED: bool;
     const SAFE_SHIFT: u32;
 
+    #[must_use]
     fn is_power_of_two(self) -> bool;
+
+    #[must_use]
     fn ilog2(self) -> u32;
+
+    #[must_use]
     fn cast_signed(self) -> Self::Signed;
+
+    #[must_use]
     fn cast_unsigned(self) -> Self::Unsigned;
+
+    #[must_use]
     fn from_bool(b: bool) -> Self;
+
+    #[must_use]
     fn is_zero(self) -> bool;
+
+    #[must_use]
     fn is_not_zero(self) -> bool;
+
+    #[must_use]
     fn checked_shl(self, rhs: u32) -> Option<Self>;
+
+    #[must_use]
     fn checked_add(self, rhs: Self) -> Option<Self>;
+
+    #[must_use]
     fn mask(bits: u32) -> Self;
+
+    #[must_use]
     fn highest_mask_bit(bits: u32) -> Self;
+
+    #[must_use]
     unsafe fn unchecked_mask(bits: u32) -> Self;
+
+    #[must_use]
     unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self;
+
+    #[must_use]
     fn trailing_zeros(self) -> u32;
+
+    #[must_use]
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
+
+    #[must_use]
     unsafe fn unchecked_shl(self, rhs: u32) -> Self;
+
+    #[must_use]
     fn saturating_sub(self, rhs: Self) -> Self;
+
+    #[must_use]
     fn self_from_signed(rhs: Self::Signed) -> Self;
+
+    #[must_use]
     fn self_from_unsigned(rhs: Self::Unsigned) -> Self;
 }
 
