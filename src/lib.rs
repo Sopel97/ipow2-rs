@@ -54,26 +54,26 @@ impl UnboundedPow2 {
     }
 
     #[inline(always)]
-    pub fn align_of<T>() -> UnboundedPow2 {
+    pub const fn align_of<T>() -> UnboundedPow2 {
         UnboundedPow2 {
             exponent: align_of::<T>().ilog2() as u8,
         }
     }
 
     #[inline(always)]
-    pub fn align_of_val<T: ?Sized>(val: &T) -> UnboundedPow2 {
+    pub const fn align_of_val<T: ?Sized>(val: &T) -> UnboundedPow2 {
         UnboundedPow2 {
             exponent: align_of_val(val).ilog2() as u8,
         }
     }
 
     #[inline(always)]
-    pub fn exponent(self) -> u8 {
+    pub const fn exponent(self) -> u8 {
         self.exponent
     }
 
     #[inline(always)]
-    pub fn is_safe<T: Int>(self) -> bool {
+    pub const fn is_safe<T: Int>(self) -> bool {
         self.exponent as u32 <= T::SAFE_SHIFT
     }
 
@@ -85,7 +85,7 @@ impl UnboundedPow2 {
     }
 
     #[inline(always)]
-    pub fn saturating_mul(self, other: UnboundedPow2) -> UnboundedPow2 {
+    pub const fn saturating_mul(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent.saturating_add(other.exponent))
     }
 
@@ -97,7 +97,7 @@ impl UnboundedPow2 {
     }
 
     #[inline(always)]
-    pub fn saturating_div(self, other: UnboundedPow2) -> UnboundedPow2 {
+    pub const fn saturating_div(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent.saturating_sub(other.exponent))
     }
 }
@@ -232,17 +232,17 @@ where
     }
 
     #[inline(always)]
-    pub fn align_of<U>() -> Result<Self, Pow2OutOfRange> {
+    pub const fn align_of<U>() -> Result<Self, Pow2OutOfRange> {
         Self::from_exponent(align_of::<U>().ilog2() as u8)
     }
 
     #[inline(always)]
-    pub fn align_of_val<U: ?Sized>(val: &U) -> Result<Self, Pow2OutOfRange> {
+    pub const fn align_of_val<U: ?Sized>(val: &U) -> Result<Self, Pow2OutOfRange> {
         Self::from_exponent(align_of_val(val).ilog2() as u8)
     }
 
     #[inline(always)]
-    pub fn exponent(self) -> u8 {
+    pub const fn exponent(self) -> u8 {
         self.exponent
     }
 
@@ -281,7 +281,7 @@ where
     }
 
     #[inline(always)]
-    pub fn saturating_div(self, other: Self) -> Self {
+    pub const fn saturating_div(self, other: Self) -> Self {
         Self {
             exponent: self.exponent.saturating_sub(other.exponent),
             _marker: marker::PhantomData,

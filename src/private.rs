@@ -28,7 +28,6 @@ where
     const IS_SIGNED: bool;
     const IS_UNSIGNED: bool;
     const SAFE_SHIFT: u32;
-    const IS_SMALLER_THAN_ISIZE: bool;
 
     fn is_power_of_two(self) -> bool;
     fn ilog2(self) -> u32;
@@ -44,11 +43,6 @@ where
     unsafe fn unchecked_mask(bits: u32) -> Self;
     unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self;
     fn trailing_zeros(self) -> u32;
-    fn from_isize(val: isize) -> Self;
-    fn as_isize(self) -> isize;
-    fn is_smaller_than_i32() -> bool;
-    fn from_i32(val: i32) -> Self;
-    fn as_i32(self) -> i32;
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
     unsafe fn unchecked_shl(self, rhs: u32) -> Self;
     fn saturating_sub(self, rhs: Self) -> Self;
@@ -81,7 +75,6 @@ macro_rules! impl_common_int {
         const ONE: Self = 1;
         const MIN: Self = <$t>::MIN;
         const MAX: Self = <$t>::MAX;
-        const IS_SMALLER_THAN_ISIZE: bool = <$t>::BITS < isize::BITS;
 
         #[inline(always)]
         fn ilog2(self) -> u32 {
@@ -116,31 +109,6 @@ macro_rules! impl_common_int {
         #[inline(always)]
         fn trailing_zeros(self) -> u32 {
             self.trailing_zeros()
-        }
-
-        #[inline(always)]
-        fn from_isize(val: isize) -> Self {
-            val as Self
-        }
-
-        #[inline(always)]
-        fn as_isize(self) -> isize {
-            self as isize
-        }
-
-        #[inline(always)]
-        fn is_smaller_than_i32() -> bool {
-            <$t>::BITS < i32::BITS
-        }
-
-        #[inline(always)]
-        fn from_i32(val: i32) -> Self {
-            val as Self
-        }
-
-        #[inline(always)]
-        fn as_i32(self) -> i32 {
-            self as i32
         }
 
         #[inline(always)]
