@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::ops::{Div, DivAssign, Mul, MulAssign};
 use std::{cmp, marker};
 
@@ -19,8 +20,22 @@ const _: () = assert!(align_of::<UnboundedPow2>() == align_of::<u8>());
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct NotPow2;
 
+impl Error for NotPow2 {}
+impl std::fmt::Display for NotPow2 {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "Not a power of two")
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Pow2OutOfRange;
+
+impl Error for Pow2OutOfRange {}
+impl std::fmt::Display for Pow2OutOfRange {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "Out of range")
+    }
+}
 
 #[rustfmt::skip]
 impl UnboundedPow2 {
