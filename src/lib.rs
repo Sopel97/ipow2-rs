@@ -847,22 +847,16 @@ where
 
 make_func_trait!(DivRound, div_round);
 
-impl<T> DivRound<UnboundedPow2> for T
-where
-    T: Int,
-{
-    type Output = Self;
+impl_trait_signed_unsigned!(
+    DivRound<UnboundedPow2>,
+    signed_body {
+        type Output = Self;
 
-    #[inline(always)]
-    fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
-        debug_assert!(rhs.is_safe::<T::Unsigned>());
-        if T::IS_UNSIGNED {
-            let bit = T::highest_mask_bit(rhs.exponent as u32);
-            let floored = div_floor(self, rhs);
-            // this is only valid for unsigned a
-            floored + T::from_bool((self & bit).is_not_zero())
-        } else {
-            let mask = T::mask(rhs.exponent as u32);
+        #[inline(always)]
+        fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_SIGNED);
+            debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
+            let mask = Self::mask(rhs.exponent as u32);
             let floored = div_floor(self, rhs);
             // Account for signedness of a
             // for a >= 0 we need rem != 0 and rem >= mask_highest_bit
@@ -870,31 +864,36 @@ where
             // make sure the saturating sub saturates to zero (unsigned)
             let rem = (self & mask)
                 .cast_unsigned()
-                .saturating_sub(T::Unsigned::from_bool(self < Self::ZERO));
+                .saturating_sub(<Self as Int>::Unsigned::from_bool(self < Self::ZERO));
             let rems = (rem << 1) >> rhs.exponent;
-            floored + T::self_from_unsigned(rems & T::Unsigned::ONE)
+            floored + Self::self_from_unsigned(rems & <Self as Int>::Unsigned::ONE)
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
+            debug_assert!(Self::IS_UNSIGNED);
+            debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
+            let bit = Self::highest_mask_bit(rhs.exponent as u32);
+            let floored = div_floor(self, rhs);
+            // this is only valid for unsigned a
+            floored + Self::from_bool((self & bit).is_not_zero())
         }
     }
-}
+);
 
-impl<L, T> DivRound<Pow2<T>> for L
-where
-    L: IntAtLeastAsWide<T>,
-    T: UnsignedInt,
-{
-    type Output = Self;
+impl_generic_trait_signed_unsigned!(
+    <T> DivRound<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
+    signed_body {
+        type Output = Self;
 
-    #[inline(always)]
-    fn div_round(self, rhs: Pow2<T>) -> Self::Output {
-        if L::IS_UNSIGNED {
+        #[inline(always)]
+        fn div_round(self, rhs: Pow2<T>) -> Self {
+            debug_assert!(Self::IS_SIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
-            let bit = unsafe { L::unchecked_highest_mask_bit(rhs.exponent as u32) };
-            let floored = div_floor(self, rhs);
-            // this is only valid for unsigned a
-            floored + L::from_bool((self & bit).is_not_zero())
-        } else {
-            // SAFETY: SafePow2 guarantees a valid shift
-            let mask = unsafe { L::unchecked_mask(rhs.exponent as u32) };
+            let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
             let floored = div_floor(self, rhs);
             // Account for signedness of a
             // for a >= 0 we need rem != 0 and rem >= mask_highest_bit
@@ -902,13 +901,26 @@ where
             // make sure the saturating sub saturates to zero (unsigned)
             let rem = (self & mask)
                 .cast_unsigned()
-                .saturating_sub(L::Unsigned::from_bool(self < Self::ZERO));
+                .saturating_sub(<Self as Int>::Unsigned::from_bool(self < Self::ZERO));
             // SAFETY: SafePow2 guarantees a valid shift
             let rems = unsafe { rem.unchecked_shl(1).unchecked_shr(rhs.exponent as u32) };
-            floored + L::self_from_unsigned(rems & L::Unsigned::ONE)
+            floored + Self::self_from_unsigned(rems & <Self as Int>::Unsigned::ONE)
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn div_round(self, rhs: Pow2<T>) -> Self {
+            debug_assert!(Self::IS_UNSIGNED);
+            // SAFETY: SafePow2 guarantees a valid shift
+            let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
+            let floored = div_floor(self, rhs);
+            // this is only valid for unsigned a
+            floored + Self::from_bool((self & bit).is_not_zero())
         }
     }
-}
+);
 
 make_func_trait!(IsMultipleOf, is_multiple_of);
 
