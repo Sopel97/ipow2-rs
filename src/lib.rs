@@ -43,8 +43,8 @@
 //! assert_eq!(ipow2::floor_to_multiple(block_y, CHUNK_SIZE), -16);
 //! assert_eq!(ipow2::div_floor(block_x, CHUNK_SIZE), -2);
 //! assert_eq!(ipow2::div_floor(block_y, CHUNK_SIZE), -1);
-//! assert_eq!(ipow2::mod_floor(block_x, CHUNK_SIZE), 15);
-//! assert_eq!(ipow2::mod_floor(block_y, CHUNK_SIZE), 12);
+//! assert_eq!(ipow2::rem_floor(block_x, CHUNK_SIZE), 15);
+//! assert_eq!(ipow2::rem_floor(block_y, CHUNK_SIZE), 12);
 //! ```
 //!
 //! ### [`UnboundedPow2`]
@@ -103,7 +103,7 @@
 //! | Function | Description |
 //! |----------|-------------|
 //! | [`div_floor`] | Floor division (round toward −∞). For unsigned integers this is identical to `/`. |
-//! | [`mod_floor`] | Remainder after floor division. Always non-negative for signed inputs (unlike `%`). |
+//! | [`rem_floor`] | Remainder after floor division. Always non-negative for signed inputs (unlike `%`). |
 //! | [`div_ceil`] | Ceiling division (round toward +∞). |
 //! | [`div_round`] | Rounding division (round half away from zero). |
 //!
@@ -1316,51 +1316,51 @@ where
     }
 }
 
-make_func_trait!(ModFloor, mod_floor);
+make_func_trait!(RemFloor, rem_floor);
 
-/// See [docs](__detached_docs::UnboundedPow2::ModFloor)
-impl<T> ModFloor<UnboundedPow2> for T
+/// See [docs](__detached_docs::UnboundedPow2::RemFloor)
+impl<T> RemFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
-    /// See [docs](__detached_docs::UnboundedPow2::ModFloor)
+    /// See [docs](__detached_docs::UnboundedPow2::RemFloor)
     #[inline(always)]
-    fn mod_floor(self, rhs: UnboundedPow2) -> Self::Output {
+    fn rem_floor(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
         self - floor_to_multiple(self, rhs)
     }
 }
 
-/// See [docs](__detached_docs::Pow2::ModFloor)
-impl<L, T> ModFloor<Pow2<T>> for L
+/// See [docs](__detached_docs::Pow2::RemFloor)
+impl<L, T> RemFloor<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
     T: UnsignedInt,
 {
     type Output = Self;
 
-    /// See [docs](__detached_docs::Pow2::ModFloor)
+    /// See [docs](__detached_docs::Pow2::RemFloor)
     #[inline(always)]
-    fn mod_floor(self, rhs: Pow2<T>) -> Self::Output {
+    fn rem_floor(self, rhs: Pow2<T>) -> Self::Output {
         self - floor_to_multiple(self, rhs)
     }
 }
 
-make_func_trait!(CheckedModFloor, checked_mod_floor);
+make_func_trait!(CheckedRemFloor, checked_rem_floor);
 
-/// See [docs](__detached_docs::UnboundedPow2::CheckedModFloor)
-impl<T> CheckedModFloor<UnboundedPow2> for T
+/// See [docs](__detached_docs::UnboundedPow2::CheckedRemFloor)
+impl<T> CheckedRemFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
-    /// See [docs](__detached_docs::UnboundedPow2::CheckedModFloor)
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedRemFloor)
     #[inline(always)]
-    fn checked_mod_floor(self, rhs: UnboundedPow2) -> Self::Output {
-        rhs.is_safe::<T::Unsigned>().then(|| mod_floor(self, rhs))
+    fn checked_rem_floor(self, rhs: UnboundedPow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| rem_floor(self, rhs))
     }
 }
 
@@ -2098,10 +2098,10 @@ pub mod __detached_docs {
         /// Avoids integer division by using bitwise arithmetic.
         pub mod DivFloor {}
 
-        #[doc = trait_code_header_pow2!(ModFloor, mod_floor, [])]
+        #[doc = trait_code_header_pow2!(RemFloor, rem_floor, [])]
         /// Computes the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
         /// Avoids integer division by using bitwise arithmetic.
-        pub mod ModFloor {}
+        pub mod RemFloor {}
 
         #[doc = trait_code_header_pow2!(DivCeil, div_ceil, [])]
         /// Divides `self` by `rhs` with rounding towards positive infinity.
@@ -2213,7 +2213,7 @@ pub mod __detached_docs {
         /// Avoids integer division by using bitwise arithmetic.
         pub mod UnboundedDivFloor {}
 
-        #[doc = trait_code_header_unb_pow2!(ModFloor, mod_floor, [])]
+        #[doc = trait_code_header_unb_pow2!(RemFloor, rem_floor, [])]
         /// Computes the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
         /// Avoids integer division by using bitwise arithmetic.
         ///
@@ -2221,14 +2221,14 @@ pub mod __detached_docs {
         ///
         /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
         /// In release builds this check is skipped; the result will be defined but incorrect.
-        pub mod ModFloor {}
+        pub mod RemFloor {}
 
-        #[doc = trait_code_header_unb_pow2!(CheckedModFloor, checked_mod_floor, [])]
+        #[doc = trait_code_header_unb_pow2!(CheckedRemFloor, checked_rem_floor, [])]
         /// Attempts to compute the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
         /// Avoids integer division by using bitwise arithmetic.
         ///
         /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
-        pub mod CheckedModFloor {}
+        pub mod CheckedRemFloor {}
 
         #[doc = trait_code_header_unb_pow2!(DivCeil, div_ceil, [])]
         /// Divides `self` by `rhs` with rounding towards positive infinity.
@@ -4849,147 +4849,147 @@ mod tests {
     }
 
     #[test]
-    fn unb_pow2_mod_floor_u64_exact() {
-        assert_eq!(mod_floor(32u64, UnboundedPow2::from_exponent(5)), 0);
+    fn unb_pow2_rem_floor_u64_exact() {
+        assert_eq!(rem_floor(32u64, UnboundedPow2::from_exponent(5)), 0);
     }
 
     #[test]
-    fn pow2_mod_floor_u64_exact() {
-        assert_eq!(mod_floor(32u64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+    fn pow2_rem_floor_u64_exact() {
+        assert_eq!(rem_floor(32u64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
     }
 
     #[test]
     #[cfg(debug_assertions)]
     #[should_panic]
-    fn unb_pow2_mod_floor_divisor_out_of_range() {
-        let _ = mod_floor(32u64, UnboundedPow2::from_exponent(64));
+    fn unb_pow2_rem_floor_divisor_out_of_range() {
+        let _ = rem_floor(32u64, UnboundedPow2::from_exponent(64));
     }
 
     #[test]
-    fn unb_pow2_mod_floor_u64_remainder() {
-        assert_eq!(mod_floor(37u64, UnboundedPow2::from_exponent(5)), 5);
-        assert_eq!(mod_floor(63u64, UnboundedPow2::from_exponent(5)), 31);
+    fn unb_pow2_rem_floor_u64_remainder() {
+        assert_eq!(rem_floor(37u64, UnboundedPow2::from_exponent(5)), 5);
+        assert_eq!(rem_floor(63u64, UnboundedPow2::from_exponent(5)), 31);
     }
 
     #[test]
-    fn pow2_mod_floor_u64_remainder() {
-        assert_eq!(mod_floor(37u64, Pow2::<u8>::from_exponent(5).unwrap()), 5);
-        assert_eq!(mod_floor(63u64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
+    fn pow2_rem_floor_u64_remainder() {
+        assert_eq!(rem_floor(37u64, Pow2::<u8>::from_exponent(5).unwrap()), 5);
+        assert_eq!(rem_floor(63u64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
     }
 
     #[test]
-    fn unb_pow2_mod_floor_i64_positive() {
-        assert_eq!(mod_floor(37i64, UnboundedPow2::from_exponent(5)), 5);
+    fn unb_pow2_rem_floor_i64_positive() {
+        assert_eq!(rem_floor(37i64, UnboundedPow2::from_exponent(5)), 5);
     }
 
     #[test]
-    fn pow2_mod_floor_i64_positive() {
-        assert_eq!(mod_floor(37i64, Pow2::<u8>::from_exponent(5).unwrap()), 5);
+    fn pow2_rem_floor_i64_positive() {
+        assert_eq!(rem_floor(37i64, Pow2::<u8>::from_exponent(5).unwrap()), 5);
     }
 
     #[test]
-    fn unb_pow2_mod_floor_i64_negative() {
-        assert_eq!(mod_floor(-1i64, UnboundedPow2::from_exponent(5)), 31);
+    fn unb_pow2_rem_floor_i64_negative() {
+        assert_eq!(rem_floor(-1i64, UnboundedPow2::from_exponent(5)), 31);
     }
 
     #[test]
-    fn pow2_mod_floor_i64_negative() {
-        assert_eq!(mod_floor(-1i64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
+    fn pow2_rem_floor_i64_negative() {
+        assert_eq!(rem_floor(-1i64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
     }
 
     #[test]
-    fn unb_pow2_mod_floor_min() {
-        assert_eq!(mod_floor(i32::MIN, UnboundedPow2::from_exponent(2)), 0);
-        assert_eq!(mod_floor(i32::MIN, UnboundedPow2::from_exponent(31)), 0);
+    fn unb_pow2_rem_floor_min() {
+        assert_eq!(rem_floor(i32::MIN, UnboundedPow2::from_exponent(2)), 0);
+        assert_eq!(rem_floor(i32::MIN, UnboundedPow2::from_exponent(31)), 0);
     }
 
     #[test]
-    fn pow2_mod_floor_min() {
+    fn pow2_rem_floor_min() {
         assert_eq!(
-            mod_floor(i32::MIN, Pow2::<u8>::from_exponent(2).unwrap()),
+            rem_floor(i32::MIN, Pow2::<u8>::from_exponent(2).unwrap()),
             0
         );
         assert_eq!(
-            mod_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
+            rem_floor(i32::MIN, Pow2::<u32>::from_exponent(31).unwrap()),
             0
         );
     }
 
     #[test]
-    fn unb_pow2_mod_floor_max() {
-        assert_eq!(mod_floor(i32::MAX, UnboundedPow2::from_exponent(2)), 3);
+    fn unb_pow2_rem_floor_max() {
+        assert_eq!(rem_floor(i32::MAX, UnboundedPow2::from_exponent(2)), 3);
         assert_eq!(
-            mod_floor(i32::MAX, UnboundedPow2::from_exponent(31)),
+            rem_floor(i32::MAX, UnboundedPow2::from_exponent(31)),
             i32::MAX
         );
-        assert_eq!(mod_floor(u32::MAX, UnboundedPow2::from_exponent(2)), 3);
+        assert_eq!(rem_floor(u32::MAX, UnboundedPow2::from_exponent(2)), 3);
         assert_eq!(
-            mod_floor(u32::MAX, UnboundedPow2::from_exponent(31)),
+            rem_floor(u32::MAX, UnboundedPow2::from_exponent(31)),
             i32::MAX as u32
         );
     }
 
     #[test]
-    fn pow2_mod_floor_max() {
+    fn pow2_rem_floor_max() {
         assert_eq!(
-            mod_floor(i32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
+            rem_floor(i32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
             3
         );
         assert_eq!(
-            mod_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            rem_floor(i32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
             i32::MAX
         );
         assert_eq!(
-            mod_floor(u32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
+            rem_floor(u32::MAX, Pow2::<u8>::from_exponent(2).unwrap()),
             3
         );
         assert_eq!(
-            mod_floor(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
+            rem_floor(u32::MAX, Pow2::<u32>::from_exponent(31).unwrap()),
             i32::MAX as u32
         );
     }
 
     #[test]
-    fn unb_pow2_mod_floor_i64_negative_is_always_nonnegative() {
+    fn unb_pow2_rem_floor_i64_negative_is_always_nonnegative() {
         // div_floor(-37, 32) = -64, so mod = -37 - (-64) = 27
-        assert_eq!(mod_floor(-37i64, UnboundedPow2::from_exponent(5)), 27);
+        assert_eq!(rem_floor(-37i64, UnboundedPow2::from_exponent(5)), 27);
         // div_floor(-32, 32) = -32, so mod = 0
-        assert_eq!(mod_floor(-32i64, UnboundedPow2::from_exponent(5)), 0);
+        assert_eq!(rem_floor(-32i64, UnboundedPow2::from_exponent(5)), 0);
         // div_floor(-1, 32) = -32, so mod = 31
-        assert_eq!(mod_floor(-1i64, UnboundedPow2::from_exponent(5)), 31);
+        assert_eq!(rem_floor(-1i64, UnboundedPow2::from_exponent(5)), 31);
     }
 
     #[test]
-    fn pow2_mod_floor_i64_negative_is_always_nonnegative() {
+    fn pow2_rem_floor_i64_negative_is_always_nonnegative() {
         // div_floor(-37, 32) = -64, so mod = -37 - (-64) = 27
-        assert_eq!(mod_floor(-37i64, Pow2::<u8>::from_exponent(5).unwrap()), 27);
+        assert_eq!(rem_floor(-37i64, Pow2::<u8>::from_exponent(5).unwrap()), 27);
         // div_floor(-32, 32) = -32, so mod = 0
-        assert_eq!(mod_floor(-32i64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
+        assert_eq!(rem_floor(-32i64, Pow2::<u8>::from_exponent(5).unwrap()), 0);
         // div_floor(-1, 32) = -32, so mod = 31
-        assert_eq!(mod_floor(-1i64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
+        assert_eq!(rem_floor(-1i64, Pow2::<u8>::from_exponent(5).unwrap()), 31);
     }
 
     #[test]
-    fn unb_pow2_checked_mod_floor_boundary() {
+    fn unb_pow2_checked_rem_floor_boundary() {
         assert_eq!(
-            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(30)),
+            checked_rem_floor(0_i32, UnboundedPow2::from_exponent(30)),
             Some(0)
         );
         assert_eq!(
-            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(31)),
+            checked_rem_floor(0_i32, UnboundedPow2::from_exponent(31)),
             Some(0)
         );
         assert_eq!(
-            checked_mod_floor(0_i32, UnboundedPow2::from_exponent(32)),
+            checked_rem_floor(0_i32, UnboundedPow2::from_exponent(32)),
             None
         );
 
         assert_eq!(
-            checked_mod_floor(0_u32, UnboundedPow2::from_exponent(31)),
+            checked_rem_floor(0_u32, UnboundedPow2::from_exponent(31)),
             Some(0)
         );
         assert_eq!(
-            checked_mod_floor(0_u32, UnboundedPow2::from_exponent(32)),
+            checked_rem_floor(0_u32, UnboundedPow2::from_exponent(32)),
             None
         );
     }
@@ -5116,10 +5116,10 @@ mod tests {
     }
 
     #[test]
-    fn unb_pow2_mod_floor_plus_floor_to_multiple_equals_input() {
+    fn unb_pow2_rem_floor_plus_floor_to_multiple_equals_input() {
         let b = UnboundedPow2::from_exponent(5); // 32
         for a in (-300i64..=300).step_by(11) {
-            let reconstructed = floor_to_multiple(a, b) + mod_floor(a, b);
+            let reconstructed = floor_to_multiple(a, b) + rem_floor(a, b);
             assert_eq!(reconstructed, a, "reconstruction failed at a={a}");
         }
     }

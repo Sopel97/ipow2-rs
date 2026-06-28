@@ -237,11 +237,11 @@ macro_rules! make_bench_inner {
 
 macro_rules! make_bench {
     (
-        @modules [ $( $mod_name:ident : $t:ty ),* $(,)? ]
+        @modules [ $( $rem_name:ident : $t:ty ),* $(,)? ]
         @funcs $funcs:tt
     ) => {
         $(
-            mod $mod_name {
+            mod $rem_name {
                 use super::*;
 
                 make_bench_inner!($t; $funcs);
@@ -250,12 +250,12 @@ macro_rules! make_bench {
     };
 
     (
-        $( $mod_name:ident : $t:ty ),* $(,)?
+        $( $rem_name:ident : $t:ty ),* $(,)?
         ;
         $( $func_name:ident : $input:ident => $block:expr ),* $(,)?
     ) => {
         make_bench!(
-            @modules [ $( $mod_name : $t ),* ]
+            @modules [ $( $rem_name : $t ),* ]
             @funcs [ $( $func_name : $input => $block ),* ]
         );
     };
@@ -377,20 +377,20 @@ mod rem {
         pow2_is_multiple_of           : for_pow2           => |a, b| ipow2::is_multiple_of(a, b),
         pow2_is_multiple_of_const     : for_const          => |a|    ipow2::is_multiple_of(a, CONST_POW2),
         pow2_is_multiple_of_reuse     : for_pow2_reuse     => |a, b| ipow2::is_multiple_of(a, b),
-        unb_pow2_mod_floor            : for_unb_pow2       => |a, b| ipow2::mod_floor(a, b),
-        unb_pow2_mod_floor_const      : for_const          => |a|    ipow2::mod_floor(a, CONST_UNB_POW2),
-        unb_pow2_mod_floor_reuse      : for_unb_pow2_reuse => |a, b| ipow2::mod_floor(a, b),
-        pow2_mod_floor                : for_pow2           => |a, b| ipow2::mod_floor(a, b),
-        pow2_mod_floor_const          : for_const          => |a|    ipow2::mod_floor(a, CONST_POW2),
-        pow2_mod_floor_reuse          : for_pow2_reuse     => |a, b| ipow2::mod_floor(a, b),
+        unb_pow2_rem_floor            : for_unb_pow2       => |a, b| ipow2::rem_floor(a, b),
+        unb_pow2_rem_floor_const      : for_const          => |a|    ipow2::rem_floor(a, CONST_UNB_POW2),
+        unb_pow2_rem_floor_reuse      : for_unb_pow2_reuse => |a, b| ipow2::rem_floor(a, b),
+        pow2_rem_floor                : for_pow2           => |a, b| ipow2::rem_floor(a, b),
+        pow2_rem_floor_const          : for_const          => |a|    ipow2::rem_floor(a, CONST_POW2),
+        pow2_rem_floor_reuse          : for_pow2_reuse     => |a, b| ipow2::rem_floor(a, b),
         unb_pow2_rem                  : for_unb_pow2       => |a, b| a % b,
         unb_pow2_rem_const            : for_const          => |a|    a % CONST_UNB_POW2,
         unb_pow2_rem_reuse            : for_unb_pow2_reuse => |a, b| a % b,
         pow2_rem                      : for_pow2           => |a, b| a % b,
         pow2_rem_const                : for_const          => |a|    a % CONST_POW2,
         pow2_rem_reuse                : for_pow2_reuse     => |a, b| a % b,
-        std_mod                       : for_std            => |a, b| a % b,
-        std_mod_const                 : for_const          => |a|    a % const_int!(),
-        std_mod_reuse                 : for_std_reuse      => |a, b| a % b,
+        std_rem                       : for_std            => |a, b| a % b,
+        std_rem_const                 : for_const          => |a|    a % const_int!(),
+        std_rem_reuse                 : for_std_reuse      => |a, b| a % b,
     );
 }

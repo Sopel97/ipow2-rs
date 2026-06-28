@@ -1,8 +1,8 @@
 ﻿use ipow2::{
     CeilToMultiple, CheckedCeilToMultiple, CheckedDiv, CheckedDivCeil, CheckedDivFloor,
-    CheckedDivRound, CheckedFloorToMultiple, CheckedModFloor, CheckedMul, CheckedRem,
-    CheckedRoundToMultiple, DivCeil, DivFloor, DivRound, FloorToMultiple, IsMultipleOf, ModFloor,
-    Pow2, RoundToMultiple, UnboundedCeilToMultiple, UnboundedDiv, UnboundedDivCeil,
+    CheckedDivRound, CheckedFloorToMultiple, CheckedMul, CheckedRem, CheckedRemFloor,
+    CheckedRoundToMultiple, DivCeil, DivFloor, DivRound, FloorToMultiple, IsMultipleOf, Pow2,
+    RemFloor, RoundToMultiple, UnboundedCeilToMultiple, UnboundedDiv, UnboundedDivCeil,
     UnboundedDivFloor, UnboundedDivRound, UnboundedFloorToMultiple, UnboundedIsMultipleOf,
     UnboundedPow2, UnboundedRem, UnboundedRoundToMultiple,
 };
@@ -43,7 +43,7 @@ impl_binops!(
     [RoundToMultiple, round_to_multiple],
     [IsMultipleOf, is_multiple_of],
     [DivCeil, div_ceil],
-    [ModFloor, mod_floor],
+    [RemFloor, rem_floor],
     [DivFloor, div_floor],
     [DivRound, div_round]
 );
@@ -73,8 +73,8 @@ impl_binops!(
     [DivCeil, div_ceil],
     [CheckedDivCeil, checked_div_ceil],
     [UnboundedDivCeil, unbounded_div_ceil],
-    [ModFloor, mod_floor],
-    [CheckedModFloor, checked_mod_floor],
+    [RemFloor, rem_floor],
+    [CheckedRemFloor, checked_rem_floor],
     [DivFloor, div_floor],
     [CheckedDivFloor, checked_div_floor],
     [UnboundedDivFloor, unbounded_div_floor],
