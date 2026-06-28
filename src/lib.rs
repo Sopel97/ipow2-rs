@@ -698,16 +698,36 @@ impl_generic_trait_all_ints!(
 
 macro_rules! make_func_trait {
     ($trait_name:ident, $func_name:ident) => {
+        #[doc = concat!(
+            "Trait implementing `", stringify!($func_name), "` taking `self` and some `rhs` of type `Rhs`.\n\n",
+            "Implementations of this trait define the behavior of the free ",
+            "function [`", stringify!($func_name), "`] which dispatches to them.\n\n",
+            "The [`crate::ipow2`] module may be implementing this trait for all primitive integer ",
+            "types as `self` and the following `Rhs` types:\n",
+            " - [`Pow2`] - [`docs`](__detached_docs::Pow2::", stringify!($trait_name), ")\n",
+            " - [`UnboundedPow2`] - [`docs`](__detached_docs::UnboundedPow2::", stringify!($trait_name), ")\n",
+        )]
         pub trait $trait_name<Rhs> {
             type Output;
 
+            #[doc = concat!(
+                "See docs for [`", stringify!($trait_name), "`]."
+            )]
             #[must_use]
             fn $func_name(self, rhs: Rhs) -> Self::Output;
         }
 
+        #[doc = concat!(
+            "Uses the [`", stringify!($trait_name), "`] trait for dispatch.\n\n",
+            "Invokes [`", stringify!($trait_name), "::", stringify!($func_name), "`] ",
+            "via `lhs.", stringify!($func_name), "(rhs)`.",
+        )]
         #[must_use]
         #[inline(always)]
-        pub fn $func_name<L: $trait_name<R>, R>(lhs: L, rhs: R) -> L::Output {
+        pub fn $func_name<L, R>(lhs: L, rhs: R) -> L::Output
+        where
+            L: $trait_name<R>
+        {
             lhs.$func_name(rhs)
         }
     };
@@ -715,12 +735,14 @@ macro_rules! make_func_trait {
 
 make_func_trait!(CheckedMul, checked_mul);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedMul)
 impl<T> CheckedMul<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedMul)
     #[inline(always)]
     fn checked_mul(self, rhs: UnboundedPow2) -> Self::Output {
         let result = self.checked_shl(rhs.exponent as u32)?;
@@ -732,6 +754,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::CheckedMul)
 impl<L, T> CheckedMul<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -739,6 +762,7 @@ where
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::Pow2::CheckedMul)
     #[inline(always)]
     fn checked_mul(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
@@ -1474,6 +1498,91 @@ where
         } else {
             Some(T::ZERO)
         }
+    }
+}
+
+#[allow(nonstandard_style)]
+pub mod __detached_docs {
+    macro_rules! colored_link {
+        ($name:ident, $color:literal) => {
+            concat!(
+                "[<font color=\"",
+                $color,
+                "\">",
+                stringify!($name),
+                "</font>]",
+                "(crate::",
+                stringify!($name),
+                ")"
+            )
+        };
+    }
+
+    macro_rules! trait_link {
+        ($trait_name:ident) => {
+            colored_link!($trait_name, "#b78cf2")
+        };
+    }
+
+    macro_rules! struct_link {
+        ($struct_name:ident) => {
+            colored_link!($struct_name, "#2dbfb8")
+        };
+    }
+
+    macro_rules! fn_link {
+        ($fn_name:ident) => {
+            colored_link!($fn_name, "#2bab63")
+        };
+    }
+
+    #[rustfmt::skip]
+    macro_rules! trait_code_header_pow2 {
+        ($trait_name:ident, $func_name:ident, [$($additional_trait_bound:ident),*]) => {
+            concat!(
+                "<span><pre>",
+                "impl&lt;L, T&gt; ", trait_link!($trait_name), "&lt;", struct_link!(Pow2), "&lt;T&gt;&gt; for L<br/>",
+                "where<br/>",
+                "&nbsp;&nbsp;&nbsp;&nbsp;L: ", trait_link!(IntAtLeastAsWide), "&lt;T&gt;", $(" + ", trait_link!($additional_trait_bound), "&lt;", struct_link!(Pow2), "&lt;T&gt;, Output = T&gt;",)* ",<br/>",
+                "&nbsp;&nbsp;&nbsp;&nbsp;T: ", trait_link!(UnsignedInt), "<br/>",
+                "fn ", fn_link!($func_name), "(self, rhs: ", struct_link!(Pow2), "&lt;T&gt;) -> Self::Output",
+                "</pre></span><hr/>"
+            )
+        };
+    }
+
+    #[rustfmt::skip]
+    macro_rules! trait_code_header_unb_pow2 {
+        ($trait_name:ident, $func_name:ident, [$($additional_trait_bound:ident),*]) => {
+            concat!(
+                "<span><pre>",
+                "impl&lt;T&gt; ", trait_link!($trait_name), "&lt;", struct_link!(UnboundedPow2), "&gt; for L<br/>",
+                "where<br/>",
+                "&nbsp;&nbsp;&nbsp;&nbsp;L: ", trait_link!(Int), $(" + ", trait_link!($additional_trait_bound), "&lt;", struct_link!(UnboundedPow2), ", Output = T&gt;",)* ",<br/>",
+                "fn ", fn_link!($func_name), "(self, rhs: ", struct_link!(UnboundedPow2), ") -> Self::Output",
+                "</pre></span><hr/>"
+            )
+        };
+    }
+
+    pub mod Pow2 {
+        #[doc = trait_code_header_pow2!(CheckedMul, checked_mul, [])]
+        /// Attempts to multiply `self` by `rhs`.
+        /// Avoids integer multiplication by using bitwise arithmetic.
+        /// 
+        /// Returns `None` if the result overflows,
+        /// `Some(result)` otherwise.
+        pub mod CheckedMul {}
+    }
+
+    pub mod UnboundedPow2 {
+        #[doc = trait_code_header_unb_pow2!(CheckedMul, checked_mul, [])]
+        /// Attempts to multiply `self` by `rhs`.
+        /// Avoids integer multiplication by using bitwise arithmetic.
+        /// 
+        /// Returns `None` if the result overflows or the exponent is too large,
+        /// `Some(result)` otherwise.
+        pub mod CheckedMul {}
     }
 }
 
