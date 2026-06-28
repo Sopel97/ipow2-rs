@@ -980,11 +980,7 @@ impl_trait_signed_unsigned!(
         #[inline(always)]
         fn rem(self, other: UnboundedPow2) -> Self {
             debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
-            if self >= 0 {
-                self - floor_to_multiple(self, other)
-            } else {
-                self - ceil_to_multiple(self, other)
-            }
+            self - (self / other * other)
         }
     },
     unsigned_body {
@@ -993,7 +989,7 @@ impl_trait_signed_unsigned!(
         #[inline(always)]
         fn rem(self, other: UnboundedPow2) -> Self {
             debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
-            self - floor_to_multiple(self, other)
+            self - (self / other * other)
         }
     }
 );
@@ -1005,11 +1001,7 @@ impl_generic_trait_signed_unsigned!(
 
         #[inline(always)]
         fn rem(self, other: Pow2<T>) -> Self {
-            if self >= 0 {
-                self - floor_to_multiple(self, other)
-            } else {
-                self - ceil_to_multiple(self, other)
-            }
+            self - (self / other * other)
         }
     },
     unsigned_body {
@@ -1017,7 +1009,7 @@ impl_generic_trait_signed_unsigned!(
 
         #[inline(always)]
         fn rem(self, other: Pow2<T>) -> Self {
-            self - floor_to_multiple(self, other)
+            self - (self / other * other)
         }
     }
 );
