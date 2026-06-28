@@ -713,8 +713,8 @@ macro_rules! make_func_trait {
             "function [`", stringify!($func_name), "`] which dispatches to them.\n\n",
             "The [`crate::ipow2`] module may be implementing this trait for all primitive integer ",
             "types as `self` and the following `Rhs` types:\n",
-            " - [`Pow2`] - [`docs`](__detached_docs::Pow2::", stringify!($trait_name), ")\n",
-            " - [`UnboundedPow2`] - [`docs`](__detached_docs::UnboundedPow2::", stringify!($trait_name), ")\n",
+            " - [`Pow2`] - [`docs?`](__detached_docs::Pow2::", stringify!($trait_name), ")\n",
+            " - [`UnboundedPow2`] - [`docs?`](__detached_docs::UnboundedPow2::", stringify!($trait_name), ")\n",
         )]
         pub trait $trait_name<Rhs> {
             type Output;
