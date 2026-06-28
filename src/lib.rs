@@ -914,12 +914,9 @@ impl_trait_signed_unsigned!(
         #[inline(always)]
         fn div(self, other: UnboundedPow2) -> Self {
             debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
-            if self >= 0 {
-                self >> other.exponent
-            } else {
-                let mask = <Self as Int>::mask(other.exponent as u32);
-                (self + mask) >> other.exponent
-            }
+            let sgn = self >> (Self::BITS - 1);
+            let msk = Self::mask(other.exponent as u32);
+            (self + (sgn & msk)) >> other.exponent
         }
     },
     unsigned_body {
@@ -940,16 +937,11 @@ impl_generic_trait_signed_unsigned!(
 
         #[inline(always)]
         fn div(self, other: Pow2<T>) -> Self {
-            if self >= 0 {
-                // SAFETY: SafePow2 guarantees a valid shift
-                unsafe { self.unchecked_shr(other.exponent as u32) }
-            } else {
-                // SAFETY: SafePow2 guarantees a valid shift
-                unsafe {
-                    let mask = <Self as Int>::unchecked_mask(other.exponent as u32);
-                    (self + mask).unchecked_shr(other.exponent as u32)
-                }
-            }
+            // SAFETY: SafePow2 guarantees a valid shift
+            let sgn = unsafe { self.unchecked_shr(Self::BITS - 1) };
+            // SAFETY: SafePow2 guarantees a valid shift
+            let msk = unsafe { Self::unchecked_mask(other.exponent as u32) };
+            (self + (sgn & msk)) >> other.exponent
         }
     },
     unsigned_body {
