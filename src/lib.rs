@@ -532,7 +532,7 @@ where
         unsafe { T::ONE.unchecked_shl(self.exponent as u32) }
     }
 
-    /// Returns a mask with `self.exponent` lowest bits set. Effectively `self.value() - 1`.
+    /// Returns a mask with `self.exponent` of lowest bits set. Effectively `self.value() - 1`.
     #[must_use]
     #[inline(always)]
     pub fn mask(self) -> T {
