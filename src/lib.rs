@@ -644,7 +644,6 @@ pub type SafePow2u128 = Pow2<u128>;
 pub type SafePow2usize = Pow2<usize>;
 
 impl_trait_signed_unsigned!(
-    #[doc = ""],
     Div<UnboundedPow2>,
     signed_body {
         type Output = Self;
@@ -672,7 +671,6 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    #[doc = ""],
     <T> Div<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Self;
@@ -702,7 +700,6 @@ impl_generic_trait_signed_unsigned!(
 );
 
 impl_trait_all_ints!(
-    #[doc = ""],
     DivAssign<UnboundedPow2> => {
         #[inline(always)]
         fn div_assign(&mut self, other: UnboundedPow2) {
@@ -713,7 +710,6 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    #[doc = ""],
     <T> DivAssign<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
         #[inline(always)]
         fn div_assign(&mut self, other: Pow2<T>) {
@@ -723,7 +719,6 @@ impl_generic_trait_all_ints!(
 );
 
 impl_trait_all_ints!(
-    #[doc = ""],
     Mul<UnboundedPow2> => {
         type Output = Self;
 
@@ -738,7 +733,6 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    #[doc = ""],
     <T> Mul<Pow2<T>> where { T: UnsignedInt } => {
         type Output = Self;
 
@@ -753,7 +747,6 @@ impl_generic_trait_all_ints!(
 );
 
 impl_trait_all_ints!(
-    #[doc = ""],
     MulAssign<UnboundedPow2> => {
         #[inline(always)]
         fn mul_assign(&mut self, other: UnboundedPow2) {
@@ -763,7 +756,6 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    #[doc = ""],
     <T> MulAssign<Pow2<T>> where { T: UnsignedInt } => {
         #[inline(always)]
         fn mul_assign(&mut self, other: Pow2<T>) {
@@ -1087,9 +1079,9 @@ where
 make_func_trait!(DivRound, div_round);
 
 impl_trait_signed_unsigned!(
-    #[doc = ""],
     DivRound<UnboundedPow2>,
     signed_body {
+        //! [docs](__detached_docs::UnboundedPow2::DivRound)
         type Output = Self;
 
         /// See [docs](__detached_docs::UnboundedPow2::DivRound)
@@ -1111,6 +1103,7 @@ impl_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! [docs](__detached_docs::UnboundedPow2::DivRound)
         type Output = Self;
 
         /// See [docs](__detached_docs::UnboundedPow2::DivRound)
@@ -1127,9 +1120,9 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    #[doc = ""],
     <T> DivRound<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
+        //! See [docs](__detached_docs::Pow2::DivRound)
         type Output = Self;
 
         /// See [docs](__detached_docs::Pow2::DivRound)
@@ -1152,6 +1145,7 @@ impl_generic_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::Pow2::DivRound)
         type Output = Self;
 
         /// See [docs](__detached_docs::Pow2::DivRound)
@@ -1310,9 +1304,9 @@ where
 make_func_trait!(UnboundedFloorToMultiple, unbounded_floor_to_multiple);
 
 impl_trait_signed_unsigned!(
-    #[doc = "See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)"],
     UnboundedFloorToMultiple<UnboundedPow2>,
     signed_body {
+        //! See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
         type Output = Option<Self>;
 
         /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
@@ -1329,6 +1323,7 @@ impl_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
         type Output = Self;
 
         /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
@@ -1446,9 +1441,9 @@ where
 make_func_trait!(RoundToMultiple, round_to_multiple);
 
 impl_trait_signed_unsigned!(
-    #[doc = "See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)"],
     RoundToMultiple<UnboundedPow2>,
     signed_body {
+        //! See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         type Output = Self;
 
         /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
@@ -1473,6 +1468,7 @@ impl_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         type Output = Self;
 
         /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
@@ -1490,9 +1486,9 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    #[doc = "See [docs](__detached_docs::Pow2::RoundToMultiple)"],
     <T> RoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
+        //! See [docs](__detached_docs::Pow2::RoundToMultiple)
         type Output = Self;
 
         /// See [docs](__detached_docs::Pow2::RoundToMultiple)
@@ -1518,6 +1514,7 @@ impl_generic_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::Pow2::RoundToMultiple)
         type Output = Self;
 
         /// See [docs](__detached_docs::Pow2::RoundToMultiple)
@@ -1538,9 +1535,9 @@ impl_generic_trait_signed_unsigned!(
 make_func_trait!(CheckedRoundToMultiple, checked_round_to_multiple);
 
 impl_trait_signed_unsigned!(
-    #[doc = "See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)"],
     CheckedRoundToMultiple<UnboundedPow2>,
     signed_body {
+        //! See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         type Output = Option<Self>;
 
         /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
@@ -1566,6 +1563,7 @@ impl_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         type Output = Option<Self>;
 
         /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
@@ -1585,9 +1583,9 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
-    #[doc = "See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)"],
     <T> CheckedRoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
+        //! See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         type Output = Option<Self>;
 
         /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
@@ -1611,6 +1609,7 @@ impl_generic_trait_signed_unsigned!(
         }
     },
     unsigned_body {
+        //! See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         type Output = Option<Self>;
 
         /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
