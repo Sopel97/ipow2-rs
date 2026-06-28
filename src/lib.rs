@@ -1,3 +1,200 @@
+//! # ipow2 - Efficient power-of-two abstraction
+//!
+//! This crate provides two complementary types for representing powers of two, together
+//! with a comprehensive suite of arithmetic operations (division, modulo, rounding, and
+//! alignment) that are optimized to exploit the fact that the divisor is a power of two.
+//! Aside from improved performance, such abstraction provides valuable guarantees.
+//!
+//! ## Core types
+//!
+//! ### [`Pow2<T>`]
+//!
+//! The preferred type. The type parameter `T` must be an unsigned primitive integer
+//! (`u8`, `u16`, `u32`, `u64`, `u128`, or `usize`), and the stored exponent is
+//! guaranteed to be a valid shift amount for `T` - that is, strictly less than
+//! `T::BITS`. Note that while the generic type is always unsigned it is only
+//! used to signify the bit-width of the desired type. [`Pow2<T>`] can be used
+//! in operations with signed left hand sides.
+//!
+//! This guarantee, aside from being safer in general, lets the implementation
+//! use `unchecked_shl` / `unchecked_shr` in safe contexts, avoiding the masking that
+//! Rust's wrapping shift semantics would otherwise require for types narrower than 32 bits.
+//!
+//! ```
+//! use ipow2::Pow2;
+//! // Any u16 power of two is also safe for operations on u64
+//! let page_size: Pow2<u16> = Pow2::from_exponent(12).unwrap(); // 4 KiB
+//! let addr: u64 = 0x1234_5004;
+//! assert_eq!(ipow2::floor_to_multiple(addr, page_size), 0x1234_5000);
+//! assert_eq!(ipow2::ceil_to_multiple(addr, page_size), 0x1234_6000);
+//!
+//! let large_addr: u64 = 0xFFFF_FFFF_FFFF_FF00;
+//! // Panics in debug due to overflow
+//! std::panic::catch_unwind(|| ipow2::ceil_to_multiple(large_addr, page_size));
+//! assert_eq!(ipow2::checked_ceil_to_multiple(large_addr, page_size), None);
+//! ```
+//!
+//! ```
+//! use ipow2::Pow2;
+//! const CHUNK_SIZE: Pow2<u8> = Pow2::<u8>::VAL_16;
+//! let block_x: i32 = -17;
+//! let block_y: i32 = -4;
+//! assert_eq!(ipow2::floor_to_multiple(block_x, CHUNK_SIZE), -32);
+//! assert_eq!(ipow2::floor_to_multiple(block_y, CHUNK_SIZE), -16);
+//! assert_eq!(ipow2::div_floor(block_x, CHUNK_SIZE), -2);
+//! assert_eq!(ipow2::div_floor(block_y, CHUNK_SIZE), -1);
+//! assert_eq!(ipow2::mod_floor(block_x, CHUNK_SIZE), 15);
+//! assert_eq!(ipow2::mod_floor(block_y, CHUNK_SIZE), 12);
+//! ```
+//!
+//! ### [`UnboundedPow2`]
+//!
+//! A simpler type that models and power-of-two with an exponent representable as `u8`,
+//! covering the range of exponents `0..=255`. Because the exponent is not constrained to any integer width,
+//! operations that depend on the shift being in range must either use the `checked_*`
+//! variants or assert safety themselves. Prefer [`Pow2<T>`] when the target integer
+//! type is known. However, it may be needed in extreme cases, for example unbounded operations:
+//!
+//! ```
+//! use ipow2::{Pow2, Pow2OutOfRange, UnboundedPow2};
+//! let some_high_pow2 = UnboundedPow2::YOBI;
+//! let some_size: u64 = 555555555555;
+//! assert_eq!(Pow2::<u64>::try_from(some_high_pow2), Err(Pow2OutOfRange));
+//! // Panics in debug due to exponent being out of range
+//! std::panic::catch_unwind(|| ipow2::div_floor(some_size, some_high_pow2));
+//! assert_eq!(ipow2::unbounded_div_floor(some_size, some_high_pow2), 0);
+//! ```
+//!
+//! Both types implement `Copy`, `Clone`, `Debug`, `Hash`, `Eq`, `PartialEq`, `Ord`, and
+//! `PartialOrd`, and are guaranteed to have the same size and alignment as `u8`.
+//!
+//! ## Predefined constants
+//!
+//! Common powers of two are provided as associated constants on both types:
+//!
+//! | Constant  | Value |
+//! |-----------|-------|
+//! | `VAL_1` … `VAL_512` | 1, 2, 4, … 512 |
+//! | `KIBI`    | 2¹⁰ = 1 024 |
+//! | `MEBI`    | 2²⁰ = 1 048 576 |
+//! | `GIBI`    | 2³⁰ |
+//! | `TEBI`    | 2⁴⁰ |
+//! | … up to `QUEBI` | 2¹⁰⁰ (on `UnboundedPow2` / wide `Pow2` types) |
+//!
+//! `Pow2<usize>` exposes only the constants that fit on the current target pointer width
+//! (up to `GIBI` on 32-bit, up to `EXBI` on 64-bit).
+//!
+//! ## Operator overloads on integers
+//!
+//! All primitive integer types (`i8` … `i128`, `u8` … `u128`, `isize`, `usize`)
+//! implement `Mul`, `MulAssign`, `Div`, `DivAssign`, `Rem`, and `RemAssign`
+//! against both [`Pow2<T>`] and [`UnboundedPow2`]. The follow the standard semantics,
+//! so division rounds towards zero.
+//!
+//! ## Free functions and their dispatch traits
+//!
+//! Every operation is exposed as a free function that dispatches through a corresponding
+//! trait. The trait names are PascalCase versions of the function names, e.g.
+//! [`DivFloor`] / [`div_floor`]. This design lets you use the functions in generic
+//! code by bounding on the trait, or call them directly on concrete types.
+//!
+//! ### Division variants
+//!
+//! | Function | Description |
+//! |----------|-------------|
+//! | [`div_floor`] | Floor division (round toward −∞). For unsigned integers this is identical to `/`. |
+//! | [`mod_floor`] | Remainder after floor division. Always non-negative for signed inputs (unlike `%`). |
+//! | [`div_ceil`] | Ceiling division (round toward +∞). |
+//! | [`div_round`] | Rounding division (round half away from zero). |
+//!
+//! ### Alignment / rounding to multiples
+//!
+//! | Function | Description |
+//! |----------|-------------|
+//! | [`floor_to_multiple`] | Round `n` down to the nearest multiple of `pow2`. |
+//! | [`ceil_to_multiple`] | Round `n` up to the nearest multiple of `pow2`. Panics on overflow (debug) / wraps (release) like `+`. |
+//! | [`round_to_multiple`] | Round `n` to the nearest multiple, half away from zero. |
+//! | [`is_multiple_of`] | Returns `true` if `n` is an exact multiple of `pow2`. |
+//!
+//! ### Additional variants
+//!
+//! `checked_*` and `unbounded_*` variants of all functions may be implemented for specific
+//! power-of-two types, if their behavior is meaningfully different.
+//!
+//! `checked_*` can be used as a safe alternative to otherwise panicking normal functions.
+//!
+//! `unbounded_*` can be used if the [`UnboundedPow2`] can have exponents outside the
+//! range supported by the left hand side operand.
+//!
+//! ## Type conversions
+//!
+//! - [`Pow2<T>`] converts infallibly to [`UnboundedPow2`] via [`From`].
+//! - [`UnboundedPow2`] converts to [`Pow2<T>`] via [`TryFrom`], returning
+//!   [`Pow2OutOfRange`] if the exponent does not fit.
+//! - [`Pow2<T>`] converts to a wider [`Pow2<U>`] (where `U` is at least as wide as `T`)
+//!   via [`From`]. Narrowing conversions use [`TryFrom`].
+//! - Both types can be constructed from integers via [`TryFrom`]
+//! - Both types can be converted to integers, either via [`Pow2::value`] or
+//!   [`UnboundedPow2::as_u8`] and similar associated functions.
+//!
+//! ## Type aliases
+//!
+//! For convenience, the following type aliases are re-exported:
+//!
+//! ```ignore
+//! type SafePow2u8    = Pow2<u8>;
+//! type SafePow2u16   = Pow2<u16>;
+//! type SafePow2u32   = Pow2<u32>;
+//! type SafePow2u64   = Pow2<u64>;
+//! type SafePow2u128  = Pow2<u128>;
+//! type SafePow2usize = Pow2<usize>;
+//! ```
+//!
+//! ## Integer traits
+//!
+//! The crate re-exports four traits from its private implementation module that you can
+//! use as generic bounds (other use is highly discouraged):
+//!
+//! - [`Int`] - any primitive integer (signed or unsigned).
+//! - [`UnsignedInt`] - any unsigned primitive integer.
+//! - [`SignedInt`] - any signed primitive integer.
+//! - [`IntAtLeastAsWide<T>`] - an integer whose bit-width is >= that of `T`.
+//!
+//! These are sealed traits; you cannot implement them for your own types.
+//!
+//! ## Choosing between `Pow2<T>` and `UnboundedPow2`
+//!
+//! | Situation | Recommendation |
+//! |-----------|----------------|
+//! | Target integer type is known at compile time | [`Pow2<T>`] - stronger guarantees, fewer runtime checks, enables `unchecked` shifts |
+//! | The exponent is in range `0..=7` | [`Pow2<u8>`] - same as above, valid for operations on all integers |
+//! | Exponent may exceed the target integer width (e.g., a "virtual" power of two used only for comparison or serialization or with `unbounded_*` functions) | [`UnboundedPow2`] |
+//! | Storing in a collection alongside integers of mixed widths | [`UnboundedPow2`] |
+//!
+//! ## Performance notes
+//!
+//! - [`Pow2<T>`] and [`UnboundedPow2`] are both `repr(transparent)` over `u8`, so they
+//!   have zero overhead as function arguments or struct fields.
+//! - All operations are marked `#[inline(always)]` and generate small (up to ~20 instructions) assembly code.
+//! - Operations on [`Pow2<T>`] exploit `unchecked_shl` / `unchecked_shr`, which removes
+//!   the shift-amount masking that Rust normally inserts for `u8` and `u16` operands.
+//! - Many functions can reuse partial results from previous calls or other functions
+//!   when using the same RHS operand repeatedly. In some cases such implementations
+//!   are favored over alternatives that would produce slightly lower latency.
+//!   The rationale is that these functions are expected to be used on
+//!   higher-dimensional (>=2) data (where there are multiple coordinates to process)
+//! - Implementations that widen the LHS operand are **NOT** used,
+//!   facilitating effective vectorization with both unique and reused RHS values.
+//! - For scalar execution the differences between default CPU targets and modern CPU targets
+//!   are minor. However, if good vectorization is desired it is strongly recommended to
+//!   enable at least AVX2 on x86-64 as SSE has limited support for bitwise operations.
+//!
+//! ## Documentation notes
+//!
+//! Due to lack of ability to link to specific trait implementations from source docs
+//! this crate uses an unconventional documentation pattern. See [`__detached_docs`]
+//! for documentations on specific trait implementations.
+
 use std::error::Error;
 use std::ops::{Div, DivAssign, Mul, MulAssign, Rem, RemAssign};
 use std::{cmp, marker};
