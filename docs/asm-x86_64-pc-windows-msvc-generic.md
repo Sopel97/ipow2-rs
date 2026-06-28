@@ -1,6 +1,5 @@
-## `ceil_to_multiple_i8_pow2`
+## `ceil_to_multiple_i8_pow2`, `ceil_to_multiple_u8_pow2`
 ```asm
-ceil_to_multiple_i8_pow2:
 	mov r8d, ecx
 	mov r9b, -1
 	mov ecx, edx
@@ -10,9 +9,8 @@ ceil_to_multiple_i8_pow2:
 	add al, r8b
 	and al, r9b
 ```
-## `ceil_to_multiple_i8_unb_pow2`
+## `ceil_to_multiple_i8_unb_pow2`, `ceil_to_multiple_u8_unb_pow2`
 ```asm
-ceil_to_multiple_i8_unb_pow2:
 	mov r8d, ecx
 	and dl, 7
 	mov r9b, -1
@@ -23,9 +21,8 @@ ceil_to_multiple_i8_unb_pow2:
 	add al, r8b
 	and al, r9b
 ```
-## `ceil_to_multiple_i16_pow2`
+## `ceil_to_multiple_i16_pow2`, `ceil_to_multiple_i32_pow2`, `ceil_to_multiple_i32_unb_pow2`, `ceil_to_multiple_u16_pow2`, `ceil_to_multiple_u32_pow2`, `ceil_to_multiple_u32_unb_pow2`
 ```asm
-ceil_to_multiple_i16_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -35,9 +32,8 @@ ceil_to_multiple_i16_pow2:
 	add eax, r8d
 	and eax, r9d
 ```
-## `ceil_to_multiple_i16_unb_pow2`
+## `ceil_to_multiple_i16_unb_pow2`, `ceil_to_multiple_u16_unb_pow2`
 ```asm
-ceil_to_multiple_i16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov r9d, -1
@@ -48,33 +44,8 @@ ceil_to_multiple_i16_unb_pow2:
 	add eax, r8d
 	and eax, r9d
 ```
-## `ceil_to_multiple_i32_pow2`
+## `ceil_to_multiple_i64_pow2`, `ceil_to_multiple_i64_unb_pow2`, `ceil_to_multiple_u64_pow2`, `ceil_to_multiple_u64_unb_pow2`
 ```asm
-ceil_to_multiple_i32_pow2:
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov eax, r9d
-	not eax
-	add eax, r8d
-	and eax, r9d
-```
-## `ceil_to_multiple_i32_unb_pow2`
-```asm
-ceil_to_multiple_i32_unb_pow2:
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov eax, r9d
-	not eax
-	add eax, r8d
-	and eax, r9d
-```
-## `ceil_to_multiple_i64_pow2`
-```asm
-ceil_to_multiple_i64_pow2:
 	mov r8, rcx
 	mov r9, -1
 	mov ecx, edx
@@ -84,42 +55,8 @@ ceil_to_multiple_i64_pow2:
 	add rax, r8
 	and rax, r9
 ```
-## `ceil_to_multiple_i64_unb_pow2`
+## `ceil_to_multiple_i128_pow2`, `ceil_to_multiple_i128_unb_pow2`, `ceil_to_multiple_u128_pow2`, `ceil_to_multiple_u128_unb_pow2`
 ```asm
-ceil_to_multiple_i64_unb_pow2:
-	mov r8, rcx
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	mov rax, r9
-	not rax
-	add rax, r8
-	and rax, r9
-```
-## `ceil_to_multiple_i128_pow2`
-```asm
-ceil_to_multiple_i128_pow2:
-	mov r9, rcx
-	mov r10, -1
-	mov ecx, r8d
-	shl r10, cl
-	mov rax, -1
-	xor ecx, ecx
-	test r8b, 64
-	cmove rcx, r10
-	cmove r10, rax
-	mov r8, r10
-	not r8
-	mov rax, rcx
-	not rax
-	add rax, r9
-	adc rdx, r8
-	and rax, rcx
-	and rdx, r10
-```
-## `ceil_to_multiple_i128_unb_pow2`
-```asm
-ceil_to_multiple_i128_unb_pow2:
 	mov r9, rcx
 	mov r10, -1
 	mov ecx, r8d
@@ -140,7 +77,6 @@ ceil_to_multiple_i128_unb_pow2:
 ```
 ## `checked_ceil_to_multiple_i8_pow2`
 ```asm
-checked_ceil_to_multiple_i8_pow2:
 	mov eax, ecx
 	mov r8b, -1
 	mov ecx, edx
@@ -153,29 +89,25 @@ checked_ceil_to_multiple_i8_pow2:
 ```
 ## `checked_ceil_to_multiple_i8_unb_pow2`
 ```asm
-checked_ceil_to_multiple_i8_unb_pow2:
 	cmp dl, 7
-	ja .LBB24_1
+	ja .LBB34_1
 	mov r8d, ecx
-	mov al, -1
+	mov r9b, -1
 	mov ecx, edx
-	shl al, cl
-	mov ecx, eax
-	not cl
-	add r8b, cl
-	jno .LBB24_3
-.LBB24_1:
-	xor eax, eax
+	shl r9b, cl
+	mov eax, r9d
+	not al
+	add r8b, al
+	setno al
+	and r8b, r9b
 	mov edx, r8d
 	ret
-.LBB24_3:
-	and r8b, al
-	mov al, 1
+.LBB34_1:
+	xor eax, eax
 	mov edx, r8d
 ```
 ## `checked_ceil_to_multiple_i16_pow2`
 ```asm
-checked_ceil_to_multiple_i16_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -189,28 +121,26 @@ checked_ceil_to_multiple_i16_pow2:
 ```
 ## `checked_ceil_to_multiple_i16_unb_pow2`
 ```asm
-checked_ceil_to_multiple_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB18_1
-	mov r8d, edx
-	mov eax, ecx
-	mov edx, -1
-	mov ecx, r8d
-	shl edx, cl
+	ja .LBB28_1
+	mov r8d, ecx
+	mov r9d, -1
 	mov ecx, edx
+	shl r9d, cl
+	mov ecx, r9d
 	not ecx
-	add ax, cx
-	jno .LBB18_3
-.LBB18_1:
 	xor eax, eax
+	add r8w, cx
+	setno al
+	and r8d, r9d
+	mov edx, r8d
 	ret
-.LBB18_3:
-	and edx, eax
-	mov ax, 1
+.LBB28_1:
+	xor eax, eax
+	mov edx, r8d
 ```
 ## `checked_ceil_to_multiple_i32_pow2`
 ```asm
-checked_ceil_to_multiple_i32_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -224,29 +154,26 @@ checked_ceil_to_multiple_i32_pow2:
 ```
 ## `checked_ceil_to_multiple_i32_unb_pow2`
 ```asm
-checked_ceil_to_multiple_i32_unb_pow2:
-	xor eax, eax
 	cmp dl, 31
-	ja .LBB20_1
+	ja .LBB30_1
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
 	mov ecx, r9d
 	not ecx
+	xor eax, eax
 	add r8d, ecx
-	jo .LBB20_4
+	setno al
 	and r8d, r9d
-	mov eax, 1
-.LBB20_4:
 	mov edx, r8d
 	ret
-.LBB20_1:
+.LBB30_1:
+	xor eax, eax
 	mov edx, r8d
 ```
 ## `checked_ceil_to_multiple_i64_pow2`
 ```asm
-checked_ceil_to_multiple_i64_pow2:
 	mov r8, rcx
 	mov r9, -1
 	mov ecx, edx
@@ -260,237 +187,26 @@ checked_ceil_to_multiple_i64_pow2:
 ```
 ## `checked_ceil_to_multiple_i64_unb_pow2`
 ```asm
-checked_ceil_to_multiple_i64_unb_pow2:
-	cmp dl, 63
-	ja .LBB22_1
-	mov r8, rcx
-	mov rax, -1
-	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
-	not rcx
-	add r8, rcx
-	jno .LBB22_3
-.LBB22_1:
-	xor eax, eax
-	mov rdx, r8
-	ret
-.LBB22_3:
-	and r8, rax
-	mov eax, 1
-	mov rdx, r8
-```
-## `checked_ceil_to_multiple_i128_pow2`
-```asm
-checked_ceil_to_multiple_i128_pow2:
-	push rsi
-	mov rax, rcx
-	mov r10, -1
-	mov ecx, r9d
-	shl r10, cl
-	mov r11, -1
-	xor ecx, ecx
-	test r9b, 64
-	mov r9, r10
-	cmovne r9, rcx
-	cmove r10, r11
-	mov r11, r10
-	not r11
-	mov rsi, r9
-	not rsi
-	add rsi, rdx
-	adc r11, r8
-	jo .LBB15_2
-	and r11, r10
-	and rsi, r9
-	mov qword ptr [rax + 16], rsi
-	mov qword ptr [rax + 24], r11
-	mov ecx, 1
-.LBB15_2:
-	mov qword ptr [rax], rcx
-	mov qword ptr [rax + 8], 0
-	pop rsi
-```
-## `checked_ceil_to_multiple_i128_unb_pow2`
-```asm
-checked_ceil_to_multiple_i128_unb_pow2:
-	push rsi
-	mov rax, rcx
-	test r9b, r9b
-	js .LBB16_4
-	mov r10, -1
-	mov ecx, r9d
-	shl r10, cl
-	mov r11, -1
-	xor ecx, ecx
-	test r9b, 64
-	mov r9, r10
-	cmovne r9, rcx
-	cmove r10, r11
-	mov r11, r10
-	not r11
-	mov rsi, r9
-	not rsi
-	add rdx, rsi
-	adc r8, r11
-	jo .LBB16_3
-	and r8, r10
-	and rdx, r9
-	mov qword ptr [rax + 16], rdx
-	mov qword ptr [rax + 24], r8
-	mov ecx, 1
-.LBB16_3:
-	mov qword ptr [rax], rcx
-	mov qword ptr [rax + 8], 0
-	pop rsi
-	ret
-.LBB16_4:
-	xor ecx, ecx
-	mov qword ptr [rax], rcx
-	mov qword ptr [rax + 8], 0
-	pop rsi
-```
-## `checked_ceil_to_multiple_u8_pow2`
-```asm
-checked_ceil_to_multiple_u8_pow2:
-	mov eax, ecx
-	mov r8b, -1
-	mov ecx, edx
-	shl r8b, cl
-	mov edx, r8d
-	not dl
-	add dl, al
-	cmp dl, al
-	setae al
-	and dl, r8b
-```
-## `checked_ceil_to_multiple_u8_unb_pow2`
-```asm
-checked_ceil_to_multiple_u8_unb_pow2:
-	cmp dl, 7
-	ja .LBB34_1
-	mov eax, ecx
-	mov r8b, -1
-	mov ecx, edx
-	shl r8b, cl
-	mov edx, r8d
-	not dl
-	add dl, al
-	cmp dl, al
-	setae al
-	and dl, r8b
-	ret
-.LBB34_1:
-	xor eax, eax
-```
-## `checked_ceil_to_multiple_u16_pow2`
-```asm
-checked_ceil_to_multiple_u16_pow2:
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov edx, r9d
-	not edx
-	add edx, r8d
-	xor eax, eax
-	cmp dx, r8w
-	setae al
-	and edx, r9d
-```
-## `checked_ceil_to_multiple_u16_unb_pow2`
-```asm
-checked_ceil_to_multiple_u16_unb_pow2:
-	cmp dl, 15
-	ja .LBB28_1
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov edx, r9d
-	not edx
-	add edx, r8d
-	xor eax, eax
-	cmp dx, r8w
-	setae al
-	and edx, r9d
-	ret
-.LBB28_1:
-	xor eax, eax
-```
-## `checked_ceil_to_multiple_u32_pow2`
-```asm
-checked_ceil_to_multiple_u32_pow2:
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov edx, r9d
-	not edx
-	add edx, r8d
-	xor eax, eax
-	cmp edx, r8d
-	setae al
-	and edx, r9d
-```
-## `checked_ceil_to_multiple_u32_unb_pow2`
-```asm
-checked_ceil_to_multiple_u32_unb_pow2:
-	cmp dl, 31
-	ja .LBB30_1
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	mov edx, r9d
-	not edx
-	add edx, r8d
-	xor eax, eax
-	cmp edx, r8d
-	setae al
-	and edx, r9d
-	ret
-.LBB30_1:
-	xor eax, eax
-```
-## `checked_ceil_to_multiple_u64_pow2`
-```asm
-checked_ceil_to_multiple_u64_pow2:
-	mov r8, rcx
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	mov rdx, r9
-	not rdx
-	add rdx, r8
-	xor eax, eax
-	cmp rdx, r8
-	setae al
-	and rdx, r9
-```
-## `checked_ceil_to_multiple_u64_unb_pow2`
-```asm
-checked_ceil_to_multiple_u64_unb_pow2:
 	cmp dl, 63
 	ja .LBB32_1
 	mov r8, rcx
 	mov r9, -1
 	mov ecx, edx
 	shl r9, cl
-	mov rdx, r9
-	not rdx
-	add rdx, r8
+	mov rcx, r9
+	not rcx
 	xor eax, eax
-	cmp rdx, r8
-	setae al
-	and rdx, r9
+	add r8, rcx
+	setno al
+	and r8, r9
+	mov rdx, r8
 	ret
 .LBB32_1:
 	xor eax, eax
+	mov rdx, r8
 ```
-## `checked_ceil_to_multiple_u128_pow2`
+## `checked_ceil_to_multiple_i128_pow2`
 ```asm
-checked_ceil_to_multiple_u128_pow2:
 	push rsi
 	mov rax, rcx
 	mov r10, -1
@@ -508,7 +224,7 @@ checked_ceil_to_multiple_u128_pow2:
 	not rsi
 	add rsi, rdx
 	adc r11, r8
-	jb .LBB25_2
+	jo .LBB25_2
 	and r11, r10
 	and rsi, r9
 	mov qword ptr [rax + 16], rsi
@@ -519,9 +235,8 @@ checked_ceil_to_multiple_u128_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 ```
-## `checked_ceil_to_multiple_u128_unb_pow2`
+## `checked_ceil_to_multiple_i128_unb_pow2`
 ```asm
-checked_ceil_to_multiple_u128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
@@ -541,7 +256,7 @@ checked_ceil_to_multiple_u128_unb_pow2:
 	not rsi
 	add rdx, rsi
 	adc r8, r11
-	jb .LBB26_3
+	jo .LBB26_3
 	and r8, r10
 	and rdx, r9
 	mov qword ptr [rax + 16], rdx
@@ -558,12 +273,209 @@ checked_ceil_to_multiple_u128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 ```
+## `checked_ceil_to_multiple_u8_pow2`
+```asm
+	mov eax, ecx
+	mov r8b, -1
+	mov ecx, edx
+	shl r8b, cl
+	mov edx, r8d
+	not dl
+	add dl, al
+	cmp dl, al
+	setae al
+	and dl, r8b
+```
+## `checked_ceil_to_multiple_u8_unb_pow2`
+```asm
+	cmp dl, 7
+	ja .LBB44_1
+	mov eax, ecx
+	mov r8b, -1
+	mov ecx, edx
+	shl r8b, cl
+	mov edx, r8d
+	not dl
+	add dl, al
+	cmp dl, al
+	setae al
+	and dl, r8b
+	ret
+.LBB44_1:
+	xor eax, eax
+```
+## `checked_ceil_to_multiple_u16_pow2`
+```asm
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	mov edx, r9d
+	not edx
+	add edx, r8d
+	xor eax, eax
+	cmp dx, r8w
+	setae al
+	and edx, r9d
+```
+## `checked_ceil_to_multiple_u16_unb_pow2`
+```asm
+	cmp dl, 15
+	ja .LBB38_1
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	mov edx, r9d
+	not edx
+	add edx, r8d
+	xor eax, eax
+	cmp dx, r8w
+	setae al
+	and edx, r9d
+	ret
+.LBB38_1:
+	xor eax, eax
+```
+## `checked_ceil_to_multiple_u32_pow2`
+```asm
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	mov edx, r9d
+	not edx
+	add edx, r8d
+	xor eax, eax
+	cmp edx, r8d
+	setae al
+	and edx, r9d
+```
+## `checked_ceil_to_multiple_u32_unb_pow2`
+```asm
+	cmp dl, 31
+	ja .LBB40_1
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	mov edx, r9d
+	not edx
+	add edx, r8d
+	xor eax, eax
+	cmp edx, r8d
+	setae al
+	and edx, r9d
+	ret
+.LBB40_1:
+	xor eax, eax
+```
+## `checked_ceil_to_multiple_u64_pow2`
+```asm
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	mov rdx, r9
+	not rdx
+	add rdx, r8
+	xor eax, eax
+	cmp rdx, r8
+	setae al
+	and rdx, r9
+```
+## `checked_ceil_to_multiple_u64_unb_pow2`
+```asm
+	cmp dl, 63
+	ja .LBB42_1
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	mov rdx, r9
+	not rdx
+	add rdx, r8
+	xor eax, eax
+	cmp rdx, r8
+	setae al
+	and rdx, r9
+	ret
+.LBB42_1:
+	xor eax, eax
+```
+## `checked_ceil_to_multiple_u128_pow2`
+```asm
+	push rsi
+	mov rax, rcx
+	mov r10, -1
+	mov ecx, r9d
+	shl r10, cl
+	mov r11, -1
+	xor ecx, ecx
+	test r9b, 64
+	mov r9, r10
+	cmovne r9, rcx
+	cmove r10, r11
+	mov r11, r10
+	not r11
+	mov rsi, r9
+	not rsi
+	add rsi, rdx
+	adc r11, r8
+	jb .LBB35_2
+	and r11, r10
+	and rsi, r9
+	mov qword ptr [rax + 16], rsi
+	mov qword ptr [rax + 24], r11
+	mov ecx, 1
+.LBB35_2:
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+```
+## `checked_ceil_to_multiple_u128_unb_pow2`
+```asm
+	push rsi
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB36_4
+	mov r10, -1
+	mov ecx, r9d
+	shl r10, cl
+	mov r11, -1
+	xor ecx, ecx
+	test r9b, 64
+	mov r9, r10
+	cmovne r9, rcx
+	cmove r10, r11
+	mov r11, r10
+	not r11
+	mov rsi, r9
+	not rsi
+	add rdx, rsi
+	adc r8, r11
+	jb .LBB36_3
+	and r8, r10
+	and rdx, r9
+	mov qword ptr [rax + 16], rdx
+	mov qword ptr [rax + 24], r8
+	mov ecx, 1
+.LBB36_3:
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+	ret
+.LBB36_4:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+```
 ## `checked_div_ceil_i8_unb_pow2`
 ```asm
-checked_div_ceil_i8_unb_pow2:
 	mov r8d, edx
 	cmp r8b, 7
-	ja .LBB39_2
+	ja .LBB49_2
 	mov eax, ecx
 	mov r9b, -1
 	mov ecx, r8d
@@ -574,16 +486,15 @@ checked_div_ceil_i8_unb_pow2:
 	and r9b, al
 	cmp r9b, 1
 	sbb dl, -1
-.LBB39_2:
+.LBB49_2:
 	cmp r8b, 8
 	setb al
 ```
 ## `checked_div_ceil_i16_unb_pow2`
 ```asm
-checked_div_ceil_i16_unb_pow2:
 	mov eax, edx
 	cmp dl, 15
-	ja .LBB36_1
+	ja .LBB46_1
 	mov edx, ecx
 	mov r8d, -1
 	mov ecx, eax
@@ -597,14 +508,13 @@ checked_div_ceil_i16_unb_pow2:
 	sbb dx, -1
 	mov ax, 1
 	ret
-.LBB36_1:
+.LBB46_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_i32_unb_pow2`
 ```asm
-checked_div_ceil_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB37_1
+	ja .LBB47_1
 	mov eax, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -617,14 +527,13 @@ checked_div_ceil_i32_unb_pow2:
 	sbb edx, -1
 	mov eax, 1
 	ret
-.LBB37_1:
+.LBB47_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_i64_unb_pow2`
 ```asm
-checked_div_ceil_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB38_1
+	ja .LBB48_1
 	mov rax, rcx
 	mov r9, -1
 	mov ecx, edx
@@ -637,18 +546,17 @@ checked_div_ceil_i64_unb_pow2:
 	sbb rdx, -1
 	mov eax, 1
 	ret
-.LBB38_1:
+.LBB48_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_i128_unb_pow2`
 ```asm
-checked_div_ceil_i128_unb_pow2:
 	push rsi
 	push rdi
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB35_1
+	js .LBB45_1
 	mov r11, -1
 	mov ecx, r9d
 	shl r11, cl
@@ -677,10 +585,10 @@ checked_div_ceil_i128_unb_pow2:
 	mov qword ptr [rax + 16], rdx
 	mov qword ptr [rax + 24], rcx
 	mov ecx, 1
-	jmp .LBB35_3
-.LBB35_1:
+	jmp .LBB45_3
+.LBB45_1:
 	xor ecx, ecx
-.LBB35_3:
+.LBB45_3:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -689,10 +597,9 @@ checked_div_ceil_i128_unb_pow2:
 ```
 ## `checked_div_ceil_u8_unb_pow2`
 ```asm
-checked_div_ceil_u8_unb_pow2:
 	mov r8d, edx
 	cmp r8b, 7
-	ja .LBB44_2
+	ja .LBB54_2
 	mov eax, ecx
 	mov r9b, -1
 	mov ecx, r8d
@@ -703,16 +610,15 @@ checked_div_ceil_u8_unb_pow2:
 	and r9b, al
 	cmp r9b, 1
 	sbb dl, -1
-.LBB44_2:
+.LBB54_2:
 	cmp r8b, 8
 	setb al
 ```
 ## `checked_div_ceil_u16_unb_pow2`
 ```asm
-checked_div_ceil_u16_unb_pow2:
 	mov eax, edx
 	cmp dl, 15
-	ja .LBB41_1
+	ja .LBB51_1
 	mov edx, ecx
 	mov r8d, -1
 	mov ecx, eax
@@ -726,14 +632,13 @@ checked_div_ceil_u16_unb_pow2:
 	sbb dx, -1
 	mov ax, 1
 	ret
-.LBB41_1:
+.LBB51_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_u32_unb_pow2`
 ```asm
-checked_div_ceil_u32_unb_pow2:
 	cmp dl, 31
-	ja .LBB42_1
+	ja .LBB52_1
 	mov eax, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -746,14 +651,13 @@ checked_div_ceil_u32_unb_pow2:
 	sbb edx, -1
 	mov eax, 1
 	ret
-.LBB42_1:
+.LBB52_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_u64_unb_pow2`
 ```asm
-checked_div_ceil_u64_unb_pow2:
 	cmp dl, 63
-	ja .LBB43_1
+	ja .LBB53_1
 	mov rax, rcx
 	mov r9, -1
 	mov ecx, edx
@@ -766,17 +670,16 @@ checked_div_ceil_u64_unb_pow2:
 	sbb rdx, -1
 	mov eax, 1
 	ret
-.LBB43_1:
+.LBB53_1:
 	xor eax, eax
 ```
 ## `checked_div_ceil_u128_unb_pow2`
 ```asm
-checked_div_ceil_u128_unb_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB40_1
+	js .LBB50_1
 	mov rsi, -1
 	mov ecx, r9d
 	shl rsi, cl
@@ -803,10 +706,10 @@ checked_div_ceil_u128_unb_pow2:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r11
 	mov ecx, 1
-	jmp .LBB40_3
-.LBB40_1:
+	jmp .LBB50_3
+.LBB50_1:
 	xor ecx, ecx
-.LBB40_3:
+.LBB50_3:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rdi
@@ -814,7 +717,6 @@ checked_div_ceil_u128_unb_pow2:
 ```
 ## `checked_div_floor_i8_unb_pow2`
 ```asm
-checked_div_floor_i8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
 	setb al
@@ -824,7 +726,6 @@ checked_div_floor_i8_unb_pow2:
 ```
 ## `checked_div_floor_i16_unb_pow2`
 ```asm
-checked_div_floor_i16_unb_pow2:
 	mov r8d, edx
 	movsx edx, cx
 	xor eax, eax
@@ -835,7 +736,6 @@ checked_div_floor_i16_unb_pow2:
 ```
 ## `checked_div_floor_i32_unb_pow2`
 ```asm
-checked_div_floor_i32_unb_pow2:
 	mov r8d, ecx
 	xor eax, eax
 	cmp dl, 32
@@ -846,7 +746,6 @@ checked_div_floor_i32_unb_pow2:
 ```
 ## `checked_div_floor_i64_unb_pow2`
 ```asm
-checked_div_floor_i64_unb_pow2:
 	mov r8, rcx
 	xor eax, eax
 	cmp dl, 64
@@ -857,10 +756,9 @@ checked_div_floor_i64_unb_pow2:
 ```
 ## `checked_div_floor_i128_unb_pow2`
 ```asm
-checked_div_floor_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB45_1
+	js .LBB55_1
 	mov ecx, r9d
 	shrd rdx, r8, cl
 	mov r10, r8
@@ -875,14 +773,13 @@ checked_div_floor_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB45_1:
+.LBB55_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
-## `checked_div_floor_u8_unb_pow2`
+## `checked_div_floor_u8_unb_pow2`, `checked_div_u8_unb_pow2`
 ```asm
-checked_div_floor_u8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
 	setb al
@@ -890,9 +787,8 @@ checked_div_floor_u8_unb_pow2:
 	shr r8b, cl
 	mov edx, r8d
 ```
-## `checked_div_floor_u16_unb_pow2`
+## `checked_div_floor_u16_unb_pow2`, `checked_div_u16_unb_pow2`
 ```asm
-checked_div_floor_u16_unb_pow2:
 	mov r8d, edx
 	movzx edx, cx
 	xor eax, eax
@@ -901,9 +797,8 @@ checked_div_floor_u16_unb_pow2:
 	mov ecx, r8d
 	shr edx, cl
 ```
-## `checked_div_floor_u32_unb_pow2`
+## `checked_div_floor_u32_unb_pow2`, `checked_div_u32_unb_pow2`
 ```asm
-checked_div_floor_u32_unb_pow2:
 	mov r8d, ecx
 	xor eax, eax
 	cmp dl, 32
@@ -912,9 +807,8 @@ checked_div_floor_u32_unb_pow2:
 	shr r8d, cl
 	mov edx, r8d
 ```
-## `checked_div_floor_u64_unb_pow2`
+## `checked_div_floor_u64_unb_pow2`, `checked_div_u64_unb_pow2`
 ```asm
-checked_div_floor_u64_unb_pow2:
 	mov r8, rcx
 	xor eax, eax
 	cmp dl, 64
@@ -925,10 +819,9 @@ checked_div_floor_u64_unb_pow2:
 ```
 ## `checked_div_floor_u128_unb_pow2`
 ```asm
-checked_div_floor_u128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB50_1
+	js .LBB60_1
 	mov ecx, r9d
 	shrd rdx, r8, cl
 	shr r8, cl
@@ -942,171 +835,137 @@ checked_div_floor_u128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB50_1:
+.LBB60_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
 ## `checked_div_i8_unb_pow2`
 ```asm
-checked_div_i8_unb_pow2:
+	mov eax, edx
+	cmp al, 7
+	ja .LBB69_2
 	mov r8d, ecx
-	cmp dl, 7
-	ja .LBB59_3
-	test r8b, r8b
-	js .LBB59_2
-	mov ecx, edx
-	shr r8b, cl
-.LBB59_3:
-	cmp dl, 8
-	setb al
+	mov r9b, -1
+	mov ecx, eax
+	shl r9b, cl
+	not r9b
 	mov edx, r8d
-	ret
-.LBB59_2:
-	mov al, -1
-	mov ecx, edx
-	shl al, cl
-	not al
-	add r8b, al
-	sar r8b, cl
-	cmp dl, 8
+	sar dl, 7
+	and dl, r9b
+	add dl, r8b
+	sar dl, cl
+.LBB69_2:
+	cmp al, 8
 	setb al
-	mov edx, r8d
 ```
 ## `checked_div_i16_unb_pow2`
 ```asm
-checked_div_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB56_1
+	ja .LBB66_1
+	mov r8d, edx
 	mov eax, ecx
-	movzx ecx, dl
-	test ax, ax
-	js .LBB56_4
-	movzx edx, ax
-	shr edx, cl
-	mov ax, 1
-	ret
-.LBB56_1:
-	xor eax, eax
-	ret
-.LBB56_4:
 	mov edx, -1
+	mov ecx, r8d
 	shl edx, cl
 	not edx
-	add eax, edx
-	movsx edx, ax
+	movsx ecx, ax
+	sar ecx, 15
+	and ecx, edx
+	add ecx, eax
+	movsx edx, cx
+	mov ecx, r8d
 	sar edx, cl
 	mov ax, 1
+	ret
+.LBB66_1:
+	xor eax, eax
 ```
 ## `checked_div_i32_unb_pow2`
 ```asm
-checked_div_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB57_1
+	ja .LBB67_1
 	mov r8d, ecx
-	test ecx, ecx
-	js .LBB57_4
+	mov r9d, -1
 	mov ecx, edx
-	shr r8d, cl
-	mov eax, 1
+	shl r9d, cl
+	not r9d
 	mov edx, r8d
+	sar edx, 31
+	and edx, r9d
+	add edx, r8d
+	sar edx, cl
+	mov eax, 1
 	ret
-.LBB57_1:
+.LBB67_1:
 	xor eax, eax
-	mov edx, r8d
-	ret
-.LBB57_4:
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	not eax
-	add r8d, eax
-	sar r8d, cl
-	mov eax, 1
-	mov edx, r8d
 ```
 ## `checked_div_i64_unb_pow2`
 ```asm
-checked_div_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB58_1
+	ja .LBB68_1
 	mov r8, rcx
-	movzx ecx, dl
-	test r8, r8
-	js .LBB58_4
-	shr r8, cl
-	mov eax, 1
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
 	mov rdx, r8
+	sar rdx, 63
+	and rdx, r9
+	add rdx, r8
+	sar rdx, cl
+	mov eax, 1
 	ret
-.LBB58_1:
+.LBB68_1:
 	xor eax, eax
-	mov rdx, r8
-	ret
-.LBB58_4:
-	mov rax, -1
-	shl rax, cl
-	not rax
-	add r8, rax
-	sar r8, cl
-	mov eax, 1
-	mov rdx, r8
 ```
 ## `checked_div_i128_unb_pow2`
 ```asm
-checked_div_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB55_1
-	test r8, r8
-	js .LBB55_4
-	mov ecx, r9d
-	shrd rdx, r8, cl
-	shr r8, cl
-	xor ecx, ecx
-	test r9b, 64
-	cmovne rdx, r8
-	cmovne r8, rcx
-	jmp .LBB55_6
-.LBB55_1:
-	xor ecx, ecx
-	mov qword ptr [rax], rcx
-	mov qword ptr [rax + 8], 0
-	ret
-.LBB55_4:
+	js .LBB65_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
 	shl r11, cl
 	xor ecx, ecx
 	test r9b, 64
+	cmovne r10, r11
 	cmove rcx, r11
-	cmove r11, r10
-	not r11
 	not rcx
-	add rdx, rcx
-	adc r8, r11
+	not r10
+	mov r11, r8
+	sar r11, 63
+	and r10, r11
+	and r11, rcx
+	add r11, rdx
+	adc r10, r8
+	mov rdx, r10
 	mov ecx, r9d
-	shrd rdx, r8, cl
-	mov r10, r8
-	sar r10, cl
-	test r9b, 64
-	cmovne rdx, r10
+	sar rdx, cl
+	mov r8, r10
 	sar r8, 63
 	test r9b, 64
-	cmove r8, r10
-.LBB55_6:
-	mov qword ptr [rax + 16], rdx
+	cmove r8, rdx
+	shrd r11, r10, cl
+	test r9b, 64
+	cmovne r11, rdx
 	mov qword ptr [rax + 24], r8
+	mov qword ptr [rax + 16], r11
 	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	ret
+.LBB65_1:
+	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
 ## `checked_div_round_i8_unb_pow2`
 ```asm
-checked_div_round_i8_unb_pow2:
 	mov eax, edx
 	cmp al, 7
-	ja .LBB64_2
+	ja .LBB74_2
 	mov r8d, ecx
 	mov r9b, -1
 	mov ecx, eax
@@ -1125,17 +984,16 @@ checked_div_round_i8_unb_pow2:
 	movzx r8d, al
 	bt ecx, r8d
 	adc dl, 0
-.LBB64_2:
+.LBB74_2:
 	cmp al, 8
 	setb al
 ```
 ## `checked_div_round_i16_unb_pow2`
 ```asm
-checked_div_round_i16_unb_pow2:
 	mov r8d, edx
 	xor eax, eax
 	cmp dl, 15
-	ja .LBB61_1
+	ja .LBB71_1
 	mov edx, ecx
 	mov r9d, -1
 	mov ecx, r8d
@@ -1156,13 +1014,12 @@ checked_div_round_i16_unb_pow2:
 	adc dx, 0
 	mov ax, 1
 	ret
-.LBB61_1:
+.LBB71_1:
 ```
 ## `checked_div_round_i32_unb_pow2`
 ```asm
-checked_div_round_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB62_1
+	ja .LBB72_1
 	mov eax, edx
 	mov r8d, ecx
 	mov r9d, -1
@@ -1182,14 +1039,13 @@ checked_div_round_i32_unb_pow2:
 	adc edx, 0
 	mov eax, 1
 	ret
-.LBB62_1:
+.LBB72_1:
 	xor eax, eax
 ```
 ## `checked_div_round_i64_unb_pow2`
 ```asm
-checked_div_round_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB63_1
+	ja .LBB73_1
 	mov eax, edx
 	mov r8, rcx
 	mov r9, -1
@@ -1209,16 +1065,15 @@ checked_div_round_i64_unb_pow2:
 	adc rdx, 0
 	mov eax, 1
 	ret
-.LBB63_1:
+.LBB73_1:
 	xor eax, eax
 ```
 ## `checked_div_round_i128_unb_pow2`
 ```asm
-checked_div_round_i128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB60_1
+	js .LBB70_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
@@ -1263,7 +1118,7 @@ checked_div_round_i128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 	ret
-.LBB60_1:
+.LBB70_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
@@ -1271,11 +1126,10 @@ checked_div_round_i128_unb_pow2:
 ```
 ## `checked_div_round_u8_unb_pow2`
 ```asm
-checked_div_round_u8_unb_pow2:
 	mov eax, edx
 	mov edx, ecx
 	cmp al, 7
-	ja .LBB69_2
+	ja .LBB79_2
 	mov r8b, 1
 	mov ecx, eax
 	shl r8b, cl
@@ -1284,16 +1138,15 @@ checked_div_round_u8_unb_pow2:
 	shr dl, cl
 	cmp r8b, 1
 	sbb dl, -1
-.LBB69_2:
+.LBB79_2:
 	cmp al, 8
 	setb al
 ```
 ## `checked_div_round_u16_unb_pow2`
 ```asm
-checked_div_round_u16_unb_pow2:
 	mov eax, edx
 	cmp dl, 15
-	ja .LBB66_1
+	ja .LBB76_1
 	mov edx, ecx
 	mov r8d, 1
 	mov ecx, eax
@@ -1308,15 +1161,14 @@ checked_div_round_u16_unb_pow2:
 	sbb dx, -1
 	mov ax, 1
 	ret
-.LBB66_1:
+.LBB76_1:
 	xor eax, eax
 ```
 ## `checked_div_round_u32_unb_pow2`
 ```asm
-checked_div_round_u32_unb_pow2:
 	mov eax, edx
 	cmp dl, 31
-	ja .LBB67_1
+	ja .LBB77_1
 	mov edx, ecx
 	mov r8d, 1
 	mov ecx, eax
@@ -1328,15 +1180,14 @@ checked_div_round_u32_unb_pow2:
 	cmp r8d, 1
 	sbb edx, -1
 	ret
-.LBB67_1:
+.LBB77_1:
 	xor eax, eax
 ```
 ## `checked_div_round_u64_unb_pow2`
 ```asm
-checked_div_round_u64_unb_pow2:
 	mov eax, edx
 	cmp dl, 63
-	ja .LBB68_1
+	ja .LBB78_1
 	mov rdx, rcx
 	mov r8d, 1
 	mov ecx, eax
@@ -1348,19 +1199,18 @@ checked_div_round_u64_unb_pow2:
 	cmp r8, 1
 	sbb rdx, -1
 	ret
-.LBB68_1:
+.LBB78_1:
 	xor eax, eax
 ```
 ## `checked_div_round_u128_unb_pow2`
 ```asm
-checked_div_round_u128_unb_pow2:
 	push r14
 	push rsi
 	push rdi
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB65_1
+	js .LBB75_1
 	mov r11, r8
 	mov ecx, r9d
 	shr r11, cl
@@ -1392,10 +1242,10 @@ checked_div_round_u128_unb_pow2:
 	adc r10, 0
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r10
-	jmp .LBB65_3
-.LBB65_1:
+	jmp .LBB75_3
+.LBB75_1:
 	xor r11d, r11d
-.LBB65_3:
+.LBB75_3:
 	mov qword ptr [rax], r11
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1403,9 +1253,31 @@ checked_div_round_u128_unb_pow2:
 	pop rsi
 	pop r14
 ```
-## `checked_floor_to_multiple_i8_unb_pow2`
+## `checked_div_u128_unb_pow2`
 ```asm
-checked_floor_to_multiple_i8_unb_pow2:
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB80_1
+	mov ecx, r9d
+	shrd rdx, r8, cl
+	shr r8, cl
+	xor ecx, ecx
+	test r9b, 64
+	cmovne rdx, r8
+	cmove rcx, r8
+	mov qword ptr [rax + 24], rcx
+	mov qword ptr [rax + 16], rdx
+	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	ret
+.LBB80_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+```
+## `checked_floor_to_multiple_i8_unb_pow2`, `checked_floor_to_multiple_u8_unb_pow2`
+```asm
 	mov r9d, edx
 	mov r8d, ecx
 	cmp dl, 8
@@ -1415,9 +1287,8 @@ checked_floor_to_multiple_i8_unb_pow2:
 	shl dl, cl
 	and dl, r8b
 ```
-## `checked_floor_to_multiple_i16_unb_pow2`
+## `checked_floor_to_multiple_i16_unb_pow2`, `checked_floor_to_multiple_u16_unb_pow2`
 ```asm
-checked_floor_to_multiple_i16_unb_pow2:
 	mov r9d, edx
 	mov r8d, ecx
 	xor eax, eax
@@ -1428,9 +1299,8 @@ checked_floor_to_multiple_i16_unb_pow2:
 	shl edx, cl
 	and edx, r8d
 ```
-## `checked_floor_to_multiple_i32_unb_pow2`
+## `checked_floor_to_multiple_i32_unb_pow2`, `checked_floor_to_multiple_u32_unb_pow2`
 ```asm
-checked_floor_to_multiple_i32_unb_pow2:
 	mov r9d, edx
 	mov r8d, ecx
 	xor eax, eax
@@ -1441,9 +1311,8 @@ checked_floor_to_multiple_i32_unb_pow2:
 	shl edx, cl
 	and edx, r8d
 ```
-## `checked_floor_to_multiple_i64_unb_pow2`
+## `checked_floor_to_multiple_i64_unb_pow2`, `checked_floor_to_multiple_u64_unb_pow2`
 ```asm
-checked_floor_to_multiple_i64_unb_pow2:
 	mov r9d, edx
 	mov r8, rcx
 	xor eax, eax
@@ -1456,10 +1325,9 @@ checked_floor_to_multiple_i64_unb_pow2:
 ```
 ## `checked_floor_to_multiple_i128_unb_pow2`
 ```asm
-checked_floor_to_multiple_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB70_1
+	js .LBB85_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
@@ -1476,14 +1344,39 @@ checked_floor_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB70_1:
+.LBB85_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+```
+## `checked_floor_to_multiple_u128_unb_pow2`
+```asm
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB90_1
+	mov r10, -1
+	mov r11, -1
+	mov ecx, r9d
+	shl r11, cl
+	xor ecx, ecx
+	test r9b, 64
+	cmovne r10, r11
+	cmove rcx, r11
+	and rcx, rdx
+	and r10, r8
+	mov qword ptr [rax + 24], r10
+	mov qword ptr [rax + 16], rcx
+	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	ret
+.LBB90_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
 ## `checked_mul_i8_pow2`
 ```asm
-checked_mul_i8_pow2:
 	mov r8d, edx
 	mov eax, ecx
 	mov edx, ecx
@@ -1496,7 +1389,6 @@ checked_mul_i8_pow2:
 ```
 ## `checked_mul_i8_unb_pow2`
 ```asm
-checked_mul_i8_unb_pow2:
 	mov r8d, edx
 	mov eax, ecx
 	cmp dl, 8
@@ -1514,7 +1406,6 @@ checked_mul_i8_unb_pow2:
 ```
 ## `checked_mul_i16_pow2`
 ```asm
-checked_mul_i16_pow2:
 	mov r8d, edx
 	mov r9d, ecx
 	mov eax, r9d
@@ -1530,9 +1421,8 @@ checked_mul_i16_pow2:
 ```
 ## `checked_mul_i16_unb_pow2`
 ```asm
-checked_mul_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB78_1
+	ja .LBB98_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1544,12 +1434,11 @@ checked_mul_i16_unb_pow2:
 	cmp r8w, r9w
 	sete al
 	ret
-.LBB78_1:
+.LBB98_1:
 	xor eax, eax
 ```
 ## `checked_mul_i32_pow2`
 ```asm
-checked_mul_i32_pow2:
 	mov r8d, edx
 	mov r9d, ecx
 	mov edx, ecx
@@ -1563,9 +1452,8 @@ checked_mul_i32_pow2:
 ```
 ## `checked_mul_i32_unb_pow2`
 ```asm
-checked_mul_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB80_1
+	ja .LBB100_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1577,12 +1465,11 @@ checked_mul_i32_unb_pow2:
 	cmp r8d, r9d
 	sete al
 	ret
-.LBB80_1:
+.LBB100_1:
 	xor eax, eax
 ```
 ## `checked_mul_i64_pow2`
 ```asm
-checked_mul_i64_pow2:
 	mov r8d, edx
 	mov r9, rcx
 	mov rdx, rcx
@@ -1596,9 +1483,8 @@ checked_mul_i64_pow2:
 ```
 ## `checked_mul_i64_unb_pow2`
 ```asm
-checked_mul_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB82_1
+	ja .LBB102_1
 	mov eax, edx
 	mov rdx, rcx
 	mov r8, rcx
@@ -1610,12 +1496,11 @@ checked_mul_i64_unb_pow2:
 	cmp r8, r9
 	sete al
 	ret
-.LBB82_1:
+.LBB102_1:
 	xor eax, eax
 ```
 ## `checked_mul_i128_pow2`
 ```asm
-checked_mul_i128_pow2:
 	push r14
 	push rsi
 	push rdi
@@ -1643,11 +1528,11 @@ checked_mul_i128_pow2:
 	xor rbx, r8
 	xor r14, rdx
 	or r14, rbx
-	jne .LBB75_2
+	jne .LBB95_2
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-.LBB75_2:
+.LBB95_2:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1657,14 +1542,13 @@ checked_mul_i128_pow2:
 ```
 ## `checked_mul_i128_unb_pow2`
 ```asm
-checked_mul_i128_unb_pow2:
 	push r14
 	push rsi
 	push rdi
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB76_1
+	js .LBB96_1
 	mov r10, r8
 	mov ecx, r9d
 	shld r10, rdx, cl
@@ -1687,14 +1571,14 @@ checked_mul_i128_unb_pow2:
 	xor rbx, r8
 	xor r14, rdx
 	or r14, rbx
-	jne .LBB76_4
+	jne .LBB96_4
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-	jmp .LBB76_4
-.LBB76_1:
+	jmp .LBB96_4
+.LBB96_1:
 	xor esi, esi
-.LBB76_4:
+.LBB96_4:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1704,7 +1588,6 @@ checked_mul_i128_unb_pow2:
 ```
 ## `checked_mul_u8_pow2`
 ```asm
-checked_mul_u8_pow2:
 	mov r8d, edx
 	mov eax, ecx
 	mov edx, ecx
@@ -1717,7 +1600,6 @@ checked_mul_u8_pow2:
 ```
 ## `checked_mul_u8_unb_pow2`
 ```asm
-checked_mul_u8_unb_pow2:
 	mov r8d, edx
 	mov eax, ecx
 	cmp dl, 8
@@ -1735,7 +1617,6 @@ checked_mul_u8_unb_pow2:
 ```
 ## `checked_mul_u16_pow2`
 ```asm
-checked_mul_u16_pow2:
 	mov r8d, edx
 	mov r9d, ecx
 	mov eax, r9d
@@ -1751,9 +1632,8 @@ checked_mul_u16_pow2:
 ```
 ## `checked_mul_u16_unb_pow2`
 ```asm
-checked_mul_u16_unb_pow2:
 	cmp dl, 15
-	ja .LBB88_1
+	ja .LBB108_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1765,12 +1645,11 @@ checked_mul_u16_unb_pow2:
 	cmp r8w, r9w
 	sete al
 	ret
-.LBB88_1:
+.LBB108_1:
 	xor eax, eax
 ```
 ## `checked_mul_u32_pow2`
 ```asm
-checked_mul_u32_pow2:
 	mov r8d, edx
 	mov r9d, ecx
 	mov edx, ecx
@@ -1784,9 +1663,8 @@ checked_mul_u32_pow2:
 ```
 ## `checked_mul_u32_unb_pow2`
 ```asm
-checked_mul_u32_unb_pow2:
 	cmp dl, 31
-	ja .LBB90_1
+	ja .LBB110_1
 	mov eax, edx
 	mov edx, ecx
 	mov r8d, ecx
@@ -1798,12 +1676,11 @@ checked_mul_u32_unb_pow2:
 	cmp r8d, r9d
 	sete al
 	ret
-.LBB90_1:
+.LBB110_1:
 	xor eax, eax
 ```
 ## `checked_mul_u64_pow2`
 ```asm
-checked_mul_u64_pow2:
 	mov r8d, edx
 	mov r9, rcx
 	mov rdx, rcx
@@ -1817,9 +1694,8 @@ checked_mul_u64_pow2:
 ```
 ## `checked_mul_u64_unb_pow2`
 ```asm
-checked_mul_u64_unb_pow2:
 	cmp dl, 63
-	ja .LBB92_1
+	ja .LBB112_1
 	mov eax, edx
 	mov rdx, rcx
 	mov r8, rcx
@@ -1831,12 +1707,11 @@ checked_mul_u64_unb_pow2:
 	cmp r8, r9
 	sete al
 	ret
-.LBB92_1:
+.LBB112_1:
 	xor eax, eax
 ```
 ## `checked_mul_u128_pow2`
 ```asm
-checked_mul_u128_pow2:
 	push r14
 	push rsi
 	push rdi
@@ -1863,11 +1738,11 @@ checked_mul_u128_pow2:
 	xor r14, rdx
 	xor rbx, r8
 	or rbx, r14
-	jne .LBB85_2
+	jne .LBB105_2
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-.LBB85_2:
+.LBB105_2:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1877,14 +1752,13 @@ checked_mul_u128_pow2:
 ```
 ## `checked_mul_u128_unb_pow2`
 ```asm
-checked_mul_u128_unb_pow2:
 	push r14
 	push rsi
 	push rdi
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB86_1
+	js .LBB106_1
 	mov r10, r8
 	mov ecx, r9d
 	shld r10, rdx, cl
@@ -1906,14 +1780,14 @@ checked_mul_u128_unb_pow2:
 	xor r14, rdx
 	xor rbx, r8
 	or rbx, r14
-	jne .LBB86_4
+	jne .LBB106_4
 	mov qword ptr [rax + 16], r11
 	mov qword ptr [rax + 24], r10
 	mov esi, 1
-	jmp .LBB86_4
-.LBB86_1:
+	jmp .LBB106_4
+.LBB106_1:
 	xor esi, esi
-.LBB86_4:
+.LBB106_4:
 	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -1921,9 +1795,8 @@ checked_mul_u128_unb_pow2:
 	pop rsi
 	pop r14
 ```
-## `checked_rem_floor_i8_unb_pow2`
+## `checked_rem_floor_i8_unb_pow2`, `checked_rem_floor_u8_unb_pow2`, `checked_rem_u8_unb_pow2`
 ```asm
-checked_rem_floor_i8_unb_pow2:
 	mov r9d, edx
 	mov r8d, ecx
 	cmp dl, 8
@@ -1934,9 +1807,8 @@ checked_rem_floor_i8_unb_pow2:
 	not dl
 	and dl, r8b
 ```
-## `checked_rem_floor_i16_unb_pow2`
+## `checked_rem_floor_i16_unb_pow2`, `checked_rem_floor_u16_unb_pow2`, `checked_rem_u16_unb_pow2`
 ```asm
-checked_rem_floor_i16_unb_pow2:
 	mov r9d, edx
 	mov r8d, ecx
 	xor eax, eax
@@ -1948,9 +1820,8 @@ checked_rem_floor_i16_unb_pow2:
 	not edx
 	and edx, r8d
 ```
-## `checked_rem_floor_i32_unb_pow2`
+## `checked_rem_floor_i32_unb_pow2`, `checked_rem_floor_u32_unb_pow2`, `checked_rem_u32_unb_pow2`
 ```asm
-checked_rem_floor_i32_unb_pow2:
 	mov r9d, edx
 	mov r8d, ecx
 	xor eax, eax
@@ -1962,9 +1833,8 @@ checked_rem_floor_i32_unb_pow2:
 	not edx
 	and edx, r8d
 ```
-## `checked_rem_floor_i64_unb_pow2`
+## `checked_rem_floor_i64_unb_pow2`, `checked_rem_floor_u64_unb_pow2`, `checked_rem_u64_unb_pow2`
 ```asm
-checked_rem_floor_i64_unb_pow2:
 	mov r9d, edx
 	mov r8, rcx
 	xor eax, eax
@@ -1978,10 +1848,9 @@ checked_rem_floor_i64_unb_pow2:
 ```
 ## `checked_rem_floor_i128_unb_pow2`
 ```asm
-checked_rem_floor_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB95_1
+	js .LBB115_1
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -2000,130 +1869,16 @@ checked_rem_floor_i128_unb_pow2:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	ret
-.LBB95_1:
+.LBB115_1:
 	xor ecx, ecx
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 ```
-## `checked_rem_i8_unb_pow2`
+## `checked_rem_floor_u128_unb_pow2`
 ```asm
-checked_rem_i8_unb_pow2:
-	mov r8d, ecx
-	cmp dl, 7
-	ja .LBB104_3
-	mov al, -1
-	mov ecx, edx
-	shl al, cl
-	mov ecx, eax
-	not cl
-	test r8b, r8b
-	js .LBB104_2
-	and r8b, cl
-.LBB104_3:
-	cmp dl, 8
-	setb al
-	mov edx, r8d
-	ret
-.LBB104_2:
-	add cl, r8b
-	and cl, al
-	sub r8b, cl
-	cmp dl, 8
-	setb al
-	mov edx, r8d
-```
-## `checked_rem_i16_unb_pow2`
-```asm
-checked_rem_i16_unb_pow2:
-	cmp dl, 15
-	ja .LBB101_1
-	mov r8d, ecx
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	not ecx
-	test r8w, r8w
-	js .LBB101_4
-	and r8d, ecx
-	mov ax, 1
-	mov edx, r8d
-	ret
-.LBB101_1:
-	xor eax, eax
-	mov edx, r8d
-	ret
-.LBB101_4:
-	add ecx, r8d
-	and eax, ecx
-	sub r8d, eax
-	mov ax, 1
-	mov edx, r8d
-```
-## `checked_rem_i32_unb_pow2`
-```asm
-checked_rem_i32_unb_pow2:
-	cmp dl, 31
-	ja .LBB102_1
-	mov r8d, ecx
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	not ecx
-	test r8d, r8d
-	js .LBB102_4
-	and r8d, ecx
-	mov eax, 1
-	mov edx, r8d
-	ret
-.LBB102_1:
-	xor eax, eax
-	mov edx, r8d
-	ret
-.LBB102_4:
-	add ecx, r8d
-	and ecx, eax
-	sub r8d, ecx
-	mov eax, 1
-	mov edx, r8d
-```
-## `checked_rem_i64_unb_pow2`
-```asm
-checked_rem_i64_unb_pow2:
-	cmp dl, 63
-	ja .LBB103_1
-	mov r8, rcx
-	mov rax, -1
-	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
-	not rcx
-	test r8, r8
-	js .LBB103_4
-	and r8, rcx
-	mov eax, 1
-	mov rdx, r8
-	ret
-.LBB103_1:
-	xor eax, eax
-	mov rdx, r8
-	ret
-.LBB103_4:
-	add rcx, r8
-	and rcx, rax
-	sub r8, rcx
-	mov eax, 1
-	mov rdx, r8
-```
-## `checked_rem_i128_unb_pow2`
-```asm
-checked_rem_i128_unb_pow2:
-	push rsi
-	push rdi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB100_1
+	js .LBB120_1
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -2132,84 +1887,185 @@ checked_rem_i128_unb_pow2:
 	test r9b, 64
 	cmove r11, r10
 	cmove r10, rcx
-	mov rcx, r10
-	not rcx
-	mov r9, r11
-	not r9
-	mov rsi, rdx
-	and rsi, r9
-	mov rdi, r8
-	and rdi, rcx
-	add r9, rdx
-	adc rcx, r8
-	and rcx, r10
-	and r9, r11
-	sub rdx, r9
-	mov r9, r8
-	sbb r9, rcx
-	test r8, r8
-	cmovns r9, rdi
-	cmovns rdx, rsi
+	not r10
+	not r11
+	and rdx, r11
+	and r8, r10
+	mov qword ptr [rax + 24], r8
 	mov qword ptr [rax + 16], rdx
-	mov qword ptr [rax + 24], r9
 	mov ecx, 1
-	jmp .LBB100_3
-.LBB100_1:
-	xor ecx, ecx
-.LBB100_3:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
-	pop rdi
+	ret
+.LBB120_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+```
+## `checked_rem_i8_unb_pow2`
+```asm
+	mov r8d, ecx
+	cmp dl, 7
+	ja .LBB129_2
+	mov al, -1
+	mov ecx, edx
+	shl al, cl
+	mov ecx, eax
+	not cl
+	mov r9d, r8d
+	sar r9b, 7
+	and r9b, cl
+	add r9b, r8b
+	and r9b, al
+	sub r8b, r9b
+.LBB129_2:
+	cmp dl, 8
+	setb al
+	mov edx, r8d
+```
+## `checked_rem_i16_unb_pow2`
+```asm
+	cmp dl, 15
+	ja .LBB126_1
+	mov r8d, ecx
+	mov eax, -1
+	mov ecx, edx
+	shl eax, cl
+	mov ecx, eax
+	not ecx
+	movsx edx, r8w
+	sar edx, 15
+	and edx, ecx
+	add edx, r8d
+	and edx, eax
+	sub r8d, edx
+	mov ax, 1
+	mov edx, r8d
+	ret
+.LBB126_1:
+	xor eax, eax
+	mov edx, r8d
+```
+## `checked_rem_i32_unb_pow2`
+```asm
+	cmp dl, 31
+	ja .LBB127_1
+	mov r8d, ecx
+	mov eax, -1
+	mov ecx, edx
+	shl eax, cl
+	mov ecx, eax
+	not ecx
+	mov edx, r8d
+	sar edx, 31
+	and edx, ecx
+	add edx, r8d
+	and edx, eax
+	sub r8d, edx
+	mov eax, 1
+	mov edx, r8d
+	ret
+.LBB127_1:
+	xor eax, eax
+	mov edx, r8d
+```
+## `checked_rem_i64_unb_pow2`
+```asm
+	cmp dl, 63
+	ja .LBB128_1
+	mov r8, rcx
+	mov rax, -1
+	mov ecx, edx
+	shl rax, cl
+	mov rcx, rax
+	not rcx
+	mov rdx, r8
+	sar rdx, 63
+	and rdx, rcx
+	add rdx, r8
+	and rdx, rax
+	sub r8, rdx
+	mov eax, 1
+	mov rdx, r8
+	ret
+.LBB128_1:
+	xor eax, eax
+	mov rdx, r8
+```
+## `checked_rem_i128_unb_pow2`
+```asm
+	push rsi
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB125_1
+	mov r10, -1
+	mov ecx, r9d
+	shl r10, cl
+	mov rcx, -1
+	xor r11d, r11d
+	test r9b, 64
+	cmovne rcx, r10
+	cmove r11, r10
+	mov r9, r11
+	not r9
+	mov r10, rcx
+	not r10
+	mov rsi, r8
+	sar rsi, 63
+	and r10, rsi
+	and rsi, r9
+	add rsi, rdx
+	adc r10, r8
+	and r10, rcx
+	and rsi, r11
+	sub rdx, rsi
+	sbb r8, r10
+	mov qword ptr [rax + 16], rdx
+	mov qword ptr [rax + 24], r8
+	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	pop rsi
+	ret
+.LBB125_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
 	pop rsi
 ```
-## `checked_rem_u16_unb_pow2`
+## `checked_rem_u128_unb_pow2`
 ```asm
-checked_rem_u16_unb_pow2:
-	mov r9d, edx
-	mov r8d, ecx
-	xor eax, eax
-	cmp dl, 16
-	setb al
-	mov edx, -1
+	mov rax, rcx
+	test r9b, r9b
+	js .LBB130_1
+	mov r10, -1
 	mov ecx, r9d
-	shl edx, cl
-	not edx
-	and edx, r8d
-```
-## `checked_rem_u32_unb_pow2`
-```asm
-checked_rem_u32_unb_pow2:
-	mov r9d, edx
-	mov r8d, ecx
-	xor eax, eax
-	cmp dl, 32
-	setb al
-	mov edx, -1
-	mov ecx, r9d
-	shl edx, cl
-	not edx
-	and edx, r8d
-```
-## `checked_rem_u64_unb_pow2`
-```asm
-checked_rem_u64_unb_pow2:
-	mov r9d, edx
-	mov r8, rcx
-	xor eax, eax
-	cmp dl, 64
-	setb al
-	mov rdx, -1
-	mov ecx, r9d
-	shl rdx, cl
-	not rdx
-	and rdx, r8
+	shl r10, cl
+	mov rcx, -1
+	xor r11d, r11d
+	test r9b, 64
+	cmove r11, r10
+	cmove r10, rcx
+	not r10
+	not r11
+	and rdx, r11
+	and r8, r10
+	mov qword ptr [rax + 24], r8
+	mov qword ptr [rax + 16], rdx
+	mov ecx, 1
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
+	ret
+.LBB130_1:
+	xor ecx, ecx
+	mov qword ptr [rax], rcx
+	mov qword ptr [rax + 8], 0
 ```
 ## `checked_round_to_multiple_i8_unb_pow2`
 ```asm
-checked_round_to_multiple_i8_unb_pow2:
 	xor r10d, r10d
 	cmp dl, 7
-	ja .LBB112_1
+	ja .LBB139_1
 	mov r8d, ecx
 	mov al, 1
 	mov r9b, 1
@@ -2223,19 +2079,18 @@ checked_round_to_multiple_i8_unb_pow2:
 	movzx edx, cl
 	cmovb edx, r10d
 	add dl, r8b
-	jo .LBB112_1
+	jo .LBB139_1
 	neg r9b
 	and dl, r9b
 	ret
-.LBB112_1:
+.LBB139_1:
 	xor eax, eax
 ```
 ## `checked_round_to_multiple_i16_unb_pow2`
 ```asm
-checked_round_to_multiple_i16_unb_pow2:
 	xor eax, eax
 	cmp dl, 15
-	ja .LBB109_4
+	ja .LBB136_4
 	mov r9d, edx
 	mov r8d, ecx
 	mov edx, 1
@@ -2249,18 +2104,17 @@ checked_round_to_multiple_i16_unb_pow2:
 	sub r9w, r8w
 	cmovb r9d, eax
 	add cx, r9w
-	jo .LBB109_4
+	jo .LBB136_4
 	neg edx
 	and edx, ecx
 	mov ax, 1
 	ret
-.LBB109_4:
+.LBB136_4:
 ```
 ## `checked_round_to_multiple_i32_unb_pow2`
 ```asm
-checked_round_to_multiple_i32_unb_pow2:
 	cmp dl, 31
-	ja .LBB110_3
+	ja .LBB137_3
 	mov r8d, ecx
 	mov r9d, 1
 	mov ecx, edx
@@ -2273,20 +2127,19 @@ checked_round_to_multiple_i32_unb_pow2:
 	sub edx, ecx
 	cmovb edx, eax
 	add edx, r8d
-	jo .LBB110_4
+	jo .LBB137_4
 	neg r9d
 	and edx, r9d
 	mov eax, 1
 	ret
-.LBB110_3:
+.LBB137_3:
 	xor eax, eax
-.LBB110_4:
+.LBB137_4:
 ```
 ## `checked_round_to_multiple_i64_unb_pow2`
 ```asm
-checked_round_to_multiple_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB111_3
+	ja .LBB138_3
 	mov r8, rcx
 	mov r9d, 1
 	mov ecx, edx
@@ -2299,24 +2152,23 @@ checked_round_to_multiple_i64_unb_pow2:
 	sub rdx, rcx
 	cmovb rdx, rax
 	add rdx, r8
-	jo .LBB111_4
+	jo .LBB138_4
 	neg r9
 	and rdx, r9
 	mov eax, 1
 	ret
-.LBB111_3:
+.LBB138_3:
 	xor eax, eax
-.LBB111_4:
+.LBB138_4:
 ```
 ## `checked_round_to_multiple_i128_unb_pow2`
 ```asm
-checked_round_to_multiple_i128_unb_pow2:
 	push rsi
 	push rdi
 	push rbx
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB108_3
+	js .LBB135_3
 	mov r10d, 1
 	xor esi, esi
 	mov ecx, r9d
@@ -2339,7 +2191,7 @@ checked_round_to_multiple_i128_unb_pow2:
 	cmovb r9, rdi
 	add rdx, r9
 	adc rcx, r8
-	jo .LBB108_3
+	jo .LBB135_3
 	xor r8d, r8d
 	neg r11
 	sbb r8, rsi
@@ -2347,10 +2199,10 @@ checked_round_to_multiple_i128_unb_pow2:
 	and rdx, r11
 	mov qword ptr [rax + 16], rdx
 	mov qword ptr [rax + 24], rcx
-	jmp .LBB108_4
-.LBB108_3:
+	jmp .LBB135_4
+.LBB135_3:
 	xor r10d, r10d
-.LBB108_4:
+.LBB135_4:
 	mov qword ptr [rax], r10
 	mov qword ptr [rax + 8], 0
 	pop rbx
@@ -2359,9 +2211,8 @@ checked_round_to_multiple_i128_unb_pow2:
 ```
 ## `checked_round_to_multiple_u8_unb_pow2`
 ```asm
-checked_round_to_multiple_u8_unb_pow2:
 	cmp dl, 7
-	ja .LBB117_2
+	ja .LBB144_2
 	mov r8d, ecx
 	mov r9b, 1
 	mov ecx, edx
@@ -2370,18 +2221,17 @@ checked_round_to_multiple_u8_unb_pow2:
 	mov edx, r9d
 	shr dl
 	add dl, r8b
-	jb .LBB117_2
+	jb .LBB144_2
 	neg r9b
 	and dl, r9b
 	ret
-.LBB117_2:
+.LBB144_2:
 	xor eax, eax
 ```
 ## `checked_round_to_multiple_u16_unb_pow2`
 ```asm
-checked_round_to_multiple_u16_unb_pow2:
 	cmp dl, 15
-	ja .LBB114_2
+	ja .LBB141_2
 	mov eax, ecx
 	mov r8d, 1
 	mov ecx, edx
@@ -2389,20 +2239,19 @@ checked_round_to_multiple_u16_unb_pow2:
 	movzx edx, r8w
 	shr edx
 	add dx, ax
-	jb .LBB114_2
+	jb .LBB141_2
 	neg r8d
 	and edx, r8d
 	mov ax, 1
 	ret
-.LBB114_2:
+.LBB141_2:
 	xor eax, eax
 ```
 ## `checked_round_to_multiple_u32_unb_pow2`
 ```asm
-checked_round_to_multiple_u32_unb_pow2:
 	xor eax, eax
 	cmp dl, 31
-	ja .LBB115_2
+	ja .LBB142_2
 	mov r8d, ecx
 	mov r9d, 1
 	mov ecx, edx
@@ -2410,18 +2259,17 @@ checked_round_to_multiple_u32_unb_pow2:
 	mov edx, r9d
 	shr edx
 	add edx, r8d
-	jb .LBB115_2
+	jb .LBB142_2
 	neg r9d
 	and edx, r9d
 	mov eax, 1
 	ret
-.LBB115_2:
+.LBB142_2:
 ```
 ## `checked_round_to_multiple_u64_unb_pow2`
 ```asm
-checked_round_to_multiple_u64_unb_pow2:
 	cmp dl, 63
-	ja .LBB116_2
+	ja .LBB143_2
 	mov r8, rcx
 	mov r9d, 1
 	mov ecx, edx
@@ -2430,21 +2278,20 @@ checked_round_to_multiple_u64_unb_pow2:
 	mov rdx, r9
 	shr rdx
 	add rdx, r8
-	jb .LBB116_2
+	jb .LBB143_2
 	neg r9
 	and rdx, r9
 	ret
-.LBB116_2:
+.LBB143_2:
 	xor eax, eax
 ```
 ## `checked_round_to_multiple_u128_unb_pow2`
 ```asm
-checked_round_to_multiple_u128_unb_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB113_2
+	js .LBB140_2
 	mov r10d, 1
 	xor r11d, r11d
 	mov ecx, r9d
@@ -2461,7 +2308,7 @@ checked_round_to_multiple_u128_unb_pow2:
 	shr rcx
 	add r9, rdx
 	adc rcx, r8
-	jb .LBB113_2
+	jb .LBB140_2
 	xor edx, edx
 	neg rsi
 	sbb rdx, r11
@@ -2469,10 +2316,10 @@ checked_round_to_multiple_u128_unb_pow2:
 	and r9, rsi
 	mov qword ptr [rax + 16], r9
 	mov qword ptr [rax + 24], rcx
-	jmp .LBB113_3
-.LBB113_2:
+	jmp .LBB140_3
+.LBB140_2:
 	xor r10d, r10d
-.LBB113_3:
+.LBB140_3:
 	mov qword ptr [rax], r10
 	mov qword ptr [rax + 8], 0
 	pop rdi
@@ -2480,7 +2327,6 @@ checked_round_to_multiple_u128_unb_pow2:
 ```
 ## `div_ceil_i8_pow2`
 ```asm
-div_ceil_i8_pow2:
 	mov eax, ecx
 	mov r8b, -1
 	mov ecx, edx
@@ -2493,7 +2339,6 @@ div_ceil_i8_pow2:
 ```
 ## `div_ceil_i8_unb_pow2`
 ```asm
-div_ceil_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov r8b, -1
@@ -2507,7 +2352,6 @@ div_ceil_i8_unb_pow2:
 ```
 ## `div_ceil_i16_pow2`
 ```asm
-div_ceil_i16_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -2521,7 +2365,6 @@ div_ceil_i16_pow2:
 ```
 ## `div_ceil_i16_unb_pow2`
 ```asm
-div_ceil_i16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov r9d, -1
@@ -2534,9 +2377,8 @@ div_ceil_i16_unb_pow2:
 	cmp r9w, 1
 	sbb ax, -1
 ```
-## `div_ceil_i32_pow2`
+## `div_ceil_i32_pow2`, `div_ceil_i32_unb_pow2`
 ```asm
-div_ceil_i32_pow2:
 	mov eax, ecx
 	mov r8d, -1
 	mov ecx, edx
@@ -2547,22 +2389,8 @@ div_ceil_i32_pow2:
 	cmp r8d, 1
 	sbb eax, -1
 ```
-## `div_ceil_i32_unb_pow2`
+## `div_ceil_i64_pow2`, `div_ceil_i64_unb_pow2`
 ```asm
-div_ceil_i32_unb_pow2:
-	mov eax, ecx
-	mov r8d, -1
-	mov ecx, edx
-	shl r8d, cl
-	not r8d
-	and r8d, eax
-	sar eax, cl
-	cmp r8d, 1
-	sbb eax, -1
-```
-## `div_ceil_i64_pow2`
-```asm
-div_ceil_i64_pow2:
 	mov rax, rcx
 	mov r8, -1
 	mov ecx, edx
@@ -2573,56 +2401,8 @@ div_ceil_i64_pow2:
 	cmp r8, 1
 	sbb rax, -1
 ```
-## `div_ceil_i64_unb_pow2`
+## `div_ceil_i128_pow2`, `div_ceil_i128_unb_pow2`
 ```asm
-div_ceil_i64_unb_pow2:
-	mov rax, rcx
-	mov r8, -1
-	mov ecx, edx
-	shl r8, cl
-	not r8
-	and r8, rax
-	sar rax, cl
-	cmp r8, 1
-	sbb rax, -1
-```
-## `div_ceil_i128_pow2`
-```asm
-div_ceil_i128_pow2:
-	push rsi
-	push rdi
-	mov rax, rcx
-	mov r11, -1
-	mov ecx, r8d
-	shl r11, cl
-	mov r9, rdx
-	mov r10, rax
-	shrd r10, rdx, cl
-	mov rsi, -1
-	mov rdi, rdx
-	sar rdi, cl
-	sar rdx, 63
-	xor ecx, ecx
-	test r8b, 64
-	cmovne rsi, r11
-	cmove rcx, r11
-	not rcx
-	not rsi
-	cmovne r10, rdi
-	cmove rdx, rdi
-	and rsi, r9
-	and rcx, rax
-	xor eax, eax
-	or rcx, rsi
-	setne al
-	add rax, r10
-	adc rdx, 0
-	pop rdi
-	pop rsi
-```
-## `div_ceil_i128_unb_pow2`
-```asm
-div_ceil_i128_unb_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
@@ -2656,7 +2436,6 @@ div_ceil_i128_unb_pow2:
 ```
 ## `div_ceil_u8_pow2`
 ```asm
-div_ceil_u8_pow2:
 	mov eax, ecx
 	mov r8b, -1
 	mov ecx, edx
@@ -2669,7 +2448,6 @@ div_ceil_u8_pow2:
 ```
 ## `div_ceil_u8_unb_pow2`
 ```asm
-div_ceil_u8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov r8b, -1
@@ -2683,7 +2461,6 @@ div_ceil_u8_unb_pow2:
 ```
 ## `div_ceil_u16_pow2`
 ```asm
-div_ceil_u16_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -2697,7 +2474,6 @@ div_ceil_u16_pow2:
 ```
 ## `div_ceil_u16_unb_pow2`
 ```asm
-div_ceil_u16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov r9d, -1
@@ -2710,9 +2486,8 @@ div_ceil_u16_unb_pow2:
 	cmp r9w, 1
 	sbb ax, -1
 ```
-## `div_ceil_u32_pow2`
+## `div_ceil_u32_pow2`, `div_ceil_u32_unb_pow2`
 ```asm
-div_ceil_u32_pow2:
 	mov eax, ecx
 	mov r8d, -1
 	mov ecx, edx
@@ -2723,22 +2498,8 @@ div_ceil_u32_pow2:
 	cmp r8d, 1
 	sbb eax, -1
 ```
-## `div_ceil_u32_unb_pow2`
+## `div_ceil_u64_pow2`, `div_ceil_u64_unb_pow2`
 ```asm
-div_ceil_u32_unb_pow2:
-	mov eax, ecx
-	mov r8d, -1
-	mov ecx, edx
-	shl r8d, cl
-	not r8d
-	and r8d, eax
-	shr eax, cl
-	cmp r8d, 1
-	sbb eax, -1
-```
-## `div_ceil_u64_pow2`
-```asm
-div_ceil_u64_pow2:
 	mov rax, rcx
 	mov r8, -1
 	mov ecx, edx
@@ -2749,52 +2510,8 @@ div_ceil_u64_pow2:
 	cmp r8, 1
 	sbb rax, -1
 ```
-## `div_ceil_u64_unb_pow2`
+## `div_ceil_u128_pow2`, `div_ceil_u128_unb_pow2`
 ```asm
-div_ceil_u64_unb_pow2:
-	mov rax, rcx
-	mov r8, -1
-	mov ecx, edx
-	shl r8, cl
-	not r8
-	and r8, rax
-	shr rax, cl
-	cmp r8, 1
-	sbb rax, -1
-```
-## `div_ceil_u128_pow2`
-```asm
-div_ceil_u128_pow2:
-	push rsi
-	mov rax, rcx
-	mov r11, -1
-	mov ecx, r8d
-	shl r11, cl
-	mov r9, rdx
-	mov r10, rax
-	shrd r10, rdx, cl
-	shr rdx, cl
-	mov rcx, -1
-	xor esi, esi
-	test r8b, 64
-	cmovne rcx, r11
-	cmovne r11, rsi
-	not r11
-	not rcx
-	cmovne r10, rdx
-	cmovne rdx, rsi
-	and rcx, r9
-	and r11, rax
-	xor eax, eax
-	or r11, rcx
-	setne al
-	add rax, r10
-	adc rdx, 0
-	pop rsi
-```
-## `div_ceil_u128_unb_pow2`
-```asm
-div_ceil_u128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	mov r11, -1
@@ -2824,14 +2541,12 @@ div_ceil_u128_unb_pow2:
 ```
 ## `div_floor_i8_pow2`
 ```asm
-div_floor_i8_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	sar al, cl
 ```
 ## `div_floor_i8_unb_pow2`
 ```asm
-div_floor_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov ecx, edx
@@ -2839,63 +2554,31 @@ div_floor_i8_unb_pow2:
 ```
 ## `div_floor_i16_pow2`
 ```asm
-div_floor_i16_pow2:
 	movsx eax, cx
 	mov ecx, edx
 	sar eax, cl
 ```
 ## `div_floor_i16_unb_pow2`
 ```asm
-div_floor_i16_unb_pow2:
 	movsx eax, cx
 	and dl, 15
 	mov ecx, edx
 	sar eax, cl
 ```
-## `div_floor_i32_pow2`
+## `div_floor_i32_pow2`, `div_floor_i32_unb_pow2`
 ```asm
-div_floor_i32_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	sar eax, cl
 ```
-## `div_floor_i32_unb_pow2`
+## `div_floor_i64_pow2`, `div_floor_i64_unb_pow2`
 ```asm
-div_floor_i32_unb_pow2:
-	mov eax, ecx
-	mov ecx, edx
-	sar eax, cl
-```
-## `div_floor_i64_pow2`
-```asm
-div_floor_i64_pow2:
 	mov rax, rcx
 	mov ecx, edx
 	sar rax, cl
 ```
-## `div_floor_i64_unb_pow2`
+## `div_floor_i128_pow2`, `div_floor_i128_unb_pow2`
 ```asm
-div_floor_i64_unb_pow2:
-	mov rax, rcx
-	mov ecx, edx
-	sar rax, cl
-```
-## `div_floor_i128_pow2`
-```asm
-div_floor_i128_pow2:
-	mov rax, rcx
-	mov ecx, r8d
-	shrd rax, rdx, cl
-	mov r9, rdx
-	sar r9, cl
-	sar rdx, 63
-	test r8b, 64
-	cmovne rax, r9
-	cmove rdx, r9
-```
-## `div_floor_i128_unb_pow2`
-```asm
-div_floor_i128_unb_pow2:
 	mov rax, rcx
 	mov ecx, r8d
 	shrd rax, rdx, cl
@@ -2908,14 +2591,12 @@ div_floor_i128_unb_pow2:
 ```
 ## `div_floor_u8_pow2`
 ```asm
-div_floor_u8_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
 ```
-## `div_floor_u8_unb_pow2`
+## `div_floor_u8_unb_pow2`, `div_u8_pow2`, `div_u8_unb_pow2`
 ```asm
-div_floor_u8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov ecx, edx
@@ -2923,62 +2604,31 @@ div_floor_u8_unb_pow2:
 ```
 ## `div_floor_u16_pow2`
 ```asm
-div_floor_u16_pow2:
 	movzx eax, cx
 	mov ecx, edx
 	shr eax, cl
 ```
-## `div_floor_u16_unb_pow2`
+## `div_floor_u16_unb_pow2`, `div_u16_pow2`, `div_u16_unb_pow2`
 ```asm
-div_floor_u16_unb_pow2:
 	movzx eax, cx
 	and dl, 15
 	mov ecx, edx
 	shr eax, cl
 ```
-## `div_floor_u32_pow2`
+## `div_floor_u32_pow2`, `div_floor_u32_unb_pow2`, `div_u32_pow2`, `div_u32_unb_pow2`
 ```asm
-div_floor_u32_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr eax, cl
 ```
-## `div_floor_u32_unb_pow2`
+## `div_floor_u64_pow2`, `div_floor_u64_unb_pow2`, `div_u64_pow2`, `div_u64_unb_pow2`
 ```asm
-div_floor_u32_unb_pow2:
-	mov eax, ecx
-	mov ecx, edx
-	shr eax, cl
-```
-## `div_floor_u64_pow2`
-```asm
-div_floor_u64_pow2:
 	mov rax, rcx
 	mov ecx, edx
 	shr rax, cl
 ```
-## `div_floor_u64_unb_pow2`
+## `div_floor_u128_pow2`, `div_floor_u128_unb_pow2`, `div_u128_pow2`, `div_u128_unb_pow2`
 ```asm
-div_floor_u64_unb_pow2:
-	mov rax, rcx
-	mov ecx, edx
-	shr rax, cl
-```
-## `div_floor_u128_pow2`
-```asm
-div_floor_u128_pow2:
-	mov rax, rcx
-	mov ecx, r8d
-	shrd rax, rdx, cl
-	shr rdx, cl
-	xor ecx, ecx
-	test r8b, 64
-	cmovne rax, rdx
-	cmovne rdx, rcx
-```
-## `div_floor_u128_unb_pow2`
-```asm
-div_floor_u128_unb_pow2:
 	mov rax, rcx
 	mov ecx, r8d
 	shrd rax, rdx, cl
@@ -2990,222 +2640,123 @@ div_floor_u128_unb_pow2:
 ```
 ## `div_i8_pow2`
 ```asm
-div_i8_pow2:
-	mov eax, ecx
-	test cl, cl
-	js .LBB166_1
+	mov r8d, ecx
+	mov r9b, -1
 	mov ecx, edx
-	shr al, cl
-	ret
-.LBB166_1:
-	mov r8b, -1
-	mov ecx, edx
-	shl r8b, cl
-	not r8b
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	sar al, 7
+	and al, r9b
 	add al, r8b
+	and dl, 7
+	mov ecx, edx
 	sar al, cl
 ```
 ## `div_i8_unb_pow2`
 ```asm
-div_i8_unb_pow2:
-	mov eax, ecx
+	mov r8d, ecx
 	and dl, 7
-	test cl, cl
-	js .LBB167_1
+	mov r9b, -1
 	mov ecx, edx
-	shr al, cl
-	ret
-.LBB167_1:
-	mov r8b, -1
-	mov ecx, edx
-	shl r8b, cl
-	not r8b
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	sar al, 7
+	and al, r9b
 	add al, r8b
 	sar al, cl
 ```
 ## `div_i16_pow2`
 ```asm
-div_i16_pow2:
 	mov eax, ecx
-	movzx ecx, dl
-	test ax, ax
-	js .LBB160_1
-	movzx eax, ax
-	shr eax, cl
-	ret
-.LBB160_1:
-	mov edx, -1
-	shl edx, cl
-	not edx
-	add eax, edx
-	cwde
+	mov r8d, -1
+	mov ecx, edx
+	shl r8d, cl
+	movsx ecx, ax
+	not r8d
+	sar ecx, 15
+	and ecx, r8d
+	add ecx, eax
+	movsx eax, cx
+	and dl, 15
+	mov ecx, edx
 	sar eax, cl
 ```
 ## `div_i16_unb_pow2`
 ```asm
-div_i16_unb_pow2:
 	mov eax, ecx
 	and dl, 15
-	movzx ecx, dl
-	test ax, ax
-	js .LBB161_1
-	movzx eax, ax
-	shr eax, cl
-	ret
-.LBB161_1:
-	mov edx, -1
-	shl edx, cl
-	not edx
-	add eax, edx
-	cwde
-	sar eax, cl
-```
-## `div_i32_pow2`
-```asm
-div_i32_pow2:
-	mov eax, ecx
-	test ecx, ecx
-	js .LBB162_1
-	mov ecx, edx
-	shr eax, cl
-	ret
-.LBB162_1:
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
+	movsx ecx, ax
 	not r8d
+	sar ecx, 15
+	and ecx, r8d
+	add ecx, eax
+	movsx eax, cx
+	mov ecx, edx
+	sar eax, cl
+```
+## `div_i32_pow2`, `div_i32_unb_pow2`
+```asm
+	mov r8d, ecx
+	mov r9d, -1
+	mov ecx, edx
+	shl r9d, cl
+	not r9d
+	mov eax, r8d
+	sar eax, 31
+	and eax, r9d
 	add eax, r8d
 	sar eax, cl
 ```
-## `div_i32_unb_pow2`
+## `div_i64_pow2`, `div_i64_unb_pow2`
 ```asm
-div_i32_unb_pow2:
-	mov eax, ecx
-	and dl, 31
-	test ecx, ecx
-	js .LBB163_1
-	mov ecx, edx
-	shr eax, cl
-	ret
-.LBB163_1:
-	mov r8d, -1
-	mov ecx, edx
-	shl r8d, cl
-	not r8d
-	add eax, r8d
-	sar eax, cl
-```
-## `div_i64_pow2`
-```asm
-div_i64_pow2:
-	mov rax, rcx
-	movzx ecx, dl
-	test rax, rax
-	js .LBB164_1
-	shr rax, cl
-	ret
-.LBB164_1:
-	mov rdx, -1
-	shl rdx, cl
-	not rdx
-	add rax, rdx
-	sar rax, cl
-```
-## `div_i64_unb_pow2`
-```asm
-div_i64_unb_pow2:
-	mov rax, rcx
-	and dl, 63
-	movzx ecx, dl
-	test rax, rax
-	js .LBB165_1
-	shr rax, cl
-	ret
-.LBB165_1:
-	mov rdx, -1
-	shl rdx, cl
-	not rdx
-	add rax, rdx
-	sar rax, cl
-```
-## `div_i128_pow2`
-```asm
-div_i128_pow2:
-	mov rax, rcx
-	test rdx, rdx
-	js .LBB158_1
-	mov ecx, r8d
-	shrd rax, rdx, cl
-	shr rdx, cl
-	xor ecx, ecx
-	test r8b, 64
-	cmovne rax, rdx
-	cmovne rdx, rcx
-	ret
-.LBB158_1:
+	mov r8, rcx
 	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
+	mov rax, r8
+	sar rax, 63
+	and rax, r9
+	add rax, r8
+	sar rax, cl
+```
+## `div_i128_pow2`, `div_i128_unb_pow2`
+```asm
+	mov r9, rcx
 	mov r10, -1
+	mov rax, -1
 	mov ecx, r8d
-	shl r10, cl
+	shl rax, cl
 	xor ecx, ecx
 	test r8b, 64
-	cmove rcx, r10
-	cmove r10, r9
-	not r10
+	cmovne r10, rax
+	cmove rcx, rax
 	not rcx
-	add rax, rcx
-	adc rdx, r10
+	not r10
+	mov rax, rdx
+	sar rax, 63
+	and r10, rax
+	and rax, rcx
+	add rax, r9
+	adc r10, rdx
+	mov r9, r10
 	mov ecx, r8d
-	shrd rax, rdx, cl
-	mov r9, rdx
 	sar r9, cl
-	test r8b, 64
-	cmovne rax, r9
+	mov rdx, r10
 	sar rdx, 63
 	test r8b, 64
 	cmove rdx, r9
-```
-## `div_i128_unb_pow2`
-```asm
-div_i128_unb_pow2:
-	mov rax, rcx
-	and r8b, 127
-	test rdx, rdx
-	js .LBB159_1
-	mov ecx, r8d
-	shrd rax, rdx, cl
-	shr rdx, cl
-	xor ecx, ecx
-	test r8b, 64
-	cmovne rax, rdx
-	cmovne rdx, rcx
-	ret
-.LBB159_1:
-	mov r9, -1
-	mov r10, -1
-	mov ecx, r8d
-	shl r10, cl
-	xor ecx, ecx
-	test r8b, 64
-	cmove rcx, r10
-	cmove r10, r9
-	not r10
-	not rcx
-	add rax, rcx
-	adc rdx, r10
-	mov ecx, r8d
-	shrd rax, rdx, cl
-	mov r9, rdx
-	sar r9, cl
+	shrd rax, r10, cl
 	test r8b, 64
 	cmovne rax, r9
-	sar rdx, 63
-	test r8b, 64
-	cmove rdx, r9
 ```
 ## `div_round_i8_pow2`
 ```asm
-div_round_i8_pow2:
 	mov r8d, ecx
 	mov r9b, -1
 	mov ecx, edx
@@ -3227,7 +2778,6 @@ div_round_i8_pow2:
 ```
 ## `div_round_i8_unb_pow2`
 ```asm
-div_round_i8_unb_pow2:
 	mov r8d, ecx
 	and dl, 7
 	mov r9b, -1
@@ -3250,7 +2800,6 @@ div_round_i8_unb_pow2:
 ```
 ## `div_round_i16_pow2`
 ```asm
-div_round_i16_pow2:
 	mov r8d, ecx
 	movzx r9d, cx
 	movsx eax, r9w
@@ -3271,7 +2820,6 @@ div_round_i16_pow2:
 ```
 ## `div_round_i16_unb_pow2`
 ```asm
-div_round_i16_unb_pow2:
 	mov r8d, ecx
 	movzx r9d, cx
 	movsx eax, r9w
@@ -3291,9 +2839,8 @@ div_round_i16_unb_pow2:
 	bt r10d, ecx
 	adc ax, 0
 ```
-## `div_round_i32_pow2`
+## `div_round_i32_pow2`, `div_round_i32_unb_pow2`
 ```asm
-div_round_i32_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -3311,29 +2858,8 @@ div_round_i32_pow2:
 	bt r9d, ecx
 	adc eax, 0
 ```
-## `div_round_i32_unb_pow2`
+## `div_round_i64_pow2`, `div_round_i64_unb_pow2`
 ```asm
-div_round_i32_unb_pow2:
-	mov r8d, ecx
-	mov r9d, -1
-	mov ecx, edx
-	shl r9d, cl
-	not r9d
-	mov eax, r8d
-	sar eax, cl
-	and r9d, r8d
-	shr r8d, 31
-	xor ecx, ecx
-	sub r9d, r8d
-	cmovb r9d, ecx
-	add r9d, r9d
-	movzx ecx, dl
-	bt r9d, ecx
-	adc eax, 0
-```
-## `div_round_i64_pow2`
-```asm
-div_round_i64_pow2:
 	mov r8, rcx
 	mov r9, -1
 	mov ecx, edx
@@ -3351,73 +2877,8 @@ div_round_i64_pow2:
 	bt rcx, rdx
 	adc rax, 0
 ```
-## `div_round_i64_unb_pow2`
+## `div_round_i128_pow2`, `div_round_i128_unb_pow2`
 ```asm
-div_round_i64_unb_pow2:
-	mov r8, rcx
-	mov r9, -1
-	mov ecx, edx
-	shl r9, cl
-	not r9
-	mov rax, r8
-	sar rax, cl
-	and r9, r8
-	shr r8, 63
-	xor ecx, ecx
-	sub r9, r8
-	cmovae rcx, r9
-	add rcx, rcx
-	movzx edx, dl
-	bt rcx, rdx
-	adc rax, 0
-```
-## `div_round_i128_pow2`
-```asm
-div_round_i128_pow2:
-	mov r9d, r8d
-	mov r8, rcx
-	mov rax, -1
-	mov r10, -1
-	mov ecx, r9d
-	shl r10, cl
-	xor ecx, ecx
-	test r9b, 64
-	cmovne rax, r10
-	cmovne r10, rcx
-	not r10
-	not rax
-	and rax, rdx
-	and r10, r8
-	mov r11, rdx
-	shr r11, 63
-	sub r10, r11
-	sbb rax, 0
-	cmovb rax, rcx
-	cmovb r10, rcx
-	shld rax, r10, 1
-	add r10, r10
-	mov ecx, r9d
-	shrd r10, rax, cl
-	shr rax, cl
-	test r9b, 64
-	cmove rax, r10
-	mov r11, rdx
-	sar r11, cl
-	mov r10, rdx
-	sar r10, 63
-	test r9b, 64
-	cmove r10, r11
-	shrd r8, rdx, cl
-	test r9b, 64
-	cmovne r8, r11
-	and eax, 1
-	add rax, r8
-	adc r10, 0
-	mov rdx, r10
-```
-## `div_round_i128_unb_pow2`
-```asm
-div_round_i128_unb_pow2:
 	mov r9d, r8d
 	mov r8, rcx
 	mov rax, -1
@@ -3461,7 +2922,6 @@ div_round_i128_unb_pow2:
 ```
 ## `div_round_u8_pow2`
 ```asm
-div_round_u8_pow2:
 	mov eax, ecx
 	mov r8b, 1
 	mov ecx, edx
@@ -3474,7 +2934,6 @@ div_round_u8_pow2:
 ```
 ## `div_round_u8_unb_pow2`
 ```asm
-div_round_u8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov r8b, 1
@@ -3488,7 +2947,6 @@ div_round_u8_unb_pow2:
 ```
 ## `div_round_u16_pow2`
 ```asm
-div_round_u16_pow2:
 	mov r8d, ecx
 	mov r9d, 1
 	mov ecx, edx
@@ -3503,7 +2961,6 @@ div_round_u16_pow2:
 ```
 ## `div_round_u16_unb_pow2`
 ```asm
-div_round_u16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov r9d, 1
@@ -3516,9 +2973,8 @@ div_round_u16_unb_pow2:
 	cmp r9w, 1
 	sbb ax, -1
 ```
-## `div_round_u32_pow2`
+## `div_round_u32_pow2`, `div_round_u32_unb_pow2`
 ```asm
-div_round_u32_pow2:
 	mov eax, ecx
 	mov r8d, 1
 	mov ecx, edx
@@ -3529,22 +2985,8 @@ div_round_u32_pow2:
 	cmp r8d, 1
 	sbb eax, -1
 ```
-## `div_round_u32_unb_pow2`
+## `div_round_u64_pow2`, `div_round_u64_unb_pow2`
 ```asm
-div_round_u32_unb_pow2:
-	mov eax, ecx
-	mov r8d, 1
-	mov ecx, edx
-	shl r8d, cl
-	shr r8d
-	and r8d, eax
-	shr eax, cl
-	cmp r8d, 1
-	sbb eax, -1
-```
-## `div_round_u64_pow2`
-```asm
-div_round_u64_pow2:
 	mov rax, rcx
 	mov r8d, 1
 	mov ecx, edx
@@ -3555,22 +2997,8 @@ div_round_u64_pow2:
 	cmp r8, 1
 	sbb rax, -1
 ```
-## `div_round_u64_unb_pow2`
+## `div_round_u128_pow2`, `div_round_u128_unb_pow2`
 ```asm
-div_round_u64_unb_pow2:
-	mov rax, rcx
-	mov r8d, 1
-	mov ecx, edx
-	shl r8, cl
-	shr r8
-	and r8, rax
-	shr rax, cl
-	cmp r8, 1
-	sbb rax, -1
-```
-## `div_round_u128_pow2`
-```asm
-div_round_u128_pow2:
 	push rsi
 	push rdi
 	push rbx
@@ -3610,117 +3038,52 @@ div_round_u128_pow2:
 	pop rdi
 	pop rsi
 ```
-## `div_round_u128_unb_pow2`
+## `floor_to_multiple_i8_pow2`, `floor_to_multiple_u8_pow2`
 ```asm
-div_round_u128_unb_pow2:
-	push rsi
-	push rdi
-	push rbx
-	mov r9d, r8d
-	mov r8, rdx
-	mov rax, rcx
-	mov rsi, rdx
-	mov ecx, r9d
-	shr rsi, cl
-	xor r11d, r11d
-	test r9b, 64
-	mov rdx, rsi
-	cmovne rdx, r11
-	mov r10, rax
-	shrd r10, r8, cl
-	test r9b, 64
-	cmovne r10, rsi
-	mov esi, 1
-	mov edi, 1
-	shl rdi, cl
-	test r9b, 64
-	mov rbx, rdi
-	cmovne rbx, r11
-	shld r11, rsi, cl
-	test r9b, 64
-	cmovne r11, rdi
-	shrd rbx, r11, 1
-	shr r11
-	and r11, r8
-	and rbx, rax
-	xor eax, eax
-	or rbx, r11
-	setne al
-	add rax, r10
-	adc rdx, 0
-	pop rbx
-	pop rdi
-	pop rsi
-```
-## `floor_to_multiple_i8_pow2`
-```asm
-floor_to_multiple_i8_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
 	shl al, cl
 ```
-## `floor_to_multiple_i8_unb_pow2`
+## `floor_to_multiple_i8_unb_pow2`, `floor_to_multiple_u8_unb_pow2`
 ```asm
-floor_to_multiple_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov ecx, edx
 	shr al, cl
 	shl al, cl
 ```
-## `floor_to_multiple_i16_pow2`
+## `floor_to_multiple_i16_pow2`, `floor_to_multiple_u16_pow2`
 ```asm
-floor_to_multiple_i16_pow2:
 	movzx eax, cx
 	mov ecx, edx
 	shr eax, cl
 	shl eax, cl
 ```
-## `floor_to_multiple_i16_unb_pow2`
+## `floor_to_multiple_i16_unb_pow2`, `floor_to_multiple_u16_unb_pow2`
 ```asm
-floor_to_multiple_i16_unb_pow2:
 	movzx eax, cx
 	and dl, 15
 	mov ecx, edx
 	shr eax, cl
 	shl eax, cl
 ```
-## `floor_to_multiple_i32_pow2`
+## `floor_to_multiple_i32_pow2`, `floor_to_multiple_i32_unb_pow2`, `floor_to_multiple_u32_pow2`, `floor_to_multiple_u32_unb_pow2`
 ```asm
-floor_to_multiple_i32_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr eax, cl
 	shl eax, cl
 ```
-## `floor_to_multiple_i32_unb_pow2`
+## `floor_to_multiple_i64_pow2`, `floor_to_multiple_i64_unb_pow2`, `floor_to_multiple_u64_pow2`, `floor_to_multiple_u64_unb_pow2`
 ```asm
-floor_to_multiple_i32_unb_pow2:
-	mov eax, ecx
-	mov ecx, edx
-	shr eax, cl
-	shl eax, cl
-```
-## `floor_to_multiple_i64_pow2`
-```asm
-floor_to_multiple_i64_pow2:
 	mov rax, rcx
 	mov ecx, edx
 	shr rax, cl
 	shl rax, cl
 ```
-## `floor_to_multiple_i64_unb_pow2`
+## `floor_to_multiple_i128_pow2`, `floor_to_multiple_i128_unb_pow2`, `floor_to_multiple_u128_pow2`, `floor_to_multiple_u128_unb_pow2`
 ```asm
-floor_to_multiple_i64_unb_pow2:
-	mov rax, rcx
-	mov ecx, edx
-	shr rax, cl
-	shl rax, cl
-```
-## `floor_to_multiple_i128_pow2`
-```asm
-floor_to_multiple_i128_pow2:
 	mov r9, rcx
 	mov r10, -1
 	mov ecx, r8d
@@ -3733,60 +3096,40 @@ floor_to_multiple_i128_pow2:
 	and rax, r9
 	and rdx, rcx
 ```
-## `floor_to_multiple_i128_unb_pow2`
+## `is_multiple_of_i8_pow2`, `is_multiple_of_i8_unb_pow2`, `is_multiple_of_u8_pow2`, `is_multiple_of_u8_unb_pow2`
 ```asm
-floor_to_multiple_i128_unb_pow2:
-	mov r9, rcx
-	mov r10, -1
-	mov ecx, r8d
-	shl r10, cl
-	mov rcx, -1
-	xor eax, eax
-	test r8b, 64
-	cmovne rcx, r10
-	cmove rax, r10
-	and rax, r9
-	and rdx, rcx
-```
-## `is_multiple_of_i8_pow2`
-```asm
-is_multiple_of_i8_pow2:
 	movzx eax, cl
 	or eax, 256
 	rep bsf	eax, eax
 	cmp al, dl
 	setae al
 ```
-## `is_multiple_of_i16_pow2`
+## `is_multiple_of_i16_pow2`, `is_multiple_of_i16_unb_pow2`, `is_multiple_of_u16_pow2`, `is_multiple_of_u16_unb_pow2`
 ```asm
-is_multiple_of_i16_pow2:
 	or ecx, 65536
 	rep bsf	eax, ecx
 	movzx ecx, dl
 	cmp ax, cx
 	setae al
 ```
-## `is_multiple_of_i32_pow2`
+## `is_multiple_of_i32_pow2`, `is_multiple_of_i32_unb_pow2`, `is_multiple_of_u32_pow2`, `is_multiple_of_u32_unb_pow2`
 ```asm
-is_multiple_of_i32_pow2:
 	mov eax, 32
 	rep bsf	eax, ecx
 	movzx ecx, dl
 	cmp eax, ecx
 	setae al
 ```
-## `is_multiple_of_i64_pow2`
+## `is_multiple_of_i64_pow2`, `is_multiple_of_i64_unb_pow2`, `is_multiple_of_u64_pow2`, `is_multiple_of_u64_unb_pow2`
 ```asm
-is_multiple_of_i64_pow2:
 	mov eax, 64
 	rep bsf	rax, rcx
 	movzx ecx, dl
 	cmp eax, ecx
 	setae al
 ```
-## `is_multiple_of_i128_pow2`
+## `is_multiple_of_i128_pow2`, `is_multiple_of_i128_unb_pow2`, `is_multiple_of_u128_pow2`, `is_multiple_of_u128_unb_pow2`
 ```asm
-is_multiple_of_i128_pow2:
 	rep bsf	rax, rcx
 	mov r9d, 64
 	rep bsf	r9, rdx
@@ -3797,67 +3140,40 @@ is_multiple_of_i128_pow2:
 	cmp r9d, eax
 	setae al
 ```
-## `mul_i8_pow2`
+## `mul_i8_pow2`, `mul_u8_pow2`
 ```asm
-mul_i8_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shl al, cl
 ```
-## `mul_i8_unb_pow2`
+## `mul_i8_unb_pow2`, `mul_u8_unb_pow2`
 ```asm
-mul_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov ecx, edx
 	shl al, cl
 ```
-## `mul_i16_pow2`
+## `mul_i16_pow2`, `mul_i32_pow2`, `mul_i32_unb_pow2`, `mul_u16_pow2`, `mul_u32_pow2`, `mul_u32_unb_pow2`
 ```asm
-mul_i16_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shl eax, cl
 ```
-## `mul_i16_unb_pow2`
+## `mul_i16_unb_pow2`, `mul_u16_unb_pow2`
 ```asm
-mul_i16_unb_pow2:
 	mov eax, ecx
 	and dl, 15
 	mov ecx, edx
 	shl eax, cl
 ```
-## `mul_i32_pow2`
+## `mul_i64_pow2`, `mul_i64_unb_pow2`, `mul_u64_pow2`, `mul_u64_unb_pow2`
 ```asm
-mul_i32_pow2:
-	mov eax, ecx
-	mov ecx, edx
-	shl eax, cl
-```
-## `mul_i32_unb_pow2`
-```asm
-mul_i32_unb_pow2:
-	mov eax, ecx
-	mov ecx, edx
-	shl eax, cl
-```
-## `mul_i64_pow2`
-```asm
-mul_i64_pow2:
 	mov rax, rcx
 	mov ecx, edx
 	shl rax, cl
 ```
-## `mul_i64_unb_pow2`
+## `mul_i128_pow2`, `mul_i128_unb_pow2`, `mul_u128_pow2`, `mul_u128_unb_pow2`
 ```asm
-mul_i64_unb_pow2:
-	mov rax, rcx
-	mov ecx, edx
-	shl rax, cl
-```
-## `mul_i128_pow2`
-```asm
-mul_i128_pow2:
 	mov r9, rcx
 	mov ecx, r8d
 	shld rdx, r9, cl
@@ -3867,21 +3183,8 @@ mul_i128_pow2:
 	cmovne rdx, r9
 	cmove rax, r9
 ```
-## `mul_i128_unb_pow2`
+## `rem_floor_i8_pow2`, `rem_floor_u8_pow2`
 ```asm
-mul_i128_unb_pow2:
-	mov r9, rcx
-	mov ecx, r8d
-	shld rdx, r9, cl
-	shl r9, cl
-	xor eax, eax
-	test r8b, 64
-	cmovne rdx, r9
-	cmove rax, r9
-```
-## `rem_floor_i8_pow2`
-```asm
-rem_floor_i8_pow2:
 	mov r8d, ecx
 	mov al, -1
 	mov ecx, edx
@@ -3889,9 +3192,8 @@ rem_floor_i8_pow2:
 	not al
 	and al, r8b
 ```
-## `rem_floor_i8_unb_pow2`
+## `rem_floor_i8_unb_pow2`, `rem_floor_u8_unb_pow2`, `rem_u8_unb_pow2`
 ```asm
-rem_floor_i8_unb_pow2:
 	mov r8d, ecx
 	and dl, 7
 	mov al, -1
@@ -3900,9 +3202,8 @@ rem_floor_i8_unb_pow2:
 	not al
 	and al, r8b
 ```
-## `rem_floor_i16_pow2`
+## `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_i32_unb_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_floor_u32_unb_pow2`, `rem_u32_unb_pow2`
 ```asm
-rem_floor_i16_pow2:
 	mov r8d, ecx
 	mov eax, -1
 	mov ecx, edx
@@ -3910,9 +3211,8 @@ rem_floor_i16_pow2:
 	not eax
 	and eax, r8d
 ```
-## `rem_floor_i16_unb_pow2`
+## `rem_floor_i16_unb_pow2`, `rem_floor_u16_unb_pow2`, `rem_u16_unb_pow2`
 ```asm
-rem_floor_i16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov eax, -1
@@ -3921,29 +3221,8 @@ rem_floor_i16_unb_pow2:
 	not eax
 	and eax, r8d
 ```
-## `rem_floor_i32_pow2`
+## `rem_floor_i64_pow2`, `rem_floor_i64_unb_pow2`, `rem_floor_u64_pow2`, `rem_floor_u64_unb_pow2`, `rem_u64_unb_pow2`
 ```asm
-rem_floor_i32_pow2:
-	mov r8d, ecx
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	not eax
-	and eax, r8d
-```
-## `rem_floor_i32_unb_pow2`
-```asm
-rem_floor_i32_unb_pow2:
-	mov r8d, ecx
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	not eax
-	and eax, r8d
-```
-## `rem_floor_i64_pow2`
-```asm
-rem_floor_i64_pow2:
 	mov r8, rcx
 	mov rax, -1
 	mov ecx, edx
@@ -3951,36 +3230,8 @@ rem_floor_i64_pow2:
 	not rax
 	and rax, r8
 ```
-## `rem_floor_i64_unb_pow2`
+## `rem_floor_i128_pow2`, `rem_floor_i128_unb_pow2`, `rem_floor_u128_pow2`, `rem_floor_u128_unb_pow2`, `rem_u128_unb_pow2`
 ```asm
-rem_floor_i64_unb_pow2:
-	mov r8, rcx
-	mov rax, -1
-	mov ecx, edx
-	shl rax, cl
-	not rax
-	and rax, r8
-```
-## `rem_floor_i128_pow2`
-```asm
-rem_floor_i128_pow2:
-	mov r9, rcx
-	mov r10, -1
-	mov r11, -1
-	mov ecx, r8d
-	shl r11, cl
-	xor eax, eax
-	test r8b, 64
-	cmove rax, r11
-	cmove r11, r10
-	not r11
-	not rax
-	and rax, r9
-	and rdx, r11
-```
-## `rem_floor_i128_unb_pow2`
-```asm
-rem_floor_i128_unb_pow2:
 	mov r9, rcx
 	mov r10, -1
 	mov r11, -1
@@ -3997,27 +3248,23 @@ rem_floor_i128_unb_pow2:
 ```
 ## `rem_i8_pow2`
 ```asm
-rem_i8_pow2:
 	mov eax, ecx
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
-	mov ecx, r8d
-	not cl
-	mov edx, eax
-	and dl, cl
-	add cl, al
-	and cl, r8b
-	mov r8d, eax
-	sub r8b, cl
-	test al, al
-	movzx ecx, r8b
-	movzx eax, dl
-	cmovs eax, ecx
+	not r8b
+	mov r9d, eax
+	sar r9b, 7
+	and r9b, r8b
+	add r9b, al
+	and cl, 7
+	sar r9b, cl
+	mov ecx, edx
+	shl r9b, cl
+	sub al, r9b
 ```
 ## `rem_i8_unb_pow2`
 ```asm
-rem_i8_unb_pow2:
 	mov eax, ecx
 	and dl, 7
 	mov r8b, -1
@@ -4026,196 +3273,240 @@ rem_i8_unb_pow2:
 	mov ecx, r8d
 	not cl
 	mov edx, eax
+	sar dl, 7
 	and dl, cl
-	add cl, al
-	and cl, r8b
-	mov r8d, eax
-	sub r8b, cl
-	test al, al
-	movzx ecx, r8b
-	movzx eax, dl
-	cmovs eax, ecx
+	add dl, al
+	and dl, r8b
+	sub al, dl
 ```
 ## `rem_i16_pow2`
 ```asm
-rem_i16_pow2:
-	mov r8d, ecx
-	mov eax, -1
+	mov eax, ecx
+	mov r8d, -1
 	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	not ecx
-	mov edx, r8d
-	and edx, ecx
-	add ecx, r8d
-	and ecx, eax
-	mov eax, r8d
-	sub eax, ecx
-	test r8w, r8w
-	cmovns eax, edx
+	shl r8d, cl
+	movsx ecx, ax
+	not r8d
+	sar ecx, 15
+	and ecx, r8d
+	add ecx, eax
+	movsx r8d, cx
+	mov ecx, edx
+	and cl, 15
+	sar r8d, cl
+	mov ecx, edx
+	shl r8d, cl
+	sub eax, r8d
 ```
 ## `rem_i16_unb_pow2`
 ```asm
-rem_i16_unb_pow2:
-	mov r8d, ecx
+	mov eax, ecx
+	movsx r8d, cx
 	and dl, 15
-	mov eax, -1
+	mov r9d, -1
 	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
+	shl r9d, cl
+	mov ecx, r9d
 	not ecx
-	mov edx, r8d
-	and edx, ecx
-	add ecx, r8d
-	and ecx, eax
-	mov eax, r8d
-	sub eax, ecx
-	test r8w, r8w
-	cmovns eax, edx
+	sar r8d, 15
+	and r8d, ecx
+	add r8d, eax
+	and r8d, r9d
+	sub eax, r8d
 ```
 ## `rem_i32_pow2`
 ```asm
-rem_i32_pow2:
-	mov r8d, ecx
-	mov eax, -1
+	mov eax, ecx
+	mov r8d, -1
 	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	not ecx
-	mov edx, r8d
-	and edx, ecx
-	add ecx, r8d
-	and ecx, eax
-	mov eax, r8d
-	sub eax, ecx
-	test r8d, r8d
-	cmovns eax, edx
+	shl r8d, cl
+	not r8d
+	mov r9d, eax
+	sar r9d, 31
+	and r9d, r8d
+	add r9d, eax
+	sar r9d, cl
+	shl r9d, cl
+	sub eax, r9d
 ```
 ## `rem_i32_unb_pow2`
 ```asm
-rem_i32_unb_pow2:
-	mov r8d, ecx
-	mov eax, -1
+	mov eax, ecx
+	mov r8d, -1
 	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
+	shl r8d, cl
+	mov ecx, r8d
 	not ecx
-	mov edx, r8d
+	mov edx, eax
+	sar edx, 31
 	and edx, ecx
-	add ecx, r8d
-	and ecx, eax
-	mov eax, r8d
-	sub eax, ecx
-	test r8d, r8d
-	cmovns eax, edx
+	add edx, eax
+	and edx, r8d
+	sub eax, edx
 ```
 ## `rem_i64_pow2`
 ```asm
-rem_i64_pow2:
-	mov r8, rcx
-	mov rax, -1
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
-	not rcx
-	mov rdx, r8
-	and rdx, rcx
-	add rcx, r8
-	and rcx, rax
-	mov rax, r8
-	sub rax, rcx
-	test r8, r8
-	cmovns rax, rdx
+	shl r8, cl
+	not r8
+	mov r9, rax
+	sar r9, 63
+	and r9, r8
+	add r9, rax
+	sar r9, cl
+	shl r9, cl
+	sub rax, r9
 ```
 ## `rem_i64_unb_pow2`
 ```asm
-rem_i64_unb_pow2:
-	mov r8, rcx
-	mov rax, -1
+	mov rax, rcx
+	mov r8, -1
 	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
+	shl r8, cl
+	mov rcx, r8
 	not rcx
-	mov rdx, r8
+	mov rdx, rax
+	sar rdx, 63
 	and rdx, rcx
-	add rcx, r8
-	and rcx, rax
-	mov rax, r8
-	sub rax, rcx
-	test r8, r8
-	cmovns rax, rdx
+	add rdx, rax
+	and rdx, r8
+	sub rax, rdx
 ```
 ## `rem_i128_pow2`
 ```asm
-rem_i128_pow2:
 	push rsi
+	push rdi
 	mov rax, rcx
 	mov r9, -1
+	mov rsi, -1
 	mov ecx, r8d
-	shl r9, cl
-	xor ecx, ecx
+	shl rsi, cl
+	xor r10d, r10d
 	test r8b, 64
-	cmove rcx, r9
-	mov r8, -1
-	cmove r9, r8
-	mov r8, r9
-	not r8
-	mov r10, rcx
-	not r10
-	mov r11, rax
-	and r11, r10
-	mov rsi, rdx
-	and rsi, r8
-	add r10, rax
-	adc r8, rdx
-	and r8, r9
-	and r10, rcx
+	cmovne r9, rsi
+	cmovne rsi, r10
+	not rsi
+	not r9
+	mov r11, rdx
+	sar r11, 63
+	and r9, r11
+	and r11, rsi
+	add r11, rax
+	adc r9, rdx
+	shrd r11, r9, cl
+	mov rsi, r9
+	sar rsi, cl
+	test r8b, 64
+	cmovne r11, rsi
+	mov rdi, r11
+	shl rdi, cl
+	test r8b, 64
+	cmove r10, rdi
+	sar r9, 63
+	test r8b, 64
+	cmove r9, rsi
+	shld r9, r11, cl
+	test r8b, 64
+	cmovne r9, rdi
 	sub rax, r10
-	mov rcx, rdx
-	sbb rcx, r8
-	test rdx, rdx
-	cmovns rcx, rsi
-	cmovns rax, r11
-	mov rdx, rcx
+	sbb rdx, r9
+	pop rdi
 	pop rsi
 ```
 ## `rem_i128_unb_pow2`
 ```asm
-rem_i128_unb_pow2:
-	push rsi
 	mov rax, rcx
 	mov r9, -1
 	mov ecx, r8d
 	shl r9, cl
-	xor ecx, ecx
+	mov rcx, -1
+	xor r10d, r10d
 	test r8b, 64
-	cmove rcx, r9
-	mov r8, -1
-	cmove r9, r8
-	mov r8, r9
+	cmovne rcx, r9
+	cmove r10, r9
+	mov r8, r10
 	not r8
-	mov r10, rcx
-	not r10
-	mov r11, rax
+	mov r9, rcx
+	not r9
+	mov r11, rdx
+	sar r11, 63
+	and r9, r11
+	and r11, r8
+	add r11, rax
+	adc r9, rdx
+	and r9, rcx
 	and r11, r10
-	mov rsi, rdx
-	and rsi, r8
-	add r10, rax
-	adc r8, rdx
-	and r8, r9
-	and r10, rcx
-	sub rax, r10
-	mov rcx, rdx
-	sbb rcx, r8
-	test rdx, rdx
-	cmovns rcx, rsi
-	cmovns rax, r11
-	mov rdx, rcx
+	sub rax, r11
+	sbb rdx, r9
+```
+## `rem_u8_pow2`
+```asm
+	mov eax, ecx
+	mov ecx, edx
+	and cl, 7
+	mov r8d, eax
+	shr r8b, cl
+	mov ecx, edx
+	shl r8b, cl
+	sub al, r8b
+```
+## `rem_u16_pow2`
+```asm
+	mov eax, ecx
+	movzx r8d, cx
+	mov ecx, edx
+	and cl, 15
+	shr r8d, cl
+	mov ecx, edx
+	shl r8d, cl
+	sub eax, r8d
+```
+## `rem_u32_pow2`
+```asm
+	mov eax, ecx
+	mov r8d, ecx
+	mov ecx, edx
+	shr r8d, cl
+	shl r8d, cl
+	sub eax, r8d
+```
+## `rem_u64_pow2`
+```asm
+	mov rax, rcx
+	mov r8, rcx
+	mov ecx, edx
+	shr r8, cl
+	shl r8, cl
+	sub rax, r8
+```
+## `rem_u128_pow2`
+```asm
+	push rsi
+	mov rax, rcx
+	mov r9, rcx
+	mov ecx, r8d
+	shrd r9, rdx, cl
+	mov r10, rdx
+	shr r10, cl
+	test r8b, 64
+	cmovne r9, r10
+	mov r11, r9
+	shl r11, cl
+	xor esi, esi
+	test r8b, 64
+	cmovne r10, rsi
+	cmove rsi, r11
+	shld r10, r9, cl
+	test r8b, 64
+	cmovne r10, r11
+	sub rax, rsi
+	sbb rdx, r10
 	pop rsi
 ```
 ## `round_to_multiple_i8_pow2`
 ```asm
-round_to_multiple_i8_pow2:
 	mov r8d, ecx
 	mov al, 1
 	mov ecx, edx
@@ -4234,7 +3525,6 @@ round_to_multiple_i8_pow2:
 ```
 ## `round_to_multiple_i8_unb_pow2`
 ```asm
-round_to_multiple_i8_unb_pow2:
 	mov r8d, ecx
 	and dl, 7
 	mov al, 1
@@ -4254,7 +3544,6 @@ round_to_multiple_i8_unb_pow2:
 ```
 ## `round_to_multiple_i16_pow2`
 ```asm
-round_to_multiple_i16_pow2:
 	mov r8d, ecx
 	mov eax, 1
 	mov ecx, edx
@@ -4272,7 +3561,6 @@ round_to_multiple_i16_pow2:
 ```
 ## `round_to_multiple_i16_unb_pow2`
 ```asm
-round_to_multiple_i16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov eax, 1
@@ -4289,9 +3577,8 @@ round_to_multiple_i16_unb_pow2:
 	neg eax
 	and eax, edx
 ```
-## `round_to_multiple_i32_pow2`
+## `round_to_multiple_i32_pow2`, `round_to_multiple_i32_unb_pow2`
 ```asm
-round_to_multiple_i32_pow2:
 	mov r8d, ecx
 	mov eax, 1
 	mov ecx, edx
@@ -4307,27 +3594,8 @@ round_to_multiple_i32_pow2:
 	neg eax
 	and eax, ecx
 ```
-## `round_to_multiple_i32_unb_pow2`
+## `round_to_multiple_i64_pow2`, `round_to_multiple_i64_unb_pow2`
 ```asm
-round_to_multiple_i32_unb_pow2:
-	mov r8d, ecx
-	mov eax, 1
-	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	shr ecx
-	mov edx, r8d
-	shr edx, 31
-	xor r9d, r9d
-	sub ecx, edx
-	cmovb ecx, r9d
-	add ecx, r8d
-	neg eax
-	and eax, ecx
-```
-## `round_to_multiple_i64_pow2`
-```asm
-round_to_multiple_i64_pow2:
 	mov r8, rcx
 	mov eax, 1
 	mov ecx, edx
@@ -4343,60 +3611,8 @@ round_to_multiple_i64_pow2:
 	neg rax
 	and rax, r9
 ```
-## `round_to_multiple_i64_unb_pow2`
+## `round_to_multiple_i128_pow2`, `round_to_multiple_i128_unb_pow2`
 ```asm
-round_to_multiple_i64_unb_pow2:
-	mov r8, rcx
-	mov eax, 1
-	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
-	shr rcx
-	mov rdx, r8
-	shr rdx, 63
-	xor r9d, r9d
-	sub rcx, rdx
-	cmovae r9, rcx
-	add r9, r8
-	neg rax
-	and rax, r9
-```
-## `round_to_multiple_i128_pow2`
-```asm
-round_to_multiple_i128_pow2:
-	push rsi
-	mov r9d, r8d
-	mov r8, rcx
-	mov eax, 1
-	xor r10d, r10d
-	mov ecx, r9d
-	shld r10, rax, cl
-	shl rax, cl
-	xor ecx, ecx
-	test r9b, 64
-	cmovne r10, rax
-	cmovne rax, rcx
-	mov r9, r10
-	shr r9
-	mov r11, r10
-	shld r11, rax, 63
-	mov rsi, rdx
-	shr rsi, 63
-	sub r11, rsi
-	sbb r9, 0
-	cmovb r9, rcx
-	cmovb r11, rcx
-	add r11, r8
-	adc rdx, r9
-	neg rax
-	sbb rcx, r10
-	and rdx, rcx
-	and rax, r11
-	pop rsi
-```
-## `round_to_multiple_i128_unb_pow2`
-```asm
-round_to_multiple_i128_unb_pow2:
 	push rsi
 	mov r9d, r8d
 	mov r8, rcx
@@ -4429,7 +3645,6 @@ round_to_multiple_i128_unb_pow2:
 ```
 ## `round_to_multiple_u8_pow2`
 ```asm
-round_to_multiple_u8_pow2:
 	mov r8d, ecx
 	mov al, 1
 	mov ecx, edx
@@ -4442,7 +3657,6 @@ round_to_multiple_u8_pow2:
 ```
 ## `round_to_multiple_u8_unb_pow2`
 ```asm
-round_to_multiple_u8_unb_pow2:
 	mov r8d, ecx
 	and dl, 7
 	mov al, 1
@@ -4456,7 +3670,6 @@ round_to_multiple_u8_unb_pow2:
 ```
 ## `round_to_multiple_u16_pow2`
 ```asm
-round_to_multiple_u16_pow2:
 	mov r8d, ecx
 	mov eax, 1
 	mov ecx, edx
@@ -4469,7 +3682,6 @@ round_to_multiple_u16_pow2:
 ```
 ## `round_to_multiple_u16_unb_pow2`
 ```asm
-round_to_multiple_u16_unb_pow2:
 	mov r8d, ecx
 	and dl, 15
 	mov eax, 1
@@ -4481,9 +3693,8 @@ round_to_multiple_u16_unb_pow2:
 	neg eax
 	and eax, ecx
 ```
-## `round_to_multiple_u32_pow2`
+## `round_to_multiple_u32_pow2`, `round_to_multiple_u32_unb_pow2`
 ```asm
-round_to_multiple_u32_pow2:
 	mov r8d, ecx
 	mov eax, 1
 	mov ecx, edx
@@ -4494,22 +3705,8 @@ round_to_multiple_u32_pow2:
 	neg eax
 	and eax, ecx
 ```
-## `round_to_multiple_u32_unb_pow2`
+## `round_to_multiple_u64_pow2`, `round_to_multiple_u64_unb_pow2`
 ```asm
-round_to_multiple_u32_unb_pow2:
-	mov r8d, ecx
-	mov eax, 1
-	mov ecx, edx
-	shl eax, cl
-	mov ecx, eax
-	shr ecx
-	add ecx, r8d
-	neg eax
-	and eax, ecx
-```
-## `round_to_multiple_u64_pow2`
-```asm
-round_to_multiple_u64_pow2:
 	mov r8, rcx
 	mov eax, 1
 	mov ecx, edx
@@ -4520,46 +3717,8 @@ round_to_multiple_u64_pow2:
 	neg rax
 	and rax, rcx
 ```
-## `round_to_multiple_u64_unb_pow2`
+## `round_to_multiple_u128_pow2`, `round_to_multiple_u128_unb_pow2`
 ```asm
-round_to_multiple_u64_unb_pow2:
-	mov r8, rcx
-	mov eax, 1
-	mov ecx, edx
-	shl rax, cl
-	mov rcx, rax
-	shr rcx
-	add rcx, r8
-	neg rax
-	and rax, rcx
-```
-## `round_to_multiple_u128_pow2`
-```asm
-round_to_multiple_u128_pow2:
-	mov r9, rcx
-	mov eax, 1
-	xor r10d, r10d
-	mov ecx, r8d
-	shld r10, rax, cl
-	xor r11d, r11d
-	shl rax, cl
-	test r8b, 64
-	cmovne r10, rax
-	cmovne rax, r11
-	mov rcx, r10
-	mov r8, r10
-	shld r8, rax, 63
-	shr rcx
-	add r8, r9
-	adc rdx, rcx
-	neg rax
-	sbb r11, r10
-	and rdx, r11
-	and rax, r8
-```
-## `round_to_multiple_u128_unb_pow2`
-```asm
-round_to_multiple_u128_unb_pow2:
 	mov r9, rcx
 	mov eax, 1
 	xor r10d, r10d
@@ -4583,10 +3742,9 @@ round_to_multiple_u128_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_i8_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_i8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB257_1
+	jae .LBB349_1
 	mov r9b, -1
 	mov ecx, edx
 	shl r9b, cl
@@ -4597,7 +3755,7 @@ unbounded_ceil_to_multiple_i8_unb_pow2:
 	and r8b, r9b
 	mov edx, r8d
 	ret
-.LBB257_1:
+.LBB349_1:
 	test r8b, r8b
 	setle al
 	xor r8d, r8d
@@ -4605,10 +3763,9 @@ unbounded_ceil_to_multiple_i8_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_i16_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_i16_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 16
-	jae .LBB254_1
+	jae .LBB346_1
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -4620,7 +3777,7 @@ unbounded_ceil_to_multiple_i16_unb_pow2:
 	movzx eax, al
 	mov edx, r8d
 	ret
-.LBB254_1:
+.LBB346_1:
 	test r8w, r8w
 	setle al
 	xor r8d, r8d
@@ -4629,10 +3786,9 @@ unbounded_ceil_to_multiple_i16_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_i32_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_i32_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 32
-	jae .LBB255_1
+	jae .LBB347_1
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -4644,7 +3800,7 @@ unbounded_ceil_to_multiple_i32_unb_pow2:
 	movzx eax, al
 	mov edx, r8d
 	ret
-.LBB255_1:
+.LBB347_1:
 	test r8d, r8d
 	setle al
 	xor r8d, r8d
@@ -4653,10 +3809,9 @@ unbounded_ceil_to_multiple_i32_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_i64_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_i64_unb_pow2:
 	mov r8, rcx
 	cmp dl, 64
-	jae .LBB256_1
+	jae .LBB348_1
 	mov r9, -1
 	mov ecx, edx
 	shl r9, cl
@@ -4668,7 +3823,7 @@ unbounded_ceil_to_multiple_i64_unb_pow2:
 	movzx eax, al
 	mov rdx, r8
 	ret
-.LBB256_1:
+.LBB348_1:
 	test r8, r8
 	setle al
 	xor r8d, r8d
@@ -4677,11 +3832,10 @@ unbounded_ceil_to_multiple_i64_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_i128_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_i128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB253_4
+	js .LBB345_4
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -4697,11 +3851,11 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	not rsi
 	add rdx, rsi
 	adc r8, r11
-	jo .LBB253_5
+	jo .LBB345_5
 	and rdx, r9
 	and r8, r10
 	mov rcx, rdx
-.LBB253_3:
+.LBB345_3:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r8
 	mov ecx, 1
@@ -4709,23 +3863,22 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 	ret
-.LBB253_4:
+.LBB345_4:
 	xor ecx, ecx
 	cmp rdx, 1
 	sbb r8, 0
 	mov r8d, 0
-	jl .LBB253_3
-.LBB253_5:
+	jl .LBB345_3
+.LBB345_5:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rsi
 ```
 ## `unbounded_ceil_to_multiple_u8_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_u8_unb_pow2:
 	mov eax, ecx
 	cmp dl, 8
-	jae .LBB262_1
+	jae .LBB354_1
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
@@ -4736,17 +3889,16 @@ unbounded_ceil_to_multiple_u8_unb_pow2:
 	setae al
 	and dl, r8b
 	ret
-.LBB262_1:
+.LBB354_1:
 	test al, al
 	sete al
 	xor edx, edx
 ```
 ## `unbounded_ceil_to_multiple_u16_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_u16_unb_pow2:
 	mov eax, ecx
 	cmp dl, 16
-	jae .LBB259_1
+	jae .LBB351_1
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -4758,7 +3910,7 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB259_1:
+.LBB351_1:
 	test ax, ax
 	sete al
 	xor edx, edx
@@ -4766,10 +3918,9 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_u32_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_u32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 32
-	jae .LBB260_1
+	jae .LBB352_1
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
@@ -4781,7 +3932,7 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB260_1:
+.LBB352_1:
 	test eax, eax
 	sete al
 	xor edx, edx
@@ -4789,10 +3940,9 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_u64_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_u64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 64
-	jae .LBB261_1
+	jae .LBB353_1
 	mov r8, -1
 	mov ecx, edx
 	shl r8, cl
@@ -4804,7 +3954,7 @@ unbounded_ceil_to_multiple_u64_unb_pow2:
 	and rdx, r8
 	movzx eax, al
 	ret
-.LBB261_1:
+.LBB353_1:
 	test rax, rax
 	sete al
 	xor edx, edx
@@ -4812,11 +3962,10 @@ unbounded_ceil_to_multiple_u64_unb_pow2:
 ```
 ## `unbounded_ceil_to_multiple_u128_unb_pow2`
 ```asm
-unbounded_ceil_to_multiple_u128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB258_4
+	js .LBB350_4
 	mov r10, -1
 	mov ecx, r9d
 	shl r10, cl
@@ -4832,11 +3981,11 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	not rsi
 	add rdx, rsi
 	adc r8, r11
-	jb .LBB258_5
+	jb .LBB350_5
 	and rdx, r9
 	and r8, r10
 	mov rcx, rdx
-.LBB258_3:
+.LBB350_3:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r8
 	mov ecx, 1
@@ -4844,22 +3993,21 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	pop rsi
 	ret
-.LBB258_4:
+.LBB350_4:
 	xor ecx, ecx
 	or rdx, r8
 	mov r8d, 0
-	je .LBB258_3
-.LBB258_5:
+	je .LBB350_3
+.LBB350_5:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rsi
 ```
 ## `unbounded_div_ceil_i8_unb_pow2`
 ```asm
-unbounded_div_ceil_i8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB267_1
+	jae .LBB359_1
 	mov r9b, -1
 	mov ecx, edx
 	shl r9b, cl
@@ -4870,17 +4018,16 @@ unbounded_div_ceil_i8_unb_pow2:
 	cmp r9b, 1
 	sbb al, -1
 	ret
-.LBB267_1:
+.LBB359_1:
 	test r8b, r8b
 	setg al
 ```
 ## `unbounded_div_ceil_i16_unb_pow2`
 ```asm
-unbounded_div_ceil_i16_unb_pow2:
 	mov r8d, edx
 	mov edx, ecx
 	cmp r8b, 16
-	jae .LBB264_1
+	jae .LBB356_1
 	mov r9d, -1
 	mov ecx, r8d
 	shl r9d, cl
@@ -4891,18 +4038,17 @@ unbounded_div_ceil_i16_unb_pow2:
 	cmp dx, 1
 	sbb ax, -1
 	ret
-.LBB264_1:
+.LBB356_1:
 	xor eax, eax
 	test dx, dx
 	setg al
 ```
 ## `unbounded_div_ceil_i32_unb_pow2`
 ```asm
-unbounded_div_ceil_i32_unb_pow2:
 	mov r8d, edx
 	mov edx, ecx
 	cmp r8b, 32
-	jae .LBB265_1
+	jae .LBB357_1
 	mov r9d, -1
 	mov ecx, r8d
 	shl r9d, cl
@@ -4913,18 +4059,17 @@ unbounded_div_ceil_i32_unb_pow2:
 	cmp r9d, 1
 	sbb eax, -1
 	ret
-.LBB265_1:
+.LBB357_1:
 	xor eax, eax
 	test edx, edx
 	setg al
 ```
 ## `unbounded_div_ceil_i64_unb_pow2`
 ```asm
-unbounded_div_ceil_i64_unb_pow2:
 	mov r8d, edx
 	mov rdx, rcx
 	cmp r8b, 64
-	jae .LBB266_1
+	jae .LBB358_1
 	mov r9, -1
 	mov ecx, r8d
 	shl r9, cl
@@ -4935,21 +4080,20 @@ unbounded_div_ceil_i64_unb_pow2:
 	cmp r9, 1
 	sbb rax, -1
 	ret
-.LBB266_1:
+.LBB358_1:
 	xor eax, eax
 	test rdx, rdx
 	setg al
 ```
 ## `unbounded_div_ceil_i128_unb_pow2`
 ```asm
-unbounded_div_ceil_i128_unb_pow2:
 	push rsi
 	push rdi
 	mov r9d, r8d
 	mov rax, rdx
 	mov r8, rcx
 	test r9b, r9b
-	js .LBB263_1
+	js .LBB355_1
 	mov r11, -1
 	mov ecx, r9d
 	shl r11, cl
@@ -4978,7 +4122,7 @@ unbounded_div_ceil_i128_unb_pow2:
 	pop rdi
 	pop rsi
 	ret
-.LBB263_1:
+.LBB355_1:
 	xor edx, edx
 	neg r8
 	mov ecx, 0
@@ -4990,10 +4134,9 @@ unbounded_div_ceil_i128_unb_pow2:
 ```
 ## `unbounded_div_ceil_u8_unb_pow2`
 ```asm
-unbounded_div_ceil_u8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 8
-	jae .LBB272_1
+	jae .LBB364_1
 	mov r9b, -1
 	mov ecx, edx
 	shl r9b, cl
@@ -5004,17 +4147,16 @@ unbounded_div_ceil_u8_unb_pow2:
 	cmp r9b, 1
 	sbb al, -1
 	ret
-.LBB272_1:
+.LBB364_1:
 	test r8b, r8b
 	setne al
 ```
 ## `unbounded_div_ceil_u16_unb_pow2`
 ```asm
-unbounded_div_ceil_u16_unb_pow2:
 	mov r8d, edx
 	mov edx, ecx
 	cmp r8b, 16
-	jae .LBB269_1
+	jae .LBB361_1
 	mov r9d, -1
 	mov ecx, r8d
 	shl r9d, cl
@@ -5025,18 +4167,17 @@ unbounded_div_ceil_u16_unb_pow2:
 	cmp dx, 1
 	sbb ax, -1
 	ret
-.LBB269_1:
+.LBB361_1:
 	xor eax, eax
 	test dx, dx
 	setne al
 ```
 ## `unbounded_div_ceil_u32_unb_pow2`
 ```asm
-unbounded_div_ceil_u32_unb_pow2:
 	mov r8d, edx
 	mov edx, ecx
 	cmp r8b, 32
-	jae .LBB270_1
+	jae .LBB362_1
 	mov r9d, -1
 	mov ecx, r8d
 	shl r9d, cl
@@ -5047,18 +4188,17 @@ unbounded_div_ceil_u32_unb_pow2:
 	cmp r9d, 1
 	sbb eax, -1
 	ret
-.LBB270_1:
+.LBB362_1:
 	xor eax, eax
 	test edx, edx
 	setne al
 ```
 ## `unbounded_div_ceil_u64_unb_pow2`
 ```asm
-unbounded_div_ceil_u64_unb_pow2:
 	mov r8d, edx
 	mov rdx, rcx
 	cmp r8b, 64
-	jae .LBB271_1
+	jae .LBB363_1
 	mov r9, -1
 	mov ecx, r8d
 	shl r9, cl
@@ -5069,19 +4209,18 @@ unbounded_div_ceil_u64_unb_pow2:
 	cmp r9, 1
 	sbb rax, -1
 	ret
-.LBB271_1:
+.LBB363_1:
 	xor eax, eax
 	test rdx, rdx
 	setne al
 ```
 ## `unbounded_div_ceil_u128_unb_pow2`
 ```asm
-unbounded_div_ceil_u128_unb_pow2:
 	push rsi
 	mov eax, r8d
 	mov r8, rcx
 	test al, al
-	js .LBB268_1
+	js .LBB360_1
 	mov r11, -1
 	mov ecx, eax
 	shl r11, cl
@@ -5107,7 +4246,7 @@ unbounded_div_ceil_u128_unb_pow2:
 	adc rdx, 0
 	pop rsi
 	ret
-.LBB268_1:
+.LBB360_1:
 	xor eax, eax
 	or r8, rdx
 	setne al
@@ -5116,7 +4255,6 @@ unbounded_div_ceil_u128_unb_pow2:
 ```
 ## `unbounded_div_floor_i8_unb_pow2`
 ```asm
-unbounded_div_floor_i8_unb_pow2:
 	mov eax, ecx
 	movzx edx, dl
 	cmp dl, 7
@@ -5126,7 +4264,6 @@ unbounded_div_floor_i8_unb_pow2:
 ```
 ## `unbounded_div_floor_i16_unb_pow2`
 ```asm
-unbounded_div_floor_i16_unb_pow2:
 	movsx eax, cx
 	movzx edx, dl
 	cmp dl, 15
@@ -5136,7 +4273,6 @@ unbounded_div_floor_i16_unb_pow2:
 ```
 ## `unbounded_div_floor_i32_unb_pow2`
 ```asm
-unbounded_div_floor_i32_unb_pow2:
 	mov eax, ecx
 	movzx edx, dl
 	cmp dl, 31
@@ -5146,7 +4282,6 @@ unbounded_div_floor_i32_unb_pow2:
 ```
 ## `unbounded_div_floor_i64_unb_pow2`
 ```asm
-unbounded_div_floor_i64_unb_pow2:
 	mov rax, rcx
 	movzx edx, dl
 	cmp dl, 63
@@ -5156,7 +4291,6 @@ unbounded_div_floor_i64_unb_pow2:
 ```
 ## `unbounded_div_floor_i128_unb_pow2`
 ```asm
-unbounded_div_floor_i128_unb_pow2:
 	mov rax, rcx
 	test r8b, r8b
 	movzx r8d, r8b
@@ -5170,9 +4304,8 @@ unbounded_div_floor_i128_unb_pow2:
 	cmovne rax, r8
 	cmove rdx, r8
 ```
-## `unbounded_div_floor_u8_unb_pow2`
+## `unbounded_div_floor_u8_unb_pow2`, `unbounded_div_u8_unb_pow2`
 ```asm
-unbounded_div_floor_u8_unb_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
@@ -5181,9 +4314,8 @@ unbounded_div_floor_u8_unb_pow2:
 	movzx eax, al
 	cmovae eax, ecx
 ```
-## `unbounded_div_floor_u16_unb_pow2`
+## `unbounded_div_floor_u16_unb_pow2`, `unbounded_div_u16_unb_pow2`
 ```asm
-unbounded_div_floor_u16_unb_pow2:
 	movzx r8d, cx
 	mov ecx, edx
 	shr r8d, cl
@@ -5191,9 +4323,8 @@ unbounded_div_floor_u16_unb_pow2:
 	cmp dl, 16
 	cmovb eax, r8d
 ```
-## `unbounded_div_floor_u32_unb_pow2`
+## `unbounded_div_floor_u32_unb_pow2`, `unbounded_div_u32_unb_pow2`
 ```asm
-unbounded_div_floor_u32_unb_pow2:
 	mov r8d, ecx
 	mov ecx, edx
 	shr r8d, cl
@@ -5201,9 +4332,8 @@ unbounded_div_floor_u32_unb_pow2:
 	cmp dl, 32
 	cmovb eax, r8d
 ```
-## `unbounded_div_floor_u64_unb_pow2`
+## `unbounded_div_floor_u64_unb_pow2`, `unbounded_div_u64_unb_pow2`
 ```asm
-unbounded_div_floor_u64_unb_pow2:
 	mov r8, rcx
 	mov ecx, edx
 	shr r8, cl
@@ -5211,9 +4341,8 @@ unbounded_div_floor_u64_unb_pow2:
 	cmp dl, 64
 	cmovb rax, r8
 ```
-## `unbounded_div_floor_u128_unb_pow2`
+## `unbounded_div_floor_u128_unb_pow2`, `unbounded_div_u128_unb_pow2`
 ```asm
-unbounded_div_floor_u128_unb_pow2:
 	mov rax, rcx
 	mov ecx, r8d
 	shrd rax, rdx, cl
@@ -5228,126 +4357,99 @@ unbounded_div_floor_u128_unb_pow2:
 ```
 ## `unbounded_div_i8_unb_pow2`
 ```asm
-unbounded_div_i8_unb_pow2:
 	cmp dl, 7
-	ja .LBB287_1
-	mov eax, ecx
-	test cl, cl
-	js .LBB287_4
+	ja .LBB379_1
+	mov r8d, ecx
+	mov r9b, -1
 	mov ecx, edx
-	shr al, cl
-	ret
-.LBB287_1:
-	xor eax, eax
-	ret
-.LBB287_4:
-	mov r8b, -1
-	mov ecx, edx
-	shl r8b, cl
-	not r8b
+	shl r9b, cl
+	not r9b
+	mov eax, r8d
+	sar al, 7
+	and al, r9b
 	add al, r8b
 	sar al, cl
+	ret
+.LBB379_1:
+	xor eax, eax
 ```
 ## `unbounded_div_i16_unb_pow2`
 ```asm
-unbounded_div_i16_unb_pow2:
 	cmp dl, 15
-	ja .LBB284_1
+	ja .LBB376_1
 	mov eax, ecx
-	movzx ecx, dl
-	test ax, ax
-	js .LBB284_4
-	movzx eax, ax
-	shr eax, cl
-	ret
-.LBB284_1:
-	xor eax, eax
-	ret
-.LBB284_4:
-	mov edx, -1
-	shl edx, cl
-	not edx
-	add eax, edx
-	cwde
+	mov r8d, -1
+	mov ecx, edx
+	shl r8d, cl
+	not r8d
+	movsx ecx, ax
+	sar ecx, 15
+	and ecx, r8d
+	add ecx, eax
+	movsx eax, cx
+	mov ecx, edx
 	sar eax, cl
+	ret
+.LBB376_1:
+	xor eax, eax
 ```
 ## `unbounded_div_i32_unb_pow2`
 ```asm
-unbounded_div_i32_unb_pow2:
 	xor eax, eax
 	cmp dl, 31
-	ja .LBB285_4
+	ja .LBB377_2
 	mov r8d, ecx
-	test ecx, ecx
-	js .LBB285_2
+	mov r9d, -1
 	mov ecx, edx
-	shr r8d, cl
-	jmp .LBB285_3
-.LBB285_2:
-	mov eax, -1
-	mov ecx, edx
-	shl eax, cl
-	not eax
-	add r8d, eax
-	sar r8d, cl
-.LBB285_3:
+	shl r9d, cl
+	not r9d
 	mov eax, r8d
-.LBB285_4:
+	sar eax, 31
+	and eax, r9d
+	add eax, r8d
+	sar eax, cl
+.LBB377_2:
 ```
 ## `unbounded_div_i64_unb_pow2`
 ```asm
-unbounded_div_i64_unb_pow2:
 	cmp dl, 63
-	ja .LBB286_1
-	mov rax, rcx
-	movzx ecx, dl
-	test rax, rax
-	js .LBB286_4
-	shr rax, cl
-	ret
-.LBB286_1:
-	xor eax, eax
-	ret
-.LBB286_4:
-	mov rdx, -1
-	shl rdx, cl
-	not rdx
-	add rax, rdx
+	ja .LBB378_1
+	mov r8, rcx
+	mov r9, -1
+	mov ecx, edx
+	shl r9, cl
+	not r9
+	mov rax, r8
+	sar rax, 63
+	and rax, r9
+	add rax, r8
 	sar rax, cl
+	ret
+.LBB378_1:
+	xor eax, eax
 ```
 ## `unbounded_div_i128_unb_pow2`
 ```asm
-unbounded_div_i128_unb_pow2:
 	test r8b, r8b
-	js .LBB283_1
-	mov rax, rcx
-	test rdx, rdx
-	js .LBB283_4
+	js .LBB375_1
+	mov r9, rdx
+	mov r10, rcx
+	mov rdx, -1
+	mov rax, -1
 	mov ecx, r8d
-	shrd rax, rdx, cl
-	shr rdx, cl
+	shl rax, cl
 	xor ecx, ecx
 	test r8b, 64
-	cmovne rax, rdx
-	cmovne rdx, rcx
-	ret
-.LBB283_1:
-	xor eax, eax
-	xor edx, edx
-	ret
-.LBB283_4:
-	mov r9, -1
-	mov r10, -1
-	mov ecx, r8d
-	shl r10, cl
-	xor ecx, ecx
-	test r8b, 64
-	cmove rcx, r10
-	cmove r10, r9
-	not r10
+	cmovne rdx, rax
+	cmove rcx, rax
 	not rcx
-	add rax, rcx
-	adc rdx, r10
+	not rdx
+	mov rax, r9
+	sar rax, 63
+	and rdx, rax
+	and rax, rcx
+	add rax, r10
+	adc rdx, r9
 	mov ecx, r8d
 	shrd rax, rdx, cl
 	mov r9, rdx
@@ -5357,13 +4459,16 @@ unbounded_div_i128_unb_pow2:
 	sar rdx, 63
 	test r8b, 64
 	cmove rdx, r9
+	ret
+.LBB375_1:
+	xor eax, eax
+	xor edx, edx
 ```
 ## `unbounded_div_round_i8_unb_pow2`
 ```asm
-unbounded_div_round_i8_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 7
-	ja .LBB292_2
+	ja .LBB384_2
 	mov r9b, -1
 	mov ecx, edx
 	shl r9b, cl
@@ -5382,22 +4487,21 @@ unbounded_div_round_i8_unb_pow2:
 	bt ecx, edx
 	adc al, 0
 	ret
-.LBB292_2:
+.LBB384_2:
 	neg r8b
-	jno .LBB292_3
+	jno .LBB384_3
 	cmp dl, 8
 	sete al
 	neg al
 	ret
-.LBB292_3:
+.LBB384_3:
 	xor eax, eax
 ```
 ## `unbounded_div_round_i16_unb_pow2`
 ```asm
-unbounded_div_round_i16_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 15
-	ja .LBB289_2
+	ja .LBB381_2
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -5415,21 +4519,20 @@ unbounded_div_round_i16_unb_pow2:
 	bt r9d, ecx
 	adc ax, 0
 	ret
-.LBB289_2:
+.LBB381_2:
 	xor eax, eax
 	neg r8w
-	jno .LBB289_4
+	jno .LBB381_4
 	cmp dl, 16
 	sete al
 	neg eax
-.LBB289_4:
+.LBB381_4:
 ```
 ## `unbounded_div_round_i32_unb_pow2`
 ```asm
-unbounded_div_round_i32_unb_pow2:
 	mov r8d, ecx
 	cmp dl, 31
-	ja .LBB290_2
+	ja .LBB382_2
 	mov r9d, -1
 	mov ecx, edx
 	shl r9d, cl
@@ -5446,22 +4549,21 @@ unbounded_div_round_i32_unb_pow2:
 	bt r9d, ecx
 	adc eax, 0
 	ret
-.LBB290_2:
+.LBB382_2:
 	xor eax, eax
 	neg r8d
-	jno .LBB290_4
+	jno .LBB382_4
 	xor eax, eax
 	cmp dl, 32
 	sete al
 	neg eax
-.LBB290_4:
+.LBB382_4:
 ```
 ## `unbounded_div_round_i64_unb_pow2`
 ```asm
-unbounded_div_round_i64_unb_pow2:
 	mov r8, rcx
 	cmp dl, 63
-	ja .LBB291_2
+	ja .LBB383_2
 	mov r9, -1
 	mov ecx, edx
 	shl r9, cl
@@ -5478,21 +4580,20 @@ unbounded_div_round_i64_unb_pow2:
 	bt rcx, rdx
 	adc rax, 0
 	ret
-.LBB291_2:
+.LBB383_2:
 	xor eax, eax
 	neg r8
-	jno .LBB291_4
+	jno .LBB383_4
 	cmp dl, 64
 	sete al
 	neg rax
-.LBB291_4:
+.LBB383_4:
 ```
 ## `unbounded_div_round_i128_unb_pow2`
 ```asm
-unbounded_div_round_i128_unb_pow2:
 	mov r9, rcx
 	test r8b, r8b
-	js .LBB288_2
+	js .LBB380_2
 	mov rax, -1
 	mov r10, -1
 	mov ecx, r8d
@@ -5532,25 +4633,24 @@ unbounded_div_round_i128_unb_pow2:
 	add rax, r9
 	adc rdx, 0
 	ret
-.LBB288_2:
+.LBB380_2:
 	movabs rax, -9223372036854775808
 	xor rdx, rax
 	xor eax, eax
 	or r9, rdx
 	mov edx, 0
-	jne .LBB288_4
+	jne .LBB380_4
 	xor eax, eax
 	neg r8b
 	seto al
 	neg rax
 	mov rdx, rax
-.LBB288_4:
+.LBB380_4:
 ```
 ## `unbounded_div_round_u8_unb_pow2`
 ```asm
-unbounded_div_round_u8_unb_pow2:
 	cmp dl, 7
-	ja .LBB297_1
+	ja .LBB389_1
 	mov eax, ecx
 	mov r8b, 1
 	mov ecx, edx
@@ -5561,14 +4661,13 @@ unbounded_div_round_u8_unb_pow2:
 	cmp r8b, 1
 	sbb al, -1
 	ret
-.LBB297_1:
+.LBB389_1:
 	xor eax, eax
 ```
 ## `unbounded_div_round_u16_unb_pow2`
 ```asm
-unbounded_div_round_u16_unb_pow2:
 	cmp dl, 15
-	ja .LBB294_1
+	ja .LBB386_1
 	mov eax, ecx
 	mov r8d, 1
 	mov ecx, edx
@@ -5582,15 +4681,14 @@ unbounded_div_round_u16_unb_pow2:
 	cmp r9w, 1
 	sbb ax, -1
 	ret
-.LBB294_1:
+.LBB386_1:
 	xor eax, eax
 ```
 ## `unbounded_div_round_u32_unb_pow2`
 ```asm
-unbounded_div_round_u32_unb_pow2:
 	xor eax, eax
 	cmp dl, 31
-	ja .LBB295_2
+	ja .LBB387_2
 	mov r8d, ecx
 	mov eax, 1
 	mov ecx, edx
@@ -5601,13 +4699,12 @@ unbounded_div_round_u32_unb_pow2:
 	cmp eax, 1
 	sbb r8d, -1
 	mov eax, r8d
-.LBB295_2:
+.LBB387_2:
 ```
 ## `unbounded_div_round_u64_unb_pow2`
 ```asm
-unbounded_div_round_u64_unb_pow2:
 	cmp dl, 63
-	ja .LBB296_1
+	ja .LBB388_1
 	mov rax, rcx
 	mov r8d, 1
 	mov ecx, edx
@@ -5618,17 +4715,16 @@ unbounded_div_round_u64_unb_pow2:
 	cmp r8, 1
 	sbb rax, -1
 	ret
-.LBB296_1:
+.LBB388_1:
 	xor eax, eax
 ```
 ## `unbounded_div_round_u128_unb_pow2`
 ```asm
-unbounded_div_round_u128_unb_pow2:
 	push rsi
 	push rdi
 	push rbx
 	test r8b, r8b
-	js .LBB293_1
+	js .LBB385_1
 	mov rax, rcx
 	mov r11, rdx
 	mov ecx, r8d
@@ -5664,7 +4760,7 @@ unbounded_div_round_u128_unb_pow2:
 	pop rdi
 	pop rsi
 	ret
-.LBB293_1:
+.LBB385_1:
 	xor eax, eax
 	xor edx, edx
 	pop rbx
@@ -5673,7 +4769,6 @@ unbounded_div_round_u128_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_i8_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_i8_unb_pow2:
 	mov eax, ecx
 	mov r8d, ecx
 	mov ecx, edx
@@ -5690,9 +4785,8 @@ unbounded_floor_to_multiple_i8_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_i16_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_i16_unb_pow2:
 	cmp dl, 16
-	jae .LBB299_1
+	jae .LBB396_1
 	mov eax, edx
 	movzx edx, cx
 	mov ecx, eax
@@ -5700,7 +4794,7 @@ unbounded_floor_to_multiple_i16_unb_pow2:
 	shl edx, cl
 	mov ax, 1
 	ret
-.LBB299_1:
+.LBB396_1:
 	not ecx
 	movzx eax, cx
 	shr eax, 15
@@ -5708,44 +4802,41 @@ unbounded_floor_to_multiple_i16_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_i32_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_i32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 32
-	jae .LBB300_1
+	jae .LBB397_1
 	mov ecx, edx
 	shr eax, cl
 	shl eax, cl
 	mov edx, eax
 	mov eax, 1
 	ret
-.LBB300_1:
+.LBB397_1:
 	not eax
 	shr eax, 31
 	xor edx, edx
 ```
 ## `unbounded_floor_to_multiple_i64_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_i64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 64
-	jae .LBB301_1
+	jae .LBB398_1
 	mov ecx, edx
 	shr rax, cl
 	shl rax, cl
 	mov rdx, rax
 	mov eax, 1
 	ret
-.LBB301_1:
+.LBB398_1:
 	not rax
 	shr rax, 63
 	xor edx, edx
 ```
 ## `unbounded_floor_to_multiple_i128_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_i128_unb_pow2:
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB298_1
+	js .LBB395_1
 	mov r10, -1
 	mov r11, -1
 	mov ecx, r9d
@@ -5761,20 +4852,19 @@ unbounded_floor_to_multiple_i128_unb_pow2:
 	mov qword ptr [rax + 8], 0
 	mov qword ptr [rax], 1
 	ret
-.LBB298_1:
+.LBB395_1:
 	xorps xmm0, xmm0
 	test r8, r8
-	js .LBB298_2
+	js .LBB395_2
 	movups xmmword ptr [rax + 8], xmm0
 	mov qword ptr [rax], 1
 	mov qword ptr [rax + 24], 0
 	ret
-.LBB298_2:
+.LBB395_2:
 	movaps xmmword ptr [rax], xmm0
 ```
 ## `unbounded_floor_to_multiple_u8_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_u8_unb_pow2:
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
@@ -5786,7 +4876,6 @@ unbounded_floor_to_multiple_u8_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_u16_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_u16_unb_pow2:
 	movzx r8d, cx
 	mov ecx, edx
 	shr r8d, cl
@@ -5797,7 +4886,6 @@ unbounded_floor_to_multiple_u16_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_u32_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_u32_unb_pow2:
 	mov r8d, ecx
 	mov ecx, edx
 	shr r8d, cl
@@ -5808,7 +4896,6 @@ unbounded_floor_to_multiple_u32_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_u64_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_u64_unb_pow2:
 	mov r8, rcx
 	mov ecx, edx
 	shr r8, cl
@@ -5819,7 +4906,6 @@ unbounded_floor_to_multiple_u64_unb_pow2:
 ```
 ## `unbounded_floor_to_multiple_u128_unb_pow2`
 ```asm
-unbounded_floor_to_multiple_u128_unb_pow2:
 	mov r9, rcx
 	mov r10, -1
 	mov ecx, r8d
@@ -5836,9 +4922,8 @@ unbounded_floor_to_multiple_u128_unb_pow2:
 	cmovs rax, rcx
 	cmovs rdx, rcx
 ```
-## `unbounded_is_multiple_of_i8_unb_pow2`
+## `unbounded_is_multiple_of_i8_unb_pow2`, `unbounded_is_multiple_of_u8_unb_pow2`
 ```asm
-unbounded_is_multiple_of_i8_unb_pow2:
 	test cl, cl
 	sete r8b
 	movzx eax, cl
@@ -5847,9 +4932,8 @@ unbounded_is_multiple_of_i8_unb_pow2:
 	setae al
 	or al, r8b
 ```
-## `unbounded_is_multiple_of_i16_unb_pow2`
+## `unbounded_is_multiple_of_i16_unb_pow2`, `unbounded_is_multiple_of_u16_unb_pow2`
 ```asm
-unbounded_is_multiple_of_i16_unb_pow2:
 	test cx, cx
 	sete r8b
 	rep bsf	eax, ecx
@@ -5858,9 +4942,8 @@ unbounded_is_multiple_of_i16_unb_pow2:
 	setae al
 	or al, r8b
 ```
-## `unbounded_is_multiple_of_i32_unb_pow2`
+## `unbounded_is_multiple_of_i32_unb_pow2`, `unbounded_is_multiple_of_u32_unb_pow2`
 ```asm
-unbounded_is_multiple_of_i32_unb_pow2:
 	test ecx, ecx
 	sete r8b
 	rep bsf	eax, ecx
@@ -5869,9 +4952,8 @@ unbounded_is_multiple_of_i32_unb_pow2:
 	setae al
 	or al, r8b
 ```
-## `unbounded_is_multiple_of_i64_unb_pow2`
+## `unbounded_is_multiple_of_i64_unb_pow2`, `unbounded_is_multiple_of_u64_unb_pow2`
 ```asm
-unbounded_is_multiple_of_i64_unb_pow2:
 	test rcx, rcx
 	sete r8b
 	rep bsf	rax, rcx
@@ -5882,10 +4964,9 @@ unbounded_is_multiple_of_i64_unb_pow2:
 ```
 ## `unbounded_is_multiple_of_i128_unb_pow2`
 ```asm
-unbounded_is_multiple_of_i128_unb_pow2:
 	mov rax, rcx
 	or rax, rdx
-	je .LBB308_1
+	je .LBB405_1
 	rep bsf	rax, rcx
 	rep bsf	rdx, rdx
 	add edx, 64
@@ -5895,128 +4976,129 @@ unbounded_is_multiple_of_i128_unb_pow2:
 	cmp edx, eax
 	setae al
 	ret
-.LBB308_1:
+.LBB405_1:
+	mov al, 1
+```
+## `unbounded_is_multiple_of_u128_unb_pow2`
+```asm
+	mov rax, rcx
+	or rax, rdx
+	je .LBB410_1
+	rep bsf	rax, rcx
+	rep bsf	rdx, rdx
+	add edx, 64
+	test rcx, rcx
+	cmovne edx, eax
+	movzx eax, r8b
+	cmp edx, eax
+	setae al
+	ret
+.LBB410_1:
 	mov al, 1
 ```
 ## `unbounded_rem_i8_unb_pow2`
 ```asm
-unbounded_rem_i8_unb_pow2:
 	mov eax, ecx
 	cmp dl, 7
-	ja .LBB317_3
+	ja .LBB419_2
 	mov r8b, -1
 	mov ecx, edx
 	shl r8b, cl
 	mov ecx, r8d
 	not cl
-	test al, al
-	js .LBB317_2
-	and al, cl
-	ret
-.LBB317_2:
-	add cl, al
-	and cl, r8b
-	sub al, cl
-.LBB317_3:
+	mov edx, eax
+	sar dl, 7
+	and dl, cl
+	add dl, al
+	and dl, r8b
+	sub al, dl
+.LBB419_2:
 ```
 ## `unbounded_rem_i16_unb_pow2`
 ```asm
-unbounded_rem_i16_unb_pow2:
 	mov eax, ecx
 	cmp dl, 15
-	ja .LBB314_3
+	ja .LBB416_2
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
 	mov ecx, r8d
 	not ecx
-	test ax, ax
-	js .LBB314_2
-	and eax, ecx
-	ret
-.LBB314_2:
-	add ecx, eax
-	and r8d, ecx
-	sub eax, r8d
-.LBB314_3:
+	movsx edx, ax
+	sar edx, 15
+	and edx, ecx
+	add edx, eax
+	and edx, r8d
+	sub eax, edx
+.LBB416_2:
 ```
 ## `unbounded_rem_i32_unb_pow2`
 ```asm
-unbounded_rem_i32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 31
-	ja .LBB315_3
+	ja .LBB417_2
 	mov r8d, -1
 	mov ecx, edx
 	shl r8d, cl
 	mov ecx, r8d
 	not ecx
-	test eax, eax
-	js .LBB315_2
-	and eax, ecx
-	ret
-.LBB315_2:
-	add ecx, eax
-	and ecx, r8d
-	sub eax, ecx
-.LBB315_3:
+	mov edx, eax
+	sar edx, 31
+	and edx, ecx
+	add edx, eax
+	and edx, r8d
+	sub eax, edx
+.LBB417_2:
 ```
 ## `unbounded_rem_i64_unb_pow2`
 ```asm
-unbounded_rem_i64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 63
-	ja .LBB316_3
+	ja .LBB418_2
 	mov r8, -1
 	mov ecx, edx
 	shl r8, cl
 	mov rcx, r8
 	not rcx
-	test rax, rax
-	js .LBB316_2
-	and rax, rcx
-	ret
-.LBB316_2:
-	add rcx, rax
-	and rcx, r8
-	sub rax, rcx
-.LBB316_3:
+	mov rdx, rax
+	sar rdx, 63
+	and rdx, rcx
+	add rdx, rax
+	and rdx, r8
+	sub rax, rdx
+.LBB418_2:
 ```
 ## `unbounded_rem_i128_unb_pow2`
 ```asm
-unbounded_rem_i128_unb_pow2:
 	mov rax, rcx
 	test r8b, r8b
-	js .LBB313_3
+	js .LBB415_2
 	mov r9, -1
 	mov ecx, r8d
 	shl r9, cl
-	xor ecx, ecx
+	mov rcx, -1
+	xor r10d, r10d
 	test r8b, 64
-	cmove rcx, r9
-	mov r8, -1
-	cmove r9, r8
-	mov r8, r9
+	cmovne rcx, r9
+	cmove r10, r9
+	mov r8, r10
 	not r8
-	mov r10, rcx
-	not r10
-	test rdx, rdx
-	js .LBB313_2
-	and rax, r10
-	and rdx, r8
-	ret
-.LBB313_2:
-	add r10, rax
-	adc r8, rdx
-	and r8, r9
-	and r10, rcx
-	sub rax, r10
-	sbb rdx, r8
-.LBB313_3:
+	mov r9, rcx
+	not r9
+	mov r11, rdx
+	sar r11, 63
+	and r9, r11
+	and r11, r8
+	add r11, rax
+	adc r9, rdx
+	and r9, rcx
+	and r11, r10
+	sub rax, r11
+	sbb rdx, r9
+.LBB415_2:
 ```
 ## `unbounded_rem_u8_unb_pow2`
 ```asm
-unbounded_rem_u8_unb_pow2:
 	mov r8d, ecx
 	mov al, -1
 	mov ecx, edx
@@ -6030,7 +5112,6 @@ unbounded_rem_u8_unb_pow2:
 ```
 ## `unbounded_rem_u16_unb_pow2`
 ```asm
-unbounded_rem_u16_unb_pow2:
 	mov r8d, ecx
 	mov r9d, -1
 	mov ecx, edx
@@ -6043,7 +5124,6 @@ unbounded_rem_u16_unb_pow2:
 ```
 ## `unbounded_rem_u32_unb_pow2`
 ```asm
-unbounded_rem_u32_unb_pow2:
 	mov r8d, ecx
 	mov eax, -1
 	mov ecx, edx
@@ -6056,7 +5136,6 @@ unbounded_rem_u32_unb_pow2:
 ```
 ## `unbounded_rem_u64_unb_pow2`
 ```asm
-unbounded_rem_u64_unb_pow2:
 	mov r8, rcx
 	mov rax, -1
 	mov ecx, edx
@@ -6069,7 +5148,6 @@ unbounded_rem_u64_unb_pow2:
 ```
 ## `unbounded_rem_u128_unb_pow2`
 ```asm
-unbounded_rem_u128_unb_pow2:
 	mov r9, rcx
 	mov r10, -1
 	mov ecx, r8d
@@ -6090,10 +5168,9 @@ unbounded_rem_u128_unb_pow2:
 ```
 ## `unbounded_round_to_multiple_i8_unb_pow2`
 ```asm
-unbounded_round_to_multiple_i8_unb_pow2:
 	mov eax, ecx
 	cmp dl, 7
-	ja .LBB327_5
+	ja .LBB429_5
 	mov r8b, 1
 	mov ecx, edx
 	shl r8b, cl
@@ -6108,28 +5185,27 @@ unbounded_round_to_multiple_i8_unb_pow2:
 	lea edx, [rax + rcx]
 	add al, cl
 	seto al
-	jo .LBB327_2
+	jo .LBB429_2
 	neg r8b
 	and dl, r8b
 	xor al, 1
 	ret
-.LBB327_5:
+.LBB429_5:
 	add al, -128
 	xor dl, 8
 	or dl, al
 	setne al
 	xor edx, edx
 	ret
-.LBB327_2:
+.LBB429_2:
 	xor al, 1
 ```
 ## `unbounded_round_to_multiple_i16_unb_pow2`
 ```asm
-unbounded_round_to_multiple_i16_unb_pow2:
 	mov r8d, edx
 	mov eax, ecx
 	cmp dl, 15
-	ja .LBB324_3
+	ja .LBB426_3
 	mov edx, 1
 	mov ecx, r8d
 	shl edx, cl
@@ -6143,13 +5219,13 @@ unbounded_round_to_multiple_i16_unb_pow2:
 	lea ecx, [rax + r8]
 	add ax, r8w
 	seto al
-	jo .LBB324_4
+	jo .LBB426_4
 	neg edx
 	and edx, ecx
 	xor al, 1
 	movzx eax, al
 	ret
-.LBB324_3:
+.LBB426_3:
 	neg ax
 	setno cl
 	cmp r8b, 16
@@ -6158,16 +5234,15 @@ unbounded_round_to_multiple_i16_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB324_4:
+.LBB426_4:
 	xor al, 1
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_i32_unb_pow2`
 ```asm
-unbounded_round_to_multiple_i32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 31
-	ja .LBB325_5
+	ja .LBB427_5
 	mov r8d, 1
 	mov ecx, edx
 	shl r8d, cl
@@ -6181,13 +5256,13 @@ unbounded_round_to_multiple_i32_unb_pow2:
 	lea edx, [rax + rcx]
 	add ecx, eax
 	seto al
-	jo .LBB325_2
+	jo .LBB427_2
 	neg r8d
 	and edx, r8d
 	xor al, 1
 	movzx eax, al
 	ret
-.LBB325_5:
+.LBB427_5:
 	neg eax
 	setno cl
 	cmp dl, 32
@@ -6196,16 +5271,15 @@ unbounded_round_to_multiple_i32_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB325_2:
+.LBB427_2:
 	xor al, 1
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_i64_unb_pow2`
 ```asm
-unbounded_round_to_multiple_i64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 63
-	ja .LBB326_5
+	ja .LBB428_5
 	mov r8d, 1
 	mov ecx, edx
 	shl r8, cl
@@ -6219,13 +5293,13 @@ unbounded_round_to_multiple_i64_unb_pow2:
 	lea rdx, [rax + r9]
 	add r9, rax
 	seto al
-	jo .LBB326_2
+	jo .LBB428_2
 	neg r8
 	and rdx, r8
 	xor al, 1
 	movzx eax, al
 	ret
-.LBB326_5:
+.LBB428_5:
 	neg rax
 	setno cl
 	cmp dl, 64
@@ -6234,18 +5308,17 @@ unbounded_round_to_multiple_i64_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB326_2:
+.LBB428_2:
 	xor al, 1
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_i128_unb_pow2`
 ```asm
-unbounded_round_to_multiple_i128_unb_pow2:
 	push rsi
 	push rdi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB323_3
+	js .LBB425_3
 	mov r10d, 1
 	xor r11d, r11d
 	mov ecx, r9d
@@ -6267,15 +5340,15 @@ unbounded_round_to_multiple_i128_unb_pow2:
 	cmovb rsi, rcx
 	add rdx, rsi
 	adc r9, r8
-	jo .LBB323_5
+	jo .LBB425_5
 	xor ecx, ecx
 	neg r10
 	sbb rcx, r11
 	and r9, rcx
 	and rdx, r10
 	mov rcx, rdx
-	jmp .LBB323_4
-.LBB323_3:
+	jmp .LBB425_4
+.LBB425_3:
 	movabs rcx, -9223372036854775808
 	xor r8, rcx
 	or rdx, r8
@@ -6285,12 +5358,12 @@ unbounded_round_to_multiple_i128_unb_pow2:
 	xor ecx, ecx
 	mov r9d, 0
 	test dl, r8b
-	jne .LBB323_5
-.LBB323_4:
+	jne .LBB425_5
+.LBB425_4:
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], r9
 	mov ecx, 1
-.LBB323_5:
+.LBB425_5:
 	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
 	pop rdi
@@ -6298,10 +5371,9 @@ unbounded_round_to_multiple_i128_unb_pow2:
 ```
 ## `unbounded_round_to_multiple_u8_unb_pow2`
 ```asm
-unbounded_round_to_multiple_u8_unb_pow2:
 	mov eax, ecx
 	cmp dl, 7
-	ja .LBB332_4
+	ja .LBB434_4
 	mov r8b, 1
 	mov ecx, edx
 	shl r8b, cl
@@ -6310,11 +5382,11 @@ unbounded_round_to_multiple_u8_unb_pow2:
 	add dl, al
 	cmp dl, al
 	setae al
-	jb .LBB332_3
+	jb .LBB434_3
 	neg r8b
 	and dl, r8b
 	ret
-.LBB332_4:
+.LBB434_4:
 	test al, al
 	setns cl
 	cmp dl, 8
@@ -6322,14 +5394,13 @@ unbounded_round_to_multiple_u8_unb_pow2:
 	or al, cl
 	xor edx, edx
 	ret
-.LBB332_3:
+.LBB434_3:
 ```
 ## `unbounded_round_to_multiple_u16_unb_pow2`
 ```asm
-unbounded_round_to_multiple_u16_unb_pow2:
 	mov eax, ecx
 	cmp dl, 15
-	ja .LBB329_4
+	ja .LBB431_4
 	mov r8d, 1
 	mov ecx, edx
 	shl r8d, cl
@@ -6338,12 +5409,12 @@ unbounded_round_to_multiple_u16_unb_pow2:
 	lea edx, [rax + rcx]
 	cmp dx, ax
 	setae al
-	jb .LBB329_3
+	jb .LBB431_3
 	neg r8d
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB329_4:
+.LBB431_4:
 	test ax, ax
 	setns cl
 	cmp dl, 16
@@ -6352,15 +5423,14 @@ unbounded_round_to_multiple_u16_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB329_3:
+.LBB431_3:
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_u32_unb_pow2`
 ```asm
-unbounded_round_to_multiple_u32_unb_pow2:
 	mov eax, ecx
 	cmp dl, 31
-	ja .LBB330_4
+	ja .LBB432_4
 	mov r8d, 1
 	mov ecx, edx
 	shl r8d, cl
@@ -6369,12 +5439,12 @@ unbounded_round_to_multiple_u32_unb_pow2:
 	add edx, eax
 	cmp edx, eax
 	setae al
-	jb .LBB330_3
+	jb .LBB432_3
 	neg r8d
 	and edx, r8d
 	movzx eax, al
 	ret
-.LBB330_4:
+.LBB432_4:
 	test eax, eax
 	setns cl
 	cmp dl, 32
@@ -6383,15 +5453,14 @@ unbounded_round_to_multiple_u32_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB330_3:
+.LBB432_3:
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_u64_unb_pow2`
 ```asm
-unbounded_round_to_multiple_u64_unb_pow2:
 	mov rax, rcx
 	cmp dl, 63
-	ja .LBB331_4
+	ja .LBB433_4
 	mov r8d, 1
 	mov ecx, edx
 	shl r8, cl
@@ -6400,12 +5469,12 @@ unbounded_round_to_multiple_u64_unb_pow2:
 	add rdx, rax
 	cmp rdx, rax
 	setae al
-	jb .LBB331_3
+	jb .LBB433_3
 	neg r8
 	and rdx, r8
 	movzx eax, al
 	ret
-.LBB331_4:
+.LBB433_4:
 	test rax, rax
 	setns cl
 	cmp dl, 64
@@ -6414,16 +5483,15 @@ unbounded_round_to_multiple_u64_unb_pow2:
 	xor edx, edx
 	movzx eax, al
 	ret
-.LBB331_3:
+.LBB433_3:
 	movzx eax, al
 ```
 ## `unbounded_round_to_multiple_u128_unb_pow2`
 ```asm
-unbounded_round_to_multiple_u128_unb_pow2:
 	push rsi
 	mov rax, rcx
 	test r9b, r9b
-	js .LBB328_3
+	js .LBB430_3
 	mov r11d, 1
 	xor esi, esi
 	mov ecx, r9d
@@ -6439,15 +5507,15 @@ unbounded_round_to_multiple_u128_unb_pow2:
 	shr rcx
 	add r9, rdx
 	adc rcx, r8
-	jb .LBB328_5
+	jb .LBB430_5
 	xor edx, edx
 	neg r11
 	sbb rdx, rsi
 	and rcx, rdx
 	and r9, r11
 	mov r10, r9
-	jmp .LBB328_4
-.LBB328_3:
+	jmp .LBB430_4
+.LBB430_3:
 	test r8, r8
 	sets dl
 	neg r9b
@@ -6455,12 +5523,12 @@ unbounded_round_to_multiple_u128_unb_pow2:
 	xor r10d, r10d
 	mov ecx, 0
 	test dl, r8b
-	jne .LBB328_5
-.LBB328_4:
+	jne .LBB430_5
+.LBB430_4:
 	mov qword ptr [rax + 16], r10
 	mov qword ptr [rax + 24], rcx
 	mov r10d, 1
-.LBB328_5:
+.LBB430_5:
 	mov qword ptr [rax], r10
 	mov qword ptr [rax + 8], 0
 	pop rsi
