@@ -18,6 +18,8 @@ mod seals {
     impl SealedInt for isize {}
 }
 
+/// Internal generics utility trait. While it is publicly exposed for the purpose
+/// of specifying generic bounds it is highly discouraged to use it in any other way.
 pub trait Int: seals::SealedInt
 where
     Self: Sized
@@ -105,6 +107,8 @@ where
     fn self_from_unsigned(rhs: Self::Unsigned) -> Self;
 }
 
+/// Internal generics utility trait. While it is publicly exposed for the purpose
+/// of specifying generic bounds it is highly discouraged to use it in any other way.
 pub trait UnsignedInt: Int<Unsigned = Self> {}
 
 impl UnsignedInt for u8 {}
@@ -114,6 +118,8 @@ impl UnsignedInt for u64 {}
 impl UnsignedInt for u128 {}
 impl UnsignedInt for usize {}
 
+/// Internal generics utility trait. While it is publicly exposed for the purpose
+/// of specifying generic bounds it is highly discouraged to use it in any other way.
 pub trait SignedInt: Int<Signed = Self> {}
 
 impl SignedInt for i8 {}
@@ -326,6 +332,8 @@ impl_int!(u64, i64);
 impl_int!(u128, i128);
 impl_int!(usize, isize);
 
+/// Internal generics utility trait. While it is publicly exposed for the purpose
+/// of specifying generic bounds it is highly discouraged to use it in any other way.
 pub trait IntAtLeastAsWide<T>: Int
 where
     T: UnsignedInt,
