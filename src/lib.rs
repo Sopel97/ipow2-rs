@@ -153,8 +153,8 @@ macro_rules! impl_as {
     ($name:ident, $t:ty) => {
         impl UnboundedPow2 {
             #[doc = concat!(
-                        "Returns the modelled power-of-two value as ", stringify!($t), "."
-                    )]
+                                "Returns the modelled power-of-two value as ", stringify!($t), "."
+                            )]
             /// # Panics
             ///
             /// In debug builds, panics if the value is not representable.
@@ -560,6 +560,72 @@ where
         Self::from_exponent(value.exponent)
     }
 }
+
+/// Error type for when a Pow2 cannot be constructed from an integer.
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
+pub enum Pow2TryFromIntError {
+    Pow2OutOfRange,
+    NotPow2,
+}
+
+impl Error for Pow2TryFromIntError {}
+impl std::fmt::Display for Pow2TryFromIntError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Pow2TryFromIntError::Pow2OutOfRange => {
+                write!(f, "Out of range")
+            }
+            Pow2TryFromIntError::NotPow2 => {
+                write!(f, "Not a power of two")
+            }
+        }
+    }
+}
+
+impl From<NotPow2> for Pow2TryFromIntError {
+    fn from(_: NotPow2) -> Self {
+        Pow2TryFromIntError::NotPow2
+    }
+}
+
+impl From<Pow2OutOfRange> for Pow2TryFromIntError {
+    fn from(_: Pow2OutOfRange) -> Self {
+        Pow2TryFromIntError::Pow2OutOfRange
+    }
+}
+
+macro_rules! impl_pow2_try_from_int {
+    ($t:ty) => {
+        impl<T> TryFrom<$t> for Pow2<T>
+        where
+            T: UnsignedInt,
+        {
+            type Error = Pow2TryFromIntError;
+
+            #[inline(always)]
+            fn try_from(value: $t) -> Result<Self, Self::Error> {
+                if !value.is_power_of_two() {
+                    Err(Pow2TryFromIntError::NotPow2)
+                } else {
+                    Pow2::from_exponent(value.ilog2() as u8).map_err(|e| e.into())
+                }
+            }
+        }
+    };
+}
+
+impl_pow2_try_from_int!(u8);
+impl_pow2_try_from_int!(u16);
+impl_pow2_try_from_int!(u32);
+impl_pow2_try_from_int!(u64);
+impl_pow2_try_from_int!(u128);
+impl_pow2_try_from_int!(usize);
+impl_pow2_try_from_int!(i8);
+impl_pow2_try_from_int!(i16);
+impl_pow2_try_from_int!(i32);
+impl_pow2_try_from_int!(i64);
+impl_pow2_try_from_int!(i128);
+impl_pow2_try_from_int!(isize);
 
 macro_rules! impl_pow2_self_conv_from {
     ($t:ty => $($into:ty),*) => {
@@ -2206,9 +2272,85 @@ mod tests {
     }
 
     #[test]
+    fn pow2_try_from_power_of_two_int() {
+        assert_eq!(
+            Pow2::<u8>::try_from(32_i8),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_u8),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_i16),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_u16),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_i32),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_u32),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_i64),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_u64),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_i128),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_u128),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_isize),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(32_usize),
+            Ok(Pow2::<u8>::from_exponent(5).unwrap())
+        );
+    }
+
+    #[test]
     fn unb_pow2_try_from_near_power_of_two() {
         assert_eq!(UnboundedPow2::try_from(31_i8), Err(NotPow2));
         assert_eq!(UnboundedPow2::try_from(33_i8), Err(NotPow2));
+    }
+
+    #[test]
+    fn pow2_try_from_near_power_of_two() {
+        assert_eq!(
+            Pow2::<u8>::try_from(31_i8),
+            Err(Pow2TryFromIntError::NotPow2)
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(33_i8),
+            Err(Pow2TryFromIntError::NotPow2)
+        );
+    }
+
+    #[test]
+    fn pow2_try_from_out_of_range() {
+        assert_eq!(
+            Pow2::<u8>::try_from(i32::MAX as u32 + 1),
+            Err(Pow2TryFromIntError::Pow2OutOfRange)
+        );
+        assert_eq!(
+            Pow2::<u8>::try_from(i16::MAX as u64 + 1),
+            Err(Pow2TryFromIntError::Pow2OutOfRange)
+        );
     }
 
     #[test]
