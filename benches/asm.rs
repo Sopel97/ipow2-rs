@@ -1,12 +1,13 @@
 ﻿use ipow2::{
     CeilToMultiple, CheckedCeilToMultiple, CheckedDiv, CheckedDivCeil, CheckedDivFloor,
-    CheckedDivRound, CheckedFloorToMultiple, CheckedModFloor, CheckedMul, CheckedRoundToMultiple,
-    DivCeil, DivFloor, DivRound, FloorToMultiple, IsMultipleOf, ModFloor, Pow2, RoundToMultiple,
-    UnboundedCeilToMultiple, UnboundedDiv, UnboundedDivCeil, UnboundedDivFloor, UnboundedDivRound,
-    UnboundedFloorToMultiple, UnboundedIsMultipleOf, UnboundedPow2, UnboundedRoundToMultiple,
+    CheckedDivRound, CheckedFloorToMultiple, CheckedModFloor, CheckedMul, CheckedRem,
+    CheckedRoundToMultiple, DivCeil, DivFloor, DivRound, FloorToMultiple, IsMultipleOf, ModFloor,
+    Pow2, RoundToMultiple, UnboundedCeilToMultiple, UnboundedDiv, UnboundedDivCeil,
+    UnboundedDivFloor, UnboundedDivRound, UnboundedFloorToMultiple, UnboundedIsMultipleOf,
+    UnboundedPow2, UnboundedRem, UnboundedRoundToMultiple,
 };
 use paste::paste;
-use std::ops::{Div, Mul};
+use std::ops::{Div, Mul, Rem};
 
 macro_rules! impl_binop {
     ($trait:ident, $func:ident, $rhs:ty, $suffix:ident, $($t:ty),*) => {
@@ -33,6 +34,7 @@ impl_binops!(
     Pow2<u8>,
     pow2,
     [Div, div],
+    [Rem, rem],
     [Mul, mul],
     [CheckedMul, checked_mul],
     [CheckedCeilToMultiple, checked_ceil_to_multiple],
@@ -52,6 +54,9 @@ impl_binops!(
     [Div, div],
     [CheckedDiv, checked_div],
     [UnboundedDiv, unbounded_div],
+    [Rem, rem],
+    [CheckedRem, checked_rem],
+    [UnboundedRem, unbounded_rem],
     [Mul, mul],
     [CheckedMul, checked_mul],
     [CeilToMultiple, ceil_to_multiple],
