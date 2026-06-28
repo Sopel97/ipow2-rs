@@ -185,6 +185,7 @@
 //!   higher-dimensional (>=2) data (where there are multiple coordinates to process)
 //! - Implementations that widen the LHS operand are **NOT** used,
 //!   facilitating effective vectorization with both unique and reused RHS values.
+//! - All functions other than `checked_*` and `unbounded_*` are **branchless**.
 //! - For scalar execution the differences between default CPU targets and modern CPU targets
 //!   are minor. However, if good vectorization is desired it is strongly recommended to
 //!   enable at least AVX2 on x86-64 as SSE has limited support for bitwise operations.
