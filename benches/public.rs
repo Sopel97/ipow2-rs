@@ -365,7 +365,7 @@ mod round {
     );
 }
 
-mod modulo {
+mod rem {
     use super::*;
 
     #[rustfmt::skip]
@@ -383,6 +383,12 @@ mod modulo {
         pow2_mod_floor                : for_pow2           => |a, b| ipow2::mod_floor(a, b),
         pow2_mod_floor_const          : for_const          => |a|    ipow2::mod_floor(a, CONST_POW2),
         pow2_mod_floor_reuse          : for_pow2_reuse     => |a, b| ipow2::mod_floor(a, b),
+        unb_pow2_rem                  : for_unb_pow2       => |a, b| a % b,
+        unb_pow2_rem_const            : for_const          => |a|    a % CONST_UNB_POW2,
+        unb_pow2_rem_reuse            : for_unb_pow2_reuse => |a, b| a % b,
+        pow2_rem                      : for_pow2           => |a, b| a % b,
+        pow2_rem_const                : for_const          => |a|    a % CONST_POW2,
+        pow2_rem_reuse                : for_pow2_reuse     => |a, b| a % b,
         std_mod                       : for_std            => |a, b| a % b,
         std_mod_const                 : for_const          => |a|    a % const_int!(),
         std_mod_reuse                 : for_std_reuse      => |a, b| a % b,
