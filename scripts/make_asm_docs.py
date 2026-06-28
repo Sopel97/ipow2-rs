@@ -4,18 +4,11 @@ import re
 import subprocess
 from pathlib import Path
 import sys
+import os
 
 
 ASM_DIR = Path("asm")
 ASM_DIR.mkdir(exist_ok=True)
-
-
-CARGO_ASM_LIST_CMD: list[str] = [
-    "cargo",
-    "asm",
-    "--bench",
-    "asm",
-]
 
 
 # Things we don't want to dump.
@@ -24,6 +17,7 @@ SKIP_PREFIXES: tuple[str, ...] = (
     "std::",
     "alloc::",
     "asm::",
+    "<std::",
     "main",
 )
 
@@ -77,7 +71,7 @@ def get_target_triples(host_os: str) -> list[str]:
 
 def get_installed_targets() -> set[str]:
     result = subprocess.run(
-        ["rustup", "target", "list", "--installed"],
+        ["rustup", "+nightly", "target", "list", "--installed"],
         capture_output=True,
         text=True,
         check=True,
@@ -163,17 +157,41 @@ def run_llvm_mca(asm: str, arch: str, cpu: str) -> str:
     return p.stdout
 
 
+def make_rustflags_env(cpu: str | None = None) -> dict:
+    env = os.environ.copy()
+
+    if cpu:
+        env["RUSTFLAGS"] = f"-C opt-level=3 -Z merge-functions=disabled -C target-cpu={cpu}"
+    else:
+        env["RUSTFLAGS"] = "-C opt-level=3 -Z merge-functions=disabled"
+
+    return env
+
+
 def cargo_asm_list() -> str:
+    env = make_rustflags_env()
+
+    cargo_asm_list_cmd = [
+        "cargo",
+        "+nightly", # needed for disabling merge-functions
+        "asm",
+        "--bench",
+        "asm",
+    ]
     return subprocess.run(
-        CARGO_ASM_LIST_CMD,
+        cargo_asm_list_cmd,
         text=True,
         capture_output=True,
+        env=env,
     ).stdout
 
 
-def cargo_asm(number: str, name: str, target: str) -> str:
+def cargo_asm(number: str, name: str, target: str, cpu: str | None = None) -> str:
+    env = make_rustflags_env(cpu)
+
     cargo_asm_cmd = [
         "cargo",
+        "+nightly", # needed for disabling merge-functions
         "asm",
         "--target", target,
         "--simplify",
@@ -187,6 +205,7 @@ def cargo_asm(number: str, name: str, target: str) -> str:
         cargo_asm_cmd,
         text=True,
         capture_output=True,
+        env=env,
     )
 
     if p.returncode != 0:
@@ -221,22 +240,35 @@ def list_functions() -> list[tuple[str, str]]:
     return functions
 
 
-def get_function_asm(number: str, name: str, target: str) -> str:
-    return cargo_asm(number, name, target)
+def get_function_asm(number: str, name: str, target: str, cpu: str | None = None) -> str:
+    return cargo_asm(number, name, target, cpu)
 
 
 def get_llvm_mca(asm: str, arch: str, cpu: str) -> str:
     return run_llvm_mca(asm, arch, cpu)
 
 
-def strip_trailing_ret(s: str) -> str:
-    lines = s.splitlines()
+def strip_preamble(lines: list[str]) -> list[str]:
+    if lines[0].endswith(":"):
+        lines = lines[1:]
+    return lines
 
+
+def strip_trailing_ret(lines: list[str]) -> list[str]:
     while lines and not lines[-1].strip():
         lines.pop()
 
     if lines and lines[-1].strip().startswith("ret"):
         lines.pop()
+
+    return lines
+
+
+def sanitize_asm(asm: str) -> str:
+    lines = asm.splitlines()
+
+    lines = strip_preamble(lines)
+    lines = strip_trailing_ret(lines)
 
     return "\n".join(lines)
 
@@ -266,6 +298,24 @@ def choose_aarch64_target(targets: list[str]) -> str | None:
     return None
 
 
+def transpose_asms(asms: dict[str, str]) -> dict[str, list[str]]:
+    by_asm = dict()
+    for fn, asm in asms.items():
+        if asm in by_asm:
+            by_asm[asm].append(fn)
+        else:
+            by_asm[asm] = [fn]
+
+    for asm, fns in by_asm.items():
+        fns.sort(key=natural_key)
+
+    return by_asm
+
+
+def format_fns(fns: list[str]) -> str:
+    return ", ".join(f"`{fn}`" for fn in fns)
+
+
 def produce_docs(
     target_x86_64: str,
     target_aarch64: str,
@@ -291,15 +341,16 @@ def produce_docs(
             print(f"Extracting {march} asm for {fn}")
 
             asm = get_function_asm(number, fn, target)
-            asm = strip_trailing_ret(asm)
+            asm = sanitize_asm(asm)
 
             asms[fn] = asm
 
         asm_filepath = make_asm_filepath(target, "generic")
         print(f"Writing {march} asm to {asm_filepath}")
         with open(asm_filepath, "w", encoding="utf-8") as outfile:
-            for fn, asm in asms.items():
-                outfile.write(f"## `{fn}`\n")
+            by_asm = transpose_asms(asms)
+            for asm, fns in by_asm.items():
+                outfile.write(f"## {format_fns(fns)}\n")
                 outfile.write(f"```asm\n{asm}\n```\n")
 
         for cpu in cpus:
@@ -307,31 +358,35 @@ def produce_docs(
             for (number, fn) in functions:
                 print(f"Extracting {march} asm for {fn}")
 
-                asm = get_function_asm(number, fn, target)
-                asm = strip_trailing_ret(asm)
+                asm = get_function_asm(number, fn, target, cpu)
+                asm = sanitize_asm(asm)
 
                 asms[fn] = asm
+
+            print(f"Resolved {len(asms)} asms, including duplicates")
 
             asm_filepath = make_asm_filepath(target, cpu)
             print(f"Writing {march} asm to {asm_filepath}")
             with open(asm_filepath, "w", encoding="utf-8") as outfile:
-                for fn, asm in asms.items():
-                    outfile.write(f"## `{fn}`\n")
+                by_asm = transpose_asms(asms)
+                for asm, fns in by_asm.items():
+                    outfile.write(f"## {format_fns(fns)}\n")
                     outfile.write(f"```asm\n{asm}\n```\n")
 
             with open(make_mca_filepath(cpu), "w", encoding="utf-8") as outfile:
                 instructions_legend: str = ""
                 resources_legend: str = ""
 
-                mcas: dict[str, str] = {}
-                for fn, asm in asms.items():
-                    print(f"Extracting mca for {fn} on {cpu}")
+                mcas: dict[str, list[str]] = {}
+                by_asm = transpose_asms(asms)
+                for asm, fns in by_asm.items():
+                    print(f"Extracting mca for {fns} on {cpu}")
 
                     mca = get_llvm_mca(asm, march, cpu)
 
                     mca, instructions_legend, resources_legend = extract_llvm_mca_legends(mca)
 
-                    mcas[fn] = mca
+                    mcas[mca] = fns
 
                 outfile.write("# Instruction Info:\n")
                 outfile.write(f"```\n{instructions_legend}\n```\n")
@@ -341,8 +396,8 @@ def produce_docs(
 
                 outfile.write("# Functions:\n")
 
-                for fn, mca in mcas.items():
-                    outfile.write(f"## `{fn}`\n")
+                for mca, fns in mcas.items():
+                    outfile.write(f"## {format_fns(fns)}\n")
                     outfile.write(f"```asm\n{mca}\n```\n")
 
 
