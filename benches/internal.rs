@@ -43,6 +43,70 @@ fn make_inputs_i64_mask() -> [(i64, i64); 256] {
     inputs
 }
 
+mod div {
+    use super::*;
+
+    #[divan::bench]
+    fn div_i64_a(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let sgn = a >> 63;
+                    let sgnb = ((a as u64) >> 63) as i64;
+                    let mask = ((sgn as u64) << b) as i64;
+                    divan::black_box((a - mask - sgnb) >> b);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn div_i64_b(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let sgn = a >> 63;
+                    let mask = (1 << b) - 1;
+                    divan::black_box((a + (sgn & mask)) >> b);
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn rem_i64_a(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    let sgn = a >> 63;
+                    let mask = (1 << b) - 1;
+                    let div = (a + (sgn & mask)) >> b;
+                    divan::black_box(a - (div << b));
+                }
+            });
+    }
+
+    #[divan::bench]
+    fn rem_i64_b(bencher: divan::Bencher) {
+        bencher
+            .with_inputs(|| make_inputs_i64())
+            .bench_values(|inputs| {
+                for (a, b) in inputs {
+                    divan::black_box({
+                        let mask = (1 << b) - 1;
+                        let rem_floor = a & mask;
+                        if a >= 0 {
+                            rem_floor
+                        } else {
+                            -(-rem_floor & mask)
+                        }
+                    });
+                }
+            });
+    }
+}
+
 mod div_floor {
     use super::*;
 
@@ -368,7 +432,7 @@ mod div_round {
         bencher
             .with_inputs(|| make_inputs_i64())
             .bench_values(|inputs| {
-                for (a, b) in inputs {    
+                for (a, b) in inputs {
                     // make sure there's no sign bit being shifted right
                     let mask = ((1u64 << b) - 1) as i64;
                     let floored = a >> b;
