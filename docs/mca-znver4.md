@@ -4080,257 +4080,6 @@ Resource pressure by instruction:
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax], rcx
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
 ```
-## `checked_mod_floor_i8_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      9
-Total Cycles:      7
-Total uOps:        9
-
-Dispatch Width:    6
-uOps Per Cycle:    1.29
-IPC:               1.29
-Block RThroughput: 1.8
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9d, edx
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.25                        cmp	dl, 8
- 1      1     1.00                        setb	al
- 1      1     1.00                        mov	dl, -1
- 1      0     0.17                        mov	ecx, r9d
- 1      1     0.50                        shl	dl, cl
- 1      1     0.25                        not	dl
- 1      1     0.25                        and	dl, r8b
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   2.00   4.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
- -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
- -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	dl, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	dl, cl
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	dl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r8b
-```
-## `checked_mod_floor_i16_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      10
-Total Cycles:      7
-Total uOps:        10
-
-Dispatch Width:    6
-uOps Per Cycle:    1.43
-IPC:               1.43
-Block RThroughput: 1.7
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9d, edx
- 1      0     0.17                        mov	r8d, ecx
- 1      0     0.17                        xor	eax, eax
- 1      1     0.25                        cmp	dl, 16
- 1      1     1.00                        setb	al
- 1      1     0.50                        mov	edx, -1
- 1      0     0.17                        mov	ecx, r9d
- 1      1     0.50                        shl	edx, cl
- 1      1     0.25                        not	edx
- 1      1     0.25                        and	edx, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
- -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
-```
-## `checked_mod_floor_i32_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      10
-Total Cycles:      7
-Total uOps:        10
-
-Dispatch Width:    6
-uOps Per Cycle:    1.43
-IPC:               1.43
-Block RThroughput: 1.7
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9d, edx
- 1      0     0.17                        mov	r8d, ecx
- 1      0     0.17                        xor	eax, eax
- 1      1     0.25                        cmp	dl, 32
- 1      1     1.00                        setb	al
- 1      1     0.50                        mov	edx, -1
- 1      0     0.17                        mov	ecx, r9d
- 1      1     0.50                        shl	edx, cl
- 1      1     0.25                        not	edx
- 1      1     0.25                        and	edx, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
- -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
-```
-## `checked_mod_floor_i64_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      10
-Total Cycles:      7
-Total uOps:        10
-
-Dispatch Width:    6
-uOps Per Cycle:    1.43
-IPC:               1.43
-Block RThroughput: 1.7
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9d, edx
- 1      0     0.17                        mov	r8, rcx
- 1      0     0.17                        xor	eax, eax
- 1      1     0.25                        cmp	dl, 64
- 1      1     1.00                        setb	al
- 1      1     0.50                        mov	rdx, -1
- 1      0     0.17                        mov	ecx, r9d
- 1      1     0.50                        shl	rdx, cl
- 1      1     0.25                        not	rdx
- 1      1     0.25                        and	rdx, r8
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
- -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rdx, cl
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rdx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
-```
-## `checked_mod_floor_i128_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      24
-Total Cycles:      14
-Total uOps:        24
-
-Dispatch Width:    6
-uOps Per Cycle:    1.71
-IPC:               1.71
-Block RThroughput: 6.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	rax, rcx
- 1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB75_1
- 1      1     0.50                        mov	r10, -1
- 1      0     0.17                        mov	ecx, r9d
- 1      1     0.50                        shl	r10, cl
- 1      1     0.50                        mov	rcx, -1
- 1      0     0.17                        xor	r11d, r11d
- 1      1     0.25                        test	r9b, 64
- 1      1     0.50                        cmove	r11, r10
- 1      1     0.50                        cmove	r10, rcx
- 1      1     0.25                        not	r10
- 1      1     0.25                        not	r11
- 1      1     0.25                        and	rdx, r11
- 1      1     0.25                        and	r8, r10
- 1      1     1.00           *            mov	qword ptr [rax + 24], r8
- 1      1     1.00           *            mov	qword ptr [rax + 16], rdx
- 1      1     0.50                        mov	ecx, 1
- 1      1     1.00           *            mov	qword ptr [rax], rcx
- 1      1     1.00           *            mov	qword ptr [rax + 8], 0
- 1      5     0.50                  U     ret
- 1      0     0.17                        xor	ecx, ecx
- 1      1     1.00           *            mov	qword ptr [rax], rcx
- 1      1     1.00           *            mov	qword ptr [rax + 8], 0
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
-2.00   2.00   3.00   4.00   3.00   5.00   3.00   2.00    -      -      -      -      -      -      -     4.00   4.00   5.00    -      -     1.00   6.00   6.00   
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB75_1
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
- -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r10, rcx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r10
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r10
- -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 24], r8
-1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 16], rdx
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, 1
- -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax], rcx
- -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
- -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
-1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax], rcx
- -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
-```
 ## `checked_mul_i8_pow2`
 ```asm
 Iterations:        1
@@ -4492,7 +4241,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 15
- 1      1     0.50                        ja	.LBB83_1
+ 1      1     0.50                        ja	.LBB78_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	edx, ecx
  1      0     0.17                        mov	r8d, ecx
@@ -4515,7 +4264,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB83_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB78_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
@@ -4590,7 +4339,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 31
- 1      1     0.50                        ja	.LBB85_1
+ 1      1     0.50                        ja	.LBB80_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	edx, ecx
  1      0     0.17                        mov	r8d, ecx
@@ -4613,7 +4362,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB85_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB80_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
@@ -4688,7 +4437,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 63
- 1      1     0.50                        ja	.LBB87_1
+ 1      1     0.50                        ja	.LBB82_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	rdx, rcx
  1      0     0.17                        mov	r8, rcx
@@ -4711,7 +4460,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB87_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB82_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
@@ -4767,7 +4516,7 @@ Instruction Info:
  1      1     0.25                        xor	rbx, r8
  1      1     0.25                        xor	r14, rdx
  1      1     0.25                        or	r14, rbx
- 1      1     0.50                        jne	.LBB80_2
+ 1      1     0.50                        jne	.LBB75_2
  1      1     1.00           *            mov	qword ptr [rax + 16], r11
  1      1     1.00           *            mov	qword ptr [rax + 24], r10
  1      1     0.50                        mov	esi, 1
@@ -4813,7 +4562,7 @@ Resource pressure by instruction:
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	rbx, r8
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r14, rdx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	r14, rbx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB80_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB75_2
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 16], r11
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 24], r10
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	esi, 1
@@ -4845,7 +4594,7 @@ Instruction Info:
  1      1     1.00           *            push	rbx
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB81_1
+ 1      1     0.50                        js	.LBB76_1
  1      0     0.17                        mov	r10, r8
  1      0     0.17                        mov	ecx, r9d
  5      2     1.50                        shld	r10, rdx, cl
@@ -4868,11 +4617,11 @@ Instruction Info:
  1      1     0.25                        xor	rbx, r8
  1      1     0.25                        xor	r14, rdx
  1      1     0.25                        or	r14, rbx
- 1      1     0.50                        jne	.LBB81_4
+ 1      1     0.50                        jne	.LBB76_4
  1      1     1.00           *            mov	qword ptr [rax + 16], r11
  1      1     1.00           *            mov	qword ptr [rax + 24], r10
  1      1     0.50                        mov	esi, 1
- 1      1     0.50                        jmp	.LBB81_4
+ 1      1     0.50                        jmp	.LBB76_4
  1      0     0.17                        xor	esi, esi
  1      1     1.00           *            mov	qword ptr [rax], rsi
  1      1     1.00           *            mov	qword ptr [rax + 8], 0
@@ -4895,7 +4644,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     push	rbx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB81_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB76_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, r8
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
  -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rdx, cl
@@ -4918,11 +4667,11 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	rbx, r8
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r14, rdx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	r14, rbx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB81_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB76_4
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 16], r11
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 24], r10
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	esi, 1
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB81_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB76_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	esi, esi
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax], rsi
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
@@ -5092,7 +4841,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 15
- 1      1     0.50                        ja	.LBB93_1
+ 1      1     0.50                        ja	.LBB88_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	edx, ecx
  1      0     0.17                        mov	r8d, ecx
@@ -5115,7 +4864,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB93_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB88_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
@@ -5190,7 +4939,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 31
- 1      1     0.50                        ja	.LBB95_1
+ 1      1     0.50                        ja	.LBB90_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	edx, ecx
  1      0     0.17                        mov	r8d, ecx
@@ -5213,7 +4962,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB95_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB90_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
@@ -5288,7 +5037,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 63
- 1      1     0.50                        ja	.LBB97_1
+ 1      1     0.50                        ja	.LBB92_1
  1      0     0.17                        mov	eax, edx
  1      0     0.17                        mov	rdx, rcx
  1      0     0.17                        mov	r8, rcx
@@ -5311,7 +5060,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB97_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB92_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
@@ -5366,7 +5115,7 @@ Instruction Info:
  1      1     0.25                        xor	r14, rdx
  1      1     0.25                        xor	rbx, r8
  1      1     0.25                        or	rbx, r14
- 1      1     0.50                        jne	.LBB90_2
+ 1      1     0.50                        jne	.LBB85_2
  1      1     1.00           *            mov	qword ptr [rax + 16], r11
  1      1     1.00           *            mov	qword ptr [rax + 24], r10
  1      1     0.50                        mov	esi, 1
@@ -5411,7 +5160,7 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r14, rdx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	rbx, r8
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	rbx, r14
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB90_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB85_2
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 16], r11
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 24], r10
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	esi, 1
@@ -5443,7 +5192,7 @@ Instruction Info:
  1      1     1.00           *            push	rbx
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB91_1
+ 1      1     0.50                        js	.LBB86_1
  1      0     0.17                        mov	r10, r8
  1      0     0.17                        mov	ecx, r9d
  5      2     1.50                        shld	r10, rdx, cl
@@ -5465,11 +5214,11 @@ Instruction Info:
  1      1     0.25                        xor	r14, rdx
  1      1     0.25                        xor	rbx, r8
  1      1     0.25                        or	rbx, r14
- 1      1     0.50                        jne	.LBB91_4
+ 1      1     0.50                        jne	.LBB86_4
  1      1     1.00           *            mov	qword ptr [rax + 16], r11
  1      1     1.00           *            mov	qword ptr [rax + 24], r10
  1      1     0.50                        mov	esi, 1
- 1      1     0.50                        jmp	.LBB91_4
+ 1      1     0.50                        jmp	.LBB86_4
  1      0     0.17                        xor	esi, esi
  1      1     1.00           *            mov	qword ptr [rax], rsi
  1      1     1.00           *            mov	qword ptr [rax + 8], 0
@@ -5492,7 +5241,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     push	rbx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB91_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB86_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, r8
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
  -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rdx, cl
@@ -5514,11 +5263,11 @@ Resource pressure by instruction:
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r14, rdx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	rbx, r8
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	rbx, r14
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB91_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB86_4
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 16], r11
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 24], r10
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	esi, 1
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB91_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB86_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	esi, esi
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax], rsi
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
@@ -5526,6 +5275,1461 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -     1.00    -      -      -     pop	rdi
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -     1.00    -      -      -      -     pop	rsi
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -     pop	r14
+```
+## `checked_rem_floor_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      7
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.29
+IPC:               1.29
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        cmp	dl, 8
+ 1      1     1.00                        setb	al
+ 1      1     1.00                        mov	dl, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	dl, cl
+ 1      1     0.25                        not	dl
+ 1      1     0.25                        and	dl, r8b
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   4.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	dl, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	dl, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	dl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r8b
+```
+## `checked_rem_floor_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 16
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	edx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        not	edx
+ 1      1     0.25                        and	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+```
+## `checked_rem_floor_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 32
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	edx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        not	edx
+ 1      1     0.25                        and	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+```
+## `checked_rem_floor_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8, rcx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 64
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	rdx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	rdx, cl
+ 1      1     0.25                        not	rdx
+ 1      1     0.25                        and	rdx, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rdx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
+```
+## `checked_rem_floor_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      24
+Total Cycles:      14
+Total uOps:        24
+
+Dispatch Width:    6
+uOps Per Cycle:    1.71
+IPC:               1.71
+Block RThroughput: 6.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB95_1
+ 1      1     0.50                        mov	r10, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	r10, cl
+ 1      1     0.50                        mov	rcx, -1
+ 1      0     0.17                        xor	r11d, r11d
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmove	r11, r10
+ 1      1     0.50                        cmove	r10, rcx
+ 1      1     0.25                        not	r10
+ 1      1     0.25                        not	r11
+ 1      1     0.25                        and	rdx, r11
+ 1      1     0.25                        and	r8, r10
+ 1      1     1.00           *            mov	qword ptr [rax + 24], r8
+ 1      1     1.00           *            mov	qword ptr [rax + 16], rdx
+ 1      1     0.50                        mov	ecx, 1
+ 1      1     1.00           *            mov	qword ptr [rax], rcx
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     1.00           *            mov	qword ptr [rax], rcx
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+2.00   2.00   3.00   4.00   3.00   5.00   3.00   2.00    -      -      -      -      -      -      -     4.00   4.00   5.00    -      -     1.00   6.00   6.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB95_1
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r10, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r10
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r10
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00   mov	qword ptr [rax + 24], r8
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 16], rdx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, 1
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax], rcx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax], rcx
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
+```
+## `checked_rem_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      21
+Total Cycles:      12
+Total uOps:        21
+
+Dispatch Width:    6
+uOps Per Cycle:    1.75
+IPC:               1.75
+Block RThroughput: 3.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB104_3
+ 1      1     1.00                        mov	al, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	cl
+ 1      1     0.25                        test	r8b, r8b
+ 1      1     0.50                        js	.LBB104_2
+ 1      1     0.25                        and	r8b, cl
+ 1      1     0.25                        cmp	dl, 8
+ 1      1     1.00                        setb	al
+ 1      0     0.17                        mov	edx, r8d
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	cl, r8b
+ 1      1     0.25                        and	cl, al
+ 1      1     0.25                        sub	r8b, cl
+ 1      1     0.25                        cmp	dl, 8
+ 1      1     1.00                        setb	al
+ 1      0     0.17                        mov	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   6.00   3.00   5.00   4.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB104_3
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB104_2
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8b, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, r8b
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	cl, al
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8b, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+```
+## `checked_rem_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      22
+Total Cycles:      11
+Total uOps:        22
+
+Dispatch Width:    6
+uOps Per Cycle:    2.00
+IPC:               2.00
+Block RThroughput: 4.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB101_1
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      1     0.25                        test	r8w, r8w
+ 1      1     0.50                        js	.LBB101_4
+ 1      1     0.25                        and	r8d, ecx
+ 1      1     1.00                        mov	ax, 1
+ 1      0     0.17                        mov	edx, r8d
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+ 1      0     0.17                        mov	edx, r8d
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	eax, ecx
+ 1      1     0.25                        sub	r8d, eax
+ 1      1     1.00                        mov	ax, 1
+ 1      0     0.17                        mov	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   3.00   3.00   4.00   9.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB101_1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8w, r8w
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB101_4
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8d, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8d, eax
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+```
+## `checked_rem_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      22
+Total Cycles:      11
+Total uOps:        22
+
+Dispatch Width:    6
+uOps Per Cycle:    2.00
+IPC:               2.00
+Block RThroughput: 3.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB102_1
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      1     0.25                        test	r8d, r8d
+ 1      1     0.50                        js	.LBB102_4
+ 1      1     0.25                        and	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	edx, r8d
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+ 1      0     0.17                        mov	edx, r8d
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	ecx, eax
+ 1      1     0.25                        sub	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   4.00   3.00   4.00   4.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB102_1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8d, r8d
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB102_4
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8d, ecx
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+```
+## `checked_rem_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      22
+Total Cycles:      11
+Total uOps:        22
+
+Dispatch Width:    6
+uOps Per Cycle:    2.00
+IPC:               2.00
+Block RThroughput: 3.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB103_1
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.25                        not	rcx
+ 1      1     0.25                        test	r8, r8
+ 1      1     0.50                        js	.LBB103_4
+ 1      1     0.25                        and	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	rdx, r8
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+ 1      0     0.17                        mov	rdx, r8
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	rcx, r8
+ 1      1     0.25                        and	rcx, rax
+ 1      1     0.25                        sub	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	rdx, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   4.00   3.00   4.00   4.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB103_1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB103_4
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, rcx
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+```
+## `checked_rem_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      40
+Total Cycles:      19
+Total uOps:        40
+
+Dispatch Width:    6
+uOps Per Cycle:    2.11
+IPC:               2.11
+Block RThroughput: 6.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      1     1.00           *            push	rdi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB100_1
+ 1      1     0.50                        mov	r10, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	r10, cl
+ 1      1     0.50                        mov	rcx, -1
+ 1      0     0.17                        xor	r11d, r11d
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmove	r11, r10
+ 1      1     0.50                        cmove	r10, rcx
+ 1      0     0.17                        mov	rcx, r10
+ 1      1     0.25                        not	rcx
+ 1      0     0.17                        mov	r9, r11
+ 1      1     0.25                        not	r9
+ 1      0     0.17                        mov	rsi, rdx
+ 1      1     0.25                        and	rsi, r9
+ 1      0     0.17                        mov	rdi, r8
+ 1      1     0.25                        and	rdi, rcx
+ 1      1     0.25                        add	r9, rdx
+ 1      1     1.00                        adc	rcx, r8
+ 1      1     0.25                        and	rcx, r10
+ 1      1     0.25                        and	r9, r11
+ 1      1     0.25                        sub	rdx, r9
+ 1      0     0.17                        mov	r9, r8
+ 1      1     1.00                        sbb	r9, rcx
+ 1      1     0.25                        test	r8, r8
+ 1      1     0.50                        cmovns	r9, rdi
+ 1      1     0.50                        cmovns	rdx, rsi
+ 1      1     1.00           *            mov	qword ptr [rax + 16], rdx
+ 1      1     1.00           *            mov	qword ptr [rax + 24], r9
+ 1      1     0.50                        mov	ecx, 1
+ 1      1     0.50                        jmp	.LBB100_3
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     1.00           *            mov	qword ptr [rax], rcx
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.33    *                   pop	rdi
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+2.00   3.00   3.00   8.00   6.00   6.00   10.00  2.00    -      -      -      -      -      -      -     3.00   5.00   6.00    -     1.00   1.00   6.00   6.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     push	rdi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB100_1
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r10, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r10
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r11
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rsi, r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdi, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdi, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, rdx
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rcx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r9, r11
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rdx, r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r8
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r9, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	r9, rdi
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rdx, rsi
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 16], rdx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax + 24], r9
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, 1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB100_3
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax], rcx
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -     pop	rdi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     pop	rsi
+```
+## `checked_rem_u16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 16
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	edx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        not	edx
+ 1      1     0.25                        and	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+```
+## `checked_rem_u32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 32
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	edx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        not	edx
+ 1      1     0.25                        and	edx, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+```
+## `checked_rem_u64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      7
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.43
+IPC:               1.43
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8, rcx
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 64
+ 1      1     1.00                        setb	al
+ 1      1     0.50                        mov	rdx, -1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	rdx, cl
+ 1      1     0.25                        not	rdx
+ 1      1     0.25                        and	rdx, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   1.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setb	al
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rdx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
+```
+## `checked_round_to_multiple_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      21
+Total Cycles:      15
+Total uOps:        21
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 3.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        xor	r10d, r10d
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB112_1
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	al, 1
+ 1      1     1.00                        mov	r9b, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9b, cl
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shr	cl
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	dl, 7
+ 1      1     0.25                        sub	cl, dl
+ 1      1     0.25                        movzx	edx, cl
+ 1      1     0.50                        cmovb	edx, r10d
+ 1      1     0.25                        add	dl, r8b
+ 1      1     0.50                        jo	.LBB112_1
+ 1      1     0.25                        neg	r9b
+ 1      1     0.25                        and	dl, r9b
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   3.00   6.00   6.00   4.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB112_1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl, 7
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	cl, dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	edx, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	edx, r10d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	dl, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB112_1
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9b
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r9b
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      21
+Total Cycles:      11
+Total uOps:        21
+
+Dispatch Width:    6
+uOps Per Cycle:    1.91
+IPC:               1.91
+Block RThroughput: 3.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB109_4
+ 1      0     0.17                        mov	r9d, edx
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	edx, 1
+ 1      0     0.17                        mov	ecx, r9d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        movzx	r9d, dx
+ 1      1     0.50                        shr	r9d
+ 1      1     0.25                        movzx	ecx, r8w
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        shr	r8d, 15
+ 1      1     0.25                        sub	r9w, r8w
+ 1      1     0.50                        cmovb	r9d, eax
+ 1      1     0.25                        add	cx, r9w
+ 1      1     0.50                        jo	.LBB109_4
+ 1      1     0.25                        neg	edx
+ 1      1     0.25                        and	edx, ecx
+ 1      1     1.00                        mov	ax, 1
+ 1      5     0.50                  U     ret
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   6.00   3.00   4.00   4.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB109_4
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	r9d, dx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r9d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8w
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r8d, 15
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r9w, r8w
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r9d, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cx, r9w
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB109_4
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	edx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ax, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+```
+## `checked_round_to_multiple_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      20
+Total Cycles:      11
+Total uOps:        20
+
+Dispatch Width:    6
+uOps Per Cycle:    1.82
+IPC:               1.82
+Block RThroughput: 3.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB110_3
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	r9d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9d, cl
+ 1      0     0.17                        mov	edx, r9d
+ 1      1     0.50                        shr	edx
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shr	ecx, 31
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        sub	edx, ecx
+ 1      1     0.50                        cmovb	edx, eax
+ 1      1     0.25                        add	edx, r8d
+ 1      1     0.50                        jo	.LBB110_4
+ 1      1     0.25                        neg	r9d
+ 1      1     0.25                        and	edx, r9d
+ 1      1     0.50                        mov	eax, 1
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   3.00   4.00   4.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB110_3
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r9d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx, 31
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	edx, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	edx, eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, r8d
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB110_4
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r9d
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      20
+Total Cycles:      11
+Total uOps:        20
+
+Dispatch Width:    6
+uOps Per Cycle:    1.82
+IPC:               1.82
+Block RThroughput: 3.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB111_3
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	r9d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9, cl
+ 1      0     0.17                        mov	rdx, r9
+ 1      1     0.50                        shr	rdx
+ 1      0     0.17                        mov	rcx, r8
+ 1      1     0.50                        shr	rcx, 63
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        sub	rdx, rcx
+ 1      1     0.50                        cmovb	rdx, rax
+ 1      1     0.25                        add	rdx, r8
+ 1      1     0.50                        jo	.LBB111_4
+ 1      1     0.25                        neg	r9
+ 1      1     0.25                        and	rdx, r9
+ 1      1     0.50                        mov	eax, 1
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   3.00   4.00   4.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB111_3
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rdx, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	rdx, rax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB111_4
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r9
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      43
+Total Cycles:      26
+Total uOps:        50
+
+Dispatch Width:    6
+uOps Per Cycle:    1.92
+IPC:               1.65
+Block RThroughput: 8.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      1     1.00           *            push	rdi
+ 1      1     1.00           *            push	rbx
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB108_3
+ 1      1     0.50                        mov	r10d, 1
+ 1      0     0.17                        xor	esi, esi
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	rsi, r10, cl
+ 1      1     0.50                        mov	r11d, 1
+ 1      1     0.50                        shl	r11, cl
+ 1      0     0.17                        xor	edi, edi
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	rsi, r11
+ 1      1     0.50                        cmovne	r11, rdi
+ 1      0     0.17                        mov	rcx, rsi
+ 1      1     0.50                        shr	rcx
+ 1      0     0.17                        mov	r9, rsi
+ 4      2     1.50                        shld	r9, r11, 63
+ 1      0     0.17                        mov	rbx, r8
+ 1      1     0.50                        shr	rbx, 63
+ 1      1     0.25                        sub	r9, rbx
+ 1      1     1.00                        sbb	rcx, 0
+ 1      1     0.50                        cmovb	rcx, rdi
+ 1      1     0.50                        cmovb	r9, rdi
+ 1      1     0.25                        add	rdx, r9
+ 1      1     1.00                        adc	rcx, r8
+ 1      1     0.50                        jo	.LBB108_3
+ 1      0     0.17                        xor	r8d, r8d
+ 1      1     0.25                        neg	r11
+ 1      1     1.00                        sbb	r8, rsi
+ 1      1     0.25                        and	rcx, r8
+ 1      1     0.25                        and	rdx, r11
+ 1      1     1.00           *            mov	qword ptr [rax + 16], rdx
+ 1      1     1.00           *            mov	qword ptr [rax + 24], rcx
+ 1      1     0.50                        jmp	.LBB108_4
+ 1      0     0.17                        xor	r10d, r10d
+ 1      1     1.00           *            mov	qword ptr [rax], r10
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.33    *                   pop	rbx
+ 1      5     0.33    *                   pop	rdi
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+3.00   3.00   4.00   9.00   13.00  8.00   6.00   3.00    -      -      -      -      -      -      -     6.00   5.00   6.00   1.00   1.00   1.00   6.00   8.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     push	rdi
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   push	rbx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB108_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	esi, esi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	rsi, r10, cl
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11d, 1
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edi, edi
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rsi, r11
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r11, rdi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rsi
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rsi
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r9, r11, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rbx, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rbx, 63
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r9, rbx
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, 0
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	rcx, rdi
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r9, rdi
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, r9
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rcx, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB108_3
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r8d, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r11
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r8, rsi
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 16], rdx
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 24], rcx
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB108_4
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax], r10
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax + 8], 0
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     pop	rbx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     pop	rdi
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00   1.00    -      -      -      -     pop	rsi
+```
+## `checked_round_to_multiple_u8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 3.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB117_2
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	r9b, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9b, cl
+ 1      1     1.00                        mov	al, 1
+ 1      0     0.17                        mov	edx, r9d
+ 1      1     0.50                        shr	dl
+ 1      1     0.25                        add	dl, r8b
+ 1      1     0.50                        jb	.LBB117_2
+ 1      1     0.25                        neg	r9b
+ 1      1     0.25                        and	dl, r9b
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   4.00   2.00   5.00   3.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB117_2
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	dl, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB117_2
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9b
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r9b
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_u16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB114_2
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      1     0.25                        movzx	edx, r8w
+ 1      1     0.50                        shr	edx
+ 1      1     0.25                        add	dx, ax
+ 1      1     0.50                        jb	.LBB114_2
+ 1      1     0.25                        neg	r8d
+ 1      1     0.25                        and	edx, r8d
+ 1      1     1.00                        mov	ax, 1
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   2.00   6.00   3.00   3.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB114_2
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	edx, r8w
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	dx, ax
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB114_2
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ax, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_u32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB115_2
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	r9d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9d, cl
+ 1      0     0.17                        mov	edx, r9d
+ 1      1     0.50                        shr	edx
+ 1      1     0.25                        add	edx, r8d
+ 1      1     0.50                        jb	.LBB115_2
+ 1      1     0.25                        neg	r9d
+ 1      1     0.25                        and	edx, r9d
+ 1      1     0.50                        mov	eax, 1
+ 1      5     0.50                  U     ret
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   2.00   3.00   4.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB115_2
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r9d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB115_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r9d
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+```
+## `checked_round_to_multiple_u64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB116_2
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	r9d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9, cl
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	rdx, r9
+ 1      1     0.50                        shr	rdx
+ 1      1     0.25                        add	rdx, r8
+ 1      1     0.50                        jb	.LBB116_2
+ 1      1     0.25                        neg	r9
+ 1      1     0.25                        and	rdx, r9
+ 1      5     0.50                  U     ret
+ 1      0     0.17                        xor	eax, eax
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   3.00   2.00   3.00   3.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB116_2
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB116_2
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r9
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+```
+## `checked_round_to_multiple_u128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      35
+Total Cycles:      20
+Total uOps:        42
+
+Dispatch Width:    6
+uOps Per Cycle:    2.10
+IPC:               1.75
+Block RThroughput: 7.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      1     1.00           *            push	rdi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB113_2
+ 1      1     0.50                        mov	r10d, 1
+ 1      0     0.17                        xor	r11d, r11d
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	r11, r10, cl
+ 1      0     0.17                        xor	edi, edi
+ 1      1     0.50                        mov	esi, 1
+ 1      1     0.50                        shl	rsi, cl
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	r11, rsi
+ 1      1     0.50                        cmovne	rsi, rdi
+ 1      0     0.17                        mov	rcx, r11
+ 1      0     0.17                        mov	r9, r11
+ 4      2     1.50                        shld	r9, rsi, 63
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	r9, rdx
+ 1      1     1.00                        adc	rcx, r8
+ 1      1     0.50                        jb	.LBB113_2
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        neg	rsi
+ 1      1     1.00                        sbb	rdx, r11
+ 1      1     0.25                        and	rcx, rdx
+ 1      1     0.25                        and	r9, rsi
+ 1      1     1.00           *            mov	qword ptr [rax + 16], r9
+ 1      1     1.00           *            mov	qword ptr [rax + 24], rcx
+ 1      1     0.50                        jmp	.LBB113_3
+ 1      0     0.17                        xor	r10d, r10d
+ 1      1     1.00           *            mov	qword ptr [rax], r10
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.33    *                   pop	rdi
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+2.00   3.00   3.00   5.00   10.00  6.00   7.00   3.00    -      -      -      -      -      -      -     2.00   6.00   6.00    -     1.00   1.00   6.00   6.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     push	rdi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB113_2
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r11, r10, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edi, edi
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	esi, 1
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rsi, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r11, rsi
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rsi, rdi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r11
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r9, rsi, 63
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, rdx
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rcx, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB113_2
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rsi
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rdx, r11
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, rdx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r9, rsi
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 16], r9
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax + 24], rcx
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB113_3
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax], r10
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -     pop	rdi
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -     pop	rsi
 ```
 ## `div_ceil_i8_pow2`
 ```asm
@@ -7244,7 +8448,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        test	cl, cl
- 1      1     0.50                        js	.LBB148_1
+ 1      1     0.50                        js	.LBB166_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	al, cl
  1      5     0.50                  U     ret
@@ -7265,7 +8469,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	cl, cl
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB148_1
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB166_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	al, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7294,7 +8498,7 @@ Instruction Info:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        and	dl, 7
  1      1     0.25                        test	cl, cl
- 1      1     0.50                        js	.LBB149_1
+ 1      1     0.50                        js	.LBB167_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	al, cl
  1      5     0.50                  U     ret
@@ -7316,7 +8520,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	cl, cl
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB149_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB167_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	al, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7345,7 +8549,7 @@ Instruction Info:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	ax, ax
- 1      1     0.50                        js	.LBB142_1
+ 1      1     0.50                        js	.LBB160_1
  1      1     0.25                        movzx	eax, ax
  1      1     0.50                        shr	eax, cl
  1      5     0.50                  U     ret
@@ -7367,7 +8571,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ax, ax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB142_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB160_1
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, ax
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7397,7 +8601,7 @@ Instruction Info:
  1      1     0.25                        and	dl, 15
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	ax, ax
- 1      1     0.50                        js	.LBB143_1
+ 1      1     0.50                        js	.LBB161_1
  1      1     0.25                        movzx	eax, ax
  1      1     0.50                        shr	eax, cl
  1      5     0.50                  U     ret
@@ -7420,7 +8624,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ax, ax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB143_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB161_1
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, ax
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7448,7 +8652,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        test	ecx, ecx
- 1      1     0.50                        js	.LBB144_1
+ 1      1     0.50                        js	.LBB162_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	eax, cl
  1      5     0.50                  U     ret
@@ -7469,7 +8673,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ecx, ecx
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB144_1
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB162_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7498,7 +8702,7 @@ Instruction Info:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        and	dl, 31
  1      1     0.25                        test	ecx, ecx
- 1      1     0.50                        js	.LBB145_1
+ 1      1     0.50                        js	.LBB163_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	eax, cl
  1      5     0.50                  U     ret
@@ -7520,7 +8724,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 31
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ecx, ecx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB145_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB163_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -7549,7 +8753,7 @@ Instruction Info:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	rax, rax
- 1      1     0.50                        js	.LBB146_1
+ 1      1     0.50                        js	.LBB164_1
  1      1     0.50                        shr	rax, cl
  1      5     0.50                  U     ret
  1      1     0.50                        mov	rdx, -1
@@ -7569,7 +8773,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rax, rax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB146_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB164_1
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rax, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, -1
@@ -7597,7 +8801,7 @@ Instruction Info:
  1      1     0.25                        and	dl, 63
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	rax, rax
- 1      1     0.50                        js	.LBB147_1
+ 1      1     0.50                        js	.LBB165_1
  1      1     0.50                        shr	rax, cl
  1      5     0.50                  U     ret
  1      1     0.50                        mov	rdx, -1
@@ -7618,7 +8822,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 63
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rax, rax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB147_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB165_1
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rax, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, -1
@@ -7644,7 +8848,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	rdx, rdx
- 1      1     0.50                        js	.LBB140_1
+ 1      1     0.50                        js	.LBB158_1
  1      0     0.17                        mov	ecx, r8d
  5      2     1.50                        shrd	rax, rdx, cl
  1      1     0.50                        shr	rdx, cl
@@ -7685,7 +8889,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB140_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB158_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shrd	rax, rdx, cl
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, cl
@@ -7734,7 +8938,7 @@ Instruction Info:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        and	r8b, 127
  1      1     0.25                        test	rdx, rdx
- 1      1     0.50                        js	.LBB141_1
+ 1      1     0.50                        js	.LBB159_1
  1      0     0.17                        mov	ecx, r8d
  5      2     1.50                        shrd	rax, rdx, cl
  1      1     0.50                        shr	rdx, cl
@@ -7776,7 +8980,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8b, 127
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB141_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB159_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shrd	rax, rdx, cl
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, cl
@@ -9590,408 +10794,6 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r9d, eax
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
 ```
-## `mod_floor_i8_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.5
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     1.00                        mov	al, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	al, cl
- 1      1     0.25                        not	al
- 1      1     0.25                        and	al, r8b
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	al
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, r8b
-```
-## `mod_floor_i8_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      7
-Total Cycles:      7
-Total uOps:        7
-
-Dispatch Width:    6
-uOps Per Cycle:    1.00
-IPC:               1.00
-Block RThroughput: 1.8
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.25                        and	dl, 7
- 1      1     1.00                        mov	al, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	al, cl
- 1      1     0.25                        not	al
- 1      1     0.25                        and	al, r8b
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   4.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
- -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	al
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, r8b
-```
-## `mod_floor_i16_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.50                        mov	eax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	eax, cl
- 1      1     0.25                        not	eax
- 1      1     0.25                        and	eax, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
-```
-## `mod_floor_i16_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      7
-Total Cycles:      7
-Total uOps:        7
-
-Dispatch Width:    6
-uOps Per Cycle:    1.00
-IPC:               1.00
-Block RThroughput: 1.3
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.25                        and	dl, 15
- 1      1     0.50                        mov	eax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	eax, cl
- 1      1     0.25                        not	eax
- 1      1     0.25                        and	eax, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   2.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
-```
-## `mod_floor_i32_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.50                        mov	eax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	eax, cl
- 1      1     0.25                        not	eax
- 1      1     0.25                        and	eax, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
-```
-## `mod_floor_i32_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8d, ecx
- 1      1     0.50                        mov	eax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	eax, cl
- 1      1     0.25                        not	eax
- 1      1     0.25                        and	eax, r8d
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
-```
-## `mod_floor_i64_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8, rcx
- 1      1     0.50                        mov	rax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	rax, cl
- 1      1     0.25                        not	rax
- 1      1     0.25                        and	rax, r8
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
-```
-## `mod_floor_i64_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      6
-Total Cycles:      7
-Total uOps:        6
-
-Dispatch Width:    6
-uOps Per Cycle:    0.86
-IPC:               0.86
-Block RThroughput: 1.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r8, rcx
- 1      1     0.50                        mov	rax, -1
- 1      0     0.17                        mov	ecx, edx
- 1      1     0.50                        shl	rax, cl
- 1      1     0.25                        not	rax
- 1      1     0.25                        and	rax, r8
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
-```
-## `mod_floor_i128_pow2`
-```asm
-Iterations:        1
-Instructions:      13
-Total Cycles:      8
-Total uOps:        13
-
-Dispatch Width:    6
-uOps Per Cycle:    1.63
-IPC:               1.63
-Block RThroughput: 2.3
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9, rcx
- 1      1     0.50                        mov	r10, -1
- 1      1     0.50                        mov	r11, -1
- 1      0     0.17                        mov	ecx, r8d
- 1      1     0.50                        shl	r11, cl
- 1      0     0.17                        xor	eax, eax
- 1      1     0.25                        test	r8b, 64
- 1      1     0.50                        cmove	rax, r11
- 1      1     0.50                        cmove	r11, r10
- 1      1     0.25                        not	r11
- 1      1     0.25                        not	rax
- 1      1     0.25                        and	rax, r9
- 1      1     0.25                        and	rdx, r11
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   2.00   4.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r11
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
-```
-## `mod_floor_i128_unb_pow2`
-```asm
-Iterations:        1
-Instructions:      13
-Total Cycles:      8
-Total uOps:        13
-
-Dispatch Width:    6
-uOps Per Cycle:    1.63
-IPC:               1.63
-Block RThroughput: 2.3
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      0     0.17                        mov	r9, rcx
- 1      1     0.50                        mov	r10, -1
- 1      1     0.50                        mov	r11, -1
- 1      0     0.17                        mov	ecx, r8d
- 1      1     0.50                        shl	r11, cl
- 1      0     0.17                        xor	eax, eax
- 1      1     0.25                        test	r8b, 64
- 1      1     0.50                        cmove	rax, r11
- 1      1     0.50                        cmove	r11, r10
- 1      1     0.25                        not	r11
- 1      1     0.25                        not	rax
- 1      1     0.25                        and	rax, r9
- 1      1     0.25                        and	rdx, r11
-
-Resources:
-
-Resource pressure per iteration:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     2.00   2.00   4.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
- -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
- -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r11
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
-```
 ## `mul_i8_pow2`
 ```asm
 Iterations:        1
@@ -10326,6 +11128,2090 @@ Resource pressure by instruction:
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rdx, r9
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r9
 ```
+## `rem_floor_i8_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	al, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      1     0.25                        not	al
+ 1      1     0.25                        and	al, r8b
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	al
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, r8b
+```
+## `rem_floor_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      7
+Total Cycles:      7
+Total uOps:        7
+
+Dispatch Width:    6
+uOps Per Cycle:    1.00
+IPC:               1.00
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 7
+ 1      1     1.00                        mov	al, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      1     0.25                        not	al
+ 1      1     0.25                        and	al, r8b
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   4.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	al
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, r8b
+```
+## `rem_floor_i16_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        not	eax
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `rem_floor_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      7
+Total Cycles:      7
+Total uOps:        7
+
+Dispatch Width:    6
+uOps Per Cycle:    1.00
+IPC:               1.00
+Block RThroughput: 1.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 15
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        not	eax
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   2.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `rem_floor_i32_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        not	eax
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `rem_floor_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        not	eax
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `rem_floor_i64_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      1     0.25                        not	rax
+ 1      1     0.25                        and	rax, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
+```
+## `rem_floor_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      6
+Total Cycles:      7
+Total uOps:        6
+
+Dispatch Width:    6
+uOps Per Cycle:    0.86
+IPC:               0.86
+Block RThroughput: 1.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      1     0.25                        not	rax
+ 1      1     0.25                        and	rax, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   1.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
+```
+## `rem_floor_i128_pow2`
+```asm
+Iterations:        1
+Instructions:      13
+Total Cycles:      8
+Total uOps:        13
+
+Dispatch Width:    6
+uOps Per Cycle:    1.63
+IPC:               1.63
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9, rcx
+ 1      1     0.50                        mov	r10, -1
+ 1      1     0.50                        mov	r11, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r11, cl
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmove	rax, r11
+ 1      1     0.50                        cmove	r11, r10
+ 1      1     0.25                        not	r11
+ 1      1     0.25                        not	rax
+ 1      1     0.25                        and	rax, r9
+ 1      1     0.25                        and	rdx, r11
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   4.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r11
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+```
+## `rem_floor_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      13
+Total Cycles:      8
+Total uOps:        13
+
+Dispatch Width:    6
+uOps Per Cycle:    1.63
+IPC:               1.63
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9, rcx
+ 1      1     0.50                        mov	r10, -1
+ 1      1     0.50                        mov	r11, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r11, cl
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmove	rax, r11
+ 1      1     0.50                        cmove	r11, r10
+ 1      1     0.25                        not	r11
+ 1      1     0.25                        not	rax
+ 1      1     0.25                        and	rax, r9
+ 1      1     0.25                        and	rdx, r11
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   4.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r11
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r11, r10
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r11
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+```
+## `rem_i8_pow2`
+```asm
+Iterations:        1
+Instructions:      16
+Total Cycles:      11
+Total uOps:        16
+
+Dispatch Width:    6
+uOps Per Cycle:    1.45
+IPC:               1.45
+Block RThroughput: 3.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     1.00                        mov	r8b, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8b, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.25                        not	cl
+ 1      0     0.17                        mov	edx, eax
+ 1      1     0.25                        and	dl, cl
+ 1      1     0.25                        add	cl, al
+ 1      1     0.25                        and	cl, r8b
+ 1      0     0.17                        mov	r8d, eax
+ 1      1     0.25                        sub	r8b, cl
+ 1      1     0.25                        test	al, al
+ 1      1     0.25                        movzx	ecx, r8b
+ 1      1     0.25                        movzx	eax, dl
+ 1      1     0.50                        cmovs	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   3.00   3.00   6.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, al
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	cl, r8b
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8b, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	al, al
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8b
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovs	eax, ecx
+```
+## `rem_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      17
+Total Cycles:      11
+Total uOps:        17
+
+Dispatch Width:    6
+uOps Per Cycle:    1.55
+IPC:               1.55
+Block RThroughput: 3.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        and	dl, 7
+ 1      1     1.00                        mov	r8b, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8b, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.25                        not	cl
+ 1      0     0.17                        mov	edx, eax
+ 1      1     0.25                        and	dl, cl
+ 1      1     0.25                        add	cl, al
+ 1      1     0.25                        and	cl, r8b
+ 1      0     0.17                        mov	r8d, eax
+ 1      1     0.25                        sub	r8b, cl
+ 1      1     0.25                        test	al, al
+ 1      1     0.25                        movzx	ecx, r8b
+ 1      1     0.25                        movzx	eax, dl
+ 1      1     0.50                        cmovs	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     3.00   3.00   5.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, al
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	cl, r8b
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8b, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	al, al
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8b
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovs	eax, ecx
+```
+## `rem_i16_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      10
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.25                        and	edx, ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	ecx, eax
+ 1      0     0.17                        mov	eax, r8d
+ 1      1     0.25                        sub	eax, ecx
+ 1      1     0.25                        test	r8w, r8w
+ 1      1     0.50                        cmovns	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8w, r8w
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	eax, edx
+```
+## `rem_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 15
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.25                        and	edx, ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	ecx, eax
+ 1      0     0.17                        mov	eax, r8d
+ 1      1     0.25                        sub	eax, ecx
+ 1      1     0.25                        test	r8w, r8w
+ 1      1     0.50                        cmovns	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     3.00   2.00   3.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8w, r8w
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	eax, edx
+```
+## `rem_i32_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      10
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.25                        and	edx, ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	ecx, eax
+ 1      0     0.17                        mov	eax, r8d
+ 1      1     0.25                        sub	eax, ecx
+ 1      1     0.25                        test	r8d, r8d
+ 1      1     0.50                        cmovns	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8d, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	eax, edx
+```
+## `rem_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      10
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.25                        not	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.25                        and	edx, ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        and	ecx, eax
+ 1      0     0.17                        mov	eax, r8d
+ 1      1     0.25                        sub	eax, ecx
+ 1      1     0.25                        test	r8d, r8d
+ 1      1     0.50                        cmovns	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, eax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8d, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	eax, edx
+```
+## `rem_i64_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      10
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.25                        not	rcx
+ 1      0     0.17                        mov	rdx, r8
+ 1      1     0.25                        and	rdx, rcx
+ 1      1     0.25                        add	rcx, r8
+ 1      1     0.25                        and	rcx, rax
+ 1      0     0.17                        mov	rax, r8
+ 1      1     0.25                        sub	rax, rcx
+ 1      1     0.25                        test	r8, r8
+ 1      1     0.50                        cmovns	rax, rdx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, rax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rax, rdx
+```
+## `rem_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      10
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.40
+IPC:               1.40
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.25                        not	rcx
+ 1      0     0.17                        mov	rdx, r8
+ 1      1     0.25                        and	rdx, rcx
+ 1      1     0.25                        add	rcx, r8
+ 1      1     0.25                        and	rcx, rax
+ 1      0     0.17                        mov	rax, r8
+ 1      1     0.25                        sub	rax, rcx
+ 1      1     0.25                        test	r8, r8
+ 1      1     0.50                        cmovns	rax, rdx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, rax
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rax, rdx
+```
+## `rem_i128_pow2`
+```asm
+Iterations:        1
+Instructions:      30
+Total Cycles:      12
+Total uOps:        30
+
+Dispatch Width:    6
+uOps Per Cycle:    2.50
+IPC:               2.50
+Block RThroughput: 5.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.50                        mov	r9, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r9, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmove	rcx, r9
+ 1      1     0.50                        mov	r8, -1
+ 1      1     0.50                        cmove	r9, r8
+ 1      0     0.17                        mov	r8, r9
+ 1      1     0.25                        not	r8
+ 1      0     0.17                        mov	r10, rcx
+ 1      1     0.25                        not	r10
+ 1      0     0.17                        mov	r11, rax
+ 1      1     0.25                        and	r11, r10
+ 1      0     0.17                        mov	rsi, rdx
+ 1      1     0.25                        and	rsi, r8
+ 1      1     0.25                        add	r10, rax
+ 1      1     1.00                        adc	r8, rdx
+ 1      1     0.25                        and	r8, r9
+ 1      1     0.25                        and	r10, rcx
+ 1      1     0.25                        sub	rax, r10
+ 1      0     0.17                        mov	rcx, rdx
+ 1      1     1.00                        sbb	rcx, r8
+ 1      1     0.25                        test	rdx, rdx
+ 1      1     0.50                        cmovns	rcx, rsi
+ 1      1     0.50                        cmovns	rax, r11
+ 1      0     0.17                        mov	rdx, rcx
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   6.00   7.00   7.00   7.00    -      -      -      -      -      -      -      -      -     1.00   2.00    -      -     1.00    -     2.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rcx, r9
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, -1
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r9, r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, r9
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r11, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rsi, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r10, rax
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r8, rdx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r9
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r10, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rdx
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rcx, rsi
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rax, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rsi
+```
+## `rem_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      30
+Total Cycles:      12
+Total uOps:        30
+
+Dispatch Width:    6
+uOps Per Cycle:    2.50
+IPC:               2.50
+Block RThroughput: 5.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.50                        mov	r9, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r9, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmove	rcx, r9
+ 1      1     0.50                        mov	r8, -1
+ 1      1     0.50                        cmove	r9, r8
+ 1      0     0.17                        mov	r8, r9
+ 1      1     0.25                        not	r8
+ 1      0     0.17                        mov	r10, rcx
+ 1      1     0.25                        not	r10
+ 1      0     0.17                        mov	r11, rax
+ 1      1     0.25                        and	r11, r10
+ 1      0     0.17                        mov	rsi, rdx
+ 1      1     0.25                        and	rsi, r8
+ 1      1     0.25                        add	r10, rax
+ 1      1     1.00                        adc	r8, rdx
+ 1      1     0.25                        and	r8, r9
+ 1      1     0.25                        and	r10, rcx
+ 1      1     0.25                        sub	rax, r10
+ 1      0     0.17                        mov	rcx, rdx
+ 1      1     1.00                        sbb	rcx, r8
+ 1      1     0.25                        test	rdx, rdx
+ 1      1     0.50                        cmovns	rcx, rsi
+ 1      1     0.50                        cmovns	rax, r11
+ 1      0     0.17                        mov	rdx, rcx
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   6.00   7.00   7.00   7.00    -      -      -      -      -      -      -      -      -     1.00   2.00    -      -     1.00    -     2.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rcx, r9
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, -1
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r9, r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, r9
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r11, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rsi, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r10, rax
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r8, rdx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r9
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r10, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rdx
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rcx, rsi
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovns	rax, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rsi
+```
+## `round_to_multiple_i8_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      12
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.25
+IPC:               1.25
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	al, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	cl
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	dl, 7
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	cl, dl
+ 1      1     0.25                        movzx	ecx, cl
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.25                        add	cl, r8b
+ 1      1     0.25                        neg	al
+ 1      1     0.25                        and	al, cl
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   3.00   6.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl, 7
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	cl, dl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, r8b
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, cl
+```
+## `round_to_multiple_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      16
+Total Cycles:      12
+Total uOps:        16
+
+Dispatch Width:    6
+uOps Per Cycle:    1.33
+IPC:               1.33
+Block RThroughput: 2.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 7
+ 1      1     1.00                        mov	al, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	cl
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	dl, 7
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	cl, dl
+ 1      1     0.25                        movzx	ecx, cl
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.25                        add	cl, r8b
+ 1      1     0.25                        neg	al
+ 1      1     0.25                        and	al, cl
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   3.00   6.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl, 7
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	cl, dl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, r8b
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, cl
+```
+## `round_to_multiple_i16_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      11
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.27
+IPC:               1.27
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        movzx	ecx, r8w
+ 1      1     0.25                        movzx	edx, ax
+ 1      1     0.50                        shr	edx
+ 1      1     0.50                        shr	ecx, 15
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	dx, cx
+ 1      1     0.50                        cmovb	edx, r9d
+ 1      1     0.25                        add	edx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   3.00   3.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8w
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	edx, ax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx, 15
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	dx, cx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	edx, r9d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, edx
+```
+## `round_to_multiple_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 15
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        movzx	ecx, r8w
+ 1      0     0.17                        mov	edx, eax
+ 1      1     0.50                        shr	edx
+ 1      1     0.50                        shr	ecx, 15
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	dx, cx
+ 1      1     0.50                        cmovb	edx, r9d
+ 1      1     0.25                        add	edx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, edx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   3.00   4.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8w
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx, 15
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	dx, cx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	edx, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, edx
+```
+## `round_to_multiple_i32_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      11
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.27
+IPC:               1.27
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	edx, 31
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	ecx, edx
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx, 31
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	ecx, edx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      11
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.27
+IPC:               1.27
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	ecx
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	edx, 31
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	ecx, edx
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx, 31
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	ecx, edx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_i64_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      11
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.27
+IPC:               1.27
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.50                        shr	rcx
+ 1      0     0.17                        mov	rdx, r8
+ 1      1     0.50                        shr	rdx, 63
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	rcx, rdx
+ 1      1     0.50                        cmovae	r9, rcx
+ 1      1     0.25                        add	r9, r8
+ 1      1     0.25                        neg	rax
+ 1      1     0.25                        and	rax, r9
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rcx, rdx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovae	r9, rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
+```
+## `round_to_multiple_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      14
+Total Cycles:      11
+Total uOps:        14
+
+Dispatch Width:    6
+uOps Per Cycle:    1.27
+IPC:               1.27
+Block RThroughput: 2.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.50                        shr	rcx
+ 1      0     0.17                        mov	rdx, r8
+ 1      1     0.50                        shr	rdx, 63
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	rcx, rdx
+ 1      1     0.50                        cmovae	r9, rcx
+ 1      1     0.25                        add	r9, r8
+ 1      1     0.25                        neg	rax
+ 1      1     0.25                        and	rax, r9
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     2.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rcx, rdx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovae	r9, rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
+```
+## `round_to_multiple_i128_pow2`
+```asm
+Iterations:        1
+Instructions:      29
+Total Cycles:      16
+Total uOps:        36
+
+Dispatch Width:    6
+uOps Per Cycle:    2.25
+IPC:               1.81
+Block RThroughput: 6.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      0     0.17                        mov	r9d, r8d
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        xor	r10d, r10d
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	r10, rax, cl
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	r10, rax
+ 1      1     0.50                        cmovne	rax, rcx
+ 1      0     0.17                        mov	r9, r10
+ 1      1     0.50                        shr	r9
+ 1      0     0.17                        mov	r11, r10
+ 4      2     1.50                        shld	r11, rax, 63
+ 1      0     0.17                        mov	rsi, rdx
+ 1      1     0.50                        shr	rsi, 63
+ 1      1     0.25                        sub	r11, rsi
+ 1      1     1.00                        sbb	r9, 0
+ 1      1     0.50                        cmovb	r9, rcx
+ 1      1     0.50                        cmovb	r11, rcx
+ 1      1     0.25                        add	r11, r8
+ 1      1     1.00                        adc	rdx, r9
+ 1      1     0.25                        neg	rax
+ 1      1     1.00                        sbb	rcx, r10
+ 1      1     0.25                        and	rdx, rcx
+ 1      1     0.25                        and	rax, r11
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   5.00   6.00   10.00  12.00   -      -      -      -      -      -      -      -      -     1.00   2.00    -      -     1.00    -     2.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, r8d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r10, rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rax, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r10
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, r10
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r11, rax, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rsi, 63
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r11, rsi
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r9, 0
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r9, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r11, rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r11, r8
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rdx, r9
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, r10
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r11
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rsi
+```
+## `round_to_multiple_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      29
+Total Cycles:      16
+Total uOps:        36
+
+Dispatch Width:    6
+uOps Per Cycle:    2.25
+IPC:               1.81
+Block RThroughput: 6.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      0     0.17                        mov	r9d, r8d
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        xor	r10d, r10d
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	r10, rax, cl
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	r10, rax
+ 1      1     0.50                        cmovne	rax, rcx
+ 1      0     0.17                        mov	r9, r10
+ 1      1     0.50                        shr	r9
+ 1      0     0.17                        mov	r11, r10
+ 4      2     1.50                        shld	r11, rax, 63
+ 1      0     0.17                        mov	rsi, rdx
+ 1      1     0.50                        shr	rsi, 63
+ 1      1     0.25                        sub	r11, rsi
+ 1      1     1.00                        sbb	r9, 0
+ 1      1     0.50                        cmovb	r9, rcx
+ 1      1     0.50                        cmovb	r11, rcx
+ 1      1     0.25                        add	r11, r8
+ 1      1     1.00                        adc	rdx, r9
+ 1      1     0.25                        neg	rax
+ 1      1     1.00                        sbb	rcx, r10
+ 1      1     0.25                        and	rdx, rcx
+ 1      1     0.25                        and	rax, r11
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   5.00   6.00   10.00  12.00   -      -      -      -      -      -      -      -      -     1.00   2.00    -      -     1.00    -     2.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, r8d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r10, rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rax, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r10
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, r10
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r11, rax, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rsi, 63
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r11, rsi
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r9, 0
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r9, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r11, rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r11, r8
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rdx, r9
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, r10
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r11
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rsi
+```
+## `round_to_multiple_u8_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	al, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	cl
+ 1      1     0.25                        add	cl, r8b
+ 1      1     0.25                        neg	al
+ 1      1     0.25                        and	al, cl
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   2.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, r8b
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	al
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, cl
+```
+## `round_to_multiple_u8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      8
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.25
+IPC:               1.25
+Block RThroughput: 2.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 7
+ 1      1     1.00                        mov	al, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	cl
+ 1      1     0.25                        add	cl, r8b
+ 1      1     0.25                        neg	al
+ 1      1     0.25                        and	al, cl
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   5.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 7
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, r8b
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, cl
+```
+## `round_to_multiple_u16_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      9
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.00
+IPC:               1.00
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.25                        movzx	ecx, ax
+ 1      1     0.50                        shr	ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, ax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_u16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      8
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.25
+IPC:               1.25
+Block RThroughput: 1.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.25                        and	dl, 15
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, 15
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_u32_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_u32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      0     0.17                        mov	ecx, eax
+ 1      1     0.50                        shr	ecx
+ 1      1     0.25                        add	ecx, r8d
+ 1      1     0.25                        neg	eax
+ 1      1     0.25                        and	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+```
+## `round_to_multiple_u64_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	rcx, r8
+ 1      1     0.25                        neg	rax
+ 1      1     0.25                        and	rax, rcx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, rcx
+```
+## `round_to_multiple_u64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      0     0.17                        mov	rcx, rax
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	rcx, r8
+ 1      1     0.25                        neg	rax
+ 1      1     0.25                        and	rax, rcx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   1.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, rcx
+```
+## `round_to_multiple_u128_pow2`
+```asm
+Iterations:        1
+Instructions:      20
+Total Cycles:      12
+Total uOps:        27
+
+Dispatch Width:    6
+uOps Per Cycle:    2.25
+IPC:               1.67
+Block RThroughput: 4.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        xor	r10d, r10d
+ 1      0     0.17                        mov	ecx, r8d
+ 5      2     1.50                        shld	r10, rax, cl
+ 1      0     0.17                        xor	r11d, r11d
+ 1      1     0.50                        shl	rax, cl
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmovne	r10, rax
+ 1      1     0.50                        cmovne	rax, r11
+ 1      0     0.17                        mov	rcx, r10
+ 1      0     0.17                        mov	r8, r10
+ 4      2     1.50                        shld	r8, rax, 63
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	r8, r9
+ 1      1     1.00                        adc	rdx, rcx
+ 1      1     0.25                        neg	rax
+ 1      1     1.00                        sbb	r11, r10
+ 1      1     0.25                        and	rdx, r11
+ 1      1     0.25                        and	rax, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     4.00   6.00   7.00   8.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r10, rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rax, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, r10
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r8, rax, 63
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r8, r9
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rdx, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r11, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
+```
+## `round_to_multiple_u128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      20
+Total Cycles:      12
+Total uOps:        27
+
+Dispatch Width:    6
+uOps Per Cycle:    2.25
+IPC:               1.67
+Block RThroughput: 4.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9, rcx
+ 1      1     0.50                        mov	eax, 1
+ 1      0     0.17                        xor	r10d, r10d
+ 1      0     0.17                        mov	ecx, r8d
+ 5      2     1.50                        shld	r10, rax, cl
+ 1      0     0.17                        xor	r11d, r11d
+ 1      1     0.50                        shl	rax, cl
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmovne	r10, rax
+ 1      1     0.50                        cmovne	rax, r11
+ 1      0     0.17                        mov	rcx, r10
+ 1      0     0.17                        mov	r8, r10
+ 4      2     1.50                        shld	r8, rax, 63
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	r8, r9
+ 1      1     1.00                        adc	rdx, rcx
+ 1      1     0.25                        neg	rax
+ 1      1     1.00                        sbb	r11, r10
+ 1      1     0.25                        and	rdx, r11
+ 1      1     0.25                        and	rax, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     4.00   6.00   7.00   8.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r10, rax, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r10, rax
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rax, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, r10
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r8, rax, 63
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r8, r9
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rdx, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r11, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r11
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
+```
 ## `unbounded_ceil_to_multiple_i8_unb_pow2`
 ```asm
 Iterations:        1
@@ -10343,7 +13229,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 8
- 1      1     0.50                        jae	.LBB209_1
+ 1      1     0.50                        jae	.LBB257_1
  1      1     1.00                        mov	r9b, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9b, cl
@@ -10369,7 +13255,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB209_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB257_1
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
@@ -10402,7 +13288,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 16
- 1      1     0.50                        jae	.LBB206_1
+ 1      1     0.50                        jae	.LBB254_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9d, cl
@@ -10430,7 +13316,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB206_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB254_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -10465,7 +13351,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 32
- 1      1     0.50                        jae	.LBB207_1
+ 1      1     0.50                        jae	.LBB255_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9d, cl
@@ -10493,7 +13379,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB207_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB255_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -10528,7 +13414,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8, rcx
  1      1     0.25                        cmp	dl, 64
- 1      1     0.50                        jae	.LBB208_1
+ 1      1     0.50                        jae	.LBB256_1
  1      1     0.50                        mov	r9, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9, cl
@@ -10556,7 +13442,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB208_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB256_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
@@ -10592,7 +13478,7 @@ Instruction Info:
  1      1     1.00           *            push	rsi
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB205_4
+ 1      1     0.50                        js	.LBB253_4
  1      1     0.50                        mov	r10, -1
  1      0     0.17                        mov	ecx, r9d
  1      1     0.50                        shl	r10, cl
@@ -10608,7 +13494,7 @@ Instruction Info:
  1      1     0.25                        not	rsi
  1      1     0.25                        add	rdx, rsi
  1      1     1.00                        adc	r8, r11
- 1      1     0.50                        jo	.LBB205_5
+ 1      1     0.50                        jo	.LBB253_5
  1      1     0.25                        and	rdx, r9
  1      1     0.25                        and	r8, r10
  1      0     0.17                        mov	rcx, rdx
@@ -10623,7 +13509,7 @@ Instruction Info:
  1      1     0.25                        cmp	rdx, 1
  1      1     1.00                        sbb	r8, 0
  1      1     0.50                        mov	r8d, 0
- 1      1     0.50                        jl	.LBB205_3
+ 1      1     0.50                        jl	.LBB253_3
  1      1     1.00           *            mov	qword ptr [rax], rcx
  1      1     1.00           *            mov	qword ptr [rax + 8], 0
  1      5     0.33    *                   pop	rsi
@@ -10639,7 +13525,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB205_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB253_4
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
@@ -10655,7 +13541,7 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rsi
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, rsi
  -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r8, r11
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB205_5
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB253_5
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r9
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r10
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rdx
@@ -10670,7 +13556,7 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	rdx, 1
  -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r8, 0
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 0
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jl	.LBB205_3
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jl	.LBB253_3
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax], rcx
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 8], 0
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -     1.00    -      -      -      -     pop	rsi
@@ -10692,7 +13578,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        cmp	dl, 8
- 1      1     0.50                        jae	.LBB214_1
+ 1      1     0.50                        jae	.LBB262_1
  1      1     1.00                        mov	r8b, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r8b, cl
@@ -10717,7 +13603,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB214_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB262_1
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
@@ -10749,7 +13635,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        cmp	dl, 16
- 1      1     0.50                        jae	.LBB211_1
+ 1      1     0.50                        jae	.LBB259_1
  1      1     0.50                        mov	r8d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r8d, cl
@@ -10776,7 +13662,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB211_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB259_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
@@ -10810,7 +13696,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        cmp	dl, 32
- 1      1     0.50                        jae	.LBB212_1
+ 1      1     0.50                        jae	.LBB260_1
  1      1     0.50                        mov	r8d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r8d, cl
@@ -10837,7 +13723,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB212_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB260_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
@@ -10871,7 +13757,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        cmp	dl, 64
- 1      1     0.50                        jae	.LBB213_1
+ 1      1     0.50                        jae	.LBB261_1
  1      1     0.50                        mov	r8, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r8, cl
@@ -10898,7 +13784,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB213_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB261_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8, cl
@@ -10933,7 +13819,7 @@ Instruction Info:
  1      1     1.00           *            push	rsi
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB210_4
+ 1      1     0.50                        js	.LBB258_4
  1      1     0.50                        mov	r10, -1
  1      0     0.17                        mov	ecx, r9d
  1      1     0.50                        shl	r10, cl
@@ -10949,7 +13835,7 @@ Instruction Info:
  1      1     0.25                        not	rsi
  1      1     0.25                        add	rdx, rsi
  1      1     1.00                        adc	r8, r11
- 1      1     0.50                        jb	.LBB210_5
+ 1      1     0.50                        jb	.LBB258_5
  1      1     0.25                        and	rdx, r9
  1      1     0.25                        and	r8, r10
  1      0     0.17                        mov	rcx, rdx
@@ -10963,7 +13849,7 @@ Instruction Info:
  1      0     0.17                        xor	ecx, ecx
  1      1     0.25                        or	rdx, r8
  1      1     0.50                        mov	r8d, 0
- 1      1     0.50                        je	.LBB210_3
+ 1      1     0.50                        je	.LBB258_3
  1      1     1.00           *            mov	qword ptr [rax], rcx
  1      1     1.00           *            mov	qword ptr [rax + 8], 0
  1      5     0.33    *                   pop	rsi
@@ -10979,7 +13865,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB210_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB258_4
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
@@ -10995,7 +13881,7 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rsi
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, rsi
  -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r8, r11
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB210_5
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB258_5
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r9
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r10
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rdx
@@ -11009,7 +13895,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	rdx, r8
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 0
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     je	.LBB210_3
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     je	.LBB258_3
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax], rcx
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 8], 0
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -     1.00    -      -      -      -     pop	rsi
@@ -11031,7 +13917,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 8
- 1      1     0.50                        jae	.LBB219_1
+ 1      1     0.50                        jae	.LBB267_1
  1      1     1.00                        mov	r9b, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9b, cl
@@ -11055,7 +13941,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB219_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB267_1
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
@@ -11087,7 +13973,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	edx, ecx
  1      1     0.25                        cmp	r8b, 16
- 1      1     0.50                        jae	.LBB216_1
+ 1      1     0.50                        jae	.LBB264_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9d, cl
@@ -11113,7 +13999,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 16
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB216_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB264_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -11146,7 +14032,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	edx, ecx
  1      1     0.25                        cmp	r8b, 32
- 1      1     0.50                        jae	.LBB217_1
+ 1      1     0.50                        jae	.LBB265_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9d, cl
@@ -11172,7 +14058,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 32
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB217_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB265_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -11205,7 +14091,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	rdx, rcx
  1      1     0.25                        cmp	r8b, 64
- 1      1     0.50                        jae	.LBB218_1
+ 1      1     0.50                        jae	.LBB266_1
  1      1     0.50                        mov	r9, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9, cl
@@ -11231,7 +14117,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 64
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB218_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB266_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
@@ -11267,7 +14153,7 @@ Instruction Info:
  1      0     0.17                        mov	rax, rdx
  1      0     0.17                        mov	r8, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB215_1
+ 1      1     0.50                        js	.LBB263_1
  1      1     0.50                        mov	r11, -1
  1      0     0.17                        mov	ecx, r9d
  1      1     0.50                        shl	r11, cl
@@ -11319,7 +14205,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rdx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB215_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB263_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
@@ -11374,7 +14260,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 8
- 1      1     0.50                        jae	.LBB224_1
+ 1      1     0.50                        jae	.LBB272_1
  1      1     1.00                        mov	r9b, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9b, cl
@@ -11398,7 +14284,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB224_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB272_1
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
@@ -11430,7 +14316,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	edx, ecx
  1      1     0.25                        cmp	r8b, 16
- 1      1     0.50                        jae	.LBB221_1
+ 1      1     0.50                        jae	.LBB269_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9d, cl
@@ -11456,7 +14342,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 16
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB221_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB269_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -11489,7 +14375,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	edx, ecx
  1      1     0.25                        cmp	r8b, 32
- 1      1     0.50                        jae	.LBB222_1
+ 1      1     0.50                        jae	.LBB270_1
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9d, cl
@@ -11515,7 +14401,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 32
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB222_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB270_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -11548,7 +14434,7 @@ Instruction Info:
  1      0     0.17                        mov	r8d, edx
  1      0     0.17                        mov	rdx, rcx
  1      1     0.25                        cmp	r8b, 64
- 1      1     0.50                        jae	.LBB223_1
+ 1      1     0.50                        jae	.LBB271_1
  1      1     0.50                        mov	r9, -1
  1      0     0.17                        mov	ecx, r8d
  1      1     0.50                        shl	r9, cl
@@ -11574,7 +14460,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 64
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB223_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB271_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
@@ -11608,7 +14494,7 @@ Instruction Info:
  1      0     0.17                        mov	eax, r8d
  1      0     0.17                        mov	r8, rcx
  1      1     0.25                        test	al, al
- 1      1     0.50                        js	.LBB220_1
+ 1      1     0.50                        js	.LBB268_1
  1      1     0.50                        mov	r11, -1
  1      0     0.17                        mov	ecx, eax
  1      1     0.50                        shl	r11, cl
@@ -11652,7 +14538,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, r8d
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	al, al
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB220_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB268_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
@@ -12094,10 +14980,10 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 7
- 1      1     0.50                        ja	.LBB239_1
+ 1      1     0.50                        ja	.LBB287_1
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        test	cl, cl
- 1      1     0.50                        js	.LBB239_4
+ 1      1     0.50                        js	.LBB287_4
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	al, cl
  1      5     0.50                  U     ret
@@ -12119,10 +15005,10 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB239_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB287_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	cl, cl
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB239_4
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB287_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	al, cl
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -12151,11 +15037,11 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 15
- 1      1     0.50                        ja	.LBB236_1
+ 1      1     0.50                        ja	.LBB284_1
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	ax, ax
- 1      1     0.50                        js	.LBB236_4
+ 1      1     0.50                        js	.LBB284_4
  1      1     0.25                        movzx	eax, ax
  1      1     0.50                        shr	eax, cl
  1      5     0.50                  U     ret
@@ -12177,11 +15063,11 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB236_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB284_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ax, ax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB236_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB284_4
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, ax
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
@@ -12211,13 +15097,13 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        cmp	dl, 31
- 1      1     0.50                        ja	.LBB237_4
+ 1      1     0.50                        ja	.LBB285_4
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        test	ecx, ecx
- 1      1     0.50                        js	.LBB237_2
+ 1      1     0.50                        js	.LBB285_2
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	r8d, cl
- 1      1     0.50                        jmp	.LBB237_3
+ 1      1     0.50                        jmp	.LBB285_3
  1      1     0.50                        mov	eax, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	eax, cl
@@ -12236,13 +15122,13 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB237_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB285_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ecx, ecx
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB237_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB285_2
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r8d, cl
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB237_3
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB285_3
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
@@ -12267,11 +15153,11 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 63
- 1      1     0.50                        ja	.LBB238_1
+ 1      1     0.50                        ja	.LBB286_1
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        test	rax, rax
- 1      1     0.50                        js	.LBB238_4
+ 1      1     0.50                        js	.LBB286_4
  1      1     0.50                        shr	rax, cl
  1      5     0.50                  U     ret
  1      0     0.17                        xor	eax, eax
@@ -12291,11 +15177,11 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB238_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB286_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rax, rax
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB238_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB286_4
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rax, cl
  -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
@@ -12322,10 +15208,10 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        test	r8b, r8b
- 1      1     0.50                        js	.LBB235_1
+ 1      1     0.50                        js	.LBB283_1
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	rdx, rdx
- 1      1     0.50                        js	.LBB235_4
+ 1      1     0.50                        js	.LBB283_4
  1      0     0.17                        mov	ecx, r8d
  5      2     1.50                        shrd	rax, rdx, cl
  1      1     0.50                        shr	rdx, cl
@@ -12368,10 +15254,10 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB235_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB283_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
- -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB235_4
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB283_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
  -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shrd	rax, rdx, cl
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, cl
@@ -12422,7 +15308,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 7
- 1      1     0.50                        ja	.LBB244_2
+ 1      1     0.50                        ja	.LBB292_2
  1      1     1.00                        mov	r9b, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9b, cl
@@ -12442,7 +15328,7 @@ Instruction Info:
  1      1     1.00                        adc	al, 0
  1      5     0.50                  U     ret
  1      1     0.25                        neg	r8b
- 1      1     0.50                        jno	.LBB244_3
+ 1      1     0.50                        jno	.LBB292_3
  1      1     0.25                        cmp	dl, 8
  1      1     1.00                        sete	al
  1      1     0.25                        neg	al
@@ -12459,7 +15345,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB244_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB292_2
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9b, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9b, cl
@@ -12479,7 +15365,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	al, 0
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB244_3
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB292_3
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	al
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	al
@@ -12503,7 +15389,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 15
- 1      1     0.50                        ja	.LBB241_2
+ 1      1     0.50                        ja	.LBB289_2
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9d, cl
@@ -12523,7 +15409,7 @@ Instruction Info:
  1      5     0.50                  U     ret
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        neg	r8w
- 1      1     0.50                        jno	.LBB241_4
+ 1      1     0.50                        jno	.LBB289_4
  1      1     0.25                        cmp	dl, 16
  1      1     1.00                        sete	al
  1      1     0.25                        neg	eax
@@ -12538,7 +15424,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB241_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB289_2
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -12558,7 +15444,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8w
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB241_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB289_4
  -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	al
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
@@ -12580,7 +15466,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8d, ecx
  1      1     0.25                        cmp	dl, 31
- 1      1     0.50                        ja	.LBB242_2
+ 1      1     0.50                        ja	.LBB290_2
  1      1     0.50                        mov	r9d, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9d, cl
@@ -12599,7 +15485,7 @@ Instruction Info:
  1      5     0.50                  U     ret
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        neg	r8d
- 1      1     0.50                        jno	.LBB242_4
+ 1      1     0.50                        jno	.LBB290_4
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        cmp	dl, 32
  1      1     1.00                        sete	al
@@ -12615,7 +15501,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB242_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB290_2
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
@@ -12634,7 +15520,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8d
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB242_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB290_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	al
@@ -12657,7 +15543,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r8, rcx
  1      1     0.25                        cmp	dl, 63
- 1      1     0.50                        ja	.LBB243_2
+ 1      1     0.50                        ja	.LBB291_2
  1      1     0.50                        mov	r9, -1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shl	r9, cl
@@ -12676,7 +15562,7 @@ Instruction Info:
  1      5     0.50                  U     ret
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        neg	r8
- 1      1     0.50                        jno	.LBB243_4
+ 1      1     0.50                        jno	.LBB291_4
  1      1     0.25                        cmp	dl, 64
  1      1     1.00                        sete	al
  1      1     0.25                        neg	rax
@@ -12691,7 +15577,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB243_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB291_2
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
@@ -12710,7 +15596,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB243_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jno	.LBB291_4
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	al
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
@@ -12732,7 +15618,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	r9, rcx
  1      1     0.25                        test	r8b, r8b
- 1      1     0.50                        js	.LBB240_2
+ 1      1     0.50                        js	.LBB288_2
  1      1     0.50                        mov	rax, -1
  1      1     0.50                        mov	r10, -1
  1      0     0.17                        mov	ecx, r8d
@@ -12777,7 +15663,7 @@ Instruction Info:
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        or	r9, rdx
  1      1     0.50                        mov	edx, 0
- 1      1     0.50                        jne	.LBB240_4
+ 1      1     0.50                        jne	.LBB288_4
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        neg	r8b
  1      1     1.00                        seto	al
@@ -12794,7 +15680,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB240_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB288_2
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
@@ -12839,7 +15725,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	r9, rdx
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, 0
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB240_4
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB288_4
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8b
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	al
@@ -12862,7 +15748,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 7
- 1      1     0.50                        ja	.LBB249_1
+ 1      1     0.50                        ja	.LBB297_1
  1      0     0.17                        mov	eax, ecx
  1      1     1.00                        mov	r8b, 1
  1      0     0.17                        mov	ecx, edx
@@ -12884,7 +15770,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB249_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB297_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, 1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
@@ -12913,7 +15799,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 15
- 1      1     0.50                        ja	.LBB246_1
+ 1      1     0.50                        ja	.LBB294_1
  1      0     0.17                        mov	eax, ecx
  1      1     0.50                        mov	r8d, 1
  1      0     0.17                        mov	ecx, edx
@@ -12938,7 +15824,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB246_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB294_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
@@ -12971,7 +15857,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        xor	eax, eax
  1      1     0.25                        cmp	dl, 31
- 1      1     0.50                        ja	.LBB247_2
+ 1      1     0.50                        ja	.LBB295_2
  1      0     0.17                        mov	r8d, ecx
  1      1     0.50                        mov	eax, 1
  1      0     0.17                        mov	ecx, edx
@@ -12993,7 +15879,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB247_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB295_2
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
@@ -13021,7 +15907,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 63
- 1      1     0.50                        ja	.LBB248_1
+ 1      1     0.50                        ja	.LBB296_1
  1      0     0.17                        mov	rax, rcx
  1      1     0.50                        mov	r8d, 1
  1      0     0.17                        mov	ecx, edx
@@ -13043,7 +15929,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB248_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB296_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
@@ -13075,7 +15961,7 @@ Instruction Info:
  1      1     1.00           *            push	rdi
  1      1     1.00           *            push	rbx
  1      1     0.25                        test	r8b, r8b
- 1      1     0.50                        js	.LBB245_1
+ 1      1     0.50                        js	.LBB293_1
  1      0     0.17                        mov	rax, rcx
  1      0     0.17                        mov	r11, rdx
  1      0     0.17                        mov	ecx, r8d
@@ -13129,7 +16015,7 @@ Resource pressure by instruction:
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     push	rdi
 1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   push	rbx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB245_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB293_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, rdx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
@@ -13238,7 +16124,7 @@ Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        cmp	dl, 16
- 1      1     0.50                        jae	.LBB251_1
+ 1      1     0.50                        jae	.LBB299_1
  1      0     0.17                        mov	eax, edx
  1      1     0.25                        movzx	edx, cx
  1      0     0.17                        mov	ecx, eax
@@ -13260,7 +16146,7 @@ Resource pressure per iteration:
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB251_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB299_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	edx, cx
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, eax
@@ -13290,7 +16176,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	eax, ecx
  1      1     0.25                        cmp	dl, 32
- 1      1     0.50                        jae	.LBB252_1
+ 1      1     0.50                        jae	.LBB300_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	eax, cl
  1      1     0.50                        shl	eax, cl
@@ -13311,7 +16197,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB252_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB300_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	eax, cl
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
@@ -13339,7 +16225,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        cmp	dl, 64
- 1      1     0.50                        jae	.LBB253_1
+ 1      1     0.50                        jae	.LBB301_1
  1      0     0.17                        mov	ecx, edx
  1      1     0.50                        shr	rax, cl
  1      1     0.50                        shl	rax, cl
@@ -13360,7 +16246,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB253_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jae	.LBB301_1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rax, cl
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
@@ -13388,7 +16274,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        test	r9b, r9b
- 1      1     0.50                        js	.LBB250_1
+ 1      1     0.50                        js	.LBB298_1
  1      1     0.50                        mov	r10, -1
  1      1     0.50                        mov	r11, -1
  1      0     0.17                        mov	ecx, r9d
@@ -13406,7 +16292,7 @@ Instruction Info:
  1      5     0.50                  U     ret
  1      1     0.25                        xorps	xmm0, xmm0
  1      1     0.25                        test	r8, r8
- 1      1     0.50                        js	.LBB250_2
+ 1      1     0.50                        js	.LBB298_2
  1      1     1.00           *            movups	xmmword ptr [rax + 8], xmm0
  1      1     1.00           *            mov	qword ptr [rax], 1
  1      1     1.00           *            mov	qword ptr [rax + 24], 0
@@ -13423,7 +16309,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB250_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB298_1
  -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
  -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11, -1
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
@@ -13441,7 +16327,7 @@ Resource pressure by instruction:
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     xorps	xmm0, xmm0
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB250_2
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB298_2
  -      -      -      -      -      -      -      -      -      -      -      -      -     1.00   1.00    -      -     1.00    -      -      -      -     1.00   movups	xmmword ptr [rax + 8], xmm0
  -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax], 1
  -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax + 24], 0
@@ -13742,21 +16628,20 @@ Resource pressure by instruction:
 ## `unbounded_is_multiple_of_i32_unb_pow2`
 ```asm
 Iterations:        1
-Instructions:      8
+Instructions:      7
 Total Cycles:      9
-Total uOps:        13
+Total uOps:        12
 
 Dispatch Width:    6
-uOps Per Cycle:    1.44
-IPC:               0.89
-Block RThroughput: 2.2
+uOps Per Cycle:    1.33
+IPC:               0.78
+Block RThroughput: 2.0
 
 Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        test	ecx, ecx
  1      1     1.00                        sete	r8b
- 1      1     0.50                        mov	eax, 32
  6      1     1.00                        rep		bsf	eax, ecx
  1      1     0.25                        movzx	ecx, dl
  1      1     0.25                        cmp	eax, ecx
@@ -13767,40 +16652,38 @@ Resources:
 
 Resource pressure per iteration:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     4.00   2.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+ -      -      -     4.00   1.00   2.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
 
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ecx, ecx
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	r8b
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 32
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     rep		bsf	eax, ecx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	eax, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	eax, ecx
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, r8b
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, r8b
 ```
 ## `unbounded_is_multiple_of_i64_unb_pow2`
 ```asm
 Iterations:        1
-Instructions:      8
+Instructions:      7
 Total Cycles:      9
-Total uOps:        13
+Total uOps:        12
 
 Dispatch Width:    6
-uOps Per Cycle:    1.44
-IPC:               0.89
-Block RThroughput: 2.2
+uOps Per Cycle:    1.33
+IPC:               0.78
+Block RThroughput: 2.0
 
 Instruction Info:
 
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      1     0.25                        test	rcx, rcx
  1      1     1.00                        sete	r8b
- 1      1     0.50                        mov	eax, 64
  6      1     1.00                        rep		bsf	rax, rcx
  1      1     0.25                        movzx	ecx, dl
- 1      1     0.25                        cmp	eax, ecx
+ 1      1     0.25                        cmp	rax, rcx
  1      1     1.00                        setae	al
  1      1     0.25                        or	al, r8b
 
@@ -13808,18 +16691,17 @@ Resources:
 
 Resource pressure per iteration:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
- -      -      -     4.00   2.00   3.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+ -      -      -     4.00   1.00   2.00   2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
 
 Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rcx, rcx
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	r8b
- -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 64
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     rep		bsf	rax, rcx
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	eax, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	rax, rcx
  -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
- -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, r8b
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, r8b
 ```
 ## `unbounded_is_multiple_of_i128_unb_pow2`
 ```asm
@@ -13838,7 +16720,7 @@ Instruction Info:
 [1]    [2]    [3]    [4]    [5]    [6]    Instructions:
  1      0     0.17                        mov	rax, rcx
  1      1     0.25                        or	rax, rdx
- 1      1     0.50                        je	.LBB260_1
+ 1      1     0.50                        je	.LBB308_1
  6      1     1.00                        rep		bsf	rax, rcx
  6      1     1.00                        rep		bsf	rdx, rdx
  1      1     0.25                        add	edx, 64
@@ -13860,7 +16742,7 @@ Resource pressure by instruction:
 [0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
  -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	rax, rdx
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     je	.LBB260_1
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     je	.LBB308_1
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     rep		bsf	rax, rcx
  -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     rep		bsf	rdx, rdx
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, 64
@@ -13871,4 +16753,1414 @@ Resource pressure by instruction:
  -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
  -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
  -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, 1
+```
+## `unbounded_rem_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB317_3
+ 1      1     1.00                        mov	r8b, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8b, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.25                        not	cl
+ 1      1     0.25                        test	al, al
+ 1      1     0.50                        js	.LBB317_2
+ 1      1     0.25                        and	al, cl
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	cl, al
+ 1      1     0.25                        and	cl, r8b
+ 1      1     0.25                        sub	al, cl
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   3.00   5.00   3.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB317_3
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	cl
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	al, al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB317_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, cl
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	cl, al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	cl, r8b
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	al, cl
+```
+## `unbounded_rem_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB314_3
+ 1      1     0.50                        mov	r8d, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.25                        not	ecx
+ 1      1     0.25                        test	ax, ax
+ 1      1     0.50                        js	.LBB314_2
+ 1      1     0.25                        and	eax, ecx
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	ecx, eax
+ 1      1     0.25                        and	r8d, ecx
+ 1      1     0.25                        sub	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   2.00   4.00   3.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB314_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ax, ax
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB314_2
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8d, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, r8d
+```
+## `unbounded_rem_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB315_3
+ 1      1     0.50                        mov	r8d, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.25                        not	ecx
+ 1      1     0.25                        test	eax, eax
+ 1      1     0.50                        js	.LBB315_2
+ 1      1     0.25                        and	eax, ecx
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	ecx, eax
+ 1      1     0.25                        and	ecx, r8d
+ 1      1     0.25                        sub	eax, ecx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   2.00   4.00   3.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB315_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	eax, eax
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB315_2
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, ecx
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	eax, ecx
+```
+## `unbounded_rem_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      15
+Total Cycles:      10
+Total uOps:        15
+
+Dispatch Width:    6
+uOps Per Cycle:    1.50
+IPC:               1.50
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB316_3
+ 1      1     0.50                        mov	r8, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8, cl
+ 1      0     0.17                        mov	rcx, r8
+ 1      1     0.25                        not	rcx
+ 1      1     0.25                        test	rax, rax
+ 1      1     0.50                        js	.LBB316_2
+ 1      1     0.25                        and	rax, rcx
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	rcx, rax
+ 1      1     0.25                        and	rcx, r8
+ 1      1     0.25                        sub	rax, rcx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   2.00   2.00   4.00   3.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB316_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r8
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rax, rax
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB316_2
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, rcx
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rcx, rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, rcx
+```
+## `unbounded_rem_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      26
+Total Cycles:      12
+Total uOps:        26
+
+Dispatch Width:    6
+uOps Per Cycle:    2.17
+IPC:               2.17
+Block RThroughput: 5.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r8b, r8b
+ 1      1     0.50                        js	.LBB313_3
+ 1      1     0.50                        mov	r9, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r9, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        cmove	rcx, r9
+ 1      1     0.50                        mov	r8, -1
+ 1      1     0.50                        cmove	r9, r8
+ 1      0     0.17                        mov	r8, r9
+ 1      1     0.25                        not	r8
+ 1      0     0.17                        mov	r10, rcx
+ 1      1     0.25                        not	r10
+ 1      1     0.25                        test	rdx, rdx
+ 1      1     0.50                        js	.LBB313_2
+ 1      1     0.25                        and	rax, r10
+ 1      1     0.25                        and	rdx, r8
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        add	r10, rax
+ 1      1     1.00                        adc	r8, rdx
+ 1      1     0.25                        and	r8, r9
+ 1      1     0.25                        and	r10, rcx
+ 1      1     0.25                        sub	rax, r10
+ 1      1     1.00                        sbb	rdx, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -     1.00   8.00   7.00   6.00   6.00   2.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB313_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rcx, r9
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, -1
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	r9, r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r8
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r10
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rdx, rdx
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB313_2
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r10
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
+ -      -     1.00   1.00    -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r10, rax
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r8, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r8, r9
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r10, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rax, r10
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rdx, r8
+```
+## `unbounded_rem_u8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      10
+Total Cycles:      9
+Total uOps:        10
+
+Dispatch Width:    6
+uOps Per Cycle:    1.11
+IPC:               1.11
+Block RThroughput: 2.5
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     1.00                        mov	al, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	al, cl
+ 1      1     0.25                        cmp	dl, 8
+ 1      1     0.25                        not	al
+ 1      1     0.25                        movzx	ecx, al
+ 1      1     0.50                        mov	eax, 255
+ 1      1     0.50                        cmovb	eax, ecx
+ 1      1     0.25                        and	al, r8b
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     3.00   2.00   2.00   5.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	al, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	al, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	al
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, al
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 255
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	eax, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	al, r8b
+```
+## `unbounded_rem_u16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	r9d, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r9d, cl
+ 1      1     0.25                        cmp	dl, 16
+ 1      1     0.25                        not	r9d
+ 1      1     0.50                        mov	eax, 65535
+ 1      1     0.50                        cmovb	eax, r9d
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     3.00   1.00   2.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r9d, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	r9d
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, 65535
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	eax, r9d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `unbounded_rem_u32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, ecx
+ 1      1     0.50                        mov	eax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	eax, cl
+ 1      1     0.50                        mov	ecx, -1
+ 1      1     0.25                        cmp	dl, 32
+ 1      1     0.25                        not	eax
+ 1      1     0.50                        cmovae	eax, ecx
+ 1      1     0.25                        and	eax, r8d
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   3.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, ecx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	eax, cl
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, -1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	eax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovae	eax, ecx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	eax, r8d
+```
+## `unbounded_rem_u64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      9
+Total Cycles:      8
+Total uOps:        9
+
+Dispatch Width:    6
+uOps Per Cycle:    1.13
+IPC:               1.13
+Block RThroughput: 1.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8, rcx
+ 1      1     0.50                        mov	rax, -1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	rax, cl
+ 1      1     0.50                        mov	rcx, -1
+ 1      1     0.25                        cmp	dl, 64
+ 1      1     0.25                        not	rax
+ 1      1     0.50                        cmovae	rax, rcx
+ 1      1     0.25                        and	rax, r8
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     1.00   2.00   3.00   3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	rax, cl
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, -1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovae	rax, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r8
+```
+## `unbounded_rem_u128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      17
+Total Cycles:      10
+Total uOps:        17
+
+Dispatch Width:    6
+uOps Per Cycle:    1.70
+IPC:               1.70
+Block RThroughput: 3.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r9, rcx
+ 1      1     0.50                        mov	r10, -1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	r10, cl
+ 1      0     0.17                        xor	eax, eax
+ 1      1     0.25                        test	r8b, 64
+ 1      1     0.50                        mov	rcx, -1
+ 1      1     0.50                        cmovne	rcx, r10
+ 1      1     0.50                        cmove	rax, r10
+ 1      1     0.50                        mov	r10, -1
+ 1      1     0.25                        not	rax
+ 1      1     0.25                        not	rcx
+ 1      1     0.25                        test	r8b, r8b
+ 1      1     0.50                        cmovs	rcx, r10
+ 1      1     0.50                        cmovs	rax, r10
+ 1      1     0.25                        and	rax, r9
+ 1      1     0.25                        and	rdx, rcx
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -      -      -     4.00   4.00   5.00   4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	eax, eax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, 64
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, -1
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rcx, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmove	rax, r10
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, -1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     not	rcx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8b, r8b
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovs	rcx, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovs	rax, r10
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rax, r9
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, rcx
+```
+## `unbounded_round_to_multiple_i8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      29
+Total Cycles:      17
+Total uOps:        29
+
+Dispatch Width:    6
+uOps Per Cycle:    1.71
+IPC:               1.71
+Block RThroughput: 6.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB327_5
+ 1      1     1.00                        mov	r8b, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8b, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shr	cl
+ 1      0     0.17                        mov	edx, eax
+ 1      1     0.50                        shr	dl, 7
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	cl, dl
+ 1      1     0.25                        movzx	ecx, cl
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.33                        lea	edx, [rax + rcx]
+ 1      1     0.25                        add	al, cl
+ 1      1     1.00                        seto	al
+ 1      1     0.50                        jo	.LBB327_2
+ 1      1     0.25                        neg	r8b
+ 1      1     0.25                        and	dl, r8b
+ 1      1     1.00                        xor	al, 1
+ 1      5     0.50                  U     ret
+ 1      1     1.00                        add	al, -128
+ 1      1     0.25                        xor	dl, 8
+ 1      1     0.25                        or	dl, al
+ 1      1     1.00                        setne	al
+ 1      0     0.17                        xor	edx, edx
+ 1      5     0.50                  U     ret
+ 1      1     1.00                        xor	al, 1
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+1.00   1.00   1.00   7.00   8.00   7.00   11.00  3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB327_5
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl, 7
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	cl, dl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     lea	edx, [rax + rcx]
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	al, cl
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB327_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8b
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r8b
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	al, -128
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	dl, 8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	dl, al
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+```
+## `unbounded_round_to_multiple_i16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      33
+Total Cycles:      20
+Total uOps:        33
+
+Dispatch Width:    6
+uOps Per Cycle:    1.65
+IPC:               1.65
+Block RThroughput: 5.8
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	r8d, edx
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB324_3
+ 1      1     0.50                        mov	edx, 1
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shl	edx, cl
+ 1      1     0.25                        movzx	r8d, dx
+ 1      1     0.50                        shr	r8d
+ 1      1     0.25                        movzx	ecx, ax
+ 1      1     0.50                        shr	ecx, 15
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	r8w, cx
+ 1      1     0.50                        cmovb	r8d, r9d
+ 1      1     0.33                        lea	ecx, [rax + r8]
+ 1      1     0.25                        add	ax, r8w
+ 1      1     1.00                        seto	al
+ 1      1     0.50                        jo	.LBB324_4
+ 1      1     0.25                        neg	edx
+ 1      1     0.25                        and	edx, ecx
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        neg	ax
+ 1      1     1.00                        setno	cl
+ 1      1     0.25                        cmp	r8b, 16
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+1.00   1.00   1.00   7.00   6.00   13.00  7.00   4.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, edx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB324_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	edx, cl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	r8d, dx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r8d
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, ax
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx, 15
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	r8w, cx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r8d, r9d
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     lea	ecx, [rax + r8]
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ax, r8w
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB324_4
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	edx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, ecx
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	ax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setno	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	r8b, 16
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_i32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      32
+Total Cycles:      20
+Total uOps:        32
+
+Dispatch Width:    6
+uOps Per Cycle:    1.60
+IPC:               1.60
+Block RThroughput: 5.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB325_5
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      0     0.17                        mov	ecx, r8d
+ 1      1     0.50                        shr	ecx
+ 1      0     0.17                        mov	edx, eax
+ 1      1     0.50                        shr	edx, 31
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	ecx, edx
+ 1      1     0.50                        cmovb	ecx, r9d
+ 1      1     0.33                        lea	edx, [rax + rcx]
+ 1      1     0.25                        add	ecx, eax
+ 1      1     1.00                        seto	al
+ 1      1     0.50                        jo	.LBB325_2
+ 1      1     0.25                        neg	r8d
+ 1      1     0.25                        and	edx, r8d
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        neg	eax
+ 1      1     1.00                        setno	cl
+ 1      1     0.25                        cmp	dl, 32
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+1.00   1.00   1.00   7.00   5.00   7.00   13.00  3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB325_5
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx, 31
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	ecx, edx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	ecx, r9d
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     lea	edx, [rax + rcx]
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	ecx, eax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB325_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	eax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setno	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_i64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      32
+Total Cycles:      20
+Total uOps:        32
+
+Dispatch Width:    6
+uOps Per Cycle:    1.60
+IPC:               1.60
+Block RThroughput: 5.3
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB326_5
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8, cl
+ 1      0     0.17                        mov	rcx, r8
+ 1      1     0.50                        shr	rcx
+ 1      0     0.17                        mov	rdx, rax
+ 1      1     0.50                        shr	rdx, 63
+ 1      0     0.17                        xor	r9d, r9d
+ 1      1     0.25                        sub	rcx, rdx
+ 1      1     0.50                        cmovae	r9, rcx
+ 1      1     0.33                        lea	rdx, [rax + r9]
+ 1      1     0.25                        add	r9, rax
+ 1      1     1.00                        seto	al
+ 1      1     0.50                        jo	.LBB326_2
+ 1      1     0.25                        neg	r8
+ 1      1     0.25                        and	rdx, r8
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        neg	rax
+ 1      1     1.00                        setno	cl
+ 1      1     0.25                        cmp	dl, 64
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     1.00                        xor	al, 1
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+1.00   1.00   1.00   7.00   5.00   7.00   13.00  3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB326_5
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r9d, r9d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rcx, rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovae	r9, rcx
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     lea	rdx, [rax + r9]
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, rax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB326_2
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	rax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setno	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	al, 1
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_i128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      51
+Total Cycles:      23
+Total uOps:        58
+
+Dispatch Width:    6
+uOps Per Cycle:    2.52
+IPC:               2.22
+Block RThroughput: 9.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      1     1.00           *            push	rdi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB323_3
+ 1      1     0.50                        mov	r10d, 1
+ 1      0     0.17                        xor	r11d, r11d
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	r11, r10, cl
+ 1      1     0.50                        shl	r10, cl
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	r11, r10
+ 1      1     0.50                        cmovne	r10, rcx
+ 1      0     0.17                        mov	r9, r11
+ 1      1     0.50                        shr	r9
+ 1      0     0.17                        mov	rsi, r11
+ 4      2     1.50                        shld	rsi, r10, 63
+ 1      0     0.17                        mov	rdi, r8
+ 1      1     0.50                        shr	rdi, 63
+ 1      1     0.25                        sub	rsi, rdi
+ 1      1     1.00                        sbb	r9, 0
+ 1      1     0.50                        cmovb	r9, rcx
+ 1      1     0.50                        cmovb	rsi, rcx
+ 1      1     0.25                        add	rdx, rsi
+ 1      1     1.00                        adc	r9, r8
+ 1      1     0.50                        jo	.LBB323_5
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.25                        neg	r10
+ 1      1     1.00                        sbb	rcx, r11
+ 1      1     0.25                        and	r9, rcx
+ 1      1     0.25                        and	rdx, r10
+ 1      0     0.17                        mov	rcx, rdx
+ 1      1     0.50                        jmp	.LBB323_4
+ 1      1     1.00                        movabs	rcx, -9223372036854775808
+ 1      1     0.25                        xor	r8, rcx
+ 1      1     0.25                        or	rdx, r8
+ 1      1     1.00                        sete	dl
+ 1      1     0.25                        neg	r9b
+ 1      1     1.00                        seto	r8b
+ 1      0     0.17                        xor	ecx, ecx
+ 1      1     0.50                        mov	r9d, 0
+ 1      1     0.25                        test	dl, r8b
+ 1      1     0.50                        jne	.LBB323_5
+ 1      1     1.00           *            mov	qword ptr [rax + 16], rcx
+ 1      1     1.00           *            mov	qword ptr [rax + 24], r9
+ 1      1     0.50                        mov	ecx, 1
+ 1      1     1.00           *            mov	qword ptr [rax], rcx
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.33    *                   pop	rdi
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+2.00   3.00   3.00   12.00  15.00  12.00  11.00  4.00    -      -      -      -      -      -      -     4.00   4.00   6.00    -     1.00   1.00   6.00   6.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     push	rdi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB323_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r11d, r11d
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r11, r10, cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r10, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r11, r10
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r10, rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, r11
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rsi, r11
+ -      -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	rsi, r10, 63
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdi, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdi, 63
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sub	rsi, rdi
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	r9, 0
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	r9, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovb	rsi, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, rsi
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	r9, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jo	.LBB323_5
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r10
+ -      -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rcx, r11
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r9, rcx
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rdx
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB323_4
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movabs	rcx, -9223372036854775808
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r8, rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	rdx, r8
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sete	dl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9b
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	r8b
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	ecx, ecx
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9d, 0
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	dl, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB323_5
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax + 16], rcx
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 24], r9
+ -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, 1
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax], rcx
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -     mov	qword ptr [rax + 8], 0
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rdi
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     pop	rsi
+```
+## `unbounded_round_to_multiple_u8_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      22
+Total Cycles:      12
+Total uOps:        22
+
+Dispatch Width:    6
+uOps Per Cycle:    1.83
+IPC:               1.83
+Block RThroughput: 3.7
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 7
+ 1      1     0.50                        ja	.LBB332_4
+ 1      1     1.00                        mov	r8b, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8b, cl
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	dl
+ 1      1     0.25                        add	dl, al
+ 1      1     0.25                        cmp	dl, al
+ 1      1     1.00                        setae	al
+ 1      1     0.50                        jb	.LBB332_3
+ 1      1     0.25                        neg	r8b
+ 1      1     0.25                        and	dl, r8b
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        test	al, al
+ 1      1     1.00                        setns	cl
+ 1      1     0.25                        cmp	dl, 8
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      5     0.50                  U     ret
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   6.00   3.00   7.00   5.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 7
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB332_4
+ -      -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8b, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8b, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	dl
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	dl, al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, al
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB332_3
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8b
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	dl, r8b
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	al, al
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setns	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 8
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+```
+## `unbounded_round_to_multiple_u16_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      25
+Total Cycles:      16
+Total uOps:        25
+
+Dispatch Width:    6
+uOps Per Cycle:    1.56
+IPC:               1.56
+Block RThroughput: 4.2
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 15
+ 1      1     0.50                        ja	.LBB329_4
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      1     0.25                        movzx	ecx, r8w
+ 1      1     0.50                        shr	ecx
+ 1      1     0.33                        lea	edx, [rax + rcx]
+ 1      1     0.25                        cmp	dx, ax
+ 1      1     1.00                        setae	al
+ 1      1     0.50                        jb	.LBB329_3
+ 1      1     0.25                        neg	r8d
+ 1      1     0.25                        and	edx, r8d
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        test	ax, ax
+ 1      1     1.00                        setns	cl
+ 1      1     0.25                        cmp	dl, 16
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+1.00   1.00   1.00   6.00   4.00   6.00   6.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 15
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB329_4
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	ecx, r8w
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	ecx
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     lea	edx, [rax + rcx]
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dx, ax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB329_3
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	ax, ax
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setns	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 16
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_u32_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      25
+Total Cycles:      15
+Total uOps:        25
+
+Dispatch Width:    6
+uOps Per Cycle:    1.67
+IPC:               1.67
+Block RThroughput: 4.2
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	eax, ecx
+ 1      1     0.25                        cmp	dl, 31
+ 1      1     0.50                        ja	.LBB330_4
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8d, cl
+ 1      0     0.17                        mov	edx, r8d
+ 1      1     0.50                        shr	edx
+ 1      1     0.25                        add	edx, eax
+ 1      1     0.25                        cmp	edx, eax
+ 1      1     1.00                        setae	al
+ 1      1     0.50                        jb	.LBB330_3
+ 1      1     0.25                        neg	r8d
+ 1      1     0.25                        and	edx, r8d
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        test	eax, eax
+ 1      1     1.00                        setns	cl
+ 1      1     0.25                        cmp	dl, 32
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   6.00   4.00   6.00   6.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	eax, ecx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 31
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB330_4
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8d, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	edx, r8d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	edx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	edx, eax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	edx, eax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB330_3
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8d
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	edx, r8d
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	eax, eax
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setns	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 32
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_u64_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      25
+Total Cycles:      15
+Total uOps:        25
+
+Dispatch Width:    6
+uOps Per Cycle:    1.67
+IPC:               1.67
+Block RThroughput: 4.2
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        cmp	dl, 63
+ 1      1     0.50                        ja	.LBB331_4
+ 1      1     0.50                        mov	r8d, 1
+ 1      0     0.17                        mov	ecx, edx
+ 1      1     0.50                        shl	r8, cl
+ 1      0     0.17                        mov	rdx, r8
+ 1      1     0.50                        shr	rdx
+ 1      1     0.25                        add	rdx, rax
+ 1      1     0.25                        cmp	rdx, rax
+ 1      1     1.00                        setae	al
+ 1      1     0.50                        jb	.LBB331_3
+ 1      1     0.25                        neg	r8
+ 1      1     0.25                        and	rdx, r8
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        test	rax, rax
+ 1      1     1.00                        setns	cl
+ 1      1     0.25                        cmp	dl, 64
+ 1      1     1.00                        setne	al
+ 1      1     0.25                        or	al, cl
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        movzx	eax, al
+ 1      5     0.50                  U     ret
+ 1      1     0.25                        movzx	eax, al
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+ -     1.00   1.00   6.00   4.00   6.00   6.00   3.00    -      -      -      -      -      -      -      -     1.00   1.00    -     1.00   1.00    -      -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 63
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     ja	.LBB331_4
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r8d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r8, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rdx, r8
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rdx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	rdx, rax
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	rdx, rax
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setae	al
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB331_3
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r8
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rdx, r8
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -     ret
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	rax, rax
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setns	cl
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmp	dl, 64
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     setne	al
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     or	al, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+ -     1.00    -     1.00    -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -     ret
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     movzx	eax, al
+```
+## `unbounded_round_to_multiple_u128_unb_pow2`
+```asm
+Iterations:        1
+Instructions:      41
+Total Cycles:      16
+Total uOps:        48
+
+Dispatch Width:    6
+uOps Per Cycle:    3.00
+IPC:               2.56
+Block RThroughput: 8.0
+
+Instruction Info:
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      1     1.00           *            push	rsi
+ 1      0     0.17                        mov	rax, rcx
+ 1      1     0.25                        test	r9b, r9b
+ 1      1     0.50                        js	.LBB328_3
+ 1      1     0.50                        mov	r11d, 1
+ 1      0     0.17                        xor	esi, esi
+ 1      0     0.17                        mov	ecx, r9d
+ 5      2     1.50                        shld	rsi, r11, cl
+ 1      0     0.17                        xor	r10d, r10d
+ 1      1     0.50                        shl	r11, cl
+ 1      1     0.25                        test	r9b, 64
+ 1      1     0.50                        cmovne	rsi, r11
+ 1      1     0.50                        cmovne	r11, r10
+ 1      0     0.17                        mov	rcx, rsi
+ 1      0     0.17                        mov	r9, rsi
+ 4      2     1.50                        shld	r9, r11, 63
+ 1      1     0.50                        shr	rcx
+ 1      1     0.25                        add	r9, rdx
+ 1      1     1.00                        adc	rcx, r8
+ 1      1     0.50                        jb	.LBB328_5
+ 1      0     0.17                        xor	edx, edx
+ 1      1     0.25                        neg	r11
+ 1      1     1.00                        sbb	rdx, rsi
+ 1      1     0.25                        and	rcx, rdx
+ 1      1     0.25                        and	r9, r11
+ 1      0     0.17                        mov	r10, r9
+ 1      1     0.50                        jmp	.LBB328_4
+ 1      1     0.25                        test	r8, r8
+ 1      1     1.00                        sets	dl
+ 1      1     0.25                        neg	r9b
+ 1      1     1.00                        seto	r8b
+ 1      0     0.17                        xor	r10d, r10d
+ 1      1     0.50                        mov	ecx, 0
+ 1      1     0.25                        test	dl, r8b
+ 1      1     0.50                        jne	.LBB328_5
+ 1      1     1.00           *            mov	qword ptr [rax + 16], r10
+ 1      1     1.00           *            mov	qword ptr [rax + 24], rcx
+ 1      1     0.50                        mov	r10d, 1
+ 1      1     1.00           *            mov	qword ptr [rax], r10
+ 1      1     1.00           *            mov	qword ptr [rax + 8], 0
+ 1      5     0.33    *                   pop	rsi
+
+Resources:
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] 
+2.00   2.00   2.00   9.00   10.00  9.00   9.00   4.00    -      -      -      -      -      -      -     4.00   3.00   4.00    -      -     1.00   4.00   6.00   
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12.0] [12.1] [13]   [14.0] [14.1] [14.2] [15.0] [15.1] [15.2] [16.0] [16.1] Instructions:
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   push	rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rax, rcx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, r9b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     js	.LBB328_3
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r11d, 1
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	esi, esi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, r9d
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	rsi, r11, cl
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shl	r11, cl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r9b, 64
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	rsi, r11
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     cmovne	r11, r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	rcx, rsi
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r9, rsi
+ -      -      -      -     3.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shld	r9, r11, 63
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     shr	rcx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     add	r9, rdx
+ -      -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     adc	rcx, r8
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jb	.LBB328_5
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	edx, edx
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r11
+ -      -      -     4.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbb	rdx, rsi
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	rcx, rdx
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	r9, r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10, r9
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB328_4
+ -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	r8, r8
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sets	dl
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     neg	r9b
+ -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     seto	r8b
+ -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     xor	r10d, r10d
+ -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	ecx, 0
+ -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     test	dl, r8b
+ -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     jne	.LBB328_5
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -     mov	qword ptr [rax + 16], r10
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00   mov	qword ptr [rax + 24], rcx
+ -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     mov	r10d, 1
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -     mov	qword ptr [rax], r10
+1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     2.00    -      -      -      -      -      -     2.00   mov	qword ptr [rax + 8], 0
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -     pop	rsi
 ```

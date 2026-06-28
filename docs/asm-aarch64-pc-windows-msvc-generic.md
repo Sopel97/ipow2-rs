@@ -1203,69 +1203,6 @@ checked_floor_to_multiple_i128_unb_pow2:
 .LBB70_2:
 	stp xzr, xzr, [x8]
 ```
-## `checked_mod_floor_i8_unb_pow2`
-```asm
-checked_mod_floor_i8_unb_pow2:
-	mov w8, #-1
-	tst w1, #0xf8
-	lsl w9, w8, w1
-	cset w8, eq
-	bic w1, w0, w9
-	mov w0, w8
-```
-## `checked_mod_floor_i16_unb_pow2`
-```asm
-checked_mod_floor_i16_unb_pow2:
-	mov w8, #-1
-	tst w1, #0xf0
-	lsl w9, w8, w1
-	cset w8, eq
-	bic w1, w0, w9
-	mov w0, w8
-```
-## `checked_mod_floor_i32_unb_pow2`
-```asm
-checked_mod_floor_i32_unb_pow2:
-	mov w8, #-1
-	tst w1, #0xe0
-	lsl w9, w8, w1
-	cset w8, eq
-	bic w1, w0, w9
-	mov w0, w8
-```
-## `checked_mod_floor_i64_unb_pow2`
-```asm
-checked_mod_floor_i64_unb_pow2:
-	mov x8, #-1
-	tst w1, #0xc0
-	lsl x9, x8, x1
-	cset w8, eq
-	bic x1, x0, x9
-	mov x0, x8
-```
-## `checked_mod_floor_i128_unb_pow2`
-```asm
-checked_mod_floor_i128_unb_pow2:
-	tbnz w2, #7, .LBB75_2
-	mov x9, #-1
-	mvn w10, w2
-	mov x11, #9223372036854775807
-	lsl x9, x9, x2
-	lsr x10, x11, x10
-	and x12, x2, #0xff
-	tst x12, #0x40
-	orr x10, x9, x10
-	csel x11, xzr, x9, ne
-	csel x9, x9, x10, ne
-	bic x10, x0, x11
-	bic x9, x1, x9
-	stp x10, x9, [x8, #16]
-	mov w9, #1
-	stp x9, xzr, [x8]
-	ret
-.LBB75_2:
-	stp xzr, xzr, [x8]
-```
 ## `checked_mul_i8_pow2`
 ```asm
 checked_mul_i8_pow2:
@@ -1307,7 +1244,7 @@ checked_mul_i16_pow2:
 checked_mul_i16_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #15
-	b.hi .LBB83_2
+	b.hi .LBB78_2
 	mov w8, w1
 	lsl w1, w0, w1
 	sxth w9, w1
@@ -1316,7 +1253,7 @@ checked_mul_i16_unb_pow2:
 	cmp w9, w8, uxth
 	cset w0, eq
 	ret
-.LBB83_2:
+.LBB78_2:
 	mov w0, wzr
 ```
 ## `checked_mul_i32_pow2`
@@ -1333,14 +1270,14 @@ checked_mul_i32_pow2:
 checked_mul_i32_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #31
-	b.hi .LBB85_2
+	b.hi .LBB80_2
 	mov w8, w1
 	lsl w1, w0, w1
 	asr w8, w1, w8
 	cmp w0, w8
 	cset w0, eq
 	ret
-.LBB85_2:
+.LBB80_2:
 	mov w0, wzr
 ```
 ## `checked_mul_i64_pow2`
@@ -1386,16 +1323,16 @@ checked_mul_i128_pow2:
 	cmp x1, x13
 	ccmp x0, x11, #0, eq
 	mov x11, xzr
-	b.ne .LBB80_2
+	b.ne .LBB75_2
 	mov w11, #1
 	stp x10, x9, [x8, #16]
-.LBB80_2:
+.LBB75_2:
 	stp x11, xzr, [x8]
 ```
 ## `checked_mul_i128_unb_pow2`
 ```asm
 checked_mul_i128_unb_pow2:
-	tbnz w2, #7, .LBB81_3
+	tbnz w2, #7, .LBB76_3
 	lsr x9, x0, #1
 	mvn w11, w2
 	lsl x10, x1, x2
@@ -1416,12 +1353,12 @@ checked_mul_i128_unb_pow2:
 	csel x11, x12, x11, ne
 	cmp x1, x13
 	ccmp x0, x11, #0, eq
-	b.ne .LBB81_3
+	b.ne .LBB76_3
 	stp x10, x9, [x8, #16]
 	mov w10, #1
 	stp x10, xzr, [x8]
 	ret
-.LBB81_3:
+.LBB76_3:
 	stp xzr, xzr, [x8]
 ```
 ## `checked_mul_u8_pow2`
@@ -1462,7 +1399,7 @@ checked_mul_u16_pow2:
 checked_mul_u16_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #15
-	b.hi .LBB93_2
+	b.hi .LBB88_2
 	mov w8, w1
 	lsl w1, w0, w1
 	and w9, w1, #0xffff
@@ -1470,7 +1407,7 @@ checked_mul_u16_unb_pow2:
 	cmp w8, w0, uxth
 	cset w0, eq
 	ret
-.LBB93_2:
+.LBB88_2:
 	mov w0, wzr
 ```
 ## `checked_mul_u32_pow2`
@@ -1487,14 +1424,14 @@ checked_mul_u32_pow2:
 checked_mul_u32_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #31
-	b.hi .LBB95_2
+	b.hi .LBB90_2
 	mov w8, w1
 	lsl w1, w0, w1
 	lsr w8, w1, w8
 	cmp w0, w8
 	cset w0, eq
 	ret
-.LBB95_2:
+.LBB90_2:
 	mov w0, wzr
 ```
 ## `checked_mul_u64_pow2`
@@ -1539,16 +1476,16 @@ checked_mul_u128_pow2:
 	cmp x1, x12
 	ccmp x0, x11, #0, eq
 	mov x11, xzr
-	b.ne .LBB90_2
+	b.ne .LBB85_2
 	mov w11, #1
 	stp x10, x9, [x8, #16]
-.LBB90_2:
+.LBB85_2:
 	stp x11, xzr, [x8]
 ```
 ## `checked_mul_u128_unb_pow2`
 ```asm
 checked_mul_u128_unb_pow2:
-	tbnz w2, #7, .LBB91_3
+	tbnz w2, #7, .LBB86_3
 	lsr x9, x0, #1
 	mvn w11, w2
 	lsl x10, x1, x2
@@ -1568,12 +1505,440 @@ checked_mul_u128_unb_pow2:
 	csel x11, x13, x11, ne
 	cmp x1, x12
 	ccmp x0, x11, #0, eq
-	b.ne .LBB91_3
+	b.ne .LBB86_3
 	stp x10, x9, [x8, #16]
 	mov w10, #1
 	stp x10, xzr, [x8]
 	ret
-.LBB91_3:
+.LBB86_3:
+	stp xzr, xzr, [x8]
+```
+## `checked_rem_floor_i8_unb_pow2`
+```asm
+checked_rem_floor_i8_unb_pow2:
+	mov w8, #-1
+	tst w1, #0xf8
+	lsl w9, w8, w1
+	cset w8, eq
+	bic w1, w0, w9
+	mov w0, w8
+```
+## `checked_rem_floor_i16_unb_pow2`
+```asm
+checked_rem_floor_i16_unb_pow2:
+	mov w8, #-1
+	tst w1, #0xf0
+	lsl w9, w8, w1
+	cset w8, eq
+	bic w1, w0, w9
+	mov w0, w8
+```
+## `checked_rem_floor_i32_unb_pow2`
+```asm
+checked_rem_floor_i32_unb_pow2:
+	mov w8, #-1
+	tst w1, #0xe0
+	lsl w9, w8, w1
+	cset w8, eq
+	bic w1, w0, w9
+	mov w0, w8
+```
+## `checked_rem_floor_i64_unb_pow2`
+```asm
+checked_rem_floor_i64_unb_pow2:
+	mov x8, #-1
+	tst w1, #0xc0
+	lsl x9, x8, x1
+	cset w8, eq
+	bic x1, x0, x9
+	mov x0, x8
+```
+## `checked_rem_floor_i128_unb_pow2`
+```asm
+checked_rem_floor_i128_unb_pow2:
+	tbnz w2, #7, .LBB95_2
+	mov x9, #-1
+	mvn w10, w2
+	mov x11, #9223372036854775807
+	lsl x9, x9, x2
+	lsr x10, x11, x10
+	and x12, x2, #0xff
+	tst x12, #0x40
+	orr x10, x9, x10
+	csel x11, xzr, x9, ne
+	csel x9, x9, x10, ne
+	bic x10, x0, x11
+	bic x9, x1, x9
+	stp x10, x9, [x8, #16]
+	mov w9, #1
+	stp x9, xzr, [x8]
+	ret
+.LBB95_2:
+	stp xzr, xzr, [x8]
+```
+## `checked_rem_i8_unb_pow2`
+```asm
+checked_rem_i8_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #7
+	b.hi .LBB104_3
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #7, .LBB104_4
+	and w8, w0, w9
+.LBB104_3:
+	tst w1, #0xf8
+	mov w1, w8
+	cset w0, eq
+	ret
+.LBB104_4:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w8, w0, w8
+	tst w1, #0xf8
+	mov w1, w8
+	cset w0, eq
+```
+## `checked_rem_i16_unb_pow2`
+```asm
+checked_rem_i16_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #15
+	b.hi .LBB101_3
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #15, .LBB101_4
+	and w1, w0, w9
+	mov w0, #1
+	ret
+.LBB101_3:
+	mov w0, wzr
+	ret
+.LBB101_4:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w1, w0, w8
+	mov w0, #1
+```
+## `checked_rem_i32_unb_pow2`
+```asm
+checked_rem_i32_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #31
+	b.hi .LBB102_3
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #31, .LBB102_4
+	and w1, w0, w9
+	mov w0, #1
+	ret
+.LBB102_3:
+	mov w0, wzr
+	ret
+.LBB102_4:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w1, w0, w8
+	mov w0, #1
+```
+## `checked_rem_i64_unb_pow2`
+```asm
+checked_rem_i64_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #63
+	b.hi .LBB103_3
+	mov x8, #-1
+	lsl x8, x8, x1
+	mvn x9, x8
+	tbnz x0, #63, .LBB103_4
+	and x1, x0, x9
+	mov w0, #1
+	ret
+.LBB103_3:
+	mov x0, xzr
+	ret
+.LBB103_4:
+	add x9, x0, x9
+	and x8, x9, x8
+	sub x1, x0, x8
+	mov w0, #1
+```
+## `checked_rem_i128_unb_pow2`
+```asm
+checked_rem_i128_unb_pow2:
+	tbnz w2, #7, .LBB100_2
+	mov x9, #-1
+	mvn w10, w2
+	mov x11, #9223372036854775807
+	and x12, x2, #0xff
+	lsl x9, x9, x2
+	lsr x10, x11, x10
+	tst x12, #0x40
+	orr x10, x9, x10
+	csel x11, xzr, x9, ne
+	csel x9, x9, x10, ne
+	subs x10, x11, x0
+	sbc x12, x9, x1
+	bic x10, x11, x10
+	bic x11, x0, x11
+	bic x12, x9, x12
+	subs x10, x0, x10
+	bic x9, x1, x9
+	sbc x12, x1, x12
+	cmp x1, #0
+	csel x10, x10, x11, mi
+	csel x9, x12, x9, mi
+	stp x10, x9, [x8, #16]
+	mov w9, #1
+	stp x9, xzr, [x8]
+	ret
+.LBB100_2:
+	stp xzr, xzr, [x8]
+```
+## `checked_rem_u16_unb_pow2`
+```asm
+checked_rem_u16_unb_pow2:
+	mov w8, #-1
+	tst w1, #0xf0
+	lsl w9, w8, w1
+	cset w8, eq
+	bic w1, w0, w9
+	mov w0, w8
+```
+## `checked_rem_u32_unb_pow2`
+```asm
+checked_rem_u32_unb_pow2:
+	mov w8, #-1
+	tst w1, #0xe0
+	lsl w9, w8, w1
+	cset w8, eq
+	bic w1, w0, w9
+	mov w0, w8
+```
+## `checked_rem_u64_unb_pow2`
+```asm
+checked_rem_u64_unb_pow2:
+	mov x8, #-1
+	tst w1, #0xc0
+	lsl x9, x8, x1
+	cset w8, eq
+	bic x1, x0, x9
+	mov x0, x8
+```
+## `checked_round_to_multiple_i8_unb_pow2`
+```asm
+checked_round_to_multiple_i8_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #7
+	b.hi .LBB112_3
+	mov w8, #1
+	and w10, w0, #0x80
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #7
+	subs w9, w9, w10, lsr #7
+	csel w9, wzr, w9, lo
+	add w9, w9, w0, sxtb
+	sxtb w10, w9
+	cmp w10, w9
+	b.ne .LBB112_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB112_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_i16_unb_pow2`
+```asm
+checked_round_to_multiple_i16_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #15
+	b.hi .LBB109_3
+	mov w8, #1
+	and w10, w0, #0x8000
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #15
+	subs w9, w9, w10, lsr #15
+	csel w9, wzr, w9, lo
+	add w9, w9, w0, sxth
+	sxth w10, w9
+	cmp w10, w9
+	b.ne .LBB109_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB109_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_i32_unb_pow2`
+```asm
+checked_round_to_multiple_i32_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #31
+	b.hi .LBB110_3
+	mov w8, #1
+	lsl w8, w8, w1
+	lsr w9, w8, #1
+	subs w9, w9, w0, lsr #31
+	csel w9, wzr, w9, lo
+	adds w9, w0, w9
+	b.vs .LBB110_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB110_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_i64_unb_pow2`
+```asm
+checked_round_to_multiple_i64_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #63
+	b.hi .LBB111_3
+	mov w8, #1
+	lsl x8, x8, x1
+	lsr x9, x8, #1
+	subs x9, x9, x0, lsr #63
+	csel x9, xzr, x9, lo
+	adds x9, x0, x9
+	b.vs .LBB111_3
+	neg x8, x8
+	mov w0, #1
+	and x1, x9, x8
+	ret
+.LBB111_3:
+	mov x0, xzr
+```
+## `checked_round_to_multiple_i128_unb_pow2`
+```asm
+checked_round_to_multiple_i128_unb_pow2:
+	tbnz w2, #7, .LBB108_3
+	mov w9, #1
+	lsl x10, x9, x2
+	and x9, x2, #0xff
+	tst x9, #0x40
+	csel x9, x10, xzr, ne
+	csel x10, xzr, x10, ne
+	extr x11, x9, x10, #1
+	lsr x12, x9, #1
+	subs x11, x11, x1, lsr #63
+	sbcs x12, x12, xzr
+	csel x11, xzr, x11, lo
+	csel x12, xzr, x12, lo
+	adds x11, x0, x11
+	adcs x12, x1, x12
+	cset w13, vs
+	tbnz w13, #0, .LBB108_3
+	negs x10, x10
+	ngc x9, x9
+	and x10, x11, x10
+	and x9, x12, x9
+	stp x10, x9, [x8, #16]
+	mov w9, #1
+	stp x9, xzr, [x8]
+	ret
+.LBB108_3:
+	stp xzr, xzr, [x8]
+```
+## `checked_round_to_multiple_u8_unb_pow2`
+```asm
+checked_round_to_multiple_u8_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #7
+	b.hi .LBB117_3
+	mov w8, #1
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #7
+	add w9, w9, w0, uxtb
+	tbnz w9, #8, .LBB117_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB117_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_u16_unb_pow2`
+```asm
+checked_round_to_multiple_u16_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #15
+	b.hi .LBB114_3
+	mov w8, #1
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #15
+	add w9, w9, w0, uxth
+	tbnz w9, #16, .LBB114_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB114_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_u32_unb_pow2`
+```asm
+checked_round_to_multiple_u32_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #31
+	b.hi .LBB115_3
+	mov w8, #1
+	lsl w8, w8, w1
+	adds w9, w0, w8, lsr #1
+	b.hs .LBB115_3
+	neg w8, w8
+	mov w0, #1
+	and w1, w9, w8
+	ret
+.LBB115_3:
+	mov w0, wzr
+```
+## `checked_round_to_multiple_u64_unb_pow2`
+```asm
+checked_round_to_multiple_u64_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #63
+	b.hi .LBB116_3
+	mov w8, #1
+	lsl x8, x8, x1
+	adds x9, x0, x8, lsr #1
+	b.hs .LBB116_3
+	neg x8, x8
+	mov w0, #1
+	and x1, x9, x8
+	ret
+.LBB116_3:
+	mov x0, xzr
+```
+## `checked_round_to_multiple_u128_unb_pow2`
+```asm
+checked_round_to_multiple_u128_unb_pow2:
+	tbnz w2, #7, .LBB113_3
+	mov w9, #1
+	lsl x10, x9, x2
+	and x9, x2, #0xff
+	tst x9, #0x40
+	csel x9, x10, xzr, ne
+	csel x10, xzr, x10, ne
+	extr x11, x9, x10, #1
+	lsr x12, x9, #1
+	adds x11, x11, x0
+	adcs x12, x12, x1
+	b.hs .LBB113_3
+	negs x10, x10
+	ngc x9, x9
+	and x10, x11, x10
+	and x9, x12, x9
+	stp x10, x9, [x8, #16]
+	mov w9, #1
+	stp x9, xzr, [x8]
+	ret
+.LBB113_3:
 	stp xzr, xzr, [x8]
 ```
 ## `div_ceil_i8_pow2`
@@ -2112,7 +2477,7 @@ div_i64_unb_pow2:
 ## `div_i128_pow2`
 ```asm
 div_i128_pow2:
-	tbnz x1, #63, .LBB140_2
+	tbnz x1, #63, .LBB158_2
 	lsl x8, x1, #1
 	mov w9, w2
 	mvn w10, w2
@@ -2125,7 +2490,7 @@ div_i128_pow2:
 	csel x1, xzr, x10, ne
 	csel x0, x10, x8, ne
 	ret
-.LBB140_2:
+.LBB158_2:
 	mov x8, #-1
 	mvn w9, w2
 	mov x10, #9223372036854775807
@@ -2154,7 +2519,7 @@ div_i128_pow2:
 ```asm
 div_i128_unb_pow2:
 	and w8, w2, #0x7f
-	tbnz x1, #63, .LBB141_2
+	tbnz x1, #63, .LBB159_2
 	lsl x9, x1, #1
 	mvn w10, w8
 	lsr x11, x0, x8
@@ -2165,7 +2530,7 @@ div_i128_unb_pow2:
 	csel x1, xzr, x10, ne
 	csel x0, x10, x9, ne
 	ret
-.LBB141_2:
+.LBB159_2:
 	mvn w9, w8
 	mov x10, #9223372036854775807
 	mov x11, #-1
@@ -2656,96 +3021,6 @@ is_multiple_of_i128_pow2:
 	cmp w8, w2, uxtb
 	cset w0, hs
 ```
-## `mod_floor_i8_pow2`
-```asm
-mod_floor_i8_pow2:
-	mov w8, #-1
-	lsl w8, w8, w1
-	bic w0, w0, w8
-```
-## `mod_floor_i8_unb_pow2`
-```asm
-mod_floor_i8_unb_pow2:
-	mov w8, #-1
-	and x9, x1, #0x7
-	lsl w8, w8, w9
-	bic w0, w0, w8
-```
-## `mod_floor_i16_pow2`
-```asm
-mod_floor_i16_pow2:
-	mov w8, #-1
-	lsl w8, w8, w1
-	bic w0, w0, w8
-```
-## `mod_floor_i16_unb_pow2`
-```asm
-mod_floor_i16_unb_pow2:
-	mov w8, #-1
-	and x9, x1, #0xf
-	lsl w8, w8, w9
-	bic w0, w0, w8
-```
-## `mod_floor_i32_pow2`
-```asm
-mod_floor_i32_pow2:
-	mov w8, #-1
-	lsl w8, w8, w1
-	bic w0, w0, w8
-```
-## `mod_floor_i32_unb_pow2`
-```asm
-mod_floor_i32_unb_pow2:
-	mov w8, #-1
-	lsl w8, w8, w1
-	bic w0, w0, w8
-```
-## `mod_floor_i64_pow2`
-```asm
-mod_floor_i64_pow2:
-	mov x8, #-1
-	lsl x8, x8, x1
-	bic x0, x0, x8
-```
-## `mod_floor_i64_unb_pow2`
-```asm
-mod_floor_i64_unb_pow2:
-	mov x8, #-1
-	lsl x8, x8, x1
-	bic x0, x0, x8
-```
-## `mod_floor_i128_pow2`
-```asm
-mod_floor_i128_pow2:
-	mov x8, #-1
-	mvn w9, w2
-	mov x10, #9223372036854775807
-	lsl x8, x8, x2
-	lsr x9, x10, x9
-	and x10, x2, #0xff
-	tst x10, #0x40
-	orr x9, x8, x9
-	csel x9, x8, x9, ne
-	csel x8, xzr, x8, ne
-	bic x0, x0, x8
-	bic x1, x1, x9
-```
-## `mod_floor_i128_unb_pow2`
-```asm
-mod_floor_i128_unb_pow2:
-	mov x8, #-1
-	mvn w9, w2
-	mov x10, #9223372036854775807
-	lsl x8, x8, x2
-	lsr x9, x10, x9
-	and x10, x2, #0x7f
-	tst x10, #0x40
-	orr x9, x8, x9
-	csel x9, x8, x9, ne
-	csel x8, xzr, x8, ne
-	bic x0, x0, x8
-	bic x1, x1, x9
-```
 ## `mul_i8_pow2`
 ```asm
 mul_i8_pow2:
@@ -2815,6 +3090,502 @@ mul_i128_unb_pow2:
 	orr x8, x10, x8
 	csel x0, xzr, x9, ne
 	csel x1, x9, x8, ne
+```
+## `rem_floor_i8_pow2`
+```asm
+rem_floor_i8_pow2:
+	mov w8, #-1
+	lsl w8, w8, w1
+	bic w0, w0, w8
+```
+## `rem_floor_i8_unb_pow2`
+```asm
+rem_floor_i8_unb_pow2:
+	mov w8, #-1
+	and x9, x1, #0x7
+	lsl w8, w8, w9
+	bic w0, w0, w8
+```
+## `rem_floor_i16_pow2`
+```asm
+rem_floor_i16_pow2:
+	mov w8, #-1
+	lsl w8, w8, w1
+	bic w0, w0, w8
+```
+## `rem_floor_i16_unb_pow2`
+```asm
+rem_floor_i16_unb_pow2:
+	mov w8, #-1
+	and x9, x1, #0xf
+	lsl w8, w8, w9
+	bic w0, w0, w8
+```
+## `rem_floor_i32_pow2`
+```asm
+rem_floor_i32_pow2:
+	mov w8, #-1
+	lsl w8, w8, w1
+	bic w0, w0, w8
+```
+## `rem_floor_i32_unb_pow2`
+```asm
+rem_floor_i32_unb_pow2:
+	mov w8, #-1
+	lsl w8, w8, w1
+	bic w0, w0, w8
+```
+## `rem_floor_i64_pow2`
+```asm
+rem_floor_i64_pow2:
+	mov x8, #-1
+	lsl x8, x8, x1
+	bic x0, x0, x8
+```
+## `rem_floor_i64_unb_pow2`
+```asm
+rem_floor_i64_unb_pow2:
+	mov x8, #-1
+	lsl x8, x8, x1
+	bic x0, x0, x8
+```
+## `rem_floor_i128_pow2`
+```asm
+rem_floor_i128_pow2:
+	mov x8, #-1
+	mvn w9, w2
+	mov x10, #9223372036854775807
+	lsl x8, x8, x2
+	lsr x9, x10, x9
+	and x10, x2, #0xff
+	tst x10, #0x40
+	orr x9, x8, x9
+	csel x9, x8, x9, ne
+	csel x8, xzr, x8, ne
+	bic x0, x0, x8
+	bic x1, x1, x9
+```
+## `rem_floor_i128_unb_pow2`
+```asm
+rem_floor_i128_unb_pow2:
+	mov x8, #-1
+	mvn w9, w2
+	mov x10, #9223372036854775807
+	lsl x8, x8, x2
+	lsr x9, x10, x9
+	and x10, x2, #0x7f
+	tst x10, #0x40
+	orr x9, x8, x9
+	csel x9, x8, x9, ne
+	csel x8, xzr, x8, ne
+	bic x0, x0, x8
+	bic x1, x1, x9
+```
+## `rem_i8_pow2`
+```asm
+rem_i8_pow2:
+	mov w8, #-1
+	tst w0, #0x80
+	lsl w8, w8, w1
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, ne
+```
+## `rem_i8_unb_pow2`
+```asm
+rem_i8_unb_pow2:
+	mov w8, #-1
+	and x9, x1, #0x7
+	tst w0, #0x80
+	lsl w8, w8, w9
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, ne
+```
+## `rem_i16_pow2`
+```asm
+rem_i16_pow2:
+	mov w8, #-1
+	tst w0, #0x8000
+	lsl w8, w8, w1
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, ne
+```
+## `rem_i16_unb_pow2`
+```asm
+rem_i16_unb_pow2:
+	mov w8, #-1
+	and x9, x1, #0xf
+	tst w0, #0x8000
+	lsl w8, w8, w9
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, ne
+```
+## `rem_i32_pow2`
+```asm
+rem_i32_pow2:
+	mov w8, #-1
+	cmp w0, #0
+	lsl w8, w8, w1
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, mi
+```
+## `rem_i32_unb_pow2`
+```asm
+rem_i32_unb_pow2:
+	mov w8, #-1
+	cmp w0, #0
+	lsl w8, w8, w1
+	sub w9, w8, w0
+	bic w9, w8, w9
+	bic w8, w0, w8
+	sub w9, w0, w9
+	csel w0, w9, w8, mi
+```
+## `rem_i64_pow2`
+```asm
+rem_i64_pow2:
+	mov x8, #-1
+	cmp x0, #0
+	lsl x8, x8, x1
+	sub x9, x8, x0
+	bic x9, x8, x9
+	bic x8, x0, x8
+	sub x9, x0, x9
+	csel x0, x9, x8, mi
+```
+## `rem_i64_unb_pow2`
+```asm
+rem_i64_unb_pow2:
+	mov x8, #-1
+	cmp x0, #0
+	lsl x8, x8, x1
+	sub x9, x8, x0
+	bic x9, x8, x9
+	bic x8, x0, x8
+	sub x9, x0, x9
+	csel x0, x9, x8, mi
+```
+## `rem_i128_pow2`
+```asm
+rem_i128_pow2:
+	mov x8, #-1
+	mvn w9, w2
+	mov x10, #9223372036854775807
+	lsl x8, x8, x2
+	lsr x9, x10, x9
+	and x10, x2, #0xff
+	tst x10, #0x40
+	orr x9, x8, x9
+	csel x10, xzr, x8, ne
+	csel x8, x8, x9, ne
+	subs x9, x10, x0
+	sbc x11, x8, x1
+	bic x9, x10, x9
+	bic x10, x0, x10
+	bic x11, x8, x11
+	subs x9, x0, x9
+	bic x8, x1, x8
+	sbc x11, x1, x11
+	cmp x1, #0
+	csel x1, x11, x8, mi
+	csel x0, x9, x10, mi
+```
+## `rem_i128_unb_pow2`
+```asm
+rem_i128_unb_pow2:
+	mov x8, #-1
+	mvn w9, w2
+	mov x10, #9223372036854775807
+	lsl x8, x8, x2
+	lsr x9, x10, x9
+	and x10, x2, #0x7f
+	tst x10, #0x40
+	orr x9, x8, x9
+	csel x10, xzr, x8, ne
+	csel x8, x8, x9, ne
+	subs x9, x10, x0
+	sbc x11, x8, x1
+	bic x9, x10, x9
+	bic x10, x0, x10
+	bic x11, x8, x11
+	subs x9, x0, x9
+	bic x8, x1, x8
+	sbc x11, x1, x11
+	cmp x1, #0
+	csel x1, x11, x8, mi
+	csel x0, x9, x10, mi
+```
+## `round_to_multiple_i8_pow2`
+```asm
+round_to_multiple_i8_pow2:
+	mov w8, #1
+	and w10, w0, #0x80
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #7
+	neg w8, w8
+	subs w9, w9, w10, lsr #7
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i8_unb_pow2`
+```asm
+round_to_multiple_i8_unb_pow2:
+	mov w8, #1
+	and x9, x1, #0x7
+	and w10, w0, #0x80
+	lsl w8, w8, w9
+	lsr w9, w8, #1
+	neg w8, w8
+	subs w9, w9, w10, lsr #7
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i16_pow2`
+```asm
+round_to_multiple_i16_pow2:
+	mov w8, #1
+	and w10, w0, #0x8000
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #15
+	neg w8, w8
+	subs w9, w9, w10, lsr #15
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i16_unb_pow2`
+```asm
+round_to_multiple_i16_unb_pow2:
+	mov w8, #1
+	and x9, x1, #0xf
+	and w10, w0, #0x8000
+	lsl w8, w8, w9
+	lsr w9, w8, #1
+	neg w8, w8
+	subs w9, w9, w10, lsr #15
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i32_pow2`
+```asm
+round_to_multiple_i32_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	lsr w9, w8, #1
+	neg w8, w8
+	subs w9, w9, w0, lsr #31
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i32_unb_pow2`
+```asm
+round_to_multiple_i32_unb_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	lsr w9, w8, #1
+	neg w8, w8
+	subs w9, w9, w0, lsr #31
+	csel w9, wzr, w9, lo
+	add w9, w9, w0
+	and w0, w9, w8
+```
+## `round_to_multiple_i64_pow2`
+```asm
+round_to_multiple_i64_pow2:
+	mov w8, #1
+	lsl x8, x8, x1
+	lsr x9, x8, #1
+	neg x8, x8
+	subs x9, x9, x0, lsr #63
+	csel x9, xzr, x9, lo
+	add x9, x9, x0
+	and x0, x9, x8
+```
+## `round_to_multiple_i64_unb_pow2`
+```asm
+round_to_multiple_i64_unb_pow2:
+	mov w8, #1
+	lsl x8, x8, x1
+	lsr x9, x8, #1
+	neg x8, x8
+	subs x9, x9, x0, lsr #63
+	csel x9, xzr, x9, lo
+	add x9, x9, x0
+	and x0, x9, x8
+```
+## `round_to_multiple_i128_pow2`
+```asm
+round_to_multiple_i128_pow2:
+	mov w8, #1
+	and x9, x2, #0xff
+	lsl x8, x8, x2
+	tst x9, #0x40
+	csel x9, xzr, x8, ne
+	csel x8, x8, xzr, ne
+	extr x10, x8, x9, #1
+	lsr x11, x8, #1
+	subs x10, x10, x1, lsr #63
+	sbcs x11, x11, xzr
+	csel x10, xzr, x10, lo
+	csel x11, xzr, x11, lo
+	adds x10, x10, x0
+	adc x11, x11, x1
+	negs x9, x9
+	ngc x8, x8
+	and x0, x10, x9
+	and x1, x11, x8
+```
+## `round_to_multiple_i128_unb_pow2`
+```asm
+round_to_multiple_i128_unb_pow2:
+	mov w8, #1
+	and x9, x2, #0x7f
+	lsl x8, x8, x2
+	tst x9, #0x40
+	csel x9, xzr, x8, ne
+	csel x8, x8, xzr, ne
+	extr x10, x8, x9, #1
+	lsr x11, x8, #1
+	subs x10, x10, x1, lsr #63
+	sbcs x11, x11, xzr
+	csel x10, xzr, x10, lo
+	csel x11, xzr, x11, lo
+	adds x10, x10, x0
+	adc x11, x11, x1
+	negs x9, x9
+	ngc x8, x8
+	and x0, x10, x9
+	and x1, x11, x8
+```
+## `round_to_multiple_u8_pow2`
+```asm
+round_to_multiple_u8_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	and w9, w8, #0xfe
+	neg w8, w8
+	add w9, w0, w9, lsr #1
+	and w0, w9, w8
+```
+## `round_to_multiple_u8_unb_pow2`
+```asm
+round_to_multiple_u8_unb_pow2:
+	mov w8, #1
+	and x9, x1, #0x7
+	lsl w8, w8, w9
+	add w9, w0, w8, lsr #1
+	neg w8, w8
+	and w0, w9, w8
+```
+## `round_to_multiple_u16_pow2`
+```asm
+round_to_multiple_u16_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	and w9, w8, #0xfffe
+	neg w8, w8
+	add w9, w0, w9, lsr #1
+	and w0, w9, w8
+```
+## `round_to_multiple_u16_unb_pow2`
+```asm
+round_to_multiple_u16_unb_pow2:
+	mov w8, #1
+	and x9, x1, #0xf
+	lsl w8, w8, w9
+	add w9, w0, w8, lsr #1
+	neg w8, w8
+	and w0, w9, w8
+```
+## `round_to_multiple_u32_pow2`
+```asm
+round_to_multiple_u32_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	add w9, w0, w8, lsr #1
+	neg w8, w8
+	and w0, w9, w8
+```
+## `round_to_multiple_u32_unb_pow2`
+```asm
+round_to_multiple_u32_unb_pow2:
+	mov w8, #1
+	lsl w8, w8, w1
+	add w9, w0, w8, lsr #1
+	neg w8, w8
+	and w0, w9, w8
+```
+## `round_to_multiple_u64_pow2`
+```asm
+round_to_multiple_u64_pow2:
+	mov w8, #1
+	lsl x8, x8, x1
+	add x9, x0, x8, lsr #1
+	neg x8, x8
+	and x0, x9, x8
+```
+## `round_to_multiple_u64_unb_pow2`
+```asm
+round_to_multiple_u64_unb_pow2:
+	mov w8, #1
+	lsl x8, x8, x1
+	add x9, x0, x8, lsr #1
+	neg x8, x8
+	and x0, x9, x8
+```
+## `round_to_multiple_u128_pow2`
+```asm
+round_to_multiple_u128_pow2:
+	mov w8, #1
+	and x9, x2, #0xff
+	lsl x8, x8, x2
+	tst x9, #0x40
+	csel x9, xzr, x8, ne
+	csel x8, x8, xzr, ne
+	extr x10, x8, x9, #1
+	lsr x11, x8, #1
+	adds x10, x10, x0
+	adc x11, x11, x1
+	negs x9, x9
+	ngc x8, x8
+	and x0, x10, x9
+	and x1, x11, x8
+```
+## `round_to_multiple_u128_unb_pow2`
+```asm
+round_to_multiple_u128_unb_pow2:
+	mov w8, #1
+	and x9, x2, #0x7f
+	lsl x8, x8, x2
+	tst x9, #0x40
+	csel x9, xzr, x8, ne
+	csel x8, x8, xzr, ne
+	extr x10, x8, x9, #1
+	lsr x11, x8, #1
+	adds x10, x10, x0
+	adc x11, x11, x1
+	negs x9, x9
+	ngc x8, x8
+	and x0, x10, x9
+	and x1, x11, x8
 ```
 ## `unbounded_ceil_to_multiple_i8_unb_pow2`
 ```asm
@@ -2887,7 +3658,7 @@ unbounded_ceil_to_multiple_i64_unb_pow2:
 ## `unbounded_ceil_to_multiple_i128_unb_pow2`
 ```asm
 unbounded_ceil_to_multiple_i128_unb_pow2:
-	tbnz w2, #7, .LBB205_3
+	tbnz w2, #7, .LBB253_3
 	mov x9, #-1
 	mvn w10, w2
 	mov x11, #9223372036854775807
@@ -2903,21 +3674,21 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 	adds x10, x0, x10
 	adcs x12, x1, x12
 	cset w13, vs
-	tbnz w13, #0, .LBB205_4
+	tbnz w13, #0, .LBB253_4
 	and x10, x10, x9
 	and x9, x12, x11
 	stp x10, x9, [x8, #16]
 	mov w10, #1
 	stp x10, xzr, [x8]
 	ret
-.LBB205_3:
+.LBB253_3:
 	cmp x0, #1
 	sbcs xzr, x1, xzr
-	b.lt .LBB205_5
-.LBB205_4:
+	b.lt .LBB253_5
+.LBB253_4:
 	stp xzr, xzr, [x8]
 	ret
-.LBB205_5:
+.LBB253_5:
 	stp xzr, xzr, [x8, #16]
 	mov w10, #1
 	stp x10, xzr, [x8]
@@ -2927,7 +3698,7 @@ unbounded_ceil_to_multiple_i128_unb_pow2:
 unbounded_ceil_to_multiple_u8_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #8
-	b.hs .LBB214_2
+	b.hs .LBB262_2
 	mov w8, #-1
 	mov w10, #255
 	lsl w8, w8, w1
@@ -2937,7 +3708,7 @@ unbounded_ceil_to_multiple_u8_unb_pow2:
 	cmp w10, w0, uxtb
 	cset w0, hs
 	ret
-.LBB214_2:
+.LBB262_2:
 	tst w0, #0xff
 	mov w1, wzr
 	cset w0, eq
@@ -2947,7 +3718,7 @@ unbounded_ceil_to_multiple_u8_unb_pow2:
 unbounded_ceil_to_multiple_u16_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #16
-	b.hs .LBB211_2
+	b.hs .LBB259_2
 	mov w8, #-1
 	mov w10, #65535
 	lsl w8, w8, w1
@@ -2957,7 +3728,7 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 	cmp w10, w0, uxth
 	cset w0, hs
 	ret
-.LBB211_2:
+.LBB259_2:
 	tst w0, #0xffff
 	mov w1, wzr
 	cset w0, eq
@@ -2967,7 +3738,7 @@ unbounded_ceil_to_multiple_u16_unb_pow2:
 unbounded_ceil_to_multiple_u32_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #32
-	b.hs .LBB212_2
+	b.hs .LBB260_2
 	mov w8, #-1
 	lsl w8, w8, w1
 	mvn w9, w8
@@ -2977,7 +3748,7 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 	cset w0, hs
 	bic w1, w8, w9
 	ret
-.LBB212_2:
+.LBB260_2:
 	cmp w0, #0
 	mov w1, wzr
 	cset w0, eq
@@ -2987,7 +3758,7 @@ unbounded_ceil_to_multiple_u32_unb_pow2:
 unbounded_ceil_to_multiple_u64_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #64
-	b.hs .LBB213_2
+	b.hs .LBB261_2
 	mov x8, #-1
 	lsl x9, x8, x1
 	mvn x8, x9
@@ -2998,7 +3769,7 @@ unbounded_ceil_to_multiple_u64_unb_pow2:
 	cset w8, hs
 	mov w0, w8
 	ret
-.LBB213_2:
+.LBB261_2:
 	cmp x0, #0
 	mov x1, xzr
 	cset w8, eq
@@ -3007,7 +3778,7 @@ unbounded_ceil_to_multiple_u64_unb_pow2:
 ## `unbounded_ceil_to_multiple_u128_unb_pow2`
 ```asm
 unbounded_ceil_to_multiple_u128_unb_pow2:
-	tbnz w2, #7, .LBB210_5
+	tbnz w2, #7, .LBB258_5
 	mov x9, #-1
 	mvn w10, w2
 	mov x11, #9223372036854775807
@@ -3023,21 +3794,21 @@ unbounded_ceil_to_multiple_u128_unb_pow2:
 	adds x10, x0, x10
 	adcs x12, x1, x12
 	cset w13, hs
-	tbnz w13, #0, .LBB210_6
+	tbnz w13, #0, .LBB258_6
 	and x10, x10, x9
 	and x9, x12, x11
-.LBB210_3:
+.LBB258_3:
 	stp x10, x9, [x8, #16]
 	mov w10, #1
-.LBB210_4:
+.LBB258_4:
 	stp x10, xzr, [x8]
 	ret
-.LBB210_5:
+.LBB258_5:
 	mov x10, xzr
 	orr x9, x0, x1
-	cbnz x9, .LBB210_4
-	b .LBB210_3
-.LBB210_6:
+	cbnz x9, .LBB258_4
+	b .LBB258_3
+.LBB258_6:
 	stp xzr, xzr, [x8]
 ```
 ## `unbounded_div_ceil_i8_unb_pow2`
@@ -3103,7 +3874,7 @@ unbounded_div_ceil_i64_unb_pow2:
 ## `unbounded_div_ceil_i128_unb_pow2`
 ```asm
 unbounded_div_ceil_i128_unb_pow2:
-	tbnz w2, #7, .LBB215_2
+	tbnz w2, #7, .LBB263_2
 	mov x8, #-1
 	mvn w9, w2
 	mov x10, #9223372036854775807
@@ -3130,7 +3901,7 @@ unbounded_div_ceil_i128_unb_pow2:
 	adds x0, x9, x8
 	cinc x1, x11, hs
 	ret
-.LBB215_2:
+.LBB263_2:
 	cmp xzr, x0
 	ngcs xzr, x1
 	mov x1, xzr
@@ -3197,7 +3968,7 @@ unbounded_div_ceil_u64_unb_pow2:
 ## `unbounded_div_ceil_u128_unb_pow2`
 ```asm
 unbounded_div_ceil_u128_unb_pow2:
-	tbnz w2, #7, .LBB220_2
+	tbnz w2, #7, .LBB268_2
 	mov x8, #-1
 	mvn w9, w2
 	mov x10, #9223372036854775807
@@ -3223,7 +3994,7 @@ unbounded_div_ceil_u128_unb_pow2:
 	adds x0, x9, x8
 	cinc x1, x10, hs
 	ret
-.LBB220_2:
+.LBB268_2:
 	orr x9, x0, x1
 	mov x1, xzr
 	cmp x9, #0
@@ -3339,15 +4110,15 @@ unbounded_div_floor_u128_unb_pow2:
 unbounded_div_i8_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #7
-	b.hi .LBB239_3
-	tbnz w0, #7, .LBB239_4
+	b.hi .LBB287_3
+	tbnz w0, #7, .LBB287_4
 	and w8, w0, #0xff
 	lsr w0, w8, w1
 	ret
-.LBB239_3:
+.LBB287_3:
 	mov w0, wzr
 	ret
-.LBB239_4:
+.LBB287_4:
 	mov w8, #-1
 	lsl w8, w8, w1
 	mvn w8, w8
@@ -3360,15 +4131,15 @@ unbounded_div_i8_unb_pow2:
 unbounded_div_i16_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #15
-	b.hi .LBB236_3
-	tbnz w0, #15, .LBB236_4
+	b.hi .LBB284_3
+	tbnz w0, #15, .LBB284_4
 	and w9, w0, #0xffff
 	lsr w0, w9, w8
 	ret
-.LBB236_3:
+.LBB284_3:
 	mov w0, wzr
 	ret
-.LBB236_4:
+.LBB284_4:
 	mov w9, #-1
 	lsl w9, w9, w8
 	mvn w9, w9
@@ -3381,14 +4152,14 @@ unbounded_div_i16_unb_pow2:
 unbounded_div_i32_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #31
-	b.hi .LBB237_3
-	tbnz w0, #31, .LBB237_4
+	b.hi .LBB285_3
+	tbnz w0, #31, .LBB285_4
 	lsr w0, w0, w8
 	ret
-.LBB237_3:
+.LBB285_3:
 	mov w0, wzr
 	ret
-.LBB237_4:
+.LBB285_4:
 	mov w9, #-1
 	lsl w9, w9, w8
 	mvn w9, w9
@@ -3400,15 +4171,15 @@ unbounded_div_i32_unb_pow2:
 unbounded_div_i64_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #63
-	b.hi .LBB238_3
+	b.hi .LBB286_3
 	and x8, x1, #0xff
-	tbnz x0, #63, .LBB238_4
+	tbnz x0, #63, .LBB286_4
 	lsr x0, x0, x8
 	ret
-.LBB238_3:
+.LBB286_3:
 	mov x0, xzr
 	ret
-.LBB238_4:
+.LBB286_4:
 	mov x9, #-1
 	lsl x9, x9, x8
 	mvn x9, x9
@@ -3418,8 +4189,8 @@ unbounded_div_i64_unb_pow2:
 ## `unbounded_div_i128_unb_pow2`
 ```asm
 unbounded_div_i128_unb_pow2:
-	tbnz w2, #7, .LBB235_3
-	tbnz x1, #63, .LBB235_4
+	tbnz w2, #7, .LBB283_3
+	tbnz x1, #63, .LBB283_4
 	lsl x8, x1, #1
 	mov w9, w2
 	mvn w10, w2
@@ -3432,11 +4203,11 @@ unbounded_div_i128_unb_pow2:
 	csel x1, xzr, x10, ne
 	csel x0, x10, x8, ne
 	ret
-.LBB235_3:
+.LBB283_3:
 	mov x0, xzr
 	mov x1, xzr
 	ret
-.LBB235_4:
+.LBB283_4:
 	mov x8, #-1
 	mvn w9, w2
 	mov x10, #9223372036854775807
@@ -3554,7 +4325,7 @@ unbounded_div_round_i64_unb_pow2:
 ## `unbounded_div_round_i128_unb_pow2`
 ```asm
 unbounded_div_round_i128_unb_pow2:
-	tbnz w2, #7, .LBB240_2
+	tbnz w2, #7, .LBB288_2
 	mov x8, #-1
 	mvn w9, w2
 	mov x10, #9223372036854775807
@@ -3592,7 +4363,7 @@ unbounded_div_round_i128_unb_pow2:
 	adds x0, x8, x9
 	cinc x1, x10, hs
 	ret
-.LBB240_2:
+.LBB288_2:
 	eor x8, x1, #0x8000000000000000
 	and w9, w2, #0xff
 	orr x8, x0, x8
@@ -3607,7 +4378,7 @@ unbounded_div_round_i128_unb_pow2:
 unbounded_div_round_u8_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #7
-	b.hi .LBB249_2
+	b.hi .LBB297_2
 	mov w8, #1
 	and w9, w0, #0xff
 	lsl w8, w8, w1
@@ -3616,7 +4387,7 @@ unbounded_div_round_u8_unb_pow2:
 	tst w0, w8, lsr #1
 	cinc w0, w9, ne
 	ret
-.LBB249_2:
+.LBB297_2:
 	mov w0, wzr
 ```
 ## `unbounded_div_round_u16_unb_pow2`
@@ -3624,7 +4395,7 @@ unbounded_div_round_u8_unb_pow2:
 unbounded_div_round_u16_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #15
-	b.hi .LBB246_2
+	b.hi .LBB294_2
 	mov w8, #1
 	and w9, w0, #0xffff
 	lsl w8, w8, w1
@@ -3633,7 +4404,7 @@ unbounded_div_round_u16_unb_pow2:
 	tst w0, w8, lsr #1
 	cinc w0, w9, ne
 	ret
-.LBB246_2:
+.LBB294_2:
 	mov w0, wzr
 ```
 ## `unbounded_div_round_u32_unb_pow2`
@@ -3641,14 +4412,14 @@ unbounded_div_round_u16_unb_pow2:
 unbounded_div_round_u32_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #31
-	b.hi .LBB247_2
+	b.hi .LBB295_2
 	mov w8, #1
 	lsr w9, w0, w1
 	lsl w8, w8, w1
 	tst w0, w8, lsr #1
 	cinc w0, w9, ne
 	ret
-.LBB247_2:
+.LBB295_2:
 	mov w0, wzr
 ```
 ## `unbounded_div_round_u64_unb_pow2`
@@ -3656,20 +4427,20 @@ unbounded_div_round_u32_unb_pow2:
 unbounded_div_round_u64_unb_pow2:
 	and w8, w1, #0xff
 	cmp w8, #63
-	b.hi .LBB248_2
+	b.hi .LBB296_2
 	mov w8, #1
 	lsr x9, x0, x1
 	lsl x8, x8, x1
 	tst x0, x8, lsr #1
 	cinc x0, x9, ne
 	ret
-.LBB248_2:
+.LBB296_2:
 	mov x0, xzr
 ```
 ## `unbounded_div_round_u128_unb_pow2`
 ```asm
 unbounded_div_round_u128_unb_pow2:
-	tbnz w2, #7, .LBB245_2
+	tbnz w2, #7, .LBB293_2
 	mov w8, #1
 	and x9, x2, #0xff
 	lsl x10, x1, #1
@@ -3693,7 +4464,7 @@ unbounded_div_round_u128_unb_pow2:
 	adds x0, x10, x8
 	cinc x1, x9, hs
 	ret
-.LBB245_2:
+.LBB293_2:
 	mov x0, xzr
 	mov x1, xzr
 ```
@@ -3751,7 +4522,7 @@ unbounded_floor_to_multiple_i64_unb_pow2:
 ## `unbounded_floor_to_multiple_i128_unb_pow2`
 ```asm
 unbounded_floor_to_multiple_i128_unb_pow2:
-	tbnz w2, #7, .LBB250_2
+	tbnz w2, #7, .LBB298_2
 	mov x9, #-1
 	mvn w10, w2
 	mov x11, #9223372036854775807
@@ -3768,13 +4539,13 @@ unbounded_floor_to_multiple_i128_unb_pow2:
 	mov w9, #1
 	stp x9, xzr, [x8]
 	ret
-.LBB250_2:
-	tbnz x1, #63, .LBB250_4
+.LBB298_2:
+	tbnz x1, #63, .LBB298_4
 	mov w9, #1
 	stp xzr, xzr, [x8, #16]
 	stp x9, xzr, [x8]
 	ret
-.LBB250_4:
+.LBB298_4:
 	stp xzr, xzr, [x8]
 ```
 ## `unbounded_floor_to_multiple_u8_unb_pow2`
@@ -3834,10 +4605,9 @@ unbounded_floor_to_multiple_u128_unb_pow2:
 ## `unbounded_is_multiple_of_i8_unb_pow2`
 ```asm
 unbounded_is_multiple_of_i8_unb_pow2:
-	orr w8, w0, #0x100
+	rbit w8, w0
 	and w9, w1, #0xff
 	tst w0, #0xff
-	rbit w8, w8
 	clz w8, w8
 	ccmp w8, w9, #2, ne
 	cset w0, hs
@@ -3845,10 +4615,9 @@ unbounded_is_multiple_of_i8_unb_pow2:
 ## `unbounded_is_multiple_of_i16_unb_pow2`
 ```asm
 unbounded_is_multiple_of_i16_unb_pow2:
-	orr w8, w0, #0x10000
+	rbit w8, w0
 	tst w0, #0xffff
 	and w9, w1, #0xff
-	rbit w8, w8
 	clz w8, w8
 	ccmp w8, w9, #2, ne
 	cset w0, hs
@@ -3883,9 +4652,436 @@ unbounded_is_multiple_of_i128_unb_pow2:
 	clz x8, x8
 	clz x9, x9
 	add w8, w8, #64
-	csel w8, w9, w8, ne
+	csel x8, x9, x8, ne
 	cmp x10, #0
 	and w9, w2, #0xff
 	ccmp w8, w9, #2, ne
 	cset w0, hs
+```
+## `unbounded_rem_i8_unb_pow2`
+```asm
+unbounded_rem_i8_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #7
+	b.hi .LBB317_4
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #7, .LBB317_3
+	and w0, w0, w9
+	ret
+.LBB317_3:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w0, w0, w8
+.LBB317_4:
+```
+## `unbounded_rem_i16_unb_pow2`
+```asm
+unbounded_rem_i16_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #15
+	b.hi .LBB314_4
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #15, .LBB314_3
+	and w0, w0, w9
+	ret
+.LBB314_3:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w0, w0, w8
+.LBB314_4:
+```
+## `unbounded_rem_i32_unb_pow2`
+```asm
+unbounded_rem_i32_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #31
+	b.hi .LBB315_4
+	mov w8, #-1
+	lsl w8, w8, w1
+	mvn w9, w8
+	tbnz w0, #31, .LBB315_3
+	and w0, w0, w9
+	ret
+.LBB315_3:
+	add w9, w0, w9
+	and w8, w9, w8
+	sub w0, w0, w8
+.LBB315_4:
+```
+## `unbounded_rem_i64_unb_pow2`
+```asm
+unbounded_rem_i64_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #63
+	b.hi .LBB316_4
+	mov x8, #-1
+	lsl x8, x8, x1
+	mvn x9, x8
+	tbnz x0, #63, .LBB316_3
+	and x0, x0, x9
+	ret
+.LBB316_3:
+	add x9, x0, x9
+	and x8, x9, x8
+	sub x0, x0, x8
+.LBB316_4:
+```
+## `unbounded_rem_i128_unb_pow2`
+```asm
+unbounded_rem_i128_unb_pow2:
+	tbnz w2, #7, .LBB313_4
+	mov x8, #-1
+	mvn w9, w2
+	mov x10, #9223372036854775807
+	lsl x11, x8, x2
+	lsr x8, x10, x9
+	and x9, x2, #0xff
+	tst x9, #0x40
+	orr x8, x11, x8
+	csel x9, xzr, x11, ne
+	csel x8, x11, x8, ne
+	mvn x11, x9
+	mvn x10, x8
+	tbnz x1, #63, .LBB313_3
+	and x0, x0, x11
+	and x1, x1, x10
+	ret
+.LBB313_3:
+	adds x11, x0, x11
+	adc x10, x1, x10
+	and x9, x11, x9
+	and x8, x10, x8
+	subs x0, x0, x9
+	sbc x1, x1, x8
+.LBB313_4:
+```
+## `unbounded_rem_u8_unb_pow2`
+```asm
+unbounded_rem_u8_unb_pow2:
+	mov w8, #-1
+	and w9, w1, #0xff
+	lsl w10, w8, w1
+	cmp w9, #8
+	csinv w8, w8, w10, hs
+	and w0, w8, w0
+```
+## `unbounded_rem_u16_unb_pow2`
+```asm
+unbounded_rem_u16_unb_pow2:
+	mov w8, #-1
+	and w9, w1, #0xff
+	lsl w10, w8, w1
+	cmp w9, #16
+	csinv w8, w8, w10, hs
+	and w0, w8, w0
+```
+## `unbounded_rem_u32_unb_pow2`
+```asm
+unbounded_rem_u32_unb_pow2:
+	mov w8, #-1
+	and w9, w1, #0xff
+	lsl w10, w8, w1
+	cmp w9, #32
+	csinv w8, w8, w10, hs
+	and w0, w8, w0
+```
+## `unbounded_rem_u64_unb_pow2`
+```asm
+unbounded_rem_u64_unb_pow2:
+	mov x8, #-1
+	and w9, w1, #0xff
+	lsl x10, x8, x1
+	cmp w9, #64
+	csinv x8, x8, x10, hs
+	and x0, x8, x0
+```
+## `unbounded_rem_u128_unb_pow2`
+```asm
+unbounded_rem_u128_unb_pow2:
+	mov x8, #-1
+	mvn w10, w2
+	and x12, x2, #0xff
+	lsr x9, x8, #1
+	lsl x11, x8, x2
+	tst x12, #0x40
+	lsr x9, x9, x10
+	sxtb w10, w2
+	csel x12, xzr, x11, ne
+	orr x9, x11, x9
+	csel x9, x11, x9, ne
+	cmp w10, #0
+	csinv x9, x8, x9, mi
+	csinv x8, x8, x12, mi
+	and x0, x8, x0
+	and x1, x9, x1
+```
+## `unbounded_round_to_multiple_i8_unb_pow2`
+```asm
+unbounded_round_to_multiple_i8_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #7
+	b.hi .LBB327_2
+	mov w8, #1
+	and w10, w0, #0x80
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #7
+	neg w8, w8
+	subs w9, w9, w10, lsr #7
+	csel w9, wzr, w9, lo
+	add w9, w9, w0, sxtb
+	cmp w9, w9, sxtb
+	and w1, w9, w8
+	cset w0, eq
+	ret
+.LBB327_2:
+	and w9, w0, #0xff
+	mov w1, wzr
+	cmp w9, #128
+	ccmp w8, #8, #0, eq
+	cset w0, ne
+```
+## `unbounded_round_to_multiple_i16_unb_pow2`
+```asm
+unbounded_round_to_multiple_i16_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #15
+	b.hi .LBB324_2
+	mov w8, #1
+	and w10, w0, #0x8000
+	lsl w8, w8, w1
+	ubfx w9, w8, #1, #15
+	neg w8, w8
+	subs w9, w9, w10, lsr #15
+	csel w9, wzr, w9, lo
+	add w9, w9, w0, sxth
+	cmp w9, w9, sxth
+	and w1, w9, w8
+	cset w0, eq
+	ret
+.LBB324_2:
+	and w9, w0, #0xffff
+	mov w1, wzr
+	cmp w9, #8, lsl #12
+	ccmp w8, #16, #0, eq
+	cset w0, ne
+```
+## `unbounded_round_to_multiple_i32_unb_pow2`
+```asm
+unbounded_round_to_multiple_i32_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #31
+	b.hi .LBB325_2
+	mov w8, #1
+	lsl w8, w8, w1
+	lsr w9, w8, #1
+	neg w8, w8
+	subs w9, w9, w0, lsr #31
+	csel w9, wzr, w9, lo
+	adds w9, w0, w9
+	cset w0, vc
+	and w1, w9, w8
+	ret
+.LBB325_2:
+	mov w9, #-2147483648
+	mov w1, wzr
+	cmp w0, w9
+	mov w9, #32
+	ccmp w8, w9, #0, eq
+	cset w0, ne
+```
+## `unbounded_round_to_multiple_i64_unb_pow2`
+```asm
+unbounded_round_to_multiple_i64_unb_pow2:
+	and w8, w1, #0xff
+	cmp w8, #63
+	b.hi .LBB326_2
+	mov w8, #1
+	lsl x8, x8, x1
+	lsr x9, x8, #1
+	neg x10, x8
+	subs x9, x9, x0, lsr #63
+	csel x9, xzr, x9, lo
+	adds x9, x0, x9
+	cset w8, vc
+	and x1, x9, x10
+	mov w0, w8
+	ret
+.LBB326_2:
+	mov x9, #-9223372036854775808
+	mov x1, xzr
+	cmp x0, x9
+	mov w9, #64
+	ccmp w8, w9, #0, eq
+	cset w8, ne
+	mov w0, w8
+```
+## `unbounded_round_to_multiple_i128_unb_pow2`
+```asm
+unbounded_round_to_multiple_i128_unb_pow2:
+	tbnz w2, #7, .LBB323_5
+	mov w9, #1
+	lsl x10, x9, x2
+	and x9, x2, #0xff
+	tst x9, #0x40
+	csel x9, x10, xzr, ne
+	csel x10, xzr, x10, ne
+	extr x11, x9, x10, #1
+	lsr x12, x9, #1
+	subs x11, x11, x1, lsr #63
+	sbcs x12, x12, xzr
+	csel x11, xzr, x11, lo
+	csel x12, xzr, x12, lo
+	adds x11, x0, x11
+	adcs x12, x1, x12
+	cset w13, vs
+	tbnz w13, #0, .LBB323_8
+	negs x10, x10
+	ngc x13, x9
+	and x9, x11, x10
+	and x10, x12, x13
+.LBB323_3:
+	stp x9, x10, [x8, #16]
+	mov w9, #1
+.LBB323_4:
+	stp x9, xzr, [x8]
+	ret
+.LBB323_5:
+	eor x9, x1, #0x8000000000000000
+	orr x10, x0, x9
+	mov x9, xzr
+	cbnz x10, .LBB323_7
+	and w10, w2, #0xff
+	cmp w10, #128
+	mov x10, x9
+	b.eq .LBB323_4
+	b .LBB323_3
+.LBB323_7:
+	mov x10, x9
+	b .LBB323_3
+.LBB323_8:
+	stp xzr, xzr, [x8]
+```
+## `unbounded_round_to_multiple_u8_unb_pow2`
+```asm
+unbounded_round_to_multiple_u8_unb_pow2:
+	mov w8, #1
+	sxtb w9, w0
+	and w11, w1, #0xff
+	lsl w8, w8, w1
+	cmn w9, #1
+	and w10, w8, #0xfe
+	ccmp w11, #8, #0, le
+	neg w8, w8
+	add w10, w0, w10, lsr #1
+	cset w12, ne
+	and w9, w10, #0xff
+	and w8, w10, w8
+	cmp w9, w0, uxtb
+	cset w9, hs
+	cmp w11, #7
+	csel w1, wzr, w8, hi
+	csel w0, w12, w9, hi
+```
+## `unbounded_round_to_multiple_u16_unb_pow2`
+```asm
+unbounded_round_to_multiple_u16_unb_pow2:
+	mov w8, #1
+	sxth w9, w0
+	and w11, w1, #0xff
+	lsl w8, w8, w1
+	cmn w9, #1
+	and w10, w8, #0xfffe
+	ccmp w11, #16, #0, le
+	neg w8, w8
+	add w10, w0, w10, lsr #1
+	cset w12, ne
+	and w9, w10, #0xffff
+	and w8, w10, w8
+	cmp w9, w0, uxth
+	cset w9, hs
+	cmp w11, #15
+	csel w1, wzr, w8, hi
+	csel w0, w12, w9, hi
+```
+## `unbounded_round_to_multiple_u32_unb_pow2`
+```asm
+unbounded_round_to_multiple_u32_unb_pow2:
+	mov w8, #1
+	and w9, w1, #0xff
+	cmn w0, #1
+	lsl w8, w8, w1
+	mov w10, #32
+	ccmp w9, w10, #0, le
+	add w11, w0, w8, lsr #1
+	cset w10, ne
+	neg w8, w8
+	cmp w11, w0
+	and w8, w11, w8
+	cset w12, hs
+	cmp w9, #31
+	csel w1, wzr, w8, hi
+	csel w0, w10, w12, hi
+```
+## `unbounded_round_to_multiple_u64_unb_pow2`
+```asm
+unbounded_round_to_multiple_u64_unb_pow2:
+	mov w8, #1
+	and w9, w1, #0xff
+	cmn x0, #1
+	lsl x8, x8, x1
+	mov w10, #64
+	ccmp w9, w10, #0, le
+	add x11, x0, x8, lsr #1
+	cset w10, ne
+	neg x8, x8
+	cmp x11, x0
+	and x8, x11, x8
+	cset w12, hs
+	cmp w9, #63
+	csel x1, xzr, x8, hi
+	csel w0, w10, w12, hi
+```
+## `unbounded_round_to_multiple_u128_unb_pow2`
+```asm
+unbounded_round_to_multiple_u128_unb_pow2:
+	tbnz w2, #7, .LBB328_5
+	mov w9, #1
+	lsl x10, x9, x2
+	and x9, x2, #0xff
+	tst x9, #0x40
+	csel x9, x10, xzr, ne
+	csel x10, xzr, x10, ne
+	extr x11, x9, x10, #1
+	lsr x12, x9, #1
+	adds x11, x11, x0
+	adcs x12, x12, x1
+	cset w13, hs
+	tbnz w13, #0, .LBB328_8
+	negs x10, x10
+	ngc x13, x9
+	and x9, x11, x10
+	and x10, x12, x13
+.LBB328_3:
+	stp x9, x10, [x8, #16]
+	mov w9, #1
+.LBB328_4:
+	stp x9, xzr, [x8]
+	ret
+.LBB328_5:
+	mov x9, xzr
+	tbz x1, #63, .LBB328_7
+	and w10, w2, #0xff
+	cmp w10, #128
+	mov x10, x9
+	b.eq .LBB328_4
+	b .LBB328_3
+.LBB328_7:
+	mov x10, x9
+	b .LBB328_3
+.LBB328_8:
+	stp xzr, xzr, [x8]
 ```
