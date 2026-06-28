@@ -34,8 +34,8 @@ where
         + Not<Output = Self>
         + BitAnd<Output = Self>,
 {
-    type Signed: SignedInt<Signed=Self::Signed, Unsigned=Self::Unsigned>;
-    type Unsigned: UnsignedInt<Signed=Self::Signed, Unsigned=Self::Unsigned>;
+    type Signed: SignedInt<Signed = Self::Signed, Unsigned = Self::Unsigned>;
+    type Unsigned: UnsignedInt<Signed = Self::Signed, Unsigned = Self::Unsigned>;
 
     const BITS: u32;
     const ZERO: Self;
@@ -105,7 +105,7 @@ where
     fn self_from_unsigned(rhs: Self::Unsigned) -> Self;
 }
 
-pub trait UnsignedInt: Int<Unsigned=Self> {}
+pub trait UnsignedInt: Int<Unsigned = Self> {}
 
 impl UnsignedInt for u8 {}
 impl UnsignedInt for u16 {}
@@ -114,7 +114,7 @@ impl UnsignedInt for u64 {}
 impl UnsignedInt for u128 {}
 impl UnsignedInt for usize {}
 
-pub trait SignedInt: Int<Signed=Self> {}
+pub trait SignedInt: Int<Signed = Self> {}
 
 impl SignedInt for i8 {}
 impl SignedInt for i16 {}
@@ -196,7 +196,7 @@ macro_rules! impl_common_int {
 macro_rules! impl_uint {
     ($t:ty, $t_sint:ty) => {
         impl_common_int!($t);
-        
+
         const MINUS_ONE: Self = <$t>::MAX;
         const IS_SIGNED: bool = false;
         const IS_UNSIGNED: bool = true;
@@ -246,7 +246,7 @@ macro_rules! impl_uint {
 macro_rules! impl_sint {
     ($t:ty, $t_uint:ty) => {
         impl_common_int!($t);
-        
+
         const MINUS_ONE: Self = -1;
         const IS_SIGNED: bool = true;
         const IS_UNSIGNED: bool = false;
@@ -362,49 +362,49 @@ impl_int_at_least_as_wide!(u64 => [i64, u64, i128, u128, isize, usize]);
 impl_int_at_least_as_wide!(u128 => [i128, u128]);
 
 macro_rules! impl_trait_signed_unsigned {
-    ($trait:ty, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
-        impl $trait for u8  $unsigned_body
-        impl $trait for u16 $unsigned_body
-        impl $trait for u32 $unsigned_body
-        impl $trait for u64 $unsigned_body
-        impl $trait for u128 $unsigned_body
-        impl $trait for usize $unsigned_body
+    (#[doc = $doc:expr], $trait:ty, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
+        #[doc = $doc] impl $trait for u8  $unsigned_body
+        #[doc = $doc] impl $trait for u16 $unsigned_body
+        #[doc = $doc] impl $trait for u32 $unsigned_body
+        #[doc = $doc] impl $trait for u64 $unsigned_body
+        #[doc = $doc] impl $trait for u128 $unsigned_body
+        #[doc = $doc] impl $trait for usize $unsigned_body
 
-        impl $trait for i8  $signed_body
-        impl $trait for i16 $signed_body
-        impl $trait for i32 $signed_body
-        impl $trait for i64 $signed_body
-        impl $trait for i128 $signed_body
-        impl $trait for isize $signed_body
+        #[doc = $doc] impl $trait for i8  $signed_body
+        #[doc = $doc] impl $trait for i16 $signed_body
+        #[doc = $doc] impl $trait for i32 $signed_body
+        #[doc = $doc] impl $trait for i64 $signed_body
+        #[doc = $doc] impl $trait for i128 $signed_body
+        #[doc = $doc] impl $trait for isize $signed_body
     };
 }
 
 macro_rules! impl_generic_trait_signed_unsigned {
-    (<$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ }, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
-        impl<$($gen_t),*> $trait for u8 where $($wc)+ $unsigned_body
-        impl<$($gen_t),*> $trait for u16 where $($wc)+ $unsigned_body
-        impl<$($gen_t),*> $trait for u32 where $($wc)+ $unsigned_body
-        impl<$($gen_t),*> $trait for u64 where $($wc)+ $unsigned_body
-        impl<$($gen_t),*> $trait for u128 where $($wc)+ $unsigned_body
-        impl<$($gen_t),*> $trait for usize where $($wc)+ $unsigned_body
+    (#[doc = $doc:expr], <$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ }, signed_body $signed_body:tt, unsigned_body $unsigned_body:tt) => {
+        #[doc = $doc] impl<$($gen_t),*> $trait for u8 where $($wc)+ $unsigned_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for u16 where $($wc)+ $unsigned_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for u32 where $($wc)+ $unsigned_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for u64 where $($wc)+ $unsigned_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for u128 where $($wc)+ $unsigned_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for usize where $($wc)+ $unsigned_body
 
-        impl<$($gen_t),*> $trait for i8 where $($wc)+ $signed_body
-        impl<$($gen_t),*> $trait for i16 where $($wc)+ $signed_body
-        impl<$($gen_t),*> $trait for i32 where $($wc)+ $signed_body
-        impl<$($gen_t),*> $trait for i64 where $($wc)+ $signed_body
-        impl<$($gen_t),*> $trait for i128 where $($wc)+ $signed_body
-        impl<$($gen_t),*> $trait for isize where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for i8 where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for i16 where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for i32 where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for i64 where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for i128 where $($wc)+ $signed_body
+        #[doc = $doc] impl<$($gen_t),*> $trait for isize where $($wc)+ $signed_body
     };
 }
 
 macro_rules! impl_trait_all_ints {
-    ($trait:ty => $body:tt) => {
-        impl_trait_signed_unsigned!($trait, signed_body $body, unsigned_body $body);
+    (#[doc = $doc:expr], $trait:ty => $body:tt) => {
+        impl_trait_signed_unsigned!(#[doc = $doc], $trait, signed_body $body, unsigned_body $body);
     };
 }
 
 macro_rules! impl_generic_trait_all_ints {
-    (<$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ } => $body:tt) => {
-        impl_generic_trait_signed_unsigned!(<$($gen_t),*> $trait where { $($wc)+ }, signed_body $body, unsigned_body $body);
+    (#[doc = $doc:expr], <$($gen_t:ident),*> $trait:ty where { $($wc:tt)+ } => $body:tt) => {
+        impl_generic_trait_signed_unsigned!(#[doc = $doc], <$($gen_t),*> $trait where { $($wc)+ }, signed_body $body, unsigned_body $body);
     };
 }

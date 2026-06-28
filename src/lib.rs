@@ -576,6 +576,7 @@ pub type SafePow2u128 = Pow2<u128>;
 pub type SafePow2usize = Pow2<usize>;
 
 impl_trait_signed_unsigned!(
+    #[doc = ""],
     Div<UnboundedPow2>,
     signed_body {
         type Output = Self;
@@ -603,6 +604,7 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
+    #[doc = ""],
     <T> Div<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Self;
@@ -632,6 +634,7 @@ impl_generic_trait_signed_unsigned!(
 );
 
 impl_trait_all_ints!(
+    #[doc = ""],
     DivAssign<UnboundedPow2> => {
         #[inline(always)]
         fn div_assign(&mut self, other: UnboundedPow2) {
@@ -642,6 +645,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
+    #[doc = ""],
     <T> DivAssign<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
         #[inline(always)]
         fn div_assign(&mut self, other: Pow2<T>) {
@@ -651,6 +655,7 @@ impl_generic_trait_all_ints!(
 );
 
 impl_trait_all_ints!(
+    #[doc = ""],
     Mul<UnboundedPow2> => {
         type Output = Self;
 
@@ -665,6 +670,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
+    #[doc = ""],
     <T> Mul<Pow2<T>> where { T: UnsignedInt } => {
         type Output = Self;
 
@@ -679,6 +685,7 @@ impl_generic_trait_all_ints!(
 );
 
 impl_trait_all_ints!(
+    #[doc = ""],
     MulAssign<UnboundedPow2> => {
         #[inline(always)]
         fn mul_assign(&mut self, other: UnboundedPow2) {
@@ -688,6 +695,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
+    #[doc = ""],
     <T> MulAssign<Pow2<T>> where { T: UnsignedInt } => {
         #[inline(always)]
         fn mul_assign(&mut self, other: Pow2<T>) {
@@ -698,6 +706,7 @@ impl_generic_trait_all_ints!(
 
 macro_rules! make_func_trait {
     ($trait_name:ident, $func_name:ident) => {
+        #[allow(rustdoc::broken_intra_doc_links)]
         #[doc = concat!(
             "Trait implementing `", stringify!($func_name), "` taking `self` and some `rhs` of type `Rhs`.\n\n",
             "Implementations of this trait define the behavior of the free ",
@@ -778,12 +787,14 @@ where
 
 make_func_trait!(CheckedDiv, checked_div);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedDiv)
 impl<T> CheckedDiv<UnboundedPow2> for T
 where
     T: Int + Div<UnboundedPow2, Output = T>,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedDiv)
     #[inline(always)]
     fn checked_div(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>().then(|| self / rhs)
@@ -810,12 +821,14 @@ where
 
 make_func_trait!(DivFloor, div_floor);
 
+/// See [docs](__detached_docs::UnboundedPow2::DivFloor)
 impl<T> DivFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::DivFloor)
     #[inline(always)]
     fn div_floor(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -823,6 +836,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::DivFloor)
 impl<L, T> DivFloor<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -830,6 +844,7 @@ where
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::Pow2::DivFloor)
     #[inline(always)]
     fn div_floor(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
@@ -839,12 +854,14 @@ where
 
 make_func_trait!(CheckedDivFloor, checked_div_floor);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedDivFloor)
 impl<T> CheckedDivFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedDivFloor)
     #[inline(always)]
     fn checked_div_floor(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>().then(|| div_floor(self, rhs))
@@ -853,12 +870,14 @@ where
 
 make_func_trait!(UnboundedDivFloor, unbounded_div_floor);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedDivFloor)
 impl<T> UnboundedDivFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedDivFloor)
     #[inline(always)]
     fn unbounded_div_floor(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
@@ -873,12 +892,14 @@ where
 
 make_func_trait!(ModFloor, mod_floor);
 
+/// See [docs](__detached_docs::UnboundedPow2::ModFloor)
 impl<T> ModFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::ModFloor)
     #[inline(always)]
     fn mod_floor(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -886,6 +907,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::ModFloor)
 impl<L, T> ModFloor<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -893,6 +915,7 @@ where
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::Pow2::ModFloor)
     #[inline(always)]
     fn mod_floor(self, rhs: Pow2<T>) -> Self::Output {
         self - floor_to_multiple(self, rhs)
@@ -901,12 +924,14 @@ where
 
 make_func_trait!(CheckedModFloor, checked_mod_floor);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedModFloor)
 impl<T> CheckedModFloor<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedModFloor)
     #[inline(always)]
     fn checked_mod_floor(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>().then(|| mod_floor(self, rhs))
@@ -915,12 +940,14 @@ where
 
 make_func_trait!(DivCeil, div_ceil);
 
+/// See [docs](__detached_docs::UnboundedPow2::DivCeil)
 impl<T> DivCeil<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::DivCeil)
     #[inline(always)]
     fn div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -933,6 +960,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::DivCeil)
 impl<L, T> DivCeil<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -940,6 +968,7 @@ where
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::Pow2::DivCeil)
     #[inline(always)]
     fn div_ceil(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
@@ -951,12 +980,14 @@ where
 
 make_func_trait!(CheckedDivCeil, checked_div_ceil);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedDivCeil)
 impl<T> CheckedDivCeil<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedDivCeil)
     #[inline(always)]
     fn checked_div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>().then(|| div_ceil(self, rhs))
@@ -965,12 +996,15 @@ where
 
 make_func_trait!(UnboundedDivCeil, unbounded_div_ceil);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedDivCeil)
 impl<T> UnboundedDivCeil<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedDivCeil)
+    #[inline(always)]
     fn unbounded_div_ceil(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
             div_ceil(self, rhs)
@@ -985,10 +1019,12 @@ where
 make_func_trait!(DivRound, div_round);
 
 impl_trait_signed_unsigned!(
+    #[doc = ""],
     DivRound<UnboundedPow2>,
     signed_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::UnboundedPow2::DivRound)
         #[inline(always)]
         fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
@@ -1009,6 +1045,7 @@ impl_trait_signed_unsigned!(
     unsigned_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::UnboundedPow2::DivRound)
         #[inline(always)]
         fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1022,10 +1059,12 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
+    #[doc = ""],
     <T> DivRound<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::Pow2::DivRound)
         #[inline(always)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
@@ -1047,6 +1086,7 @@ impl_generic_trait_signed_unsigned!(
     unsigned_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::Pow2::DivRound)
         #[inline(always)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1061,12 +1101,14 @@ impl_generic_trait_signed_unsigned!(
 
 make_func_trait!(CheckedDivRound, checked_div_round);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedDivRound)
 impl<T> CheckedDivRound<UnboundedPow2> for T
 where
     T: Int + DivRound<UnboundedPow2, Output = Self>,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedDivRound)
     #[inline(always)]
     fn checked_div_round(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>().then(|| div_round(self, rhs))
@@ -1075,12 +1117,15 @@ where
 
 make_func_trait!(UnboundedDivRound, unbounded_div_round);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedDivRound)
 impl<T> UnboundedDivRound<UnboundedPow2> for T
 where
     T: Int + DivRound<UnboundedPow2, Output = Self>,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedDivRound)
+    #[inline(always)]
     fn unbounded_div_round(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
             div_round(self, rhs)
@@ -1095,12 +1140,14 @@ where
 
 make_func_trait!(IsMultipleOf, is_multiple_of);
 
+/// See [docs](__detached_docs::UnboundedPow2::IsMultipleOf)
 impl<T> IsMultipleOf<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = bool;
 
+    /// See [docs](__detached_docs::UnboundedPow2::IsMultipleOf)
     #[inline(always)]
     fn is_multiple_of(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -1108,6 +1155,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::IsMultipleOf)
 impl<L, T> IsMultipleOf<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -1115,6 +1163,7 @@ where
 {
     type Output = bool;
 
+    /// See [docs](__detached_docs::Pow2::IsMultipleOf)
     #[inline(always)]
     fn is_multiple_of(self, rhs: Pow2<T>) -> Self::Output {
         self.trailing_zeros() >= rhs.exponent as u32
@@ -1123,12 +1172,15 @@ where
 
 make_func_trait!(UnboundedIsMultipleOf, unbounded_is_multiple_of);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedIsMultipleOf)
 impl<T> UnboundedIsMultipleOf<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = bool;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedIsMultipleOf)
+    #[inline(always)]
     fn unbounded_is_multiple_of(self, rhs: UnboundedPow2) -> Self::Output {
         self.is_zero() || self.trailing_zeros() >= rhs.exponent as u32
     }
@@ -1136,12 +1188,14 @@ where
 
 make_func_trait!(FloorToMultiple, floor_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::FloorToMultiple)
 impl<T> FloorToMultiple<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::FloorToMultiple)
     #[inline(always)]
     fn floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -1149,6 +1203,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::FloorToMultiple)
 impl<L, T> FloorToMultiple<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -1156,6 +1211,7 @@ where
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::Pow2::FloorToMultiple)
     #[inline(always)]
     fn floor_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
@@ -1168,12 +1224,14 @@ where
 
 make_func_trait!(CheckedFloorToMultiple, checked_floor_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedFloorToMultiple)
 impl<T> CheckedFloorToMultiple<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedFloorToMultiple)
     #[inline(always)]
     fn checked_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         rhs.is_safe::<T::Unsigned>()
@@ -1184,10 +1242,13 @@ where
 make_func_trait!(UnboundedFloorToMultiple, unbounded_floor_to_multiple);
 
 impl_trait_signed_unsigned!(
+    #[doc = "See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)"],
     UnboundedFloorToMultiple<UnboundedPow2>,
     signed_body {
         type Output = Option<Self>;
 
+        /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
+        #[inline(always)]
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             if rhs.is_safe::<<Self as Int>::Unsigned>() {
@@ -1202,6 +1263,8 @@ impl_trait_signed_unsigned!(
     unsigned_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
+        #[inline(always)]
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             if rhs.is_safe::<Self>() {
@@ -1215,12 +1278,14 @@ impl_trait_signed_unsigned!(
 
 make_func_trait!(CeilToMultiple, ceil_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::CeilToMultiple)
 impl<T> CeilToMultiple<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CeilToMultiple)
     #[inline(always)]
     fn ceil_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         debug_assert!(rhs.is_safe::<T::Unsigned>());
@@ -1231,6 +1296,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::CeilToMultiple)
 impl<L, T> CeilToMultiple<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -1238,6 +1304,7 @@ where
 {
     type Output = Self;
 
+    /// See [docs](__detached_docs::Pow2::CeilToMultiple)
     #[inline(always)]
     fn ceil_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // We can actually use the mask method here because if the intermediate `a + mask` overflows
@@ -1250,12 +1317,14 @@ where
 
 make_func_trait!(CheckedCeilToMultiple, checked_ceil_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::CheckedCeilToMultiple)
 impl<T> CheckedCeilToMultiple<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedCeilToMultiple)
     #[inline(always)]
     fn checked_ceil_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
@@ -1267,6 +1336,7 @@ where
     }
 }
 
+/// See [docs](__detached_docs::Pow2::CheckedCeilToMultiple)
 impl<L, T> CheckedCeilToMultiple<Pow2<T>> for L
 where
     L: IntAtLeastAsWide<T>,
@@ -1274,6 +1344,7 @@ where
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::Pow2::CheckedCeilToMultiple)
     #[inline(always)]
     fn checked_ceil_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // SAFETY: SafePow2 guarantees a valid shift
@@ -1284,12 +1355,14 @@ where
 
 make_func_trait!(UnboundedCeilToMultiple, unbounded_ceil_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedCeilToMultiple)
 impl<T> UnboundedCeilToMultiple<UnboundedPow2> for T
 where
     T: Int,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedCeilToMultiple)
     #[inline(always)]
     fn unbounded_ceil_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
@@ -1305,10 +1378,12 @@ where
 make_func_trait!(RoundToMultiple, round_to_multiple);
 
 impl_trait_signed_unsigned!(
+    #[doc = "See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)"],
     RoundToMultiple<UnboundedPow2>,
     signed_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         #[inline(always)]
         fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
@@ -1332,6 +1407,7 @@ impl_trait_signed_unsigned!(
     unsigned_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         #[inline(always)]
         fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1346,10 +1422,12 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
+    #[doc = "See [docs](__detached_docs::Pow2::RoundToMultiple)"],
     <T> RoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::Pow2::RoundToMultiple)
         #[inline(always)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
@@ -1374,6 +1452,7 @@ impl_generic_trait_signed_unsigned!(
     unsigned_body {
         type Output = Self;
 
+        /// See [docs](__detached_docs::Pow2::RoundToMultiple)
         #[inline(always)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1391,10 +1470,12 @@ impl_generic_trait_signed_unsigned!(
 make_func_trait!(CheckedRoundToMultiple, checked_round_to_multiple);
 
 impl_trait_signed_unsigned!(
+    #[doc = "See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)"],
     CheckedRoundToMultiple<UnboundedPow2>,
     signed_body {
         type Output = Option<Self>;
 
+        /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         #[inline(always)]
         fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
@@ -1419,6 +1500,7 @@ impl_trait_signed_unsigned!(
     unsigned_body {
         type Output = Option<Self>;
 
+        /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         #[inline(always)]
         fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1435,10 +1517,12 @@ impl_trait_signed_unsigned!(
 );
 
 impl_generic_trait_signed_unsigned!(
+    #[doc = "See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)"],
     <T> CheckedRoundToMultiple<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
     signed_body {
         type Output = Option<Self>;
 
+        /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         #[inline(always)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
@@ -1461,6 +1545,7 @@ impl_generic_trait_signed_unsigned!(
     unsigned_body {
         type Output = Option<Self>;
 
+        /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         #[inline(always)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
@@ -1476,12 +1561,14 @@ impl_generic_trait_signed_unsigned!(
 
 make_func_trait!(UnboundedRoundToMultiple, unbounded_round_to_multiple);
 
+/// See [docs](__detached_docs::UnboundedPow2::UnboundedRoundToMultiple)
 impl<T> UnboundedRoundToMultiple<UnboundedPow2> for T
 where
     T: Int + CheckedRoundToMultiple<UnboundedPow2, Output = Option<Self>>,
 {
     type Output = Option<Self>;
 
+    /// See [docs](__detached_docs::UnboundedPow2::UnboundedRoundToMultiple)
     #[inline(always)]
     fn unbounded_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
         if rhs.is_safe::<T::Unsigned>() {
@@ -1556,9 +1643,9 @@ pub mod __detached_docs {
         ($trait_name:ident, $func_name:ident, [$($additional_trait_bound:ident),*]) => {
             concat!(
                 "<span><pre>",
-                "impl&lt;T&gt; ", trait_link!($trait_name), "&lt;", struct_link!(UnboundedPow2), "&gt; for L<br/>",
+                "impl&lt;T&gt; ", trait_link!($trait_name), "&lt;", struct_link!(UnboundedPow2), "&gt; for T<br/>",
                 "where<br/>",
-                "&nbsp;&nbsp;&nbsp;&nbsp;L: ", trait_link!(Int), $(" + ", trait_link!($additional_trait_bound), "&lt;", struct_link!(UnboundedPow2), ", Output = T&gt;",)* ",<br/>",
+                "&nbsp;&nbsp;&nbsp;&nbsp;T: ", trait_link!(Int), $(" + ", trait_link!($additional_trait_bound), "&lt;", struct_link!(UnboundedPow2), ", Output = T&gt;",)* ",<br/>",
                 "fn ", fn_link!($func_name), "(self, rhs: ", struct_link!(UnboundedPow2), ") -> Self::Output",
                 "</pre></span><hr/>"
             )
@@ -1569,20 +1656,265 @@ pub mod __detached_docs {
         #[doc = trait_code_header_pow2!(CheckedMul, checked_mul, [])]
         /// Attempts to multiply `self` by `rhs`.
         /// Avoids integer multiplication by using bitwise arithmetic.
-        /// 
-        /// Returns `None` if the result overflows,
-        /// `Some(result)` otherwise.
+        ///
+        /// Returns `None` if the result overflows, `Some(result)` otherwise.
         pub mod CheckedMul {}
+
+        #[doc = trait_code_header_pow2!(DivFloor, div_floor, [])]
+        /// Divides `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod DivFloor {}
+
+        #[doc = trait_code_header_pow2!(ModFloor, mod_floor, [])]
+        /// Computes the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod ModFloor {}
+
+        #[doc = trait_code_header_pow2!(DivCeil, div_ceil, [])]
+        /// Divides `self` by `rhs` with rounding towards positive infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod DivCeil {}
+
+        #[doc = trait_code_header_pow2!(DivRound, div_round, [])]
+        /// Divides `self` by `rhs` with rounding to the nearest integer, ties resolving away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod DivRound {}
+
+        #[doc = trait_code_header_pow2!(IsMultipleOf, is_multiple_of, [])]
+        /// Returns whether `self` is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod IsMultipleOf {}
+
+        #[doc = trait_code_header_pow2!(FloorToMultiple, floor_to_multiple, [])]
+        /// Returns the largest integer `<=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod FloorToMultiple {}
+
+        #[doc = trait_code_header_pow2!(CeilToMultiple, ceil_to_multiple, [])]
+        /// Returns the smallest integer `>=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if the result is not representable.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod CeilToMultiple {}
+
+        #[doc = trait_code_header_pow2!(CheckedCeilToMultiple, checked_ceil_to_multiple, [])]
+        /// Returns the smallest integer `>=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable, `Some(result)` otherwise.
+        pub mod CheckedCeilToMultiple {}
+
+        #[doc = trait_code_header_pow2!(RoundToMultiple, round_to_multiple, [])]
+        /// Returns the nearest integer to `self` that is a multiple of `rhs`, ties resolved away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if the result is not representable.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod RoundToMultiple {}
+
+        #[doc = trait_code_header_pow2!(CheckedRoundToMultiple, checked_round_to_multiple, [])]
+        /// Returns the nearest integer to `self` that is a multiple of `rhs`, ties resolved away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable, `Some(result)` otherwise.
+        pub mod CheckedRoundToMultiple {}
     }
 
     pub mod UnboundedPow2 {
         #[doc = trait_code_header_unb_pow2!(CheckedMul, checked_mul, [])]
         /// Attempts to multiply `self` by `rhs`.
         /// Avoids integer multiplication by using bitwise arithmetic.
-        /// 
-        /// Returns `None` if the result overflows or the exponent is too large,
+        ///
+        /// Returns `None` if the result is not representable or the `rhs` exponent is too large,
         /// `Some(result)` otherwise.
         pub mod CheckedMul {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedDiv, checked_div, [Div])]
+        /// Attempts to divide `self` by `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedDiv {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedDiv, unbounded_div, [Div])]
+        /// Divides `self` by `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedDiv {}
+
+        #[doc = trait_code_header_unb_pow2!(DivFloor, div_floor, [])]
+        /// Divides `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod DivFloor {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedDivFloor, checked_div_floor, [])]
+        /// Attempts to divide `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedDivFloor {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedDivFloor, unbounded_div_floor, [])]
+        /// Divides `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedDivFloor {}
+
+        #[doc = trait_code_header_unb_pow2!(ModFloor, mod_floor, [])]
+        /// Computes the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod ModFloor {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedModFloor, checked_mod_floor, [])]
+        /// Attempts to compute the remainder of dividing `self` by `rhs` with rounding towards negative infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedModFloor {}
+
+        #[doc = trait_code_header_unb_pow2!(DivCeil, div_ceil, [])]
+        /// Divides `self` by `rhs` with rounding towards positive infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod DivCeil {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedDivCeil, checked_div_ceil, [])]
+        /// Attempts to divide `self` by `rhs` with rounding towards positive infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedDivCeil {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedDivCeil, unbounded_div_ceil, [])]
+        /// Divides `self` by `rhs` with rounding towards positive infinity.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedDivCeil {}
+
+        #[doc = trait_code_header_unb_pow2!(DivRound, div_round, [])]
+        /// Divides `self` by `rhs` with rounding to the nearest integer, ties resolving away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod DivRound {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedDivRound, checked_div_round, [DivRound])]
+        /// Attempts to divide `self` by `rhs` with rounding to the nearest integer, ties resolving away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedDivRound {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedDivRound, unbounded_div_round, [DivRound])]
+        /// Divides `self` by `rhs` with rounding to the nearest integer, ties resolving away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedDivRound {}
+
+        #[doc = trait_code_header_unb_pow2!(IsMultipleOf, is_multiple_of, [])]
+        /// Returns whether `self` is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod IsMultipleOf {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedIsMultipleOf, unbounded_is_multiple_of, [])]
+        /// Returns whether `self` is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedIsMultipleOf {}
+
+        #[doc = trait_code_header_unb_pow2!(FloorToMultiple, floor_to_multiple, [])]
+        /// Returns the largest integer `<=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod FloorToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedFloorToMultiple, checked_floor_to_multiple, [])]
+        /// Returns the largest integer `<=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedFloorToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedFloorToMultiple, unbounded_floor_to_multiple, [])]
+        /// Returns the largest integer `<=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable, `Some(result)` otherwise.
+        pub mod UnboundedFloorToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(CeilToMultiple, ceil_to_multiple, [])]
+        /// Returns the smallest integer `>=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod CeilToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedCeilToMultiple, checked_ceil_to_multiple, [])]
+        /// Returns the smallest integer `>=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable or the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedCeilToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedCeilToMultiple, unbounded_ceil_to_multiple, [])]
+        /// Returns the smallest integer `>=self` that is a multiple of `rhs`.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable, `Some(result)` otherwise.
+        pub mod UnboundedCeilToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(RoundToMultiple, round_to_multiple, [])]
+        /// Returns the nearest integer to `self` that is a multiple of `rhs`, ties resolved away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// # Panics
+        ///
+        /// In debug builds, panics if `rhs` is not safely representable as `T::Unsigned`.
+        /// In release builds this check is skipped; the result will be defined but incorrect.
+        pub mod RoundToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedRoundToMultiple, checked_round_to_multiple, [])]
+        /// Returns the nearest integer to `self` that is a multiple of `rhs`, ties resolved away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable or the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedRoundToMultiple {}
+
+        #[doc = trait_code_header_unb_pow2!(UnboundedRoundToMultiple, unbounded_round_to_multiple, [])]
+        /// Returns the nearest integer to `self` that is a multiple of `rhs`, ties resolved away from zero.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the result is not representable, `Some(result)` otherwise.
+        pub mod UnboundedRoundToMultiple {}
     }
 }
 
