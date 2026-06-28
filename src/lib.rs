@@ -153,8 +153,8 @@ macro_rules! impl_as {
     ($name:ident, $t:ty) => {
         impl UnboundedPow2 {
             #[doc = concat!(
-                "Returns the modelled power-of-two value as ", stringify!($t), "."
-            )]
+                        "Returns the modelled power-of-two value as ", stringify!($t), "."
+                    )]
             /// # Panics
             ///
             /// In debug builds, panics if the value is not representable.
@@ -942,6 +942,42 @@ where
             self / rhs
         } else {
             T::ZERO
+        }
+    }
+}
+
+make_func_trait!(CheckedRem, checked_rem);
+
+/// See [docs](__detached_docs::UnboundedPow2::CheckedRem)
+impl<T> CheckedRem<UnboundedPow2> for T
+where
+    T: Int + Rem<UnboundedPow2, Output = T>,
+{
+    type Output = Option<Self>;
+
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedRem)
+    #[inline(always)]
+    fn checked_rem(self, rhs: UnboundedPow2) -> Self::Output {
+        rhs.is_safe::<T::Unsigned>().then(|| self % rhs)
+    }
+}
+
+make_func_trait!(UnboundedRem, unbounded_rem);
+
+/// See [docs](__detached_docs::UnboundedPow2::CheckedRem)
+impl<T> UnboundedRem<UnboundedPow2> for T
+where
+    T: Int + Rem<UnboundedPow2, Output = T>,
+{
+    type Output = Self;
+
+    /// See [docs](__detached_docs::UnboundedPow2::CheckedRem)
+    #[inline(always)]
+    fn unbounded_rem(self, rhs: UnboundedPow2) -> Self::Output {
+        if rhs.is_safe::<T::Unsigned>() {
+            self % rhs
+        } else {
+            self
         }
     }
 }
@@ -1879,6 +1915,18 @@ pub mod __detached_docs {
         /// Divides `self` by `rhs`.
         /// Avoids integer division by using bitwise arithmetic.
         pub mod UnboundedDiv {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedRem, checked_rem, [Rem])]
+        /// Attempts to divide `self` by `rhs` and returns the remainer.
+        /// Avoids integer division by using bitwise arithmetic.
+        ///
+        /// Returns `None` if the `rhs` exponent is too large, `Some(result)` otherwise.
+        pub mod CheckedRem {}
+
+        #[doc = trait_code_header_unb_pow2!(CheckedRem, checked_rem, [Rem])]
+        /// Divide `self` by `rhs` and returns the remainer.
+        /// Avoids integer division by using bitwise arithmetic.
+        pub mod UnboundedRem {}
 
         #[doc = trait_code_header_unb_pow2!(DivFloor, div_floor, [])]
         /// Divides `self` by `rhs` with rounding towards negative infinity.
@@ -2962,6 +3010,58 @@ mod tests {
         let mut v = i32::MAX;
         v %= UnboundedPow2::from_exponent(4);
         assert_eq!(v, 15);
+    }
+
+    #[test]
+    fn unb_pow2_checked_rem() {
+        assert_eq!(
+            checked_rem(130i32, UnboundedPow2::from_exponent(4)),
+            Some(2)
+        );
+        assert_eq!(
+            checked_rem(i32::MIN, UnboundedPow2::from_exponent(4)),
+            Some(0)
+        );
+        assert_eq!(
+            checked_rem(i32::MIN + 1, UnboundedPow2::from_exponent(4)),
+            Some(-15)
+        );
+        assert_eq!(
+            checked_rem(i32::MAX, UnboundedPow2::from_exponent(4)),
+            Some(15)
+        );
+        assert_eq!(
+            checked_rem(i32::MAX, UnboundedPow2::from_exponent(31)),
+            Some(i32::MAX)
+        );
+        assert_eq!(
+            checked_rem(i32::MAX, UnboundedPow2::from_exponent(32)),
+            None
+        );
+    }
+
+    #[test]
+    fn unb_pow2_unbounded_rem() {
+        assert_eq!(unbounded_rem(130i32, UnboundedPow2::from_exponent(4)), 2);
+        assert_eq!(unbounded_rem(i32::MIN, UnboundedPow2::from_exponent(4)), 0);
+        assert_eq!(
+            unbounded_rem(i32::MIN + 1, UnboundedPow2::from_exponent(4)),
+            -15
+        );
+        assert_eq!(unbounded_rem(i32::MAX, UnboundedPow2::from_exponent(4)), 15);
+        assert_eq!(
+            unbounded_rem(i32::MAX, UnboundedPow2::from_exponent(31)),
+            i32::MAX
+        );
+        assert_eq!(
+            unbounded_rem(i32::MAX, UnboundedPow2::from_exponent(32)),
+            i32::MAX
+        );
+        assert_eq!(unbounded_rem(i32::MIN, UnboundedPow2::from_exponent(31)), 0);
+        assert_eq!(
+            unbounded_rem(i32::MIN, UnboundedPow2::from_exponent(32)),
+            i32::MIN
+        );
     }
 
     #[test]
