@@ -8,6 +8,14 @@ mod private;
 // Expose the private Int trait as API to allow users to specify generic bounds.
 pub use crate::private::{Int, IntAtLeastAsWide, SignedInt, UnsignedInt};
 
+/// Models a power of two integer by storing the exponent.
+/// The exponent is stored as a `u8` so the available values are 0..=255.
+///
+/// It is strongly recommended to use [`Pow2`] whenever possible instead due to
+/// stronger guarantees and higher performance in some cases.
+///
+/// Some operations involving [`UnboundedPow2`] are faster on unsigned integers,
+/// so they should be preferred, unless required otherwise.
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
 pub struct UnboundedPow2 {
@@ -17,6 +25,7 @@ pub struct UnboundedPow2 {
 const _: () = assert!(size_of::<UnboundedPow2>() == size_of::<u8>());
 const _: () = assert!(align_of::<UnboundedPow2>() == align_of::<u8>());
 
+/// Error type for when a value is not a power of two.
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct NotPow2;
 
@@ -27,6 +36,7 @@ impl std::fmt::Display for NotPow2 {
     }
 }
 
+/// Error type for when a power of two value cannot be represented.
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Pow2OutOfRange;
 
@@ -63,12 +73,14 @@ impl UnboundedPow2 {
 }
 
 impl UnboundedPow2 {
+    /// Creates a new [`UnboundedPow2`] from a given power of two exponent.
     #[must_use]
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> UnboundedPow2 {
         UnboundedPow2 { exponent }
     }
 
+    /// Creates a new [`UnboundedPow2`] equal to the memory alignment of type `T`
     #[must_use]
     #[inline(always)]
     pub const fn align_of<T>() -> UnboundedPow2 {
@@ -77,6 +89,7 @@ impl UnboundedPow2 {
         }
     }
 
+    /// Creates a new [`UnboundedPow2`] equal to the memory alignment of value `val`
     #[must_use]
     #[inline(always)]
     pub const fn align_of_val<T: ?Sized>(val: &T) -> UnboundedPow2 {
@@ -97,6 +110,9 @@ impl UnboundedPow2 {
         self.exponent as u32 <= T::SAFE_SHIFT
     }
 
+    /// Attempts to multiply two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    ///
+    /// Returns `None` if the result exponent is not representable, `Some(result)` otherwise.
     #[must_use]
     #[inline(always)]
     pub fn checked_mul(self, other: UnboundedPow2) -> Option<UnboundedPow2> {
@@ -105,12 +121,17 @@ impl UnboundedPow2 {
         ))
     }
 
+    /// Multiplies two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Effectively saturated addition of exponents.
     #[must_use]
     #[inline(always)]
     pub const fn saturating_mul(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent.saturating_add(other.exponent))
     }
 
+    /// Attempts to divide two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    ///
+    /// Returns `None` if the result exponent is not representable, `Some(result)` otherwise.
     #[must_use]
     #[inline(always)]
     pub fn checked_div(self, other: UnboundedPow2) -> Option<UnboundedPow2> {
@@ -119,6 +140,8 @@ impl UnboundedPow2 {
         ))
     }
 
+    /// Divides two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Effectively saturated division of exponents.
     #[must_use]
     #[inline(always)]
     pub const fn saturating_div(self, other: UnboundedPow2) -> UnboundedPow2 {
@@ -129,6 +152,13 @@ impl UnboundedPow2 {
 macro_rules! impl_as {
     ($name:ident, $t:ty) => {
         impl UnboundedPow2 {
+            #[doc = concat!(
+                "Returns the modelled power-of-two value as ", stringify!($t), "."
+            )]
+            /// # Panics
+            ///
+            /// In debug builds, panics if the value is not representable.
+            /// In release builds this check is skipped; the result will be defined but incorrect.
             #[must_use]
             #[inline(always)]
             pub fn $name(self) -> $t {
@@ -231,6 +261,18 @@ impl DivAssign for UnboundedPow2 {
     }
 }
 
+/// Models a power of two integer by storing the exponent.
+/// The exponent is guaranteed to be in the range valid for bitshift operations
+/// on `T`. `T` is restricted to unsigned integers because it's mostly used for modeling bit-width.
+///
+/// It is strongly recommended to use this struct instead of [`UnboundedPow2`] due to
+/// stronger guarantees and higher performance in some cases. Notably:
+/// - more operations are guaranteed to return a correct result for all inputs
+/// - operations on integers smaller than 32-bits may omit masking shift amount that's required for wrapping semantics
+/// - some unnecessary checks for too high exponent may be omitted
+///
+/// Some operations involving [`Pow2`] are faster on unsigned integers,
+/// so they should be preferred, unless required otherwise.
 #[repr(transparent)]
 #[derive(Debug, Hash, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
 pub struct Pow2<T> {
@@ -245,6 +287,10 @@ impl<T> Pow2<T>
 where
     T: UnsignedInt,
 {
+    /// Attempts to create a new [`Pow2`] from a given power of two exponent.
+    ///
+    /// Returns `Err(Pow2OutOfRange)` if the exponent is too high for this integer width,
+    /// `Ok(result)` otherwise.
     #[inline(always)]
     pub const fn from_exponent(exponent: u8) -> Result<Self, Pow2OutOfRange> {
         if exponent as u32 >= T::BITS {
@@ -257,11 +303,19 @@ where
         }
     }
 
+    /// Attempts to create a new [`Pow2`] equal to the memory alignment of type `T`.
+    ///
+    /// Returns `Err(Pow2OutOfRange)` if the exponent is too high for this integer width,
+    /// `Ok(result)` otherwise.
     #[inline(always)]
     pub const fn align_of<U>() -> Result<Self, Pow2OutOfRange> {
         Self::from_exponent(align_of::<U>().ilog2() as u8)
     }
 
+    /// Attempts to create a new [`Pow2`] equal to the memory alignment of value `val`.
+    ///
+    /// Returns `Err(Pow2OutOfRange)` if the exponent is too high for this integer width,
+    /// `Ok(result)` otherwise.
     #[inline(always)]
     pub const fn align_of_val<U: ?Sized>(val: &U) -> Result<Self, Pow2OutOfRange> {
         Self::from_exponent(align_of_val(val).ilog2() as u8)
@@ -273,6 +327,7 @@ where
         self.exponent
     }
 
+    /// Returns the actual value modeled by this object.
     #[must_use]
     #[inline(always)]
     pub fn value(self) -> T {
@@ -280,6 +335,7 @@ where
         unsafe { T::ONE.unchecked_shl(self.exponent as u32) }
     }
 
+    /// Returns a mask with `self.exponent` lowest bits set. Effectively `self.value() - 1`.
     #[must_use]
     #[inline(always)]
     pub fn mask(self) -> T {
@@ -287,6 +343,9 @@ where
         unsafe { T::unchecked_mask(self.exponent as u32) }
     }
 
+    /// Attempts to multiply two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    ///
+    /// Returns `None` if the result exponent is too high for this integer width, `Some(result)` otherwise.
     #[must_use]
     #[inline(always)]
     pub fn checked_mul(self, other: Self) -> Option<Self> {
@@ -294,6 +353,10 @@ where
         Self::from_exponent(self.exponent + other.exponent).ok()
     }
 
+    /// Multiplies two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Effectively saturated addition of exponents.
+    ///
+    /// NOTE: The saturation upper bound is defined by the current integer width.
     #[must_use]
     #[inline(always)]
     pub fn saturating_mul(self, other: Self) -> Self {
@@ -303,6 +366,9 @@ where
         }
     }
 
+    /// Attempts to divide two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    ///
+    /// Returns `None` if the result exponent is too high for this integer width, `Some(result)` otherwise.
     #[must_use]
     #[inline(always)]
     pub fn checked_div(self, other: Self) -> Option<Self> {
@@ -312,6 +378,8 @@ where
         })
     }
 
+    /// Divides two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Effectively saturated division of exponents.
     #[must_use]
     #[inline(always)]
     pub const fn saturating_div(self, other: Self) -> Self {
