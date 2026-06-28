@@ -1,5 +1,5 @@
 use std::error::Error;
-use std::ops::{Div, DivAssign, Mul, MulAssign};
+use std::ops::{Div, DivAssign, Mul, MulAssign, Rem, RemAssign};
 use std::{cmp, marker};
 
 #[macro_use]
@@ -717,6 +717,73 @@ impl_generic_trait_all_ints!(
         }
     }
 );
+impl_trait_signed_unsigned!(
+    Rem<UnboundedPow2>,
+    signed_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn rem(self, other: UnboundedPow2) -> Self {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            if self >= 0 {
+                self - floor_to_multiple(self, other)
+            } else {
+                self - ceil_to_multiple(self, other)
+            }
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn rem(self, other: UnboundedPow2) -> Self {
+            debug_assert!(other.is_safe::<<Self as Int>::Unsigned>());
+            self - floor_to_multiple(self, other)
+        }
+    }
+);
+
+impl_generic_trait_signed_unsigned!(
+    <T> Rem<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> },
+    signed_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn rem(self, other: Pow2<T>) -> Self {
+            if self >= 0 {
+                self - floor_to_multiple(self, other)
+            } else {
+                self - ceil_to_multiple(self, other)
+            }
+        }
+    },
+    unsigned_body {
+        type Output = Self;
+
+        #[inline(always)]
+        fn rem(self, other: Pow2<T>) -> Self {
+            self - floor_to_multiple(self, other)
+        }
+    }
+);
+
+impl_trait_all_ints!(
+    RemAssign<UnboundedPow2> => {
+        #[inline(always)]
+        fn rem_assign(&mut self, other: UnboundedPow2) {
+            *self = *self % other;
+        }
+    }
+);
+
+impl_generic_trait_all_ints!(
+    <T> RemAssign<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
+        #[inline(always)]
+        fn rem_assign(&mut self, other: Pow2<T>) {
+            *self = *self % other;
+        }
+    }
+);
 
 impl_trait_all_ints!(
     Mul<UnboundedPow2> => {
@@ -733,7 +800,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> Mul<Pow2<T>> where { T: UnsignedInt } => {
+    <T> Mul<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
         type Output = Self;
 
         #[inline(always)]
@@ -756,7 +823,7 @@ impl_trait_all_ints!(
 );
 
 impl_generic_trait_all_ints!(
-    <T> MulAssign<Pow2<T>> where { T: UnsignedInt } => {
+    <T> MulAssign<Pow2<T>> where { T: UnsignedInt, Self: IntAtLeastAsWide<T> } => {
         #[inline(always)]
         fn mul_assign(&mut self, other: Pow2<T>) {
             *self = *self * other;
@@ -2868,6 +2935,60 @@ mod tests {
         assert_eq!(unbounded_div(-123_i32, UnboundedPow2::from_exponent(31)), 0);
         assert_eq!(unbounded_div(123_i32, UnboundedPow2::from_exponent(32)), 0);
         assert_eq!(unbounded_div(-123_i32, UnboundedPow2::from_exponent(32)), 0);
+    }
+
+    #[test]
+    fn unb_pow2_rem() {
+        assert_eq!(130i32 % UnboundedPow2::from_exponent(4), 2);
+        assert_eq!(i32::MIN % UnboundedPow2::from_exponent(4), 0);
+        assert_eq!((i32::MIN + 1) % UnboundedPow2::from_exponent(4), -15);
+        assert_eq!(i32::MAX % UnboundedPow2::from_exponent(4), 15);
+    }
+
+    #[test]
+    fn unb_pow2_rem_assign() {
+        let mut v = 130i32;
+        v %= UnboundedPow2::from_exponent(4);
+        assert_eq!(v, 2);
+
+        let mut v = i32::MIN;
+        v %= UnboundedPow2::from_exponent(4);
+        assert_eq!(v, 0);
+
+        let mut v = i32::MIN + 1;
+        v %= UnboundedPow2::from_exponent(4);
+        assert_eq!(v, -15);
+
+        let mut v = i32::MAX;
+        v %= UnboundedPow2::from_exponent(4);
+        assert_eq!(v, 15);
+    }
+
+    #[test]
+    fn pow2_rem() {
+        assert_eq!(130i32 % Pow2::<u8>::from_exponent(4).unwrap(), 2);
+        assert_eq!(i32::MIN % Pow2::<u8>::from_exponent(4).unwrap(), 0);
+        assert_eq!((i32::MIN + 1) % Pow2::<u8>::from_exponent(4).unwrap(), -15);
+        assert_eq!(i32::MAX % Pow2::<u8>::from_exponent(4).unwrap(), 15);
+    }
+
+    #[test]
+    fn pow2_rem_assign() {
+        let mut v = 130i32;
+        v %= Pow2::<u8>::from_exponent(4).unwrap();
+        assert_eq!(v, 2);
+
+        let mut v = i32::MIN;
+        v %= Pow2::<u8>::from_exponent(4).unwrap();
+        assert_eq!(v, 0);
+
+        let mut v = i32::MIN + 1;
+        v %= Pow2::<u8>::from_exponent(4).unwrap();
+        assert_eq!(v, -15);
+
+        let mut v = i32::MAX;
+        v %= Pow2::<u8>::from_exponent(4).unwrap();
+        assert_eq!(v, 15);
     }
 
     #[test]
