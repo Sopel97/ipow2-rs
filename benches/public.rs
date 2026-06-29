@@ -1,4 +1,4 @@
-﻿use ipow2::{Int, UnboundedPow2, Pow2OutOfRange, Pow2};
+use ipow2::{Int, Pow2, Pow2OutOfRange, UnboundedPow2};
 
 fn main() {
     divan::main();
@@ -73,22 +73,29 @@ macro_rules! const_int {
     };
 }
 
-fn make_samples_val_lhs_unb_pow2_rhs<T: MakeSample>() -> ([T; INPUT_SAMPLE_COUNT], [UnboundedPow2; INPUT_SAMPLE_COUNT]) {
+fn make_samples_val_lhs_unb_pow2_rhs<T: MakeSample>()
+-> ([T; INPUT_SAMPLE_COUNT], [UnboundedPow2; INPUT_SAMPLE_COUNT]) {
     (
         std::array::from_fn(T::make_sample_val_lhs),
         std::array::from_fn(T::make_sample_unb_pow2_rhs),
     )
 }
 
-fn make_samples_val_lhs_pow2_rhs<T: MakeSample + Int>() -> ([T; INPUT_SAMPLE_COUNT], [Pow2<T::Unsigned>; INPUT_SAMPLE_COUNT])
-where Pow2<<T as Int>::Unsigned>: TryFrom<UnboundedPow2, Error=Pow2OutOfRange> {
+fn make_samples_val_lhs_pow2_rhs<T: MakeSample + Int>() -> (
+    [T; INPUT_SAMPLE_COUNT],
+    [Pow2<T::Unsigned>; INPUT_SAMPLE_COUNT],
+)
+where
+    Pow2<<T as Int>::Unsigned>: TryFrom<UnboundedPow2, Error = Pow2OutOfRange>,
+{
     (
         std::array::from_fn(T::make_sample_val_lhs),
-        std::array::from_fn(T::make_sample_unb_pow2_rhs).map(|b| Pow2::try_from(b).unwrap())
+        std::array::from_fn(T::make_sample_unb_pow2_rhs).map(|b| Pow2::try_from(b).unwrap()),
     )
 }
 
-fn make_samples_val_lhs_val_rhs<T: MakeSample>() -> ([T; INPUT_SAMPLE_COUNT], [T; INPUT_SAMPLE_COUNT]) {
+fn make_samples_val_lhs_val_rhs<T: MakeSample>()
+-> ([T; INPUT_SAMPLE_COUNT], [T; INPUT_SAMPLE_COUNT]) {
     (
         std::array::from_fn(T::make_sample_val_lhs),
         std::array::from_fn(T::make_sample_val_rhs),
@@ -145,7 +152,13 @@ macro_rules! make_bench_single {
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (lhs, <$t>::make_one_sample_unb_pow2_rhs(), make_samples_output()))
+                .with_inputs(|| {
+                    (
+                        lhs,
+                        <$t>::make_one_sample_unb_pow2_rhs(),
+                        make_samples_output(),
+                    )
+                })
                 .bench_refs(|&mut (lhs, b, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
@@ -162,7 +175,13 @@ macro_rules! make_bench_single {
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher
-                .with_inputs(|| (lhs, <$t>::make_one_sample_pow2_rhs::<$t>(), make_samples_output()))
+                .with_inputs(|| {
+                    (
+                        lhs,
+                        <$t>::make_one_sample_pow2_rhs::<$t>(),
+                        make_samples_output(),
+                    )
+                })
                 .bench_refs(|&mut (lhs, b, mut outputs)| {
                     let len = lhs.len();
                     assert!(outputs.len() >= len);
