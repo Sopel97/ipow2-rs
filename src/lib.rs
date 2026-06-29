@@ -1,3 +1,7 @@
+//! [<img alt="github" src="https://img.shields.io/badge/github-Sopel97/ipow2--rs-blue?logo=github" height="20">](https://github.com/Sopel97/ipow2-rs)
+//! [<img alt="crates.io" src="https://img.shields.io/crates/v/ipow2.svg?logo=rust" height="20">](https://crates.io/crates/ipow2)
+//! [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-ipow2-0?logo=docs.rs" height="20">](https://docs.rs/ipow2)
+//!
 //! # ipow2 - Efficient power-of-two abstraction
 //!
 //! This crate provides two complementary types for representing powers of two, together
