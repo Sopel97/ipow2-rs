@@ -2026,23 +2026,23 @@
 	csel x0, x9, x10, ne
 	mov x1, x8
 ```
-## `div_floor_u8_pow2`
+## `div_floor_u8_pow2`, `div_u8_pow2`
 ```asm
 	and w8, w0, #0xff
 	lsr w0, w8, w1
 ```
-## `div_floor_u8_unb_pow2`, `div_u8_pow2`, `div_u8_unb_pow2`
+## `div_floor_u8_unb_pow2`, `div_u8_unb_pow2`
 ```asm
 	and w8, w0, #0xff
 	and x9, x1, #0x7
 	lsr w0, w8, w9
 ```
-## `div_floor_u16_pow2`
+## `div_floor_u16_pow2`, `div_u16_pow2`
 ```asm
 	and w8, w0, #0xffff
 	lsr w0, w8, w1
 ```
-## `div_floor_u16_unb_pow2`, `div_u16_pow2`, `div_u16_unb_pow2`
+## `div_floor_u16_unb_pow2`, `div_u16_unb_pow2`
 ```asm
 	and w8, w0, #0xffff
 	and x9, x1, #0xf
@@ -2056,7 +2056,7 @@
 ```asm
 	lsr x0, x0, x1
 ```
-## `div_floor_u128_pow2`
+## `div_floor_u128_pow2`, `div_u128_pow2`
 ```asm
 	lsr x9, x1, x2
 	and x8, x2, #0xff
@@ -2070,7 +2070,7 @@
 	csel x0, x9, x10, ne
 	mov x1, x8
 ```
-## `div_floor_u128_unb_pow2`, `div_u128_pow2`, `div_u128_unb_pow2`
+## `div_floor_u128_unb_pow2`, `div_u128_unb_pow2`
 ```asm
 	lsr x9, x1, x2
 	and x8, x2, #0x7f
@@ -2631,7 +2631,7 @@
 	csel x1, x9, x10, ne
 	mov x0, x8
 ```
-## `rem_floor_i8_pow2`, `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_i32_unb_pow2`, `rem_floor_u8_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_floor_u32_unb_pow2`, `rem_u32_unb_pow2`
+## `rem_floor_i8_pow2`, `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_i32_unb_pow2`, `rem_floor_u8_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_floor_u32_unb_pow2`, `rem_u8_pow2`, `rem_u16_pow2`, `rem_u32_pow2`, `rem_u32_unb_pow2`
 ```asm
 	mov w8, #-1
 	lsl w8, w8, w1
@@ -2651,13 +2651,13 @@
 	lsl w8, w9, w8
 	bic w0, w0, w8
 ```
-## `rem_floor_i64_pow2`, `rem_floor_i64_unb_pow2`, `rem_floor_u64_pow2`, `rem_floor_u64_unb_pow2`, `rem_u64_unb_pow2`
+## `rem_floor_i64_pow2`, `rem_floor_i64_unb_pow2`, `rem_floor_u64_pow2`, `rem_floor_u64_unb_pow2`, `rem_u64_pow2`, `rem_u64_unb_pow2`
 ```asm
 	mov x8, #-1
 	lsl x8, x8, x1
 	bic x0, x0, x8
 ```
-## `rem_floor_i128_pow2`, `rem_floor_u128_pow2`
+## `rem_floor_i128_pow2`, `rem_floor_u128_pow2`, `rem_u128_pow2`
 ```asm
 	mov x8, #-1
 	lsl x8, x8, x2
@@ -2838,58 +2838,6 @@
 	and x8, x10, x8
 	subs x0, x0, x9
 	sbc x1, x1, x8
-```
-## `rem_u8_pow2`
-```asm
-	and w8, w0, #0xff
-	and x9, x1, #0x7
-	lsr w8, w8, w9
-	lsl w8, w8, w1
-	sub w0, w0, w8
-```
-## `rem_u16_pow2`
-```asm
-	and w8, w0, #0xffff
-	and x9, x1, #0xf
-	lsr w8, w8, w9
-	lsl w8, w8, w1
-	sub w0, w0, w8
-```
-## `rem_u32_pow2`
-```asm
-	lsr w8, w0, w1
-	lsl w8, w8, w1
-	sub w0, w0, w8
-```
-## `rem_u64_pow2`
-```asm
-	lsr x8, x0, x1
-	lsl x8, x8, x1
-	sub x0, x0, x8
-```
-## `rem_u128_pow2`
-```asm
-	lsr x8, x0, x2
-	lsl x9, x1, #1
-	mvn w10, w2
-	lsl x9, x9, x10
-	orr x8, x9, x8
-	lsr x9, x1, x2
-	and x11, x2, #0x7f
-	tst x11, #0x40
-	csel x8, x9, x8, ne
-	csel x9, xzr, x9, ne
-	lsl x9, x9, x2
-	lsr x11, x8, #1
-	lsr x10, x11, x10
-	orr x9, x9, x10
-	lsl x8, x8, x2
-	and x10, x2, #0xff
-	tst x10, #0x40
-	csel x9, x8, x9, ne
-	csel x8, xzr, x8, ne
-	subs x0, x0, x8
-	sbc x1, x1, x9
 ```
 ## `round_to_multiple_i8_pow2`
 ```asm

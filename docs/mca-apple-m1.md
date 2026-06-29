@@ -6566,7 +6566,7 @@ Resource pressure by instruction:
  -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x0, x9, x10, ne
  -      -      -      -      -      -      -      -     2.00    -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     mov	x1, x8
 ```
-## `div_floor_u8_pow2`
+## `div_floor_u8_pow2`, `div_u8_pow2`
 ```asm
 Iterations:        1
 Instructions:      2
@@ -6595,7 +6595,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	w8, w0, #0xff
  -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w0, w8, w1
 ```
-## `div_floor_u8_unb_pow2`, `div_u8_pow2`, `div_u8_unb_pow2`
+## `div_floor_u8_unb_pow2`, `div_u8_unb_pow2`
 ```asm
 Iterations:        1
 Instructions:      3
@@ -6626,7 +6626,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	x9, x1, #0x7
  -      -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w0, w8, w9
 ```
-## `div_floor_u16_pow2`
+## `div_floor_u16_pow2`, `div_u16_pow2`
 ```asm
 Iterations:        1
 Instructions:      2
@@ -6655,7 +6655,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	w8, w0, #0xffff
  -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w0, w8, w1
 ```
-## `div_floor_u16_unb_pow2`, `div_u16_pow2`, `div_u16_unb_pow2`
+## `div_floor_u16_unb_pow2`, `div_u16_unb_pow2`
 ```asm
 Iterations:        1
 Instructions:      3
@@ -6740,7 +6740,7 @@ Resource pressure by instruction:
 [0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
  -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	x0, x0, x1
 ```
-## `div_floor_u128_pow2`
+## `div_floor_u128_pow2`, `div_u128_pow2`
 ```asm
 Iterations:        1
 Instructions:      11
@@ -6787,7 +6787,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x0, x9, x10, ne
  -      -      -      -      -     2.00    -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     mov	x1, x8
 ```
-## `div_floor_u128_unb_pow2`, `div_u128_pow2`, `div_u128_unb_pow2`
+## `div_floor_u128_unb_pow2`, `div_u128_unb_pow2`
 ```asm
 Iterations:        1
 Instructions:      11
@@ -8745,7 +8745,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x1, x9, x10, ne
  -      -      -      -      -     2.00    -      -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     mov	x0, x8
 ```
-## `rem_floor_i8_pow2`, `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_i32_unb_pow2`, `rem_floor_u8_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_floor_u32_unb_pow2`, `rem_u32_unb_pow2`
+## `rem_floor_i8_pow2`, `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_i32_unb_pow2`, `rem_floor_u8_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_floor_u32_unb_pow2`, `rem_u8_pow2`, `rem_u16_pow2`, `rem_u32_pow2`, `rem_u32_unb_pow2`
 ```asm
 Iterations:        1
 Instructions:      3
@@ -8842,7 +8842,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsl	w8, w9, w8
  -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     bic	w0, w0, w8
 ```
-## `rem_floor_i64_pow2`, `rem_floor_i64_unb_pow2`, `rem_floor_u64_pow2`, `rem_floor_u64_unb_pow2`, `rem_u64_unb_pow2`
+## `rem_floor_i64_pow2`, `rem_floor_i64_unb_pow2`, `rem_floor_u64_pow2`, `rem_floor_u64_unb_pow2`, `rem_u64_pow2`, `rem_u64_unb_pow2`
 ```asm
 Iterations:        1
 Instructions:      3
@@ -8873,7 +8873,7 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsl	x8, x8, x1
  -      -      -      -      -      -     2.00    -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     bic	x0, x0, x8
 ```
-## `rem_floor_i128_pow2`, `rem_floor_u128_pow2`
+## `rem_floor_i128_pow2`, `rem_floor_u128_pow2`, `rem_u128_pow2`
 ```asm
 Iterations:        1
 Instructions:      12
@@ -9464,205 +9464,6 @@ Resource pressure by instruction:
  -      -      -      -      -      -      -     2.00    -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     and	x8, x10, x8
  -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     subs	x0, x0, x9
  -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbc	x1, x1, x8
-```
-## `rem_u8_pow2`
-```asm
-Iterations:        1
-Instructions:      5
-Total Cycles:      8
-Total uOps:        5
-
-Dispatch Width:    6
-uOps Per Cycle:    0.63
-IPC:               0.63
-Block RThroughput: 2.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      1     0.25                        and	w8, w0, #0xff
- 1      1     0.25                        and	x9, x1, #0x7
- 1      1     0.50                        lsr	w8, w8, w9
- 1      1     0.50                        lsl	w8, w8, w1
- 1      2     1.00                        sub	w0, w0, w8
-
-Resources:
-
-Resource pressure per iteration:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] 
- -      -      -      -      -     1.00   1.00   1.00   3.00    -      -     1.00   3.00    -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
- -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	w8, w0, #0xff
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	x9, x1, #0x7
- -      -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w8, w8, w9
- -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsl	w8, w8, w1
- -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     sub	w0, w0, w8
-```
-## `rem_u16_pow2`
-```asm
-Iterations:        1
-Instructions:      5
-Total Cycles:      8
-Total uOps:        5
-
-Dispatch Width:    6
-uOps Per Cycle:    0.63
-IPC:               0.63
-Block RThroughput: 2.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      1     0.25                        and	w8, w0, #0xffff
- 1      1     0.25                        and	x9, x1, #0xf
- 1      1     0.50                        lsr	w8, w8, w9
- 1      1     0.50                        lsl	w8, w8, w1
- 1      2     1.00                        sub	w0, w0, w8
-
-Resources:
-
-Resource pressure per iteration:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] 
- -      -      -      -      -     1.00   1.00   1.00   3.00    -      -     1.00   3.00    -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
- -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	w8, w0, #0xffff
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	x9, x1, #0xf
- -      -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w8, w8, w9
- -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsl	w8, w8, w1
- -      -      -      -      -      -      -      -     2.00    -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     sub	w0, w0, w8
-```
-## `rem_u32_pow2`
-```asm
-Iterations:        1
-Instructions:      3
-Total Cycles:      7
-Total uOps:        3
-
-Dispatch Width:    6
-uOps Per Cycle:    0.43
-IPC:               0.43
-Block RThroughput: 2.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      1     0.50                        lsr	w8, w0, w1
- 1      1     0.50                        lsl	w8, w8, w1
- 1      2     1.00                        sub	w0, w0, w8
-
-Resources:
-
-Resource pressure per iteration:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] 
- -      -      -      -      -      -     2.00   1.00   1.00    -      -     1.00   3.00    -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
- -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	w8, w0, w1
- -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsl	w8, w8, w1
- -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     sub	w0, w0, w8
-```
-## `rem_u64_pow2`
-```asm
-Iterations:        1
-Instructions:      3
-Total Cycles:      7
-Total uOps:        3
-
-Dispatch Width:    6
-uOps Per Cycle:    0.43
-IPC:               0.43
-Block RThroughput: 2.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      1     0.50                        lsr	x8, x0, x1
- 1      1     0.50                        lsl	x8, x8, x1
- 1      2     1.00                        sub	x0, x0, x8
-
-Resources:
-
-Resource pressure per iteration:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] 
- -      -      -      -      -      -     2.00   1.00   1.00    -      -     1.00   3.00    -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
- -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	x8, x0, x1
- -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsl	x8, x8, x1
- -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     sub	x0, x0, x8
-```
-## `rem_u128_pow2`
-```asm
-Iterations:        1
-Instructions:      21
-Total Cycles:      16
-Total uOps:        21
-
-Dispatch Width:    6
-uOps Per Cycle:    1.31
-IPC:               1.31
-Block RThroughput: 8.0
-
-Instruction Info:
-
-[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
- 1      1     0.50                        lsr	x8, x0, x2
- 1      1     0.50                        lsl	x9, x1, #1
- 1      2     1.00                        mvn	w10, w2
- 1      1     0.50                        lsl	x9, x9, x10
- 1      2     1.00                        orr	x8, x9, x8
- 1      1     0.50                        lsr	x9, x1, x2
- 1      1     0.25                        and	x11, x2, #0x7f
- 1      1     0.25                        tst	x11, #0x40
- 1      1     0.25                        csel	x8, x9, x8, ne
- 1      1     0.25                        csel	x9, xzr, x9, ne
- 1      1     0.50                        lsl	x9, x9, x2
- 1      1     0.50                        lsr	x11, x8, #1
- 1      1     0.50                        lsr	x10, x11, x10
- 1      2     1.00                        orr	x9, x9, x10
- 1      1     0.50                        lsl	x8, x8, x2
- 1      1     0.25                        and	x10, x2, #0xff
- 1      1     0.25                        tst	x10, #0x40
- 1      1     0.25                        csel	x9, x8, x9, ne
- 1      1     0.25                        csel	x8, xzr, x8, ne
- 1      2     1.00                        subs	x0, x0, x8
- 1      1     0.25                        sbc	x1, x1, x9
-
-Resources:
-
-Resource pressure per iteration:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] 
- -      -      -      -      -     7.00   6.00   6.00   6.00    -      -     8.00   8.00    -      -      -      -      -      -      -      -      -      -     
-
-Resource pressure by instruction:
-[0.0]  [0.1]  [1]    [2.0]  [2.1]  [3.0]  [3.1]  [3.2]  [3.3]  [4]    [5]    [6.0]  [6.1]  [7]    [8.0]  [8.1]  [9.0]  [9.1]  [9.2]  [10]   [11]   [12.0] [12.1] Instructions:
- -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsr	x8, x0, x2
- -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsl	x9, x1, #1
- -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     mvn	w10, w2
- -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsl	x9, x9, x10
- -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     orr	x8, x9, x8
- -      -      -      -      -     1.00    -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsr	x9, x1, x2
- -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	x11, x2, #0x7f
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     tst	x11, #0x40
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x8, x9, x8, ne
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x9, xzr, x9, ne
- -      -      -      -      -      -      -      -     1.00    -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsl	x9, x9, x2
- -      -      -      -      -      -     1.00    -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsr	x11, x8, #1
- -      -      -      -      -      -      -      -     1.00    -      -     1.00    -      -      -      -      -      -      -      -      -      -      -     lsr	x10, x11, x10
- -      -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -     orr	x9, x9, x10
- -      -      -      -      -     1.00    -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -     lsl	x8, x8, x2
- -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     and	x10, x2, #0xff
- -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     tst	x10, #0x40
- -      -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x9, x8, x9, ne
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     csel	x8, xzr, x8, ne
- -      -      -      -      -     2.00    -      -      -      -      -     2.00    -      -      -      -      -      -      -      -      -      -      -     subs	x0, x0, x8
- -      -      -      -      -      -      -     1.00    -      -      -      -      -      -      -      -      -      -      -      -      -      -      -     sbc	x1, x1, x9
 ```
 ## `round_to_multiple_i8_pow2`
 ```asm

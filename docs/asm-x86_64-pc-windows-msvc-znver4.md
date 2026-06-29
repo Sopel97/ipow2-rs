@@ -2291,25 +2291,25 @@
 	cmove rdx, rcx
 	cmovne rax, rcx
 ```
-## `div_floor_u8_pow2`
+## `div_floor_u8_pow2`, `div_u8_pow2`
 ```asm
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
 ```
-## `div_floor_u8_unb_pow2`, `div_u8_pow2`, `div_u8_unb_pow2`
+## `div_floor_u8_unb_pow2`, `div_u8_unb_pow2`
 ```asm
 	and dl, 7
 	mov eax, ecx
 	mov ecx, edx
 	shr al, cl
 ```
-## `div_floor_u16_pow2`
+## `div_floor_u16_pow2`, `div_u16_pow2`
 ```asm
 	movzx eax, cx
 	shrx eax, eax, edx
 ```
-## `div_floor_u16_unb_pow2`, `div_u16_pow2`, `div_u16_unb_pow2`
+## `div_floor_u16_unb_pow2`, `div_u16_unb_pow2`
 ```asm
 	movzx eax, cx
 	and dl, 15
@@ -2844,7 +2844,7 @@
 	cmove rax, rcx
 	cmovne rdx, rcx
 ```
-## `rem_floor_i8_pow2`, `rem_floor_u8_pow2`
+## `rem_floor_i8_pow2`, `rem_floor_u8_pow2`, `rem_u8_pow2`
 ```asm
 	mov r8d, ecx
 	mov al, -1
@@ -2863,7 +2863,7 @@
 	not al
 	and al, r8b
 ```
-## `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`
+## `rem_floor_i16_pow2`, `rem_floor_i32_pow2`, `rem_floor_u16_pow2`, `rem_floor_u32_pow2`, `rem_u16_pow2`, `rem_u32_pow2`
 ```asm
 	bzhi eax, ecx, edx
 ```
@@ -2877,7 +2877,7 @@
 	and dl, 31
 	bzhi eax, ecx, edx
 ```
-## `rem_floor_i64_pow2`, `rem_floor_u64_pow2`
+## `rem_floor_i64_pow2`, `rem_floor_u64_pow2`, `rem_u64_pow2`
 ```asm
 	bzhi rax, rcx, rdx
 ```
@@ -2886,7 +2886,7 @@
 	and dl, 63
 	bzhi rax, rcx, rdx
 ```
-## `rem_floor_i128_pow2`, `rem_floor_i128_unb_pow2`, `rem_floor_u128_pow2`, `rem_floor_u128_unb_pow2`, `rem_u128_unb_pow2`
+## `rem_floor_i128_pow2`, `rem_floor_i128_unb_pow2`, `rem_floor_u128_pow2`, `rem_floor_u128_unb_pow2`, `rem_u128_pow2`, `rem_u128_unb_pow2`
 ```asm
 	mov r9, -1
 	xor r10d, r10d
@@ -3058,62 +3058,6 @@
 	and r9, r11
 	sub rax, r8
 	sbb rdx, r9
-```
-## `rem_u8_pow2`
-```asm
-	mov eax, ecx
-	mov ecx, edx
-	and cl, 7
-	mov r8d, eax
-	shr r8b, cl
-	mov ecx, edx
-	shl r8b, cl
-	sub al, r8b
-```
-## `rem_u16_pow2`
-```asm
-	mov eax, ecx
-	mov r8d, edx
-	movzx ecx, cx
-	and dl, 15
-	shrx ecx, ecx, edx
-	shlx ecx, ecx, r8d
-	sub eax, ecx
-```
-## `rem_u32_pow2`
-```asm
-	mov eax, ecx
-	shrx ecx, ecx, edx
-	shlx ecx, ecx, edx
-	sub eax, ecx
-```
-## `rem_u64_pow2`
-```asm
-	mov rax, rcx
-	shrx rcx, rcx, rdx
-	shlx rcx, rcx, rdx
-	sub rax, rcx
-```
-## `rem_u128_pow2`
-```asm
-	push rsi
-	mov rax, rcx
-	mov r9, rcx
-	mov ecx, r8d
-	shrx r10, rdx, r8
-	xor r11d, r11d
-	shrd r9, rdx, cl
-	test r8b, 64
-	cmovne r9, r10
-	cmovne r10, r11
-	shlx rsi, r9, r8
-	cmove r11, rsi
-	shld r10, r9, cl
-	test r8b, 64
-	cmovne r10, rsi
-	sub rax, r11
-	sbb rdx, r10
-	pop rsi
 ```
 ## `round_to_multiple_i8_pow2`
 ```asm
