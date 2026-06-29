@@ -2,6 +2,10 @@
 name = "ipow2"
 version = "0.1.0"
 edition = "2024"
+repository = "https://github.com/Sopel97/ipow2-rs"
+description = "Efficient power-of-two abstraction in Rust"
+license = "Unlicense"
+include = ["/src", "Cargo.toml"]
 
 [dependencies]
 paste = "1.0.15"
