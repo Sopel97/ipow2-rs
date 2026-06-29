@@ -956,7 +956,8 @@ impl_generic_trait_signed_unsigned!(
         #[inline(always)]
         #[allow(clippy::suspicious_arithmetic_impl)]
         fn div(self, other: Pow2<T>) -> Self {
-            self >> other.exponent
+            // SAFETY: SafePow2 guarantees a valid shift
+            unsafe { self.unchecked_shr(other.exponent as u32) }
         }
     }
 );
