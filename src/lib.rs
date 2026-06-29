@@ -545,7 +545,7 @@ where
         unsafe { T::unchecked_mask(self.exponent as u32) }
     }
 
-    /// Attempts to multiply two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    /// Attempts to multiply two [`Pow2`] together, producing a new [`Pow2`].
     ///
     /// Returns `None` if the result exponent is too high for this integer width, `Some(result)` otherwise.
     #[must_use]
@@ -555,7 +555,7 @@ where
         Self::from_exponent(self.exponent + other.exponent).ok()
     }
 
-    /// Multiplies two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Multiplies two [`Pow2`] with saturation together, producing a new [`Pow2`].
     /// Effectively saturated addition of exponents.
     ///
     /// NOTE: The saturation upper bound is defined by the current integer width.
@@ -568,7 +568,7 @@ where
         }
     }
 
-    /// Attempts to divide two [`UnboundedPow2`] together, producing a new [`UnboundedPow2`].
+    /// Attempts to divide two [`Pow2`] together, producing a new [`Pow2`].
     ///
     /// Returns `None` if the result exponent is too high for this integer width, `Some(result)` otherwise.
     #[must_use]
@@ -580,7 +580,7 @@ where
         })
     }
 
-    /// Divides two [`UnboundedPow2`] with saturation together, producing a new [`UnboundedPow2`].
+    /// Divides two [`Pow2`] with saturation together, producing a new [`Pow2`].
     /// Effectively saturated division of exponents.
     #[must_use]
     #[inline(always)]
