@@ -1,4 +1,4 @@
-﻿[<img alt="github" src="https://img.shields.io/badge/github-Sopel97/ipow2--rs-blue?logo=github" height="20">](https://github.com/Sopel97/ipow2-rs)
+﻿[<img alt="GitHub" src="https://img.shields.io/badge/github-Sopel97/ipow2--rs-blue?logo=github" height="20">](https://github.com/Sopel97/ipow2-rs)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/ipow2.svg?logo=rust" height="20">](https://crates.io/crates/ipow2)
 [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-ipow2-0?logo=docs.rs" height="20">](https://docs.rs/ipow2)
 
@@ -69,21 +69,21 @@ provides the following functions:
 
 ### Division variants
 
-| Function | Description |
-|----------|-------------|
-| `div_floor` | Floor division (round toward −∞). For unsigned integers this is identical to `/`. |
+| Function    | Description                                                                         |
+|-------------|-------------------------------------------------------------------------------------|
+| `div_floor` | Floor division (round toward −∞). For unsigned integers this is identical to `/`.   |
 | `rem_floor` | Remainder after floor division. Always non-negative for signed inputs (unlike `%`). |
-| `div_ceil` | Ceiling division (round toward +∞). |
-| `div_round` | Rounding division (round half away from zero). |
+| `div_ceil`  | Ceiling division (round toward +∞).                                                 |
+| `div_round` | Rounding division (round half away from zero).                                      |
 
 ### Alignment / rounding to multiples
 
-| Function | Description |
-|----------|-------------|
-| `floor_to_multiple` | Round `n` down to the nearest multiple of `pow2`. |
-| `ceil_to_multiple` | Round `n` up to the nearest multiple of `pow2`. Panics on overflow (debug) / wraps (release) like `+`. |
-| `round_to_multiple` | Round `n` to the nearest multiple, half away from zero. |
-| `is_multiple_of` | Returns `true` if `n` is an exact multiple of `pow2`. |
+| Function            | Description                                                                                            |
+|---------------------|--------------------------------------------------------------------------------------------------------|
+| `floor_to_multiple` | Round `n` down to the nearest multiple of `pow2`.                                                      |
+| `ceil_to_multiple`  | Round `n` up to the nearest multiple of `pow2`. Panics on overflow (debug) / wraps (release) like `+`. |
+| `round_to_multiple` | Round `n` to the nearest multiple, half away from zero.                                                |
+| `is_multiple_of`    | Returns `true` if `n` is an exact multiple of `pow2`.                                                  |
 
 ### Broader variants
 

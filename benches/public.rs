@@ -113,6 +113,7 @@ fn make_samples_output<T: Default + Copy>() -> [T; INPUT_SAMPLE_COUNT] {
 macro_rules! make_bench_single {
     ($t:ty; $func_name:ident : for_unb_pow2 => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let inputs = make_samples_val_lhs_unb_pow2_rhs::<$t>();
             bencher
@@ -131,6 +132,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_pow2 => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let inputs = make_samples_val_lhs_pow2_rhs::<$t>();
             bencher
@@ -149,6 +151,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_unb_pow2_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher
@@ -172,6 +175,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_pow2_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher
@@ -195,6 +199,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_std_reuse => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher
@@ -212,6 +217,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_std => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let inputs = make_samples_val_lhs_val_rhs::<$t>();
             bencher
@@ -230,6 +236,7 @@ macro_rules! make_bench_single {
 
     ($t:ty; $func_name:ident : for_const => $block:expr) => {
         #[divan::bench(sample_count = DIVAN_SAMPLE_SIZE)]
+        #[allow(clippy::redundant_closure)]
         fn $func_name(bencher: divan::Bencher) {
             let lhs = make_samples_val_lhs::<$t>();
             bencher

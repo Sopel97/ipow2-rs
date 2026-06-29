@@ -1,4 +1,4 @@
-//! [<img alt="github" src="https://img.shields.io/badge/github-Sopel97/ipow2--rs-blue?logo=github" height="20">](https://github.com/Sopel97/ipow2-rs)
+//! [<img alt="GitHub" src="https://img.shields.io/badge/github-Sopel97/ipow2--rs-blue?logo=github" height="20">](https://github.com/Sopel97/ipow2-rs)
 //! [<img alt="crates.io" src="https://img.shields.io/crates/v/ipow2.svg?logo=rust" height="20">](https://crates.io/crates/ipow2)
 //! [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-ipow2-0?logo=docs.rs" height="20">](https://docs.rs/ipow2)
 //!
@@ -439,8 +439,8 @@ impl Mul for UnboundedPow2 {
 }
 
 impl MulAssign for UnboundedPow2 {
-    #[allow(clippy::suspicious_arithmetic_impl)]
     #[inline(always)]
+    #[allow(clippy::suspicious_op_assign_impl)]
     fn mul_assign(&mut self, other: UnboundedPow2) {
         self.exponent += other.exponent;
     }
@@ -450,14 +450,15 @@ impl Div for UnboundedPow2 {
     type Output = UnboundedPow2;
 
     #[inline(always)]
+    #[allow(clippy::suspicious_arithmetic_impl)]
     fn div(self, other: UnboundedPow2) -> UnboundedPow2 {
         UnboundedPow2::from_exponent(self.exponent - other.exponent)
     }
 }
 
 impl DivAssign for UnboundedPow2 {
-    #[allow(clippy::suspicious_arithmetic_impl)]
     #[inline(always)]
+    #[allow(clippy::suspicious_op_assign_impl)]
     fn div_assign(&mut self, other: UnboundedPow2) {
         self.exponent -= other.exponent;
     }
@@ -953,6 +954,7 @@ impl_generic_trait_signed_unsigned!(
         type Output = Self;
 
         #[inline(always)]
+        #[allow(clippy::suspicious_arithmetic_impl)]
         fn div(self, other: Pow2<T>) -> Self {
             self >> other.exponent
         }
@@ -1102,6 +1104,7 @@ macro_rules! make_func_trait {
                 "See docs for [`", stringify!($trait_name), "`]."
             )]
             #[must_use]
+            #[allow(clippy::wrong_self_convention)]
             fn $func_name(self, rhs: Rhs) -> Self::Output;
         }
 
@@ -1441,6 +1444,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::DivRound)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
@@ -1463,6 +1467,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::DivRound)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
@@ -1482,6 +1487,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::DivRound)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
@@ -1505,6 +1511,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::DivRound)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_UNSIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
@@ -1666,6 +1673,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             if rhs.is_safe::<<Self as Int>::Unsigned>() {
@@ -1683,6 +1691,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::UnboundedFloorToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn unbounded_floor_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             if rhs.is_safe::<Self>() {
@@ -1803,6 +1812,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
@@ -1828,6 +1838,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::RoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             debug_assert!(rhs.is_safe::<<Self as Int>::Unsigned>());
@@ -1848,6 +1859,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::RoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
@@ -1874,6 +1886,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::RoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
@@ -1897,6 +1910,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             if !rhs.is_safe::<<Self as Int>::Unsigned>() {
@@ -1923,6 +1937,7 @@ impl_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::UnboundedPow2::CheckedRoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: UnboundedPow2) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             if !rhs.is_safe::<<Self as Int>::Unsigned>() {
@@ -1945,6 +1960,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
             // SAFETY: SafePow2 guarantees a valid shift
@@ -1969,6 +1985,7 @@ impl_generic_trait_signed_unsigned!(
 
         /// See [docs](__detached_docs::Pow2::CheckedRoundToMultiple)
         #[inline(always)]
+        #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
             // SAFETY: SafePow2 guarantees a valid shift

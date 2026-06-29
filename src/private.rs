@@ -83,18 +83,22 @@ where
     fn highest_mask_bit(bits: u32) -> Self;
 
     #[must_use]
+    #[allow(clippy::missing_safety_doc)]
     unsafe fn unchecked_mask(bits: u32) -> Self;
 
     #[must_use]
+    #[allow(clippy::missing_safety_doc)]
     unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self;
 
     #[must_use]
     fn trailing_zeros(self) -> u32;
 
     #[must_use]
+    #[allow(clippy::missing_safety_doc)]
     unsafe fn unchecked_shr(self, rhs: u32) -> Self;
 
     #[must_use]
+    #[allow(clippy::missing_safety_doc)]
     unsafe fn unchecked_shl(self, rhs: u32) -> Self;
 
     #[must_use]
@@ -173,11 +177,13 @@ macro_rules! impl_common_int {
         }
 
         #[inline(always)]
+        #[allow(clippy::missing_safety_doc)]
         unsafe fn unchecked_shr(self, rhs: u32) -> Self {
             unsafe { self.unchecked_shr(rhs) }
         }
 
         #[inline(always)]
+        #[allow(clippy::missing_safety_doc)]
         unsafe fn unchecked_shl(self, rhs: u32) -> Self {
             unsafe { self.unchecked_shl(rhs) }
         }
@@ -236,12 +242,14 @@ macro_rules! impl_uint {
         }
 
         #[inline(always)]
+        #[allow(clippy::missing_safety_doc)]
         unsafe fn unchecked_mask(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
             unsafe { (1 as Self).unchecked_shl(bits) - 1 }
         }
 
         #[inline(always)]
+        #[allow(clippy::missing_safety_doc)]
         unsafe fn unchecked_highest_mask_bit(bits: u32) -> Self {
             debug_assert!(bits <= Self::SAFE_SHIFT);
             unsafe { (1 as Self).unchecked_shl(bits).unchecked_shr(1) }
