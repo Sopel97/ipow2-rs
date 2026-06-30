@@ -364,6 +364,7 @@ macro_rules! impl_as {
             #[must_use]
             #[inline(always)]
             pub fn $name(self) -> $t {
+                debug_assert!(self.is_safe::<$t>());
                 1 << self.exponent
             }
         }
@@ -2634,6 +2635,20 @@ mod tests {
         assert_eq!(UnboundedPow2::from_exponent(63).as_u64(), 1 << 63);
         assert_eq!(UnboundedPow2::from_exponent(126).as_i128(), 1 << 126);
         assert_eq!(UnboundedPow2::from_exponent(127).as_u128(), 1 << 127);
+    }
+
+    #[test]
+    fn unb_pow2_as_int_not_fitting() {
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(7).as_i8()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(8).as_u8()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(15).as_i16()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(16).as_u16()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(31).as_i32()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(32).as_u32()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(63).as_i64()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(64).as_u64()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(127).as_i128()).is_err());
+        assert!(std::panic::catch_unwind(|| UnboundedPow2::from_exponent(128).as_u128()).is_err());
     }
 
     #[test]
