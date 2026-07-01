@@ -22,7 +22,7 @@ cargo add ipow2
 Or add the following line to your Cargo.toml:
 
 ```toml
-ipow2 = "0.1"
+ipow2 = "0.2"
 ```
 
 ## Motivating Examples
