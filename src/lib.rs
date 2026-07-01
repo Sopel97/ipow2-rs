@@ -146,12 +146,12 @@
 //! For convenience, the following type aliases are re-exported:
 //!
 //! ```ignore
-//! type SafePow2u8    = Pow2<u8>;
-//! type SafePow2u16   = Pow2<u16>;
-//! type SafePow2u32   = Pow2<u32>;
-//! type SafePow2u64   = Pow2<u64>;
-//! type SafePow2u128  = Pow2<u128>;
-//! type SafePow2usize = Pow2<usize>;
+//! type Pow2<T>u8    = Pow2<u8>;
+//! type Pow2<T>u16   = Pow2<u16>;
+//! type Pow2<T>u32   = Pow2<u32>;
+//! type Pow2<T>u64   = Pow2<u64>;
+//! type Pow2<T>u128  = Pow2<u128>;
+//! type Pow2<T>usize = Pow2<usize>;
 //! ```
 //!
 //! ## Integer traits
@@ -535,7 +535,7 @@ where
     #[must_use]
     #[inline(always)]
     pub fn value(self) -> T {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         unsafe { T::ONE.unchecked_shl(self.exponent as u32) }
     }
 
@@ -543,7 +543,7 @@ where
     #[must_use]
     #[inline(always)]
     pub fn mask(self) -> T {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         unsafe { T::unchecked_mask(self.exponent as u32) }
     }
 
@@ -906,12 +906,12 @@ impl_pow2_self_conv_try_from!(u64 => u8, u16, u32);
 
 impl_pow2_self_conv_try_from!(u128 => u8, u16, u32, u64);
 
-pub type SafePow2u8 = Pow2<u8>;
-pub type SafePow2u16 = Pow2<u16>;
-pub type SafePow2u32 = Pow2<u32>;
-pub type SafePow2u64 = Pow2<u64>;
-pub type SafePow2u128 = Pow2<u128>;
-pub type SafePow2usize = Pow2<usize>;
+pub type Pow2u8 = Pow2<u8>;
+pub type Pow2u16 = Pow2<u16>;
+pub type Pow2u32 = Pow2<u32>;
+pub type Pow2u64 = Pow2<u64>;
+pub type Pow2u128 = Pow2<u128>;
+pub type Pow2usize = Pow2<usize>;
 
 impl_trait_signed_unsigned!(
     Div<UnboundedPow2>,
@@ -944,9 +944,9 @@ impl_generic_trait_signed_unsigned!(
 
         #[inline(always)]
         fn div(self, other: Pow2<T>) -> Self {
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let sgn = unsafe { self.unchecked_shr(Self::BITS - 1) };
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let msk = unsafe { Self::unchecked_mask(other.exponent as u32) };
             (self + (sgn & msk)) >> other.exponent
         }
@@ -957,7 +957,7 @@ impl_generic_trait_signed_unsigned!(
         #[inline(always)]
         #[allow(clippy::suspicious_arithmetic_impl)]
         fn div(self, other: Pow2<T>) -> Self {
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             unsafe { self.unchecked_shr(other.exponent as u32) }
         }
     }
@@ -1063,7 +1063,7 @@ impl_generic_trait_all_ints!(
         fn mul(self, other: Pow2<T>) -> Self {
             // Check for overflow.
             debug_assert!(self == self << other.exponent >> other.exponent);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             unsafe { self.unchecked_shl(other.exponent as u32) }
         }
     }
@@ -1158,9 +1158,9 @@ where
     /// See [docs](__detached_docs::Pow2::CheckedMul)
     #[inline(always)]
     fn checked_mul(self, rhs: Pow2<T>) -> Self::Output {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         let result = unsafe { self.unchecked_shl(rhs.exponent as u32) };
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         if self == unsafe { result.unchecked_shr(rhs.exponent as u32) } {
             Some(result)
         } else {
@@ -1267,7 +1267,7 @@ where
     /// See [docs](__detached_docs::Pow2::DivFloor)
     #[inline(always)]
     fn div_floor(self, rhs: Pow2<T>) -> Self::Output {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         unsafe { self.unchecked_shr(rhs.exponent as u32) }
     }
 }
@@ -1391,7 +1391,7 @@ where
     /// See [docs](__detached_docs::Pow2::DivCeil)
     #[inline(always)]
     fn div_ceil(self, rhs: Pow2<T>) -> Self::Output {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         let floored = div_floor(self, rhs);
         floored + Self::from_bool((self & mask).is_not_zero())
@@ -1492,7 +1492,7 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
             let floored = div_floor(self, rhs);
             // Account for signedness of a
@@ -1502,7 +1502,7 @@ impl_generic_trait_signed_unsigned!(
             let rem = (self & mask)
                 .cast_unsigned()
                 .saturating_sub(<Self as Int>::Unsigned::from_bool(self < Self::ZERO));
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let rems = unsafe { rem.unchecked_shl(1).unchecked_shr(rhs.exponent as u32) };
             floored + Self::self_from_unsigned(rems & <Self as Int>::Unsigned::ONE)
         }
@@ -1516,7 +1516,7 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn div_round(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_UNSIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
             let floored = div_floor(self, rhs);
             // this is only valid for unsigned a
@@ -1640,7 +1640,7 @@ where
     /// See [docs](__detached_docs::Pow2::FloorToMultiple)
     #[inline(always)]
     fn floor_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         unsafe {
             self.unchecked_shr(rhs.exponent as u32)
                 .unchecked_shl(rhs.exponent as u32)
@@ -1738,7 +1738,7 @@ where
     fn ceil_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
         // We can actually use the mask method here because if the intermediate `a + mask` overflows
         // then the actual result would overflow too.
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         (self + mask) & !mask
     }
@@ -1776,7 +1776,7 @@ where
     /// See [docs](__detached_docs::Pow2::CheckedCeilToMultiple)
     #[inline(always)]
     fn checked_ceil_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
-        // SAFETY: SafePow2 guarantees a valid shift
+        // SAFETY: Pow2<T> guarantees a valid shift
         let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
         Some(self.checked_add(mask)? & !mask)
     }
@@ -1864,11 +1864,11 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self {
             debug_assert!(Self::IS_SIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
             let bit = Self::self_from_unsigned(
                 // Bias:
-                // SAFETY: SafePow2 guarantees a valid shift
+                // SAFETY: Pow2<T> guarantees a valid shift
                 unsafe { <Self as Int>::Unsigned::unchecked_highest_mask_bit(rhs.exponent as u32) }
                 // We bias the bias for negative lhs to get correct rounding away from zero.
                 // Saturating sub must be against zero (so unsigned)
@@ -1891,9 +1891,9 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
             // We can actually use the mask method here because if the intermediate `a + mask` overflows
             // then the actual result would overflow too.
@@ -1965,11 +1965,11 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_SIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
             let bit = Self::self_from_unsigned(
                 // Bias:
-                // SAFETY: SafePow2 guarantees a valid shift
+                // SAFETY: Pow2<T> guarantees a valid shift
                 unsafe { <Self as Int>::Unsigned::unchecked_highest_mask_bit(rhs.exponent as u32) }
                 // We bias the bias for negative lhs to get correct rounding away from zero.
                 // Saturating sub must be against zero (so unsigned)
@@ -1990,9 +1990,9 @@ impl_generic_trait_signed_unsigned!(
         #[allow(clippy::assertions_on_constants)]
         fn checked_round_to_multiple(self, rhs: Pow2<T>) -> Self::Output {
             debug_assert!(Self::IS_UNSIGNED);
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let mask = unsafe { Self::unchecked_mask(rhs.exponent as u32) };
-            // SAFETY: SafePow2 guarantees a valid shift
+            // SAFETY: Pow2<T> guarantees a valid shift
             let bit = unsafe { Self::unchecked_highest_mask_bit(rhs.exponent as u32) };
 
             Some(self.checked_add(bit)? & !mask)
@@ -3150,7 +3150,7 @@ mod tests {
 
         /* // Should not compile.
         assert_eq!(
-            checked_mul(i32::MAX as u32, SafePow2::<u64>::from_exponent(1).unwrap()),
+            checked_mul(i32::MAX as u32, Pow2::<u64>::from_exponent(1).unwrap()),
             Some(u32::MAX - 1)
         );
         */
